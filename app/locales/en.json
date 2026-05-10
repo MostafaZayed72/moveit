@@ -1,0 +1,79 @@
+{
+  "nav": {
+    "home": "Home",
+    "about": "About Us",
+    "services": "Services",
+    "locations": "Locations",
+    "faq": "FAQs",
+    "contact": "Contact",
+    "blog": "Blog"
+  },
+  "home": {
+    "hero_title": "Moving Made Simple. Relocate with Confidence.",
+    "hero_subtitle": "The Netherlands' premier moving service for homes and businesses. Secure, efficient, and fully insured.",
+    "get_quote": "Get an Instant Quote",
+    "our_services": "Our Specialized Services",
+    "trust_pilot": "Rated Excellent on Trustpilot",
+    "stats": {
+      "completed": "10k+ Moves Completed",
+      "rating": "4.9/5 Rating",
+      "coverage": "NL Coverage"
+    }
+  },
+  "about": {
+    "title": "Our Story",
+    "subtitle": "Relocating people, not just boxes.",
+    "content_p1": "Founded in Amsterdam, MoveIt has grown into a leading logistics provider known for reliability and care.",
+    "mission": "Our Mission",
+    "mission_text": "To provide the most seamless and stress-free moving experience in Europe.",
+    "why_us": "Why Choose MoveIt?",
+    "reasons": {
+      "insured": "Fully Insured",
+      "vetted": "Vetted Professionals",
+      "modern": "Modern Fleet",
+      "punc": "Punctuality Guaranteed"
+    }
+  },
+  "services": {
+    "title": "What We Do",
+    "private_moves": "Private Moving",
+    "business_moves": "Business Relocation",
+    "intl_moves": "International Moving",
+    "storage": "Smart Storage Solutions",
+    "packing": "Professional Packing",
+    "details_btn": "View Details"
+  },
+  "locations": {
+    "title": "Where We Operate",
+    "subtitle": "Providing premium moving services across the Netherlands and beyond.",
+    "cities": ["Amsterdam", "Rotterdam", "Utrecht", "The Hague", "Eindhoven", "Groningen"]
+  },
+  "faq": {
+    "title": "Frequently Asked Questions",
+    "q1": "How early should I book my move?",
+    "a1": "We recommend booking at least 2-4 weeks in advance, especially during peak seasons.",
+    "q2": "Are my items insured during the move?",
+    "a2": "Yes, all moves include comprehensive insurance coverage for your peace of mind.",
+    "q3": "Do you provide packing materials?",
+    "a3": "Absolutely! We can provide high-quality boxes, tape, and protective wrap."
+  },
+  "contact": {
+    "title": "Let's Talk",
+    "subtitle": "Ready to move? Contact our experts today.",
+    "form_name": "Full Name",
+    "form_email": "Email Address",
+    "form_phone": "Phone Number",
+    "form_message": "Message",
+    "form_submit": "Send Message",
+    "direct_info": "Direct Contact"
+  },
+  "blog": {
+    "title": "Relocation Insights",
+    "subtitle": "Tips and tricks for a smooth moving experience.",
+    "read_more": "Read Full Article"
+  },
+  "footer": {
+    "rights": "© 2024 MoveIt Logistics. All rights reserved.",
+    "slogan": "Your trusted moving partner in the Netherlands."
+  }
+}
