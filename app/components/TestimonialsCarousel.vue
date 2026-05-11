@@ -1,24 +1,16 @@
 <template>
   <div class="relative overflow-hidden">
     <!-- Carousel Container -->
-    <div class="relative">
-      <TransitionGroup
-        :name="transitionDirection"
-        tag="div"
-        class="relative"
-      >
+    <div class="relative" :style="{ minHeight: containerHeight + 'px' }">
+      <transition :name="transitionDirection" mode="out-in">
         <div
-          v-for="(page, pageIndex) in pages"
-          v-show="pageIndex === currentPage"
-          :key="pageIndex"
+          :key="currentPage"
           class="grid grid-cols-1 md:grid-cols-3 gap-8"
         >
           <div
-            v-for="(review, idx) in page"
+            v-for="(review, idx) in pages[currentPage]"
             :key="idx"
-            class="premium-card relative"
-            :data-aos="'fade-up'"
-            :data-aos-delay="idx * 100"
+            class="premium-card relative flex flex-col"
           >
             <!-- Stars -->
             <div class="flex gap-1 mb-6">
@@ -28,16 +20,16 @@
             </div>
 
             <!-- Quote -->
-            <p class="text-slate-600 dark:text-slate-300 leading-relaxed mb-8 text-[15px] italic">
+            <p class="text-slate-600 dark:text-slate-300 leading-relaxed mb-8 text-[15px] italic flex-grow">
               "{{ review.text }}"
             </p>
 
             <!-- Author -->
-            <div class="flex items-center gap-4 mt-auto pt-6 border-t border-slate-100 dark:border-slate-800">
+            <div class="flex items-center gap-4 pt-6 border-t border-slate-100 dark:border-slate-800">
               <img
                 :src="review.avatar"
                 :alt="review.name"
-                class="w-12 h-12 rounded-full object-cover ring-2 ring-blue-500/20"
+                class="w-12 h-12 rounded-full object-cover ring-2 ring-red-500/20"
               />
               <div>
                 <div class="font-bold text-slate-900 dark:text-white text-sm">{{ review.name }}</div>
@@ -46,7 +38,7 @@
             </div>
           </div>
         </div>
-      </TransitionGroup>
+      </transition>
     </div>
 
     <!-- Dots Navigation -->
@@ -58,8 +50,8 @@
         :class="[
           'w-3 h-3 rounded-full transition-all duration-300',
           currentPage === i
-            ? 'bg-blue-600 w-8'
-            : 'bg-slate-300 dark:bg-slate-700 hover:bg-blue-400'
+            ? 'bg-red-600 w-8'
+            : 'bg-slate-300 dark:bg-slate-700 hover:bg-red-400'
         ]"
       />
     </div>
@@ -68,7 +60,8 @@
 
 <script setup>
 const currentPage = ref(0)
-const transitionDirection = ref('slide-left')
+const transitionDirection = ref('fade')
+const containerHeight = ref(0)
 let autoplayInterval = null
 
 const reviews = [
@@ -101,13 +94,11 @@ const pages = computed(() => {
 })
 
 function goToPage(index) {
-  transitionDirection.value = index > currentPage.value ? 'slide-left' : 'slide-right'
   currentPage.value = index
   restartAutoplay()
 }
 
 function nextPage() {
-  transitionDirection.value = 'slide-left'
   currentPage.value = (currentPage.value + 1) % pages.value.length
 }
 
@@ -126,31 +117,12 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
-/* Slide Left */
-.slide-left-enter-active,
-.slide-left-leave-active {
-  transition: all 0.5s ease;
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.4s ease;
 }
-.slide-left-enter-from {
+.fade-enter-from,
+.fade-leave-to {
   opacity: 0;
-  transform: translateX(50px);
-}
-.slide-left-leave-to {
-  opacity: 0;
-  transform: translateX(-50px);
-}
-
-/* Slide Right */
-.slide-right-enter-active,
-.slide-right-leave-active {
-  transition: all 0.5s ease;
-}
-.slide-right-enter-from {
-  opacity: 0;
-  transform: translateX(-50px);
-}
-.slide-right-leave-to {
-  opacity: 0;
-  transform: translateX(50px);
 }
 </style>

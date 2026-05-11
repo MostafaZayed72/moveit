@@ -15,7 +15,7 @@
           >
             <span class="text-xl font-bold text-white">{{ $t(`faq.q${i}`) }}</span>
             <svg 
-              :class="['w-6 h-6 transition-transform duration-300 text-blue-500', activeTab === i ? 'rotate-180' : '']" 
+              :class="['w-6 h-6 transition-transform duration-300 text-red-500', activeTab === i ? 'rotate-180' : '']" 
               fill="none" stroke="currentColor" viewBox="0 0 24 24"
             >
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>

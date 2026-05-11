@@ -26,8 +26,8 @@
           :to="localePath(item.path)" 
           class="nav-link font-medium"
           :class="!isScrolled ? '!text-white/90 hover:!text-white' : ''"
-          active-class="!text-blue-500"
-          exact-active-class="!text-blue-500"
+          active-class="!text-red-500"
+          exact-active-class="!text-red-500"
         >
           {{ $t(`nav.${item.key}`) }}
         </NuxtLink>
@@ -47,7 +47,7 @@
             :class="[
               'w-9 h-9 rounded-full overflow-hidden transition-all duration-300',
               locale === 'en' 
-                ? 'ring-2 ring-blue-500 ring-offset-2 scale-110 shadow-lg' 
+                ? 'ring-2 ring-red-500 ring-offset-2 scale-110 shadow-lg' 
                 : 'opacity-50 hover:opacity-100 hover:scale-105'
             ]"
             :style="locale === 'en' ? (!isScrolled || isDark ? 'box-shadow: 0 0 0 2px #0f172a' : 'box-shadow: 0 0 0 2px #ffffff') : ''"
@@ -72,7 +72,7 @@
             :class="[
               'w-9 h-9 rounded-full overflow-hidden transition-all duration-300',
               locale === 'nl' 
-                ? 'ring-2 ring-blue-500 ring-offset-2 scale-110 shadow-lg' 
+                ? 'ring-2 ring-red-500 ring-offset-2 scale-110 shadow-lg' 
                 : 'opacity-50 hover:opacity-100 hover:scale-105'
             ]"
             :style="locale === 'nl' ? (!isScrolled || isDark ? 'box-shadow: 0 0 0 2px #0f172a' : 'box-shadow: 0 0 0 2px #ffffff') : ''"
@@ -109,7 +109,7 @@
 
         <!-- CTA Button -->
         <NuxtLink :to="localePath('/contact')" class="hidden md:block">
-          <button class="px-6 py-2.5 bg-blue-600 text-white rounded-full font-bold text-sm hover:bg-blue-700 transition-all shadow-xl active:scale-95">
+          <button class="px-6 py-2.5 bg-red-600 text-white rounded-full font-bold text-sm hover:bg-red-700 transition-all shadow-xl active:scale-95">
             {{ $t('home.get_quote') }}
           </button>
         </NuxtLink>
@@ -139,14 +139,14 @@
           v-for="item in navItems" 
           :key="item.key" 
           :to="localePath(item.path)" 
-          :class="['block text-xl font-bold hover:text-blue-500', isDark ? 'text-slate-300' : 'text-slate-700']"
+          :class="['block text-xl font-bold hover:text-red-500', isDark ? 'text-slate-300' : 'text-slate-700']"
           @click="isMenuOpen = false"
         >
           {{ $t(`nav.${item.key}`) }}
         </NuxtLink>
         <!-- Mobile Lang + Dark toggle -->
         <div class="pt-6 border-t border-slate-800/30 flex items-center gap-4">
-          <button @click="setLocale('en'); isMenuOpen = false" :class="['w-12 h-12 rounded-full overflow-hidden transition-all', locale === 'en' ? 'ring-2 ring-blue-500' : 'opacity-40']">
+          <button @click="setLocale('en'); isMenuOpen = false" :class="['w-12 h-12 rounded-full overflow-hidden transition-all', locale === 'en' ? 'ring-2 ring-red-500' : 'opacity-40']">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 30" class="w-full h-full">
               <clipPath id="ma"><path d="M0 0v30h60V0z"/></clipPath>
               <clipPath id="mb"><path d="M30 15h30v15zv15H0zH0V0zV0h30z"/></clipPath>
@@ -159,7 +159,7 @@
               </g>
             </svg>
           </button>
-          <button @click="setLocale('nl'); isMenuOpen = false" :class="['w-12 h-12 rounded-full overflow-hidden transition-all', locale === 'nl' ? 'ring-2 ring-blue-500' : 'opacity-40']">
+          <button @click="setLocale('nl'); isMenuOpen = false" :class="['w-12 h-12 rounded-full overflow-hidden transition-all', locale === 'nl' ? 'ring-2 ring-red-500' : 'opacity-40']">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 9 6" class="w-full h-full">
               <rect width="9" height="2" y="0" fill="#AE1C28"/>
               <rect width="9" height="2" y="2" fill="#fff"/>

@@ -18,8 +18,8 @@
     </div>
     
     <!-- Decorative background -->
-    <div v-if="withBlob" class="absolute top-0 -left-24 w-96 h-96 bg-blue-600/10 rounded-full blur-[120px] -z-10"></div>
-    <div v-if="withBlob" class="absolute bottom-0 -right-24 w-96 h-96 bg-emerald-600/10 rounded-full blur-[120px] -z-10"></div>
+    <div v-if="withBlob" class="absolute top-0 -left-24 w-96 h-96 bg-red-600/10 rounded-full blur-[120px] -z-10"></div>
+    <div v-if="withBlob" class="absolute bottom-0 -right-24 w-96 h-96 bg-orange-600/10 rounded-full blur-[120px] -z-10"></div>
   </section>
 </template>
 
