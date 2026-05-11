@@ -4,7 +4,7 @@
       'fixed top-0 left-0 w-full z-50 transition-all duration-300 py-4 px-6',
       isScrolled 
         ? (isDark ? 'bg-slate-950/80 backdrop-blur-md border-b border-slate-800' : 'bg-white/80 backdrop-blur-md border-b border-slate-200 shadow-sm')
-        : 'bg-transparent'
+        : (isHomePage ? 'bg-transparent' : 'bg-slate-950/40 backdrop-blur-md')
     ]"
   >
     <div class="container mx-auto max-w-7xl flex items-center justify-between">
@@ -34,7 +34,6 @@
       </nav>
 
       <div class="flex items-center gap-3">
-        <!-- Language Switcher: Flags with spacing -->
         <div 
           :class="[
             'flex items-center gap-3 p-1.5 rounded-full border backdrop-blur-md transition-colors',
@@ -179,8 +178,11 @@
 <script setup>
 const { locale, locales, setLocale } = useI18n()
 const localePath = useLocalePath()
+const route = useRoute()
 const isScrolled = ref(false)
 const isMenuOpen = ref(false)
+
+const isHomePage = computed(() => route.path === '/' || route.path === '/en' || route.path === '/nl')
 
 // VueUse dark mode — toggles .dark class on <html>
 const isDark = useDark({

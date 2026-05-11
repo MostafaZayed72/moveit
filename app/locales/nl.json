@@ -108,19 +108,27 @@
       }
     }
   },
-  "about": {
-    "title": "Ons Verhaal",
-    "subtitle": "Wij verhuizen mensen, niet alleen dozen.",
-    "content_p1": "Opgericht in Amsterdam, is MoveIt uitgegroeid tot een toonaangevende logistieke dienstverlener die bekend staat om betrouwbaarheid en zorg.",
+  "about_us": {
+    "title": "Over MoveIt Maastricht",
+    "subtitle": "Uw vooraanstaande verhuispartner in Nederland en door heel Europa.",
+    "who_we_are": {
+      "title": "Wie Wij Zijn",
+      "text": "Gevestigd in het hart van Maastricht, is MoveIt Logistics begonnen met een eenvoudige missie: verhuizen zo stressvrij mogelijk maken. In de afgelopen 10 jaar zijn we uitgegroeid van een lokale bestelbus-service tot een uitgebreide verhuisprovider die duizenden gezinnen, studenten en bedrijven bedient in Nederland, België en Duitsland."
+    },
+    "expertise": {
+      "title": "Onze Expertise",
+      "text": "Of het nu gaat om een studentenkamer in het stadscentrum of een grote familievilla in de buitenwijken, we behandelen elke verhuizing met hetzelfde niveau van zorg en precisie. Ons wagenpark van moderne voertuigen is uitgerust met hoogwaardige verpakkingsmaterialen, gespecialiseerde spanbanden en hydraulische liften om ervoor te zorgen dat uw spullen veilig hun bestemming bereiken."
+    },
+    "standards": {
+      "title": "Professionele Standaarden",
+      "text": "Wij zijn volledig gelicentieerd en verzekerd. Ons team bestaat uit gescreende professionals die zijn getraind in de nieuwste inpak- en transporttechnieken. We zijn trots op onze stiptheid en transparante prijzen — we zorgen ervoor dat er geen verrassingen zijn op uw verhuisdag."
+    },
+    "content_p1": "Gevestigd in het hart van Maastricht, is MoveIt Logistics meer dan alleen een verhuisbedrijf. Wij zijn uw toegewijde verhuispartner.",
     "mission": "Onze Missie",
-    "mission_text": "Het bieden van de meest naadloze en stressvrije verhuiservaring in Europa.",
-    "why_us": "Waarom Kiezen voor MoveIt?",
-    "reasons": {
-      "insured": "Volledig Verzekerd",
-      "vetted": "Gecertificeerde Professionals",
-      "modern": "Modern Wagenpark",
-      "punc": "Stiptheid Gegarandeerd"
-    }
+    "mission_text": "Het bieden van een naadloze, transparante en hoogwaardige verhuiservaring waarbij mensen verhuisd worden, niet alleen dozen.",
+    "experience_badge": "10+ JAAR ERVARING",
+    "seo_title": "Over MoveIt Maastricht | Professionele Verhuisservice NL",
+    "seo_description": "MoveIt Maastricht is uw vertrouwde partner voor naadloze verhuizingen. Met meer dan 10 jaar ervaring bieden wij stressvrije particuliere en zakelijke verhuisdiensten in heel Nederland en Europa."
   },
   "services": {
     "title": "Wat We Doen",
@@ -162,6 +170,14 @@
   },
   "footer": {
     "rights": "© 2024 MoveIt Logistics. Alle rechten voorbehouden.",
-    "slogan": "Uw vertrouwde verhuispartner in Nederland."
+    "slogan": "Uw vertrouwde verhuispartner in Nederland.",
+    "navigation": "Navigatie",
+    "support": "Ondersteuning",
+    "privacy": "Privacybeleid",
+    "terms": "Voorwaarden",
+    "cookie_policy": "Cookiebeleid",
+    "contact_us": "Neem contact op",
+    "address": "Maastricht, Nederland",
+    "handcrafted": "Gemaakt door MoveIt Team"
   }
 }

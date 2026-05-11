@@ -36,7 +36,7 @@
         <ul class="space-y-2 mb-8">
           <li v-for="item in pkg.features" :key="item" class="flex items-start gap-2 text-sm">
             <svg :class="['w-4 h-4 mt-0.5 shrink-0', pkg.popular ? 'text-white' : 'text-red-500']" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-            <span :class="pkg.popular ? 'text-red-50' : 'text-slate-600 dark:text-slate-300'">{{ item }}</span>
+            <span :class="pkg.popular ? 'text-red-50' : 'text-slate-600 dark:text-slate-300'">{{ rt(item) }}</span>
           </li>
         </ul>
 
@@ -65,7 +65,7 @@
 </template>
 
 <script setup>
-const { t, tm } = useI18n()
+const { t, tm, rt } = useI18n()
 
 const packages = computed(() => [
   {

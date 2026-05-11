@@ -108,19 +108,27 @@
       }
     }
   },
-  "about": {
-    "title": "Our Story",
-    "subtitle": "Relocating people, not just boxes.",
-    "content_p1": "Founded in Amsterdam, MoveIt has grown into a leading logistics provider known for reliability and care.",
+  "about_us": {
+    "title": "About MoveIt Maastricht",
+    "subtitle": "Your premier moving partner in the Netherlands and across Europe.",
+    "who_we_are": {
+      "title": "Who We Are",
+      "text": "Based in the heart of Maastricht, MoveIt Logistics started with a simple mission: to make moving as stress-free as possible. Over the last 10 years, we have grown from a local van service into a comprehensive relocation provider serving thousands of families, students, and businesses across the Netherlands, Belgium, and Germany."
+    },
+    "expertise": {
+      "title": "Our Expertise",
+      "text": "Whether it's a student studio in the city center or a large family villa in the suburbs, we handle every move with the same level of care and precision. Our fleet of modern vehicles is equipped with high-quality packing materials, specialized straps, and hydraulic lifts to ensure your belongings reach their destination safely."
+    },
+    "standards": {
+      "title": "Professional Standards",
+      "text": "We are fully licensed and insured. Our team consists of vetted professionals who are trained in the latest packing and transport techniques. We take pride in our punctuality and transparent pricing — ensuring there are no surprises on your moving day."
+    },
+    "content_p1": "Based in the heart of Maastricht, MoveIt Logistics is more than just a moving company. We are your dedicated relocation partner.",
     "mission": "Our Mission",
-    "mission_text": "To provide the most seamless and stress-free moving experience in Europe.",
-    "why_us": "Why Choose MoveIt?",
-    "reasons": {
-      "insured": "Fully Insured",
-      "vetted": "Vetted Professionals",
-      "modern": "Modern Fleet",
-      "punc": "Punctuality Guaranteed"
-    }
+    "mission_text": "To provide a seamless, transparent, and high-quality moving experience that relocates people, not just boxes.",
+    "experience_badge": "10+ YEARS EXPERIENCE",
+    "seo_title": "About MoveIt Maastricht | Professional Moving Services NL",
+    "seo_description": "MoveIt Maastricht is your trusted partner for seamless relocations. With 10+ years of experience, we provide stress-free residential and business moving services across the Netherlands and Europe."
   },
   "services": {
     "title": "What We Do",
@@ -162,6 +170,14 @@
   },
   "footer": {
     "rights": "© 2024 MoveIt Logistics. All rights reserved.",
-    "slogan": "Your trusted moving partner in the Netherlands."
+    "slogan": "Your trusted moving partner in the Netherlands.",
+    "navigation": "Navigation",
+    "support": "Support",
+    "privacy": "Privacy",
+    "terms": "Terms",
+    "cookie_policy": "Cookie Policy",
+    "contact_us": "Contact Us",
+    "address": "Maastricht, Netherlands",
+    "handcrafted": "Handcrafted by MoveIt Team"
   }
 }
