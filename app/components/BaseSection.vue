@@ -1,17 +1,16 @@
 <template>
   <section 
     :class="[
-      'relative py-24 px-6 overflow-hidden',
-      variant === 'dark' ? 'bg-slate-950' : 'bg-slate-900/20'
+      'relative py-24 px-6 overflow-hidden transition-colors duration-300',
     ]"
     v-bind="$attrs"
   >
     <div class="container mx-auto max-w-7xl relative z-10">
       <div v-if="title || subtitle" class="mb-16 text-center max-w-3xl mx-auto" data-aos="fade-up">
-        <h2 v-if="title" class="text-4xl md:text-5xl font-extrabold mb-4 text-white">
+        <h2 v-if="title" class="section-title">
           {{ title }}
         </h2>
-        <p v-if="subtitle" class="text-lg text-slate-400 leading-relaxed">
+        <p v-if="subtitle" class="text-lg text-slate-600 dark:text-slate-400 leading-relaxed font-medium">
           {{ subtitle }}
         </p>
       </div>
@@ -28,10 +27,6 @@
 defineProps({
   title: String,
   subtitle: String,
-  variant: {
-    type: String,
-    default: 'dark'
-  },
   withBlob: {
     type: Boolean,
     default: true

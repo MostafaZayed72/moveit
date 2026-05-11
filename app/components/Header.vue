@@ -25,7 +25,8 @@
           :key="item.key" 
           :to="localePath(item.path)" 
           class="nav-link font-medium"
-          active-class="text-blue-500 !text-white"
+          :class="!isScrolled ? '!text-white/90 hover:!text-white' : ''"
+          active-class="!text-blue-500"
           exact-active-class="!text-blue-500"
         >
           {{ $t(`nav.${item.key}`) }}
@@ -34,16 +35,22 @@
 
       <div class="flex items-center gap-3">
         <!-- Language Switcher: Flags with spacing -->
-        <div class="flex items-center gap-3 bg-slate-900/40 dark:bg-slate-900/40 p-1.5 rounded-full border border-slate-800">
+        <div 
+          :class="[
+            'flex items-center gap-3 p-1.5 rounded-full border backdrop-blur-md transition-colors',
+            !isScrolled ? 'bg-white/10 border-white/20' : (isDark ? 'bg-slate-900/40 border-slate-800' : 'bg-slate-100 border-slate-200')
+          ]"
+        >
           <!-- UK Flag -->
           <button
             @click="setLocale('en')"
             :class="[
               'w-9 h-9 rounded-full overflow-hidden transition-all duration-300',
               locale === 'en' 
-                ? 'ring-2 ring-blue-500 ring-offset-2 ring-offset-slate-900 scale-110 shadow-lg' 
-                : 'opacity-40 hover:opacity-70 hover:scale-105'
+                ? 'ring-2 ring-blue-500 ring-offset-2 scale-110 shadow-lg' 
+                : 'opacity-50 hover:opacity-100 hover:scale-105'
             ]"
+            :style="locale === 'en' ? (!isScrolled || isDark ? 'box-shadow: 0 0 0 2px #0f172a' : 'box-shadow: 0 0 0 2px #ffffff') : ''"
             title="English"
           >
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 30" class="w-full h-full">
@@ -65,9 +72,10 @@
             :class="[
               'w-9 h-9 rounded-full overflow-hidden transition-all duration-300',
               locale === 'nl' 
-                ? 'ring-2 ring-blue-500 ring-offset-2 ring-offset-slate-900 scale-110 shadow-lg' 
-                : 'opacity-40 hover:opacity-70 hover:scale-105'
+                ? 'ring-2 ring-blue-500 ring-offset-2 scale-110 shadow-lg' 
+                : 'opacity-50 hover:opacity-100 hover:scale-105'
             ]"
+            :style="locale === 'nl' ? (!isScrolled || isDark ? 'box-shadow: 0 0 0 2px #0f172a' : 'box-shadow: 0 0 0 2px #ffffff') : ''"
             title="Nederlands"
           >
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 9 6" class="w-full h-full">
@@ -82,10 +90,10 @@
         <button
           @click="toggleDark()"
           :class="[
-            'w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 border',
-            isDark 
-              ? 'bg-slate-800 border-slate-700 text-yellow-400 hover:bg-slate-700' 
-              : 'bg-slate-100 border-slate-200 text-slate-700 hover:bg-slate-200'
+            'w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 border backdrop-blur-md',
+            !isScrolled 
+              ? 'bg-white/10 border-white/20 text-white hover:bg-white/20' 
+              : (isDark ? 'bg-slate-800 border-slate-700 text-yellow-400 hover:bg-slate-700' : 'bg-slate-100 border-slate-200 text-slate-700 hover:bg-slate-200')
           ]"
           :title="isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'"
         >
@@ -107,7 +115,7 @@
         </NuxtLink>
 
         <!-- Mobile Menu Toggle -->
-        <button @click="isMenuOpen = !isMenuOpen" :class="['lg:hidden p-2', isDark ? 'text-white' : 'text-slate-900']">
+        <button @click="isMenuOpen = !isMenuOpen" :class="['lg:hidden p-2 transition-colors', !isScrolled ? 'text-white' : (isDark ? 'text-white' : 'text-slate-900')]">
           <svg v-if="!isMenuOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
           <svg v-else class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
         </button>

@@ -3,42 +3,15 @@
 @tailwind utilities;
 
 @layer base {
-  :root {
-    --primary: 221.2 83.2% 53.3%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96.1%;
-    --accent: 142.1 76.2% 36.3%;
-  }
-
-  /* Dark mode (default) */
-  :root, .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card-bg: rgba(15, 23, 42, 0.4);
-    --border: rgba(51, 65, 85, 0.5);
-  }
-
-  /* Light mode */
-  .light {
-    --background: 210 40% 98%;
-    --foreground: 222.2 47.4% 11.2%;
-    --card-bg: rgba(255, 255, 255, 0.7);
-    --border: rgba(203, 213, 225, 0.8);
-  }
-
   body {
     font-family: 'Inter', sans-serif;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
     @apply antialiased selection:bg-blue-500 selection:text-white;
-    transition: background-color 0.4s ease, color 0.4s ease;
+    @apply bg-slate-50 text-slate-900 transition-colors duration-300;
   }
 
   .dark body {
     @apply bg-slate-950 text-slate-100;
-  }
-
-  .light body {
-    @apply bg-slate-50 text-slate-900;
   }
 
   h1, h2, h3, h4 {
@@ -48,88 +21,73 @@
 }
 
 @layer components {
-  /* Dark mode cards */
-  .dark .glass-panel {
-    background: rgba(15, 23, 42, 0.6);
-    backdrop-filter: blur(20px);
-    border: 1px solid rgba(51, 65, 85, 0.5);
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-  }
-
-  /* Light mode cards */
-  .light .glass-panel {
-    background: rgba(255, 255, 255, 0.8);
-    backdrop-filter: blur(20px);
-    border: 1px solid rgba(203, 213, 225, 0.8);
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
-  }
-
+  /* Glass Panel */
   .glass-panel {
-    background: rgba(15, 23, 42, 0.6);
-    backdrop-filter: blur(20px);
-    border: 1px solid rgba(51, 65, 85, 0.5);
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    @apply bg-white/80 backdrop-blur-xl border border-slate-200 shadow-xl;
+  }
+  .dark .glass-panel {
+    @apply bg-slate-900/60 border-slate-800/50 shadow-2xl;
   }
 
+  /* Premium Card */
   .premium-card {
     @apply glass-panel rounded-3xl p-8 transition-all duration-500 hover:-translate-y-1;
   }
+  .premium-card:hover {
+    @apply border-blue-500/30 shadow-2xl shadow-blue-100/30;
+  }
   .dark .premium-card:hover {
-    border-color: rgba(59, 130, 246, 0.5);
-    background: rgba(15, 23, 42, 0.8);
-  }
-  .light .premium-card:hover {
-    border-color: rgba(59, 130, 246, 0.4);
-    background: rgba(255, 255, 255, 0.95);
+    @apply border-blue-500/50 bg-slate-900/80 shadow-blue-900/20;
   }
 
+  /* Primary Button */
   .btn-primary {
-    @apply inline-flex items-center justify-center px-8 py-4 bg-blue-600 text-white rounded-full font-bold shadow-lg hover:bg-blue-700 transition-all active:scale-95;
+    @apply inline-flex items-center justify-center px-8 py-4 bg-blue-600 text-white rounded-full font-bold shadow-lg shadow-blue-600/20 hover:bg-blue-700 hover:shadow-blue-600/40 transition-all active:scale-95;
   }
 
+  /* Outline Button */
   .btn-outline {
     @apply inline-flex items-center justify-center px-8 py-4 border-2 rounded-full font-bold transition-all active:scale-95;
+    @apply border-slate-200 text-slate-700 hover:border-blue-600 hover:bg-blue-50/50 hover:text-blue-600;
   }
   .dark .btn-outline {
-    @apply border-slate-700 text-slate-200 hover:border-blue-600 hover:text-blue-500;
-  }
-  .light .btn-outline {
-    @apply border-slate-300 text-slate-700 hover:border-blue-600 hover:text-blue-600;
+    @apply border-slate-700 text-slate-200 hover:border-blue-600 hover:bg-transparent hover:text-blue-500;
   }
 
+  /* Nav Links */
   .nav-link {
-    @apply transition-colors relative py-2;
+    @apply transition-colors relative py-2 font-medium;
+    @apply text-slate-600 hover:text-slate-900;
   }
   .dark .nav-link {
     @apply text-slate-400 hover:text-white;
-  }
-  .light .nav-link {
-    @apply text-slate-600 hover:text-slate-900;
   }
 
   .nav-link::after {
     content: '';
     @apply absolute bottom-0 left-0 w-0 h-0.5 bg-blue-500 transition-all duration-300;
   }
-
   .nav-link:hover::after {
     @apply w-full;
   }
+
+  /* Section Titles */
+  .section-title {
+    @apply text-4xl md:text-5xl font-black mb-6 tracking-tight text-slate-900;
+  }
+  .dark .section-title {
+    @apply text-white;
+  }
 }
 
-/* Custom Gradients */
-.text-gradient {
-  @apply bg-gradient-to-br from-white via-slate-200 to-slate-500 bg-clip-text text-transparent;
-}
-
+/* Gradients */
 .text-gradient-blue {
-  @apply bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent;
+  @apply bg-gradient-to-r from-blue-600 to-emerald-500 bg-clip-text text-transparent;
+}
+.dark .text-gradient-blue {
+  @apply from-blue-400 to-emerald-400;
 }
 
 /* AOS Tweaks */
-[data-aos] {
-  pointer-events: none;
-}
-.aos-animate {
-  pointer-events: auto;
-}
+[data-aos] { pointer-events: none; }
+.aos-animate { pointer-events: auto; }
