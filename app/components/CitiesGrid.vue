@@ -28,9 +28,9 @@
 
 <script setup>
 const cities = [
-  { name: 'Maastricht', country: null, image: '/images/maastricht.jpg' },
+  { name: 'Maastricht', country: null, image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=400' },
   { name: 'Geleen', country: null, image: 'https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?auto=format&fit=crop&q=80&w=400' },
-  { name: 'Roermond', country: null, image: 'https://images.unsplash.com/photo-1467269204594-9661b134dd2b?auto=format&fit=crop&q=80&w=400' },
+  { name: 'Roermond', country: null, image: 'https://images.unsplash.com/photo-1517705008128-361805f42e86?auto=format&fit=crop&q=80&w=400' },
   { name: 'Sittard', country: null, image: 'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?auto=format&fit=crop&q=80&w=400' },
   { name: 'Venlo', country: null, image: 'https://images.unsplash.com/photo-1518391846015-55a9cc003b25?auto=format&fit=crop&q=80&w=400' },
   { name: 'Weert', country: null, image: 'https://images.unsplash.com/photo-1514924013411-cbf25faa35bb?auto=format&fit=crop&q=80&w=400' },
