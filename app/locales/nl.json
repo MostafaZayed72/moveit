@@ -15,9 +15,97 @@
     "our_services": "Onze Gespecialiseerde Diensten",
     "trust_pilot": "Uitstekend beoordeeld op Trustpilot",
     "stats": {
-      "completed": "10k+ Verhuizingen Voltooid",
-      "rating": "4.9/5 Beoordeling",
-      "coverage": "NL Dekking"
+      "completed": "Verhuizingen Voltooid",
+      "rating": "Gemiddelde Beoordeling",
+      "coverage": "Steden Gedekt",
+      "reviews": "5-Sterren Reviews"
+    },
+    "why_us": {
+      "title": "Waarom Kiezen voor MoveIt?",
+      "fast": { "title": "Snelle Reactie", "desc": "We reageren binnen enkele minuten op elke aanvraag via WhatsApp." },
+      "student": { "title": "Studentvriendelijk", "desc": "Gratis meerijden voor studenten. Budgetvriendelijke pakketten voor kleine verhuizingen." },
+      "transparent": { "title": "Transparante Prijzen", "desc": "Geen verborgen kosten. Wat u ziet is wat u betaalt, altijd." },
+      "insured": { "title": "Verzekerde Verhuizingen", "desc": "Elk item is volledig gedekt door onze uitgebreide transportverzekering." }
+    },
+    "how_it_works": {
+      "title": "Hoe Het Werkt",
+      "subtitle": "Verhuizen eenvoudig gemaakt in slechts 3 stappen",
+      "step1": { "title": "Vraag Offerte Aan", "desc": "Kies uw pakket of vraag een offerte op maat aan via WhatsApp. We reageren direct." },
+      "step2": { "title": "Bevestig Boeking", "desc": "Kies uw voorkeursdatum en -tijd. We bevestigen direct met alle details en prijzen." },
+      "step3": { "title": "Verhuisdag", "desc": "Ons professionele team arriveert op tijd, gaat zorgvuldig te werk en helpt u settelen." },
+      "step_prefix": "Stap"
+    },
+    "cities": {
+      "title": "Steden Waar We Verhuizen",
+      "subtitle": "Van Maastricht naar overal — lokaal, nationaal & over de grens",
+      "and_more": "En meer...",
+      "request_quote": "Vraag een offerte aan"
+    },
+    "testimonials": {
+      "title": "Wat Onze Klanten Zeggen",
+      "subtitle": "Vertrouwd door duizenden tevreden verhuizers in heel Nederland"
+    },
+    "faqs": {
+      "title": "Veelgestelde Vragen",
+      "subtitle": "Snelle antwoorden op veelvoorkomende verhuisvragen",
+      "view_all": "Bekijk Alle FAQ's",
+      "q1": "Hoe ver van tevoren moet ik boeken?",
+      "a1": "We raden aan om minimaal 3-5 dagen van tevoren te boeken voor lokale verhuizingen. Voor internationale verhuizingen is 2-3 weken ideaal. We kunnen echter ook dringende verhuizingen op dezelfde dag verzorgen, indien beschikbaar.",
+      "q2": "Zijn er verborgen kosten?",
+      "a2": "Absoluut niet. Onze prijzen zijn transparant. Het uurtarief dekt de bestelbus, chauffeur en verhuizers zoals aangegeven in uw pakket. BTW (21%) komt hier nog bij. Tijd wordt berekend vanaf vertrek tot terugkomst op onze locatie in Maastricht.",
+      "q3": "Bieden jullie studentenkorting?",
+      "a3": "Ja! Alle studenten rijden gratis mee binnen Maastricht. Laat gewoon uw studentenkaart zien op de verhuisdag. We bieden ook speciale studentvriendelijke prijzen voor kleine verhuizingen.",
+      "q4": "Wat als er iets beschadigd raakt tijdens de verhuizing?",
+      "a4": "Al onze verhuizingen zijn inclusief transportverzekering. In het zeldzame geval van schade hebben we een eenvoudig claimproces. Ons team is getraind in professionele hanteringstechnieken om elk risico te minimaliseren.",
+      "q5": "Kan ik meerijden in de verhuisbus?",
+      "a5": "Ja! Binnen Maastricht is het €10 vast. Buiten Maastricht (25-50km) is het €0.50/km. Studenten rijden gratis mee binnen Maastricht. Voor langeafstandsverhuizingen maken we een offerte op maat."
+    },
+    "cta": {
+      "title": "Klaar om te Verhuizen?",
+      "subtitle": "Ontvang binnen enkele minuten een gratis, vrijblijvende offerte. Ons team staat klaar om uw volgende verhuizing stressvrij te maken.",
+      "btn_quote": "Gratis Offerte",
+      "btn_whatsapp": "Chat op WhatsApp"
+    },
+    "packages": {
+      "title": "Onze Verhuispakketten",
+      "subtitle": "Transparante prijzen. Geen verborgen kosten. Kies het pakket dat bij uw verhuizing past.",
+      "van_only": {
+        "name": "Alleen Bestelbus",
+        "desc": "Perfect voor kleine verhuizingen, Marktplaats & doe-het-zelvers",
+        "price": "€59.99/u",
+        "features": ["Verhuisbus", "Professionele chauffeur", "Transportverzekering", "Brandstof binnen Maastricht"]
+      },
+      "van_1_mover": {
+        "name": "Bestelbus + 1 Verhuizer",
+        "desc": "Ideaal voor studio's & studentenkamers",
+        "price": "€69.99/u",
+        "features": ["Alles in Alleen Bestelbus", "1 Professionele verhuizer", "Hulp bij in- en uitladen", "Dekens & spanbanden inbegrepen"]
+      },
+      "van_2_movers": {
+        "name": "Bestelbus + 2 Verhuizers",
+        "desc": "Beste voor 1-2 slaapkamer appartementen & zware meubels",
+        "price": "€89.99/u",
+        "features": ["Alles in Alleen Bestelbus", "2 Professionele verhuizers", "Volledige fysieke arbeid", "Traplopen inbegrepen"]
+      },
+      "full_service": {
+        "name": "Full Service",
+        "desc": "Complete stressvrije verhuiservaring",
+        "price": "Op maat",
+        "features": ["Volledige inpakservice", "Demontage & montage", "Voorrangsplanning", "Toegewijde verhuiscoördinator"]
+      },
+      "most_popular": "Meest Populair",
+      "excl_vat": "excl. BTW",
+      "book_whatsapp": "Boek via WhatsApp",
+      "get_custom_quote": "Vraag Offerte Aan",
+      "addons_title": "Optionele Extra's",
+      "addons": {
+        "driver_assist": "Chauffeur assistentie → +€8.99/u",
+        "extra_mover": "Extra verhuizer → +€15.99/u",
+        "ride_maastricht": "Meerijden binnen Maastricht → +€10 vast",
+        "ride_outside": "Meerijden buiten Maastricht (25–50km) → +€0.50/km",
+        "ride_long": "Meerijden lange afstand → Offerte op aanvraag",
+        "student_ride": "Gratis meerijden voor studenten binnen Maastricht"
+      }
     }
   },
   "about": {

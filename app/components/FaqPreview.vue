@@ -11,7 +11,7 @@
         @click="toggle(i)"
         class="w-full flex items-center justify-between p-6 text-left"
       >
-        <span class="font-bold text-slate-900 dark:text-white pr-4">{{ faq.q }}</span>
+          <span class="font-bold text-slate-900 dark:text-white pr-4">{{ $t(`home.faqs.q${i + 1}`) }}</span>
         <svg
           :class="['w-5 h-5 text-red-500 shrink-0 transition-transform duration-300', openIndex === i ? 'rotate-180' : '']"
           fill="none" stroke="currentColor" viewBox="0 0 24 24"
@@ -29,7 +29,7 @@
       >
         <div v-show="openIndex === i" class="overflow-hidden">
           <div class="px-6 pb-6 text-slate-600 dark:text-slate-400 leading-relaxed border-t border-slate-100 dark:border-slate-800 pt-4">
-            {{ faq.a }}
+            {{ $t(`home.faqs.a${i + 1}`) }}
           </div>
         </div>
       </Transition>
@@ -44,11 +44,6 @@ function toggle(i) {
   openIndex.value = openIndex.value === i ? -1 : i
 }
 
-const faqs = [
-  { q: 'How far in advance should I book?', a: 'We recommend booking at least 3-5 days in advance for local moves. For international relocations, 2-3 weeks is ideal. However, we also accommodate urgent same-day moves when availability allows.' },
-  { q: 'Are there any hidden fees?', a: 'Absolutely not. Our pricing is transparent. The hourly rate covers the van, driver, and movers as specified in your package. VAT (21%) is added on top. Time is calculated from departure to return to our Maastricht location.' },
-  { q: 'Do you offer student discounts?', a: 'Yes! All students get free ride-along service within Maastricht. Just show your student ID on moving day. We also offer special student-friendly pricing for small moves.' },
-  { q: 'What if something gets damaged during the move?', a: 'All our moves include transport insurance. In the rare event of damage, we have a straightforward claims process. Our team is trained in professional handling techniques to minimize any risk.' },
-  { q: 'Can I ride along in the moving van?', a: 'Yes! Within Maastricht it is €10 fixed. Outside Maastricht (25-50km) it is €0.50/km. Students ride free within Maastricht. For long-distance moves, we provide a custom quote.' },
-]
+const faqs = [1, 2, 3, 4, 5]
+
 </script>

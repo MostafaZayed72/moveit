@@ -11,8 +11,11 @@
         <img :src="city.image" :alt="city.name" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
         <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 to-slate-950/20 group-hover:from-red-900/80 transition-colors duration-500"></div>
         <div class="absolute inset-0 flex flex-col items-center justify-end p-4">
-          <span class="text-white font-bold text-sm drop-shadow-lg">{{ city.name }}</span>
-          <span v-if="city.country" class="text-red-300 text-xs font-medium">{{ city.country }}</span>
+          <span v-if="!city.isMore" class="text-white font-bold text-sm drop-shadow-lg">{{ city.name }}</span>
+          <span v-else class="text-white font-bold text-sm drop-shadow-lg">{{ $t('home.cities.and_more') }}</span>
+          
+          <span v-if="city.country && !city.isMore" class="text-red-300 text-xs font-medium">{{ city.country }}</span>
+          <span v-if="city.isMore" class="text-red-300 text-xs font-medium">{{ $t('home.cities.request_quote') }}</span>
         </div>
         <!-- Pin -->
         <div class="absolute top-3 right-3 w-6 h-6 bg-red-500 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-lg">
@@ -39,6 +42,6 @@ const cities = [
   { name: 'Brunssum', country: null, image: 'https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fit=crop&q=80&w=400' },
   { name: 'Valkenburg', country: null, image: 'https://images.unsplash.com/photo-1444723121867-7a241cacace9?auto=format&fit=crop&q=80&w=400' },
   { name: 'Brussels', country: '🇧🇪 Belgium', image: 'https://images.unsplash.com/photo-1559113202-c916b8e44373?auto=format&fit=crop&q=80&w=400' },
-  { name: 'And more...', country: 'Request a quote', image: 'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&q=80&w=400' },
+  { isMore: true, image: 'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&q=80&w=400' },
 ]
 </script>

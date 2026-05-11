@@ -14,7 +14,7 @@
     >
       <!-- Popular Badge -->
       <div v-if="pkg.popular" class="absolute top-4 right-4 bg-white text-red-600 text-xs font-black px-3 py-1 rounded-full uppercase tracking-wider">
-        Most Popular
+        {{ $t('home.packages.most_popular') }}
       </div>
 
       <div class="p-8 flex flex-col flex-grow">
@@ -29,7 +29,7 @@
           <span :class="['text-3xl font-black', pkg.popular ? 'text-white' : 'text-slate-900 dark:text-white']">{{ pkg.price }}</span>
           <span :class="['text-sm ml-1', pkg.popular ? 'text-red-100' : 'text-slate-500']">{{ pkg.unit }}</span>
         </div>
-        <p :class="['text-xs mb-6', pkg.popular ? 'text-red-100' : 'text-slate-400']">excl. 21% VAT</p>
+        <p :class="['text-xs mb-6', pkg.popular ? 'text-red-100' : 'text-slate-400']">{{ $t('home.packages.excl_vat') }}</p>
 
         <!-- Perfect For -->
         <p :class="['text-xs font-bold uppercase tracking-wider mb-3', pkg.popular ? 'text-red-200' : 'text-slate-400']">Perfect for:</p>
@@ -60,48 +60,49 @@
 
   <!-- Footnote -->
   <div class="mt-12 text-center space-y-1">
-    <p class="text-sm text-slate-500 dark:text-slate-400">All prices exclude 21% VAT. Time calculated from departure & return to our Maastricht location.</p>
-    <p class="text-sm text-red-500 font-semibold">🎓 Free ride along for all students within Maastricht!</p>
+    <p class="text-sm text-red-500 font-semibold">🎓 {{ $t('home.packages.addons.student_ride') }}</p>
   </div>
 </template>
 
 <script setup>
-const packages = [
+const { t, tm } = useI18n()
+
+const packages = computed(() => [
   {
     icon: '🚐',
-    name: 'Van Only',
+    name: t('home.packages.van_only.name'),
     price: '€59.99',
     unit: '/hr',
     popular: false,
-    features: ['Small moves', 'Marketplace pickups', 'Single furniture items', 'DIY movers'],
-    cta: { text: 'Book via WhatsApp', link: 'https://wa.me/31612345678' }
+    features: tm('home.packages.van_only.features'),
+    cta: { text: t('home.packages.book_whatsapp'), link: 'https://wa.me/31612345678' }
   },
   {
     icon: '📦',
-    name: 'Van + 1 Mover',
+    name: t('home.packages.van_1_mover.name'),
     price: '€69.99',
     unit: '/hr',
     popular: true,
-    features: ['Studio moves', 'Student apartments', 'Small households', 'Min. 2 hours'],
-    cta: { text: 'Get Instant Quote', link: '/contact' }
+    features: tm('home.packages.van_1_mover.features'),
+    cta: { text: t('home.packages.get_custom_quote'), link: '/contact' }
   },
   {
     icon: '🏠',
-    name: 'Van + 2 Movers',
-    price: '€94.99',
+    name: t('home.packages.van_2_movers.name'),
+    price: '€89.99',
     unit: '/hr',
     popular: false,
-    features: ['1-bedroom apartments', 'Heavy furniture', 'Faster moving days', 'Basic furniture handling'],
-    cta: { text: 'Reserve Your Slot', link: '/contact' }
+    features: tm('home.packages.van_2_movers.features'),
+    cta: { text: t('home.packages.get_custom_quote'), link: '/contact' }
   },
   {
     icon: '🌍',
-    name: 'Full-Service Move',
-    price: '€349',
-    unit: 'starting',
+    name: t('home.packages.full_service.name'),
+    price: 'Custom',
+    unit: '',
     popular: false,
-    features: ['Long-distance moves', 'International relocations', 'Expats & families', '24/7 WhatsApp coordination'],
-    cta: { text: 'Request Fixed Quote', link: '/contact' }
+    features: tm('home.packages.full_service.features'),
+    cta: { text: t('home.packages.get_custom_quote'), link: '/contact' }
   },
-]
+])
 </script>

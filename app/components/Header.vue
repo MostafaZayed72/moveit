@@ -25,7 +25,7 @@
           :key="item.key" 
           :to="localePath(item.path)" 
           class="nav-link font-medium"
-          :class="!isScrolled ? '!text-white/90 hover:!text-white' : ''"
+          :class="!isScrolled ? 'text-white/90 hover:text-white' : ''"
           active-class="!text-red-500"
           exact-active-class="!text-red-500"
         >

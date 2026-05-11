@@ -15,32 +15,20 @@
         <div class="absolute inset-0 bg-red-600/10 dark:bg-red-900/20 rounded-3xl rotate-6 transition-transform group-hover:rotate-12"></div>
         <div class="relative w-full h-full bg-white dark:bg-slate-900 rounded-3xl shadow-xl border border-slate-100 dark:border-slate-800 flex flex-col items-center justify-center">
           <span class="text-4xl mb-1">{{ step.icon }}</span>
-          <span class="text-xs font-black text-red-500 uppercase tracking-widest">Step {{ i + 1 }}</span>
+          <span class="text-xs font-black text-red-500 uppercase tracking-widest">{{ $t('home.how_it_works.step_prefix') }} {{ i + 1 }}</span>
         </div>
       </div>
 
-      <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-3">{{ step.title }}</h3>
-      <p class="text-slate-500 dark:text-slate-400 leading-relaxed max-w-xs mx-auto text-sm">{{ step.desc }}</p>
+      <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-3">{{ $t(`home.how_it_works.step${i + 1}.title`) }}</h3>
+      <p class="text-slate-500 dark:text-slate-400 leading-relaxed max-w-xs mx-auto text-sm">{{ $t(`home.how_it_works.step${i + 1}.desc`) }}</p>
     </div>
   </div>
 </template>
 
 <script setup>
 const steps = [
-  {
-    icon: '📋',
-    title: 'Request a Quote',
-    desc: 'Choose your package or request a custom quote via WhatsApp. We respond within minutes.'
-  },
-  {
-    icon: '✅',
-    title: 'Confirm Booking',
-    desc: 'Pick your preferred date and time. We confirm instantly with all details and pricing.'
-  },
-  {
-    icon: '🚚',
-    title: 'Move Day',
-    desc: 'Our professional team arrives on time, handles everything with care, and gets you settled.'
-  },
+  { icon: '📋' },
+  { icon: '✅' },
+  { icon: '🚚' },
 ]
 </script>

@@ -12,10 +12,7 @@
         <div class="container mx-auto max-w-4xl text-center">
           <div data-aos="zoom-out">
             <div class="inline-flex items-center space-x-2 px-4 py-2 bg-red-500/10 border border-red-500/20 rounded-full text-red-400 text-sm font-bold mb-8 backdrop-blur-md">
-              <span class="relative flex h-2 w-2">
-                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-                <span class="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
-              </span>
+              <span class="w-2 h-2 rounded-full bg-red-500"></span>
               <span>{{ $t('home.trust_pilot') }}</span>
             </div>
             <h1 class="text-6xl md:text-8xl lg:text-9xl font-black mb-8 leading-[0.85] text-white tracking-tighter">
@@ -34,29 +31,25 @@
                 WhatsApp
               </a>
             </div>
-            <div class="mt-16 grid grid-cols-3 gap-8 max-w-2xl mx-auto pt-10 border-t border-white/20 backdrop-blur-sm rounded-3xl p-6 bg-slate-950/20">
-              <div v-for="stat in heroStats" :key="stat.key" class="space-y-1">
-                <div class="text-3xl md:text-4xl font-black text-white">
+            <div class="mt-12 grid grid-cols-3 gap-4 md:gap-8 max-w-2xl mx-auto pt-8 border-t border-white/10 backdrop-blur-sm rounded-3xl p-4 md:p-6 bg-slate-950/20">
+              <div v-for="stat in heroStats" :key="stat.key" class="space-y-0 md:space-y-1">
+                <div class="text-xl md:text-4xl font-black text-white">
                   <StatCounter :value="stat.value" :suffix="stat.suffix" :decimals="stat.decimals || 0" />
                 </div>
-                <div class="text-xs font-bold uppercase tracking-widest text-slate-200">{{ stat.label }}</div>
+                <div class="text-[10px] md:text-xs font-bold uppercase tracking-widest text-slate-300 leading-tight">{{ $t(`home.stats.${stat.key}`) }}</div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 animate-bounce">
-        <div class="w-6 h-10 rounded-full border-2 border-slate-400/50 flex items-start justify-center p-1">
-          <div class="w-1.5 h-3 bg-slate-400/50 rounded-full animate-pulse"></div>
-        </div>
-      </div>
+
     </section>
 
     <!-- TRUST BADGES & RATINGS -->
     <TrustSection />
 
     <!-- 2. SERVICES / PACKAGES -->
-    <BaseSection title="Our Moving Packages" subtitle="Transparent pricing. No hidden fees. Choose the package that fits your move.">
+    <BaseSection :title="$t('home.packages.title')" :subtitle="$t('home.packages.subtitle')">
       <PricingPackages />
     </BaseSection>
 
@@ -64,7 +57,7 @@
     <StatsCounter />
 
     <!-- 4. WHY CHOOSE US -->
-    <BaseSection title="Why Choose MoveIt?">
+    <BaseSection :title="$t('home.why_us.title')">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <div
           v-for="(reason, index) in whyUsItems"
@@ -79,34 +72,34 @@
             <span class="text-xl">{{ reason.icon }}</span>
           </div>
           <div class="absolute bottom-0 left-0 right-0 p-6">
-            <h4 class="text-xl font-bold text-white mb-1">{{ reason.title }}</h4>
-            <p class="text-sm text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity duration-500">{{ reason.desc }}</p>
+            <h4 class="text-xl font-bold text-white mb-1">{{ $t(`home.why_us.${reason.key}.title`) }}</h4>
+            <p class="text-sm text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity duration-500">{{ $t(`home.why_us.${reason.key}.desc`) }}</p>
           </div>
         </div>
       </div>
     </BaseSection>
 
     <!-- 5. HOW IT WORKS -->
-    <BaseSection title="How It Works" subtitle="Moving made simple in just 3 easy steps">
+    <BaseSection :title="$t('home.how_it_works.title')" :subtitle="$t('home.how_it_works.subtitle')">
       <HowItWorks />
     </BaseSection>
 
     <!-- 6. CITIES WE SERVE -->
-    <BaseSection title="Cities We Move To" subtitle="From Maastricht to anywhere — local, national & cross-border">
+    <BaseSection :title="$t('home.cities.title')" :subtitle="$t('home.cities.subtitle')">
       <CitiesGrid />
     </BaseSection>
 
     <!-- 7. TESTIMONIALS -->
-    <BaseSection title="What Our Clients Say" subtitle="Trusted by thousands of happy movers across the Netherlands">
+    <BaseSection :title="$t('home.testimonials.title')" :subtitle="$t('home.testimonials.subtitle')">
       <TestimonialsCarousel />
     </BaseSection>
 
     <!-- 8. FAQ PREVIEW -->
-    <BaseSection title="Frequently Asked Questions" subtitle="Quick answers to common moving questions">
+    <BaseSection :title="$t('home.faqs.title')" :subtitle="$t('home.faqs.subtitle')">
       <FaqPreview />
       <div class="text-center mt-10">
         <NuxtLink :to="localePath('/faq')" class="text-red-500 font-bold hover:text-red-600 transition-colors inline-flex items-center gap-2">
-          View All FAQs
+          {{ $t('home.faqs.view_all') }}
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
         </NuxtLink>
       </div>
@@ -119,17 +112,17 @@
         <div class="absolute inset-0 bg-gradient-to-r from-red-700/90 to-slate-950/90"></div>
       </div>
       <div class="container mx-auto max-w-3xl relative z-10 text-center" data-aos="zoom-in">
-        <h2 class="text-4xl md:text-6xl font-black text-white mb-6 tracking-tight">Ready to Move?</h2>
-        <p class="text-xl text-red-100 mb-10 leading-relaxed">Get a free, no-obligation quote in minutes. Our team is ready to make your next move stress-free.</p>
+        <h2 class="text-4xl md:text-6xl font-black text-white mb-6 tracking-tight">{{ $t('home.cta.title') }}</h2>
+        <p class="text-xl text-red-100 mb-10 leading-relaxed">{{ $t('home.cta.subtitle') }}</p>
         <div class="flex flex-wrap justify-center gap-4">
           <NuxtLink :to="localePath('/contact')">
             <button class="px-10 py-4 bg-white text-red-600 rounded-full font-bold text-lg shadow-2xl hover:bg-red-50 transition-all active:scale-95">
-              Get Free Quote
+              {{ $t('home.cta.btn_quote') }}
             </button>
           </NuxtLink>
           <a href="https://wa.me/31612345678" target="_blank" class="px-10 py-4 bg-green-500 text-white rounded-full font-bold text-lg shadow-2xl hover:bg-green-600 transition-all active:scale-95 inline-flex items-center gap-2">
             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-            Chat on WhatsApp
+            {{ $t('home.cta.btn_whatsapp') }}
           </a>
         </div>
       </div>

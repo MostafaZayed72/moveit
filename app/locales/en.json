@@ -15,9 +15,97 @@
     "our_services": "Our Specialized Services",
     "trust_pilot": "Rated Excellent on Trustpilot",
     "stats": {
-      "completed": "10k+ Moves Completed",
-      "rating": "4.9/5 Rating",
-      "coverage": "NL Coverage"
+      "completed": "Moves Completed",
+      "rating": "Average Rating",
+      "coverage": "Cities Covered",
+      "reviews": "5-Star Reviews"
+    },
+    "why_us": {
+      "title": "Why Choose MoveIt?",
+      "fast": { "title": "Fast Response", "desc": "We respond to every inquiry within minutes via WhatsApp." },
+      "student": { "title": "Student Friendly", "desc": "Free ride along for students. Budget-friendly packages for small moves." },
+      "transparent": { "title": "Transparent Pricing", "desc": "No hidden fees. What you see is what you pay, always." },
+      "insured": { "title": "Insured Moves", "desc": "Every item is fully covered by our comprehensive transport insurance." }
+    },
+    "how_it_works": {
+      "title": "How It Works",
+      "subtitle": "Moving made simple in just 3 easy steps",
+      "step1": { "title": "Request a Quote", "desc": "Choose your package or request a custom quote via WhatsApp. We respond within minutes." },
+      "step2": { "title": "Confirm Booking", "desc": "Pick your preferred date and time. We confirm instantly with all details and pricing." },
+      "step3": { "title": "Move Day", "desc": "Our professional team arrives on time, handles everything with care, and gets you settled." },
+      "step_prefix": "Step"
+    },
+    "cities": {
+      "title": "Cities We Move To",
+      "subtitle": "From Maastricht to anywhere — local, national & cross-border",
+      "and_more": "And more...",
+      "request_quote": "Request a quote"
+    },
+    "testimonials": {
+      "title": "What Our Clients Say",
+      "subtitle": "Trusted by thousands of happy movers across the Netherlands"
+    },
+    "faqs": {
+      "title": "Frequently Asked Questions",
+      "subtitle": "Quick answers to common moving questions",
+      "view_all": "View All FAQs",
+      "q1": "How far in advance should I book?",
+      "a1": "We recommend booking at least 3-5 days in advance for local moves. For international relocations, 2-3 weeks is ideal. However, we also accommodate urgent same-day moves when availability allows.",
+      "q2": "Are there any hidden fees?",
+      "a2": "Absolutely not. Our pricing is transparent. The hourly rate covers the van, driver, and movers as specified in your package. VAT (21%) is added on top. Time is calculated from departure to return to our Maastricht location.",
+      "q3": "Do you offer student discounts?",
+      "a3": "Yes! All students get free ride-along service within Maastricht. Just show your student ID on moving day. We also offer special student-friendly pricing for small moves.",
+      "q4": "What if something gets damaged during the move?",
+      "a4": "All our moves include transport insurance. In the rare event of damage, we have a straightforward claims process. Our team is trained in professional handling techniques to minimize any risk.",
+      "q5": "Can I ride along in the moving van?",
+      "a5": "Yes! Within Maastricht it is €10 fixed. Outside Maastricht (25-50km) it is €0.50/km. Students ride free within Maastricht. For long-distance moves, we provide a custom quote."
+    },
+    "cta": {
+      "title": "Ready to Move?",
+      "subtitle": "Get a free, no-obligation quote in minutes. Our team is ready to make your next move stress-free.",
+      "btn_quote": "Get Free Quote",
+      "btn_whatsapp": "Chat on WhatsApp"
+    },
+    "packages": {
+      "title": "Our Moving Packages",
+      "subtitle": "Transparent pricing. No hidden fees. Choose the package that fits your move.",
+      "van_only": {
+        "name": "Van Only",
+        "desc": "Perfect for small moves, Facebook Marketplace & DIY movers",
+        "price": "€59.99/hr",
+        "features": ["Moving van", "Professional driver", "Transport insurance", "Fuel within Maastricht"]
+      },
+      "van_1_mover": {
+        "name": "Van + 1 Mover",
+        "desc": "Ideal for studio moves & student apartments",
+        "price": "€69.99/hr",
+        "features": ["Everything in Van Only", "1 Professional mover", "Loading & unloading help", "Blankets & straps included"]
+      },
+      "van_2_movers": {
+        "name": "Van + 2 Movers",
+        "desc": "Best for 1-2 bedroom apartments & heavy furniture",
+        "price": "€89.99/hr",
+        "features": ["Everything in Van Only", "2 Professional movers", "Full physical labor", "Stair navigation included"]
+      },
+      "full_service": {
+        "name": "Full Service",
+        "desc": "Complete stress-free moving experience",
+        "price": "Custom",
+        "features": ["Full packing service", "Disassembly & assembly", "Priority scheduling", "Dedicated moving coordinator"]
+      },
+      "most_popular": "Most Popular",
+      "excl_vat": "excl. VAT",
+      "book_whatsapp": "Book via WhatsApp",
+      "get_custom_quote": "Get Custom Quote",
+      "addons_title": "Optional Add-ons",
+      "addons": {
+        "driver_assist": "Driver assistance → +€8.99/hr",
+        "extra_mover": "Extra mover → +€15.99/hr",
+        "ride_maastricht": "Ride along within Maastricht → +€10 fixed",
+        "ride_outside": "Ride along outside Maastricht (25–50km) → +€0.50/km",
+        "ride_long": "Long-distance ride along → Quote on request",
+        "student_ride": "Free ride along for students within Maastricht"
+      }
     }
   },
   "about": {
