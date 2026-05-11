@@ -243,7 +243,14 @@
     "form_phone": "Phone Number",
     "form_message": "Message",
     "form_submit": "Send Message",
-    "direct_info": "Direct Contact"
+    "direct_info": "Direct Contact",
+    "direct_desc": "Prefer to call or email? Our customer service team is available 24/7 to assist with your relocation needs.",
+    "phone": "Phone",
+    "email": "Email",
+    "response_time_title": "Response Time",
+    "response_time_desc_pre": "We typically respond to all inquiries within ",
+    "response_time_hours": "2 hours",
+    "response_time_desc_post": " during business hours."
   },
   "blog": {
     "title": "Relocation Insights",

@@ -26,8 +26,6 @@
           :to="localePath(item.path)" 
           class="nav-link font-medium"
           :class="!isScrolled ? 'text-white/90 hover:text-white' : ''"
-          active-class="!text-red-500"
-          exact-active-class="!text-red-500"
         >
           {{ $t(`nav.${item.key}`) }}
         </NuxtLink>

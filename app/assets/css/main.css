@@ -67,8 +67,12 @@
     content: '';
     @apply absolute bottom-0 left-0 w-0 h-0.5 bg-red-500 transition-all duration-300;
   }
-  .nav-link:hover::after {
+  .nav-link:hover::after,
+  .nav-link.router-link-active::after {
     @apply w-full;
+  }
+  .nav-link.router-link-active {
+    @apply font-bold;
   }
 
   /* Section Titles */

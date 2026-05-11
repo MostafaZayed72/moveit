@@ -243,7 +243,14 @@
     "form_phone": "Telefoonnummer",
     "form_message": "Bericht",
     "form_submit": "Bericht Verzenden",
-    "direct_info": "Direct Contact"
+    "direct_info": "Direct Contact",
+    "direct_desc": "Belt of mailt u liever? Onze klantenservice is 24/7 bereikbaar om u te helpen met uw verhuizing.",
+    "phone": "Telefoon",
+    "email": "E-mail",
+    "response_time_title": "Reactietijd",
+    "response_time_desc_pre": "We reageren meestal binnen ",
+    "response_time_hours": "2 uur",
+    "response_time_desc_post": " op alle vragen tijdens kantooruren."
   },
   "blog": {
     "title": "Verhuis Inzichten",
