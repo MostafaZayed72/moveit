@@ -35,9 +35,11 @@
               </a>
             </div>
             <div class="mt-16 grid grid-cols-3 gap-8 max-w-2xl mx-auto pt-10 border-t border-white/20 backdrop-blur-sm rounded-3xl p-6 bg-slate-950/20">
-              <div v-for="stat in ['completed', 'rating', 'coverage']" :key="stat" class="space-y-1">
-                <div class="text-3xl md:text-4xl font-black text-white">{{ $t(`home.stats.${stat}`).split(' ')[0] }}</div>
-                <div class="text-xs font-bold uppercase tracking-widest text-slate-200">{{ $t(`home.stats.${stat}`).split(' ').slice(1).join(' ') }}</div>
+              <div v-for="stat in heroStats" :key="stat.key" class="space-y-1">
+                <div class="text-3xl md:text-4xl font-black text-white">
+                  <StatCounter :value="stat.value" :suffix="stat.suffix" :decimals="stat.decimals || 0" />
+                </div>
+                <div class="text-xs font-bold uppercase tracking-widest text-slate-200">{{ stat.label }}</div>
               </div>
             </div>
           </div>
@@ -49,6 +51,9 @@
         </div>
       </div>
     </section>
+
+    <!-- TRUST BADGES & RATINGS -->
+    <TrustSection />
 
     <!-- 2. SERVICES / PACKAGES -->
     <BaseSection title="Our Moving Packages" subtitle="Transparent pricing. No hidden fees. Choose the package that fits your move.">
@@ -135,6 +140,12 @@
 <script setup>
 const localePath = useLocalePath()
 const { t } = useI18n()
+
+const heroStats = [
+  { key: 'completed', value: 10000, suffix: '+', label: 'Moves Completed' },
+  { key: 'rating', value: 4.9, suffix: '/5', label: 'Average Rating', decimals: 1 },
+  { key: 'coverage', value: 15, suffix: '+', label: 'Cities Covered' },
+]
 
 const whyUsItems = [
   { key: 'fast', icon: '⚡', title: 'Fast Response', image: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&q=80&w=600', desc: 'We respond to every inquiry within minutes via WhatsApp.' },
