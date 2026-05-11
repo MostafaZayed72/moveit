@@ -131,13 +131,60 @@
     "seo_description": "MoveIt Maastricht is uw vertrouwde partner voor naadloze verhuizingen. Met meer dan 10 jaar ervaring bieden wij stressvrije particuliere en zakelijke verhuisdiensten in heel Nederland en Europa."
   },
   "services": {
-    "title": "Wat We Doen",
-    "private_moves": "Particuliere Verhuizing",
-    "business_moves": "Bedrijfsverhuizing",
-    "intl_moves": "Internationale Verhuizing",
-    "storage": "Slimme Opslagoplossingen",
-    "packing": "Professionele Inpakservice",
-    "details_btn": "Bekijk Details"
+    "title": "Onze Gespecialiseerde Diensten",
+    "subtitle": "Deskundige oplossingen voor elk type verhuizing, van lokale studentenverhuizingen tot internationale zakelijke transities.",
+    "list": {
+      "student": {
+        "title": "Studentenverhuizing",
+        "desc": "Budgetvriendelijk verhuizen met gratis meerijservice voor studenten in Maastricht."
+      },
+      "local": {
+        "title": "Lokale Verhuizing",
+        "desc": "Snelle en efficiënte verhuizing binnen Maastricht en de regio Limburg."
+      },
+      "long_distance": {
+        "title": "Lange Afstand Verhuizing",
+        "desc": "Naadloze verhuisdiensten naar elke stad in heel Nederland."
+      },
+      "international": {
+        "title": "Internationale Verhuizing",
+        "desc": "Betrouwbare grensoverschrijdende verhuizingen naar België, Duitsland en daarbuiten."
+      },
+      "full_service": {
+        "title": "Full-Service Verhuizing",
+        "desc": "Een complete ontzorging: wij pakken in, verhuizen en pakken weer voor u uit."
+      },
+      "furniture_assembly": {
+        "title": "Meubelmontage",
+        "desc": "Professionele demontage en montage van al uw meubelstukken."
+      },
+      "packing": {
+        "title": "Inpakken & Uitpakken",
+        "desc": "Deskundig inpakken met hoogwaardige materialen om uw waardevolle spullen te beschermen."
+      },
+      "lift_rental": {
+        "title": "Verhuislift Huren",
+        "desc": "Gespecialiseerde liftapparatuur voor veilig verhuizen naar appartementen op hoge verdiepingen."
+      },
+      "piano": {
+        "title": "Pianoverhuizing",
+        "desc": "Gespecialiseerde zorg en apparatuur voor het verhuizen van delicate muziekinstrumenten."
+      },
+      "senior": {
+        "title": "Seniorenverhuizing",
+        "desc": "Respectvolle en stressvrije verhuisdiensten op maat gemaakt voor senioren."
+      },
+      "storage": {
+        "title": "Opslag Huren",
+        "desc": "Veilige, klimaatgecontroleerde opslagoplossingen voor korte of lange termijn."
+      },
+      "clearance": {
+        "title": "Woningontruiming",
+        "desc": "Professionele en respectvolle ontruiming van woningen en bedrijfsruimten."
+      }
+    },
+    "btn_book": "Nu Boeken",
+    "btn_details": "Details Bekijken"
   },
   "locations": {
     "title": "Waar We Werken",

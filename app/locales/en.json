@@ -131,13 +131,60 @@
     "seo_description": "MoveIt Maastricht is your trusted partner for seamless relocations. With 10+ years of experience, we provide stress-free residential and business moving services across the Netherlands and Europe."
   },
   "services": {
-    "title": "What We Do",
-    "private_moves": "Private Moving",
-    "business_moves": "Business Relocation",
-    "intl_moves": "International Moving",
-    "storage": "Smart Storage Solutions",
-    "packing": "Professional Packing",
-    "details_btn": "View Details"
+    "title": "Our Specialized Services",
+    "subtitle": "Expert solutions for every type of relocation, from local student moves to international business transitions.",
+    "list": {
+      "student": {
+        "title": "Student Moving",
+        "desc": "Budget-friendly moving with free ride-along for students in Maastricht."
+      },
+      "local": {
+        "title": "Local Moving",
+        "desc": "Fast and efficient relocation within Maastricht and the Limburg region."
+      },
+      "long_distance": {
+        "title": "Long Distance Moving",
+        "desc": "Seamless moving services to any city across the Netherlands."
+      },
+      "international": {
+        "title": "International Moving",
+        "desc": "Reliable cross-border relocations to Belgium, Germany, and beyond."
+      },
+      "full_service": {
+        "title": "Full-Service Moving",
+        "desc": "A complete hands-off experience: we pack, move, and unpack for you."
+      },
+      "furniture_assembly": {
+        "title": "Furniture Assembly",
+        "desc": "Professional disassembly and assembly of all your furniture pieces."
+      },
+      "packing": {
+        "title": "Packing & Unpacking",
+        "desc": "Expert packing with high-quality materials to protect your valuables."
+      },
+      "lift_rental": {
+        "title": "Moving Lift Rental",
+        "desc": "Specialized lifting equipment for safe moving to high-floor apartments."
+      },
+      "piano": {
+        "title": "Piano Moving",
+        "desc": "Specialized care and equipment for moving delicate musical instruments."
+      },
+      "senior": {
+        "title": "Senior Moving",
+        "desc": "Compassionate and stress-free relocation services tailored for seniors."
+      },
+      "storage": {
+        "title": "Storage Rental",
+        "desc": "Secure, climate-controlled storage solutions for short or long-term needs."
+      },
+      "clearance": {
+        "title": "Home Clearance",
+        "desc": "Professional and respectful clearing of residential and commercial spaces."
+      }
+    },
+    "btn_book": "Book Now",
+    "btn_details": "View Details"
   },
   "locations": {
     "title": "Where We Operate",
