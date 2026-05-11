@@ -255,7 +255,51 @@
   "blog": {
     "title": "Relocation Insights",
     "subtitle": "Tips and tricks for a smooth moving experience.",
-    "read_more": "Read Full Article"
+    "read_more": "Read Full Article",
+    "posts": [
+      {
+        "title": "10 Tips for a Stress-Free Relocation",
+        "desc": "Discover how to organize your move effectively and avoid common pitfalls during your next big transition.",
+        "category": "Moving Tips",
+        "date": "May 10, 2024",
+        "readTime": "5 min read"
+      },
+      {
+        "title": "How to Pack Fragile Items Securely",
+        "desc": "Learn the best techniques and materials to ensure your delicate valuables survive the journey intact.",
+        "category": "Packing Guide",
+        "date": "May 05, 2024",
+        "readTime": "4 min read"
+      },
+      {
+        "title": "Planning a Cross-Border Move in Europe",
+        "desc": "Everything you need to know about customs, regulations, and logistics when moving to a neighboring country.",
+        "category": "International",
+        "date": "April 28, 2024",
+        "readTime": "7 min read"
+      },
+      {
+        "title": "Minimizing Downtime During Office Relocation",
+        "desc": "A comprehensive checklist for business owners planning to move their office to a new location.",
+        "category": "Business",
+        "date": "April 15, 2024",
+        "readTime": "6 min read"
+      },
+      {
+        "title": "Choosing the Right Storage Facility",
+        "desc": "Not all storage units are created equal. Here's what to look for when you need temporary space for your belongings.",
+        "category": "Storage",
+        "date": "April 02, 2024",
+        "readTime": "5 min read"
+      },
+      {
+        "title": "The Ultimate Moving Day Survival Kit",
+        "desc": "Pack these essential items in a separate box to ensure your first night in the new home is comfortable.",
+        "category": "Checklists",
+        "date": "March 20, 2024",
+        "readTime": "3 min read"
+      }
+    ]
   },
   "footer": {
     "rights": "© 2024 MoveIt Logistics. All rights reserved.",

@@ -255,7 +255,51 @@
   "blog": {
     "title": "Verhuis Inzichten",
     "subtitle": "Tips en trucs voor een soepele verhuiservaring.",
-    "read_more": "Lees Volledig Artikel"
+    "read_more": "Lees Volledig Artikel",
+    "posts": [
+      {
+        "title": "10 Tips voor een Stressvrije Verhuizing",
+        "desc": "Ontdek hoe u uw verhuizing effectief kunt organiseren en veelvoorkomende valkuilen kunt vermijden tijdens uw volgende grote transitie.",
+        "category": "Verhuistips",
+        "date": "10 mei 2024",
+        "readTime": "5 min leestijd"
+      },
+      {
+        "title": "Hoe breekbare voorwerpen veilig in te pakken",
+        "desc": "Leer de beste technieken en materialen om ervoor te zorgen dat uw delicate waardevolle spullen de reis onbeschadigd overleven.",
+        "category": "Inpakgids",
+        "date": "05 mei 2024",
+        "readTime": "4 min leestijd"
+      },
+      {
+        "title": "Een grensoverschrijdende verhuizing in Europa plannen",
+        "desc": "Alles wat u moet weten over douane, regelgeving en logistiek bij een verhuizing naar een buurland.",
+        "category": "Internationaal",
+        "date": "28 april 2024",
+        "readTime": "7 min leestijd"
+      },
+      {
+        "title": "Downtime minimaliseren tijdens kantoorverhuizing",
+        "desc": "Een uitgebreide checklist voor ondernemers die van plan zijn hun kantoor naar een nieuwe locatie te verhuizen.",
+        "category": "Zakelijk",
+        "date": "15 april 2024",
+        "readTime": "6 min leestijd"
+      },
+      {
+        "title": "De juiste opslagfaciliteit kiezen",
+        "desc": "Niet alle opslagunits zijn gelijk. Hier is waar u op moet letten als u tijdelijke ruimte nodig heeft voor uw spullen.",
+        "category": "Opslag",
+        "date": "02 april 2024",
+        "readTime": "5 min leestijd"
+      },
+      {
+        "title": "De ultieme overlevingskit voor de verhuisdag",
+        "desc": "Pak deze essentiële items in een aparte doos om ervoor te zorgen dat uw eerste nacht in het nieuwe huis comfortabel is.",
+        "category": "Checklists",
+        "date": "20 maart 2024",
+        "readTime": "3 min leestijd"
+      }
+    ]
   },
   "footer": {
     "rights": "© 2024 MoveIt Logistics. Alle rechten voorbehouden.",
