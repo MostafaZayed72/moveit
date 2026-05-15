@@ -17,11 +17,11 @@
             </div>
             
             <!-- Rotating Main Title -->
-            <h1 class="text-6xl md:text-8xl lg:text-[10rem] font-black mb-10 leading-[0.8] text-white tracking-tighter">
-              {{ $t('home.hero_prefix') }}
-              <div class="relative h-[1.3em] overflow-hidden inline-flex align-top">
+            <h1 class="flex flex-col items-center text-6xl md:text-8xl lg:text-[10rem] font-black mb-10 leading-none text-white tracking-tighter">
+              <span class="opacity-90">{{ $t('home.hero_prefix') }}</span>
+              <div class="relative h-[1.2em] overflow-hidden flex items-center justify-center py-2">
                 <Transition name="slide-up" mode="out-in">
-                  <div :key="currentCity" class="px-4 inline-flex items-baseline">
+                  <div :key="currentCity" class="px-4 inline-flex items-center">
                     <span 
                       v-for="(char, i) in currentCity.split('')" 
                       :key="i"
@@ -33,8 +33,7 @@
                   </div>
                 </Transition>
               </div>
-              <br class="hidden md:block" />
-              {{ $t('home.hero_suffix') }}
+              <span class="opacity-90">{{ $t('home.hero_suffix') }}</span>
             </h1>
 
             <!-- Rotating Subtitle -->

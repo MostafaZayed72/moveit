@@ -92,6 +92,45 @@
       </div>
     </section>
 
+    <!-- Why moveit Section -->
+    <section class="py-32 bg-slate-50 dark:bg-slate-950/50">
+      <div class="container mx-auto max-w-7xl px-6">
+        <div class="grid lg:grid-cols-2 gap-20 items-center">
+          <div class="order-2 lg:order-1" data-aos="fade-right">
+            <h2 class="text-4xl md:text-5xl font-black text-slate-900 dark:text-white mb-12 tracking-tight">
+              {{ $t('about.why_moveit_title') }}
+            </h2>
+            
+            <div class="space-y-6 md:space-y-8">
+              <p 
+                v-for="(para, i) in $tm('about.why_moveit_text')" 
+                :key="i"
+                class="text-lg md:text-xl text-slate-600 dark:text-slate-300 leading-relaxed font-medium transition-all"
+                :class="{ 
+                  'text-red-600 dark:text-red-500 font-black text-3xl md:text-5xl italic tracking-tight py-4': $rt(para).includes('forward') && !$rt(para).includes('helping'),
+                  'pl-4 border-l-4 border-red-500/30 italic text-slate-500 py-1': i >= 1 && i <= 6
+                }"
+                data-aos="fade-up"
+                :data-aos-delay="i * 50"
+              >
+                {{ $rt(para) }}
+              </p>
+            </div>
+          </div>
+          
+          <div class="order-1 lg:order-2" data-aos="fade-left">
+            <div class="relative group">
+              <div class="aspect-[4/5] rounded-[3rem] overflow-hidden shadow-2xl transition-transform duration-700 group-hover:scale-105">
+                <img src="/images/about/why.png" alt="Why MoveIt Concept" class="w-full h-full object-cover">
+              </div>
+              <div class="absolute -bottom-10 -right-10 w-40 h-40 bg-red-600 rounded-3xl -z-10 rotate-12 group-hover:rotate-6 transition-transform duration-700"></div>
+              <div class="absolute -top-10 -left-10 w-40 h-40 bg-slate-900 rounded-3xl -z-10 -rotate-12 group-hover:rotate-0 transition-transform duration-700"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Values Section -->
     <section class="py-32">
       <div class="container mx-auto px-6 max-w-7xl">
@@ -153,14 +192,14 @@ const { tm, rt } = useI18n()
 const localePath = useLocalePath()
 
 const valueImages = [
-  '/images/about/val1.png', // Customer First (House)
-  'https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=600&auto=format&fit=crop', // Communication (Space)
-  'https://images.unsplash.com/photo-1524805444758-089113d48a6d?q=80&w=600&auto=format&fit=crop', // Reliability (Clock)
-  'https://images.unsplash.com/photo-1583947215259-38e31be8751f?q=80&w=600&auto=format&fit=crop', // Care (Boxes)
-  'https://images.unsplash.com/photo-1506126613408-eca07ce68773?q=80&w=600&auto=format&fit=crop', // Calm (Zen)
-  'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?q=80&w=600&auto=format&fit=crop', // Energy (Nature)
-  '/images/about/val7.png', // Precision (Plans)
-  'https://images.unsplash.com/photo-1502082553048-f009c37129b9?q=80&w=600&auto=format&fit=crop', // Resilience (Nature)
+  '/images/about/val1.png',
+  '/images/about/val2.png',
+  '/images/about/val3.png',
+  '/images/about/val4.png',
+  '/images/about/val5.png',
+  '/images/about/val6.png',
+  '/images/about/val7.png',
+  '/images/about/val8.png',
 ]
 
 const resolvedValues = computed(() => {
