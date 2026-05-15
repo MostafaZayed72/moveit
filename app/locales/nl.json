@@ -32,8 +32,15 @@
     "cta_button": "Vraag een Directe Offerte aan"
   },
   "home": {
-    "hero_title": "Verhuizen Wordt Simpel. Verhuis met Vertrouwen.",
-    "hero_subtitle": "De beste verhuisservice van Nederland voor woningen en bedrijven. Veilig, efficiënt en volledig verzekerd.",
+    "hero_prefix": "Verhuist",
+    "hero_suffix": "Vooruit",
+    "hero_cities": ["Maastricht", "Sittard", "Heerlen", "Kerkrade", "Geleen", "Limburg", "Nederland"],
+    "hero_subtitles": [
+      "Brengt u naar uw volgende hoofdstuk.",
+      "Minder stress. Beter verhuizen.",
+      "Voor studenten, bewoners en internationals.",
+      "Blijf vooruit gaan."
+    ],
     "get_quote": "Vraag een Offerte aan",
     "our_services": "Onze Gespecialiseerde Diensten",
     "trust_pilot": "Uitstekend beoordeeld op Trustpilot",

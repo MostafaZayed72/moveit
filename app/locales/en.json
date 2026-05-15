@@ -12,7 +12,7 @@
     "title": "Moving Made Simple. Built with Care.",
     "subtitle": "Your premier moving partner in Maastricht, Limburg and beyond.",
     "mission_title": "Our Mission",
-    "mission_text": "moveit Maastricht is on a mission to provide a Michelin-star moving experience at a student-friendly price.\n\nWe believe moving should feel organized, transparent and stress-free — not chaotic and overwhelming.\n\nFrom the first WhatsApp message or quote request until the final box is placed, we focus on delivering a smooth customer experience built around communication, punctuality and genuine care.\n\nWhether you are a student, young professional, family or expat, our goal is simple: to make moving feel easier, safer and more human.",
+    "mission_text": "moveit Maastricht is on a mission to provide a Michelin-star moving experience at a student-friendly price.\n\nWe believe moving should feel organized, transparent and stress-free — not chaotic and overwhelming.\n\nFrom the first WhatsApp message or quote request until the final box is placed, we focus on delivering a smooth customer experience built around communication, punctuality and genuine care.\n\nWhether you are a student, jonge professional, family or expat, our goal is simple: to make moving feel easier, safer and more human.",
     "vision_title": "Our Vision",
     "vision_text": "To become the most trusted and customer-focused moving company in Maastricht and Limburg.\n\nWe aim to set a new standard for moving services by combining affordability, modern communication, reliability and exceptional customer care.\n\nmoveit wants to become the go-to moving company for students, residents and businesses across the region — and eventually expand throughout the Netherlands and beyond.",
     "story_title": "Our Story",
@@ -32,8 +32,15 @@
     "cta_button": "Get an Instant Quote"
   },
   "home": {
-    "hero_title": "Moving Made Simple. Relocate with Confidence.",
-    "hero_subtitle": "The Netherlands' premier moving service for homes and businesses. Secure, efficient, and fully insured.",
+    "hero_prefix": "Moving",
+    "hero_suffix": "Forward",
+    "hero_cities": ["Maastricht", "Sittard", "Heerlen", "Kerkrade", "Geleen", "Limburg", "Netherlands"],
+    "hero_subtitles": [
+      "Moving you into your next chapter.",
+      "Stress less. Move better.",
+      "For students, locals and internationals.",
+      "Keep moving forward."
+    ],
     "get_quote": "Get an Instant Quote",
     "our_services": "Our Specialized Services",
     "trust_pilot": "Rated Excellent on Trustpilot",
