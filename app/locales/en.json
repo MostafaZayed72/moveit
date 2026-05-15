@@ -72,113 +72,92 @@
       "most_popular": "MOST POPULAR",
       "excl_vat": "excl. VAT",
       "min_booking": "Minimum booking: {hours} hours",
-      "perfect_for": "Perfect for:",
+      "perfect_for": "Best for:",
       "includes": "Includes:",
-      "optional_addons": "Optional Add-ons:",
+      "optional_addons": "Optional Add-ons",
+      "available_during_booking": "Available during booking.",
       "book_whatsapp": "Book via WhatsApp",
-      "get_instant_quote": "Get Instant Quote",
-      "reserve_slot": "Reserve Your Slot",
-      "request_fixed_quote": "Request Fixed Quote",
+      "get_instant_quote": "Get Quote",
+      "reserve_slot": "Reserve Package",
+      "request_fixed_quote": "Get Fixed Quote",
       "student_ride_free": "Free ride along for students within Maastricht",
       "footnote_vat": "All prices exclude 21% VAT.",
       "footnote_time": "Time is calculated from departure and return to our Maastricht location.",
       "footnote_student": "Free ride along service for all students (1 passenger only)",
+      "optional_addons_list": [
+        "Furniture assembly €27.99",
+        "Packing service (custom quote)",
+        "Moving lift rental (custom quote)",
+        "Ride along service (€10 within Maastricht)",
+        "Extra mover (€15.99/hr)"
+      ],
       "package1": {
-        "name": "PACKAGE 1 — VAN ONLY",
+        "name": "MOVE SOLO",
+        "subtitle": "VAN ONLY",
         "price": "€59.99",
         "unit": "/hr",
-        "perfect_for": [
-          "Small moves",
-          "Marketplace & Marktplaats pickups",
-          "Single furniture items",
-          "DIY movers"
+        "best_for": [
+          { "icon": "🎓", "text": "Students" },
+          { "icon": "🛋", "text": "Single-item moves" },
+          { "icon": "📦", "text": "Marketplace pickups" },
+          { "icon": "🛠", "text": "DIY Movers" }
         ],
         "includes": [
           "Moving van",
           "Professional driver",
           "Transport insurance",
           "Fuel within Maastricht"
-        ],
-        "addons": [
-          "Driver assistance → +€8.99/hr",
-          "Extra mover → +€15.99/hr",
-          "Ride along (Maastricht) → +€10 fixed",
-          "Ride along (25–50km) → +€0.50/km",
-          "Long-distance ride along → Quote"
         ]
       },
       "package2": {
-        "name": "PACKAGE 2 — VAN + 1 MOVER",
+        "name": "MOVE EASY",
+        "subtitle": "VAN + 1 MOVER",
         "price": "€69.99",
         "unit": "/hr",
         "popular": true,
-        "min_booking": "2",
-        "perfect_for": [
-          "Studio moves",
-          "Student 1-bedroom apartments",
-          "Small households"
+        "best_for": [
+          { "icon": "🏠", "text": "Studio moves" },
+          { "icon": "🎓", "text": "Student moves" },
+          { "icon": "📦", "text": "Small households" }
         ],
         "includes": [
-          "Moving van",
-          "1 professional mover",
-          "1 professional driver",
+          "Van + mover",
           "Loading & unloading",
           "Transport insurance"
-        ],
-        "addons": [
-          "Driver assistance → +€8.99/hr",
-          "Furniture assembly → +€35/hr",
-          "Extra mover → +€15.99/hr",
-          "Ride along (Maastricht) → +€10 fixed",
-          "Ride along (25–50km) → +€0.50/km"
         ]
       },
       "package3": {
-        "name": "PACKAGE 3 — VAN + 2 MOVERS",
+        "name": "MOVE PLUS",
+        "subtitle": "VAN + 2 MOVERS",
         "price": "€94.99",
         "unit": "/hr",
-        "perfect_for": [
-          "1-bedroom apartments",
-          "Heavy furniture",
-          "Faster moving days"
+        "best_for": [
+          { "icon": "🛏", "text": "1BD Apartments" },
+          { "icon": "💪", "text": "Heavy furniture" },
+          { "icon": "⚡", "text": "Faster moving days" }
         ],
         "includes": [
-          "Moving van",
-          "Driver assistance + 1 mover",
+          "2 professional movers",
           "Loading & unloading",
-          "Basic furniture handling",
-          "Transport insurance"
-        ],
-        "addons": [
-          "Furniture assembly → +€35/hr",
-          "Moving lift rental → Custom Quote",
-          "Packing service → Custom Quote",
-          "Ride along (Maastricht) → +€10 fixed"
+          "Furniture handling"
         ]
       },
       "package4": {
-        "name": "PACKAGE 4 — FULL-SERVICE MOVE",
+        "name": "MOVE COMPLETE",
+        "subtitle": "FULL-SERVICE MOVE",
         "price": "Starting from €349",
         "unit": "",
-        "note": "Fixed quotes available",
-        "perfect_for": [
-          "Long-distance moves",
-          "International relocations",
-          "Busy expats / young professionals",
-          "Families"
+        "best_for": [
+          { "icon": "🌍", "text": "International relocations" },
+          { "icon": "👨‍👩‍👧", "text": "Families" },
+          { "icon": "💼", "text": "Busy professionals" }
         ],
         "includes": [
-          "Movers + van",
+          "Movers + Van",
           "Assembly/disassembly",
-          "Loading/unloading",
-          "Custom planning",
-          "Urgent relocations",
-          "24/7 WhatsApp coordination"
-        ],
-        "addons": [
-          "Moving lift rental → Custom Quote",
-          "Packing service → Custom Quote",
-          "Ride along → Quote on request"
+          "Move coordination",
+          "Urgent/Same-day relocations",
+          "24/7 Whatsapp coordination"
         ]
       }
     }

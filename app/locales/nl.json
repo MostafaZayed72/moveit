@@ -72,113 +72,92 @@
       "most_popular": "MEEST POPULAIR",
       "excl_vat": "excl. BTW",
       "min_booking": "Minimale boeking: {hours} uur",
-      "perfect_for": "Perfect voor:",
+      "perfect_for": "Ideaal voor:",
       "includes": "Inclusief:",
-      "optional_addons": "Optionele Extra's:",
+      "optional_addons": "Optionele Extra's",
+      "available_during_booking": "Beschikbaar tijdens boeking.",
       "book_whatsapp": "Boek via WhatsApp",
-      "get_instant_quote": "Directe Offerte",
-      "reserve_slot": "Reserveer uw Plek",
-      "request_fixed_quote": "Vraag Vaste Prijs Aan",
+      "get_instant_quote": "Offerte Aanvragen",
+      "reserve_slot": "Pakket Reserveren",
+      "request_fixed_quote": "Vaste Offerte",
       "student_ride_free": "Gratis meerijden voor studenten binnen Maastricht",
       "footnote_vat": "Alle prijzen zijn exclusief 21% BTW.",
       "footnote_time": "Tijd wordt berekend vanaf vertrek en terugkeer naar onze locatie in Maastricht.",
-      "footnote_student": "Gratis meerijservice voor alle studenten (max. 1 passagier)",
+      "footnote_student": "Gratis meerijdservice voor alle studenten (max. 1 passagier)",
+      "optional_addons_list": [
+        "Meubelmontage €27.99",
+        "Inpakservice (offerte op maat)",
+        "Verhuislift huren (offerte op maat)",
+        "Meerijdservice (€10 binnen Maastricht)",
+        "Extra verhuizer (€15.99/u)"
+      ],
       "package1": {
-        "name": "PAKKET 1 — ALLEEN BUS",
+        "name": "MOVE SOLO",
+        "subtitle": "ALLEEN BUS",
         "price": "€59.99",
         "unit": "/u",
-        "perfect_for": [
-          "Kleine verhuizingen",
-          "Marktplaats & Facebook Marketplace aankopen",
-          "Losse meubelstukken",
-          "Doe-het-zelf verhuizers"
+        "best_for": [
+          { "icon": "🎓", "text": "Studenten" },
+          { "icon": "🛋", "text": "Enkele meubelstukken" },
+          { "icon": "📦", "text": "Marktplaats ophalen" },
+          { "icon": "🛠", "text": "Doe-het-zelf verhuizers" }
         ],
         "includes": [
           "Verhuisbus",
           "Professionele chauffeur",
           "Transportverzekering",
           "Brandstof binnen Maastricht"
-        ],
-        "addons": [
-          "Chauffeur assistentie → +€8.99/u",
-          "Extra verhuizer → +€15.99/u",
-          "Meerijden (Maastricht) → +€10 vast",
-          "Meerijden (25–50km) → +€0.50/km",
-          "Lange afstand meerijden → Offerte"
         ]
       },
       "package2": {
-        "name": "PAKKET 2 — BUS + 1 VERHUIZER",
+        "name": "MOVE EASY",
+        "subtitle": "BUS + 1 VERHUIZER",
         "price": "€69.99",
         "unit": "/u",
         "popular": true,
-        "min_booking": "2",
-        "perfect_for": [
-          "Studio verhuizingen",
-          "Studenten 1-slaapkamer appartementen",
-          "Kleine huishoudens"
+        "best_for": [
+          { "icon": "🏠", "text": "Studio verhuizingen" },
+          { "icon": "🎓", "text": "Studenten verhuizingen" },
+          { "icon": "📦", "text": "Kleine huishoudens" }
         ],
         "includes": [
-          "Verhuisbus",
-          "1 professionele verhuizer",
-          "1 professionele chauffeur",
+          "Bus + verhuizer",
           "Laden & lossen",
           "Transportverzekering"
-        ],
-        "addons": [
-          "Chauffeur assistentie → +€8.99/u",
-          "Meubelmontage → +€35/u",
-          "Extra verhuizer → +€15.99/u",
-          "Meerijden (Maastricht) → +€10 vast",
-          "Meerijden (25–50km) → +€0.50/km"
         ]
       },
       "package3": {
-        "name": "PAKKET 3 — BUS + 2 VERHUIZERS",
+        "name": "MOVE PLUS",
+        "subtitle": "BUS + 2 VERHUIZERS",
         "price": "€94.99",
         "unit": "/u",
-        "perfect_for": [
-          "1-slaapkamer appartementen",
-          "Zware meubels",
-          "Snelle verhuisdagen"
+        "best_for": [
+          { "icon": "🛏", "text": "1-slaapkamer appartement" },
+          { "icon": "💪", "text": "Zware meubels" },
+          { "icon": "⚡", "text": "Snellere verhuisdag" }
         ],
         "includes": [
-          "Verhuisbus",
-          "Chauffeur assistentie + 1 verhuizer",
+          "2 professionele verhuizers",
           "Laden & lossen",
-          "Basis meubelbehandeling",
-          "Transportverzekering"
-        ],
-        "addons": [
-          "Meubelmontage → +€35/u",
-          "Verhuislift huren → Prijs op aanvraag",
-          "Inpakservice → Prijs op aanvraag",
-          "Meerijden (Maastricht) → +€10 vast"
+          "Meubelafhandeling"
         ]
       },
       "package4": {
-        "name": "PAKKET 4 — VOLLEDIGE SERVICE",
+        "name": "MOVE COMPLETE",
+        "subtitle": "VOLLEDIGE VERHUISSERVICE",
         "price": "Vanaf €349",
         "unit": "",
-        "note": "Vaste offertes beschikbaar",
-        "perfect_for": [
-          "Lange afstand verhuizingen",
-          "Internationale verhuizingen",
-          "Drukke expats / jonge professionals",
-          "Gezinnen"
+        "best_for": [
+          { "icon": "🌍", "text": "Internationale verhuizingen" },
+          { "icon": "👨‍👩‍👧", "text": "Gezinnen" },
+          { "icon": "💼", "text": "Drukke professionals" }
         ],
         "includes": [
-          "Verhuizers + bus",
+          "Verhuizers + Bus",
           "Montage/demontage",
-          "Laden/lossen",
-          "Custom planning",
+          "Verhuiscoördinatie",
           "Spoedverhuizingen",
           "24/7 WhatsApp coördinatie"
-        ],
-        "addons": [
-          "Verhuislift huren → Prijs op aanvraag",
-          "Inpakservice → Prijs op aanvraag",
-          "Meerijden → Prijs op aanvraag"
         ]
       }
     }
