@@ -1,12 +1,35 @@
 {
   "nav": {
     "home": "Home",
-    "about": "About Us",
+    "about": "Our Story",
     "services": "Services",
     "locations": "Locations",
     "faq": "FAQs",
     "contact": "Contact",
     "blog": "Blog"
+  },
+  "about": {
+    "title": "Moving Made Simple. Built with Care.",
+    "subtitle": "Your premier moving partner in Maastricht, Limburg and beyond.",
+    "mission_title": "Our Mission",
+    "mission_text": "moveit Maastricht is on a mission to provide a Michelin-star moving experience at a student-friendly price.\n\nWe believe moving should feel organized, transparent and stress-free — not chaotic and overwhelming.\n\nFrom the first WhatsApp message or quote request until the final box is placed, we focus on delivering a smooth customer experience built around communication, punctuality and genuine care.\n\nWhether you are a student, young professional, family or expat, our goal is simple: to make moving feel easier, safer and more human.",
+    "vision_title": "Our Vision",
+    "vision_text": "To become the most trusted and customer-focused moving company in Maastricht and Limburg.\n\nWe aim to set a new standard for moving services by combining affordability, modern communication, reliability and exceptional customer care.\n\nmoveit wants to become the go-to moving company for students, residents and businesses across the region — and eventually expand throughout the Netherlands and beyond.",
+    "story_title": "Our Story",
+    "story_text": "moveit Maastricht was created after seeing a clear gap in the moving industry: customers often felt stressed, unheard and treated like “just another booking.”\n\nOne of moveit’s founders previously helped build another successful moving company in Maastricht. Through that experience, he realized that what customers remember most is not just the transport itself — but how they were treated throughout the journey.\n\nThat realization became the foundation of moveit.\n\nThe idea was simple: build a moving company where customer experience comes first.\n\nToday, moveit combines professional moving services with a modern, friendly and highly communicative approach. We focus on transparency, fast communication, careful handling and being genuinely present for customers during one of the most stressful moments in life: moving.",
+    "values_title": "Our Values",
+    "values_list": [
+      { "title": "Customer First", "desc": "We put the customer experience at the center of everything." },
+      { "title": "Transparent Communication", "desc": "Clear pricing, honest advice and fast responses. Always!" },
+      { "title": "Reliability", "desc": "We show up prepared, punctual and ready to solve problems." },
+      { "title": "Care & Respect", "desc": "We treat every customer, home and item with respect." },
+      { "title": "Calm Under Pressure", "desc": "Moving can be stressful. We stay calm, proactive and solution-oriented." },
+      { "title": "Energy & Positivity", "desc": "Friendly movers create better moving days." },
+      { "title": "Precision & Preparation", "desc": "Good moves happen because of planning, communication and attention to detail." },
+      { "title": "Resilience", "desc": "No stairs, weather, obstacles or long-distance move stops us from getting the job done." }
+    ],
+    "cta_title": "Ready to experience a Michelin-star move?",
+    "cta_button": "Get an Instant Quote"
   },
   "home": {
     "hero_title": "Moving Made Simple. Relocate with Confidence.",

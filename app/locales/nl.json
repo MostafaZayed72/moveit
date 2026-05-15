@@ -1,12 +1,35 @@
 {
   "nav": {
     "home": "Home",
-    "about": "Over Ons",
+    "about": "Ons Verhaal",
     "services": "Diensten",
     "locations": "Locaties",
     "faq": "Veelgestelde Vragen",
     "contact": "Contact",
     "blog": "Blog"
+  },
+  "about": {
+    "title": "Verhuizen Eenvoudig Gemaakt. Met Zorg Gebouwd.",
+    "subtitle": "Uw vooraanstaande verhuispartner in Maastricht, Limburg en daarbuiten.",
+    "mission_title": "Onze Missie",
+    "mission_text": "moveit Maastricht heeft als missie om een Michelin-ster verhuiservaring te bieden tegen een studentvriendelijke prijs.\n\nWij geloven dat verhuizen georganiseerd, transparant en stressvrij moet aanvoelen — niet chaotisch en overweldigend.\n\nVanaf het eerste WhatsApp-bericht of offerteaanvraag tot de laatste doos is geplaatst, richten we ons op het leveren van een soepele klantervaring gebouwd rond communicatie, punctualiteit en oprechte zorg.\n\nOf u nu een student, jonge professional, gezin of expat bent, ons doel is simpel: verhuizen makkelijker, veiliger en menselijker maken.",
+    "vision_title": "Onze Visie",
+    "vision_text": "Om het meest vertrouwde en klantgerichte verhuisbedrijf in Maastricht en Limburg te worden.\n\nWe streven ernaar een nieuwe standaard voor verhuisdiensten te zetten door betaalbaarheid, moderne communicatie, betrouwbaarheid en uitzonderlijke klantenzorg te combineren.\n\nmoveit wil hét verhuisbedrijf worden voor studenten, bewoners en bedrijven in de regio — en uiteindelijk uitbreiden door heel Nederland en daarbuiten.",
+    "story_title": "Ons Verhaal",
+    "story_text": "moveit Maastricht is ontstaan na het zien van een duidelijk gat in de verhuisbranche: klanten voelden zich vaak gestrest, ongehoord en behandeld als 'zomaar een boeking'.\n\nEen van de oprichters van moveit hielp eerder een ander succesvol verhuisbedrijf in Maastricht op te bouwen. Door die ervaring besefte hij dat wat klanten het meest bijblijft, niet alleen het transport zelf is, maar hoe ze gedurende het hele traject werden behandeld.\n\nDat besef werd de basis van moveit.\n\nHet idee was simpel: bouw een verhuisbedrijf waar klantervaring op de eerste plaats komt.\n\nVandaag de dag combineert moveit professionele verhuisdiensten met een moderne, vriendelijke en zeer communicatieve aanpak. We richten ons op transparantie, snelle communicatie, zorgvuldige afhandeling en oprechte aanwezigheid voor klanten tijdens een van de meest stressvolle momenten in het leven: verhuizen.",
+    "values_title": "Onze Waarden",
+    "values_list": [
+      { "title": "Klant Eerst", "desc": "We plaatsen de klantervaring in het middelpunt van alles." },
+      { "title": "Transparante Communicatie", "desc": "Heldere prijzen, eerlijk advies en snelle reacties. Altijd!" },
+      { "title": "Betrouwbaarheid", "desc": "We verschijnen voorbereid, punctueel en klaar om problemen op te lossen." },
+      { "title": "Zorg & Respect", "desc": "We behandelen elke klant, elk huis en elk item met respect." },
+      { "title": "Kalm Onder Druk", "desc": "Verhuizen kan stressvol zijn. We blijven kalm, proactief en oplossingsgericht." },
+      { "title": "Energie & Positiviteit", "desc": "Vriendelijke verhuizers zorgen voor betere verhuisdagen." },
+      { "title": "Precisie & Voorbereiding", "desc": "Goede verhuizingen gebeuren door planning, communicatie en aandacht voor detail." },
+      { "title": "Veerkracht", "desc": "Geen trappen, weer, obstakels of langeafstandsverhuizing houdt ons tegen om de klus te klaren." }
+    ],
+    "cta_title": "Klaar om een Michelin-ster verhuizing te ervaren?",
+    "cta_button": "Vraag een Directe Offerte aan"
   },
   "home": {
     "hero_title": "Verhuizen Wordt Simpel. Verhuis met Vertrouwen.",

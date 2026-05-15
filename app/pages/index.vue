@@ -48,6 +48,9 @@
     <!-- TRUST BADGES & RATINGS -->
     <TrustSection />
 
+    <!-- OUR VALUES TICKER -->
+    <ValuesTicker />
+
     <!-- 2. SERVICES / PACKAGES -->
     <BaseSection :title="$t('home.packages.title')" :subtitle="$t('home.packages.subtitle')">
       <PricingPackages />
