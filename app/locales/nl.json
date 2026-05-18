@@ -413,5 +413,124 @@
     "contact_us": "Neem contact op",
     "address": "Maastricht, Nederland",
     "handcrafted": "Gemaakt door MoveIt Team"
+  },
+  "student_page": {
+    "hero": {
+      "title": "Studenten Verhuisservice in Maastricht",
+      "subtitle": "Betaalbare, flexibele en studentvriendelijke verhuisoplossingen voor studenten, internationals en expats in Maastricht & Limburg.",
+      "desc": "Van IKEA-ophalingen en meubelmontage tot kamerverhuizingen en marktplaats-leveringen — wij maken het studentenleven gemakkelijker.",
+      "btn_quote": "Direct Offerte Aanvragen",
+      "btn_whatsapp": "WhatsApp Ons"
+    },
+    "section1": {
+      "title": "Waarom Studenten voor MoveIt Kiezen",
+      "intro": "Verhuizen als student kan stressvol zijn, vooral in een nieuwe stad of land. moveit is gebouwd in Maastricht met studenten in gedachten. We begrijpen de snelle studentenlevensstijl en bieden flexibele, betaalbare diensten die speciaal zijn ontworpen voor de behoeften van studenten.",
+      "features": {
+        "pricing": "Studentvriendelijke prijzen",
+        "whatsapp": "Snelle WhatsApp communicatie",
+        "flexible": "Flexibel ophalen & bezorgen",
+        "international": "Internationaal studentvriendelijk",
+        "last_minute": "Last-minute verhuizingen mogelijk",
+        "assembly": "Meubelmontage beschikbaar"
+      }
+    },
+    "section2": {
+      "title": "Onze Studentendiensten",
+      "ikea": {
+        "title": "IKEA Ophalen & Bezorgen",
+        "desc": "Meubels gekocht bij IKEA Heerlen of een andere IKEA vestiging? Wij kunnen uw bestelling ophalen en veilig direct afleveren in uw kamer, studio of appartement in Maastricht en omgeving. Op verzoek kunnen we ook ophaalacties regelen bij IKEA Heerlen en andere IKEA locaties.",
+        "includes": [
+          "Ophalen & transport",
+          "Bezorging op uw adres",
+          "Flexibele planning",
+          "Studentvriendelijke prijzen"
+        ],
+        "price": "Vanaf €45 Excl. BTW",
+        "cta": "IKEA Ophaalservice Regelen"
+      },
+      "assembly": {
+        "title": "IKEA Meubel Montage & Demontage",
+        "desc": "Hulp nodig bij het monteren van de meubels die u zojuist heeft gekocht? Ons team kan IKEA meubels snel en zorgvuldig monteren of demonteren — of ze nu gloednieuw of tweedehands zijn.",
+        "supported": "Ondersteunde meubels: Bedden, Kasten, Bureaus, Planken, Banken, enz.",
+        "price": "Vanaf €25 Excl. BTW",
+        "cta": "Montageservice Boeken"
+      },
+      "marktplaats": {
+        "title": "Marktplaats & Facebook Marketplace Ophalen",
+        "desc": "Online meubels gekocht maar geen vervoer? Wij kunnen items ophalen via Marktplaats, Facebook Marketplace of lokale verkopers en ze direct bij u afleveren.",
+        "support": "Extra ondersteuning beschikbaar:",
+        "support_list": [
+          "Controle van itemconditie",
+          "Veilig transport",
+          "Ophalen & later betalen optie",
+          "Same-day bezorging mogelijk"
+        ],
+        "great_for": "Ideaal voor: Banken, Bedden, Bureaus, Fietsen, Apparaten, enz.",
+        "price": "Vanaf €35 Excl. BTW",
+        "cta": "Ophaalservice Inplannen"
+      },
+      "bike": {
+        "title": "Fiets Transport Service",
+        "desc": "Een fiets vervoeren door Maastricht of Limburg? Of u nu een nieuwe fiets heeft gekocht, een tweedehands fiets of vervoer naar een reparatiewerkplaats nodig heeft — wij kunnen helpen. We werken ook nauw samen met S&S Services in het hart van het centrum van Maastricht.",
+        "ideal": "Ideaal voor: Nieuwe fietsophalingen, Fietsreparaties, Studentenverhuizingen, Marktplaats-aankopen",
+        "price": "Vanaf €20 Excl. BTW",
+        "cta": "Fietstransport Regelen"
+      },
+      "plant": {
+        "title": "Planten Transport Service",
+        "desc": "Een grote plant gekocht, maar u kunt deze niet veilig vervoeren? Wij vervoeren zorgvuldig planten tussen woningen, winkels en appartementen in en rondom Maastricht.",
+        "includes": "Inclusief: Veilig transport, Zorgvuldige behandeling en verpakking waar mogelijk, Deur-tot-deur bezorging",
+        "price": "Vanaf €25 Excl. BTW",
+        "cta": "Plantenbezorging Aanvragen"
+      }
+    },
+    "section3": {
+      "title": "Samen IKEA Bestellen? Bespaar op Bezorgkosten.",
+      "desc": "Kent u een andere student die ook meubels moet ophalen? U kunt leveringen combineren en transportkosten delen door een gezamenlijke ophaling bij IKEA te regelen. Het enige wat u hoeft te doen is:",
+      "steps": [
+        "Deel uw ordernummers",
+        "Kies een ophaaldag",
+        "Stuur ons de afleveradressen"
+      ],
+      "logistics": "Wij regelen de logistiek en coördineren de levering.",
+      "benefits": [
+        "Lagere bezorgkosten",
+        "Minder transportritten",
+        "Efficiëntere leveringen"
+      ],
+      "cta": "Gezamenlijke Bezorging Organiseren"
+    },
+    "section4": {
+      "title": "Gebouwd Rondom het Studentenleven in Maastricht",
+      "desc1": "We weten hoe het voelt om naar een nieuwe stad, een nieuwe kamer of uw eerste appartement te verhuizen. Daarom richten we ons op:",
+      "points": [
+        "snelle communicatie",
+        "flexibele planning",
+        "transparante prijzen",
+        "betaalbare tarieven",
+        "vriendelijke verhuizers",
+        "stressvrije service"
+      ],
+      "desc2": "Of u nu een internationale student bent die voor het eerst in Maastricht aankomt of gewoon naar de andere kant van de stad verhuist — wij zijn er om het proces gemakkelijker te maken."
+    },
+    "section5": {
+      "title": "FAQ",
+      "q1": "Helpen jullie met het tillen van meubels de trap op?",
+      "a1": "Ja — onze verhuizers kunnen helpen met trappen, appartementen en studentenhuisvesting.",
+      "q2": "Kan ik last-minute boeken?",
+      "a2": "We doen ons best om dringende en same-day verzoeken te accommoderen, afhankelijk van beschikbaarheid.",
+      "q3": "Monteren jullie IKEA meubels?",
+      "a3": "Ja — wij bieden zowel montage- als demontageservices.",
+      "q4": "Kunnen meerdere studenten leveringen combineren?",
+      "a4": "Absoluut. Gedeelde IKEA-ophalingen zijn een geweldige manier om kosten te verlagen.",
+      "q5": "Helpen jullie internationale studenten?",
+      "a5": "Ja — wij werken met zowel Nederlandse als internationale studenten."
+    },
+    "cta": {
+      "title": "Klaar om te Verhuizen?",
+      "desc": "Of u nu een volledige studentenverhuizing, IKEA-ophaling of een enkele item-levering nodig heeft — MoveIt is er om te helpen.",
+      "btn_quote": "Direct Offerte Aanvragen",
+      "btn_whatsapp": "Chat op WhatsApp"
+    }
   }
 }

@@ -413,5 +413,124 @@
     "contact_us": "Contact Us",
     "address": "Maastricht, Netherlands",
     "handcrafted": "Handcrafted by MoveIt Team"
+  },
+  "student_page": {
+    "hero": {
+      "title": "Student Moving Services in Maastricht",
+      "subtitle": "Affordable, flexible and student-friendly moving solutions for students, internationals and expats in Maastricht & Limburg.",
+      "desc": "From IKEA pickups and furniture assembly to room moves and marketplace deliveries — we make student life easier.",
+      "btn_quote": "Get Instant Quote",
+      "btn_whatsapp": "WhatsApp Us"
+    },
+    "section1": {
+      "title": "Why Students Choose MoveIt",
+      "intro": "Moving as a student can be stressful, especially in a new city or country. moveit was built in Maastricht with students in mind. We understand the fast-paced student lifestyle and offer flexible, affordable services designed specifically for student needs.",
+      "features": {
+        "pricing": "Student-friendly pricing",
+        "whatsapp": "Fast WhatsApp communication",
+        "flexible": "Flexible pickup & delivery",
+        "international": "International student friendly",
+        "last_minute": "Last-minute moves possible",
+        "assembly": "Furniture assembly available"
+      }
+    },
+    "section2": {
+      "title": "Our Student Services",
+      "ikea": {
+        "title": "IKEA Pickup & Delivery",
+        "desc": "Bought furniture from IKEA Heerlen or another IKEA location? We can pick up your order and safely deliver it directly to your room, studio or apartment in Maastricht and surrounding areas. We can also arrange pickups from IKEA Heerlen and other IKEA locations on request.",
+        "includes": [
+          "Pickup & transport",
+          "Delivery to your address",
+          "Flexible scheduling",
+          "Student-friendly pricing"
+        ],
+        "price": "From €45 Excl. VAT",
+        "cta": "Arrange IKEA Pickup"
+      },
+      "assembly": {
+        "title": "IKEA Furniture Assembly & Disassembly",
+        "desc": "Need help building the furniture you just bought? Our team can assemble or disassemble IKEA furniture quickly and carefully — whether it's brand-new or second-hand.",
+        "supported": "Supported Furniture: Beds, Wardrobes, Desks, Shelves, Sofas, Etc.",
+        "price": "From €25 Excl. VAT",
+        "cta": "Book Assembly Service"
+      },
+      "marktplaats": {
+        "title": "Marktplaats & Facebook Marketplace Pickup",
+        "desc": "Bought furniture online but don't have transport? We can pick up items from Marktplaats, Facebook Marketplace or local sellers and deliver them directly to you.",
+        "support": "Extra support available:",
+        "support_list": [
+          "Item condition check",
+          "Secure transport",
+          "Collect & pay later option",
+          "Same-day delivery possible"
+        ],
+        "great_for": "Great for: Sofas, Beds, Desks, Bikes, Appliances, etc.",
+        "price": "From €35 Excl. VAT",
+        "cta": "Schedule Pickup"
+      },
+      "bike": {
+        "title": "Bike Transport Service",
+        "desc": "Need to transport a bicycle across Maastricht or Limburg? Whether you bought a new bike, a secondhand bike or need transport to a repair shop — we can help. We also have a close partnership with S&S Services located in the heart of Maastricht's city center.",
+        "ideal": "Ideal for: New bike pickups, Bike repairs, Student relocations, Marketplace purchases",
+        "price": "From €20 Excl. VAT",
+        "cta": "Arrange Bike Transport"
+      },
+      "plant": {
+        "title": "Plant Transport Service",
+        "desc": "Bought a large plant, but can't transport it safely? We carefully transport plants between homes, shops and apartments across Maastricht and surrounding areas.",
+        "includes": "Includes: Safe transport, Careful handling and wrapping when possible, Door-to-door delivery",
+        "price": "From €25 Excl. VAT",
+        "cta": "Request Plant Delivery"
+      }
+    },
+    "section3": {
+      "title": "Ordering IKEA Together? Save on Delivery Costs.",
+      "desc": "Know another student who also needs furniture pickup? You can combine deliveries and split transport costs by arranging a shared pickup from IKEA. All you need to do is:",
+      "steps": [
+        "Share your order numbers",
+        "Choose a pickup day",
+        "Send us the delivery addresses"
+      ],
+      "logistics": "We'll handle the logistics and coordinate the delivery.",
+      "benefits": [
+        "Lower delivery costs",
+        "Fewer transport trips",
+        "More efficient deliveries"
+      ],
+      "cta": "Organize Shared Delivery"
+    },
+    "section4": {
+      "title": "Built Around Student Life in Maastricht",
+      "desc1": "We know what it feels like to move into a new city, a new room or your first apartment. That's why we focus on:",
+      "points": [
+        "fast communication",
+        "flexible scheduling",
+        "transparent pricing",
+        "affordable rates",
+        "friendly movers",
+        "stress-free service"
+      ],
+      "desc2": "Whether you're an international student arriving in Maastricht for the first time or simply moving across town — we're here to help make the process easier."
+    },
+    "section5": {
+      "title": "FAQ",
+      "q1": "Do you help carry furniture upstairs?",
+      "a1": "Yes — our movers can help with stairs, apartments and student housing buildings.",
+      "q2": "Can I book last-minute?",
+      "a2": "We try our best to accommodate urgent and same-day requests depending on availability.",
+      "q3": "Do you assemble IKEA furniture?",
+      "a3": "Yes — we offer both assembly and disassembly services.",
+      "q4": "Can multiple students combine deliveries?",
+      "a4": "Absolutely. Shared IKEA pickups are a great way to reduce costs.",
+      "q5": "Do you help internationals?",
+      "a5": "Yes — we work with both Dutch and international students."
+    },
+    "cta": {
+      "title": "Ready to Move?",
+      "desc": "Whether you need a full student move, IKEA pickup or a single-item delivery — MoveIt is here to help.",
+      "btn_quote": "Get Instant Quote",
+      "btn_whatsapp": "Chat on WhatsApp"
+    }
   }
 }

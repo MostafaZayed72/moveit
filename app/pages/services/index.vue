@@ -27,8 +27,8 @@
             </p>
             
             <div class="mt-auto">
-              <NuxtLink :to="localePath('/contact')" class="btn-primary w-full py-3 text-center block">
-                {{ $t('services.btn_book') }}
+              <NuxtLink :to="localePath('/services/' + service.id)" class="btn-primary w-full py-3 text-center block">
+                {{ $t('services.btn_details') }}
               </NuxtLink>
             </div>
           </div>
@@ -43,7 +43,7 @@ const localePath = useLocalePath()
 const { t } = useI18n()
 
 const serviceList = [
-  { id: 'student', image: 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=800' },
+  { id: 'student', image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=800' },
   { id: 'local', image: 'https://images.unsplash.com/photo-1558522195-e1201b090344?auto=format&fit=crop&q=80&w=800' },
   { id: 'long_distance', image: 'https://images.unsplash.com/photo-1553413077-190dd305871c?auto=format&fit=crop&q=80&w=800' },
   { id: 'international', image: 'https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&q=80&w=800' },
