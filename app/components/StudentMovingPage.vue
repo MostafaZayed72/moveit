@@ -346,8 +346,11 @@
 
 <script setup>
 import { useSeoMeta } from '#imports'
+import { useI18n } from 'vue-i18n'
+import { computed } from 'vue'
 
 const localePath = useLocalePath()
+const { t } = useI18n()
 
 const features = [
   { icon: '🎓', key: 'pricing' },
@@ -359,7 +362,7 @@ const features = [
 ]
 
 useSeoMeta({
-  title: 'Student Moving Services in Maastricht | MoveIt',
-  description: 'Affordable, flexible and student-friendly moving solutions for students, internationals and expats in Maastricht & Limburg. From IKEA pickups to room moves.'
+  title: computed(() => t('student_page.seo.title')),
+  description: computed(() => t('student_page.seo.desc'))
 })
 </script>

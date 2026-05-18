@@ -415,6 +415,10 @@
     "handcrafted": "Gemaakt door MoveIt Team"
   },
   "student_page": {
+    "seo": {
+      "title": "Verhuisservice voor studenten in Maastricht | MoveIt",
+      "desc": "Betaalbare, flexibele en studentvriendelijke verhuisoplossingen voor studenten, internationals en expats in Maastricht & Limburg. Van IKEA-pickups tot kamerverhuizingen."
+    },
     "hero": {
       "title": "Studenten Verhuisservice in Maastricht",
       "subtitle": "Betaalbare, flexibele en studentvriendelijke verhuisoplossingen voor studenten, internationals en expats in Maastricht & Limburg.",
