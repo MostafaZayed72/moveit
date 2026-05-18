@@ -37,9 +37,9 @@
             </h1>
 
             <!-- Rotating Subtitle -->
-            <div class="relative h-12 md:h-16 mb-12">
+            <div class="relative h-16 md:h-24 mb-12">
               <Transition name="fade-up" mode="out-in">
-                <p :key="currentSubtitle" class="text-xl md:text-4xl text-gradient-red leading-relaxed max-w-4xl mx-auto font-black drop-shadow-2xl italic tracking-tight">
+                <p :key="currentSubtitle" class="text-2xl md:text-5xl text-gradient-red leading-relaxed max-w-4xl mx-auto font-black drop-shadow-2xl italic tracking-tight">
                   {{ currentSubtitle }}
                 </p>
               </Transition>

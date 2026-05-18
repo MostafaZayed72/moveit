@@ -4,9 +4,8 @@
     <div class="container mx-auto px-6 mb-8 text-center lg:text-left flex flex-col lg:flex-row items-center justify-between gap-4">
       <div class="flex items-center gap-3">
         <div class="w-2 h-2 rounded-full bg-red-600 animate-pulse"></div>
-        <h2 class="text-xs font-black text-slate-400 uppercase tracking-[0.3em]">{{ $t('about.values_title') }}</h2>
+        <h2 class="text-sm md:text-base font-black text-slate-400 uppercase tracking-[0.3em]">{{ $t('about.values_title') }}</h2>
       </div>
-      <p class="text-slate-500 text-[10px] font-bold uppercase tracking-widest italic">“{{ $t('home.hero_title').split('.')[0] }}”</p>
     </div>
 
     <!-- Ticker Container -->
@@ -23,7 +22,7 @@
           </div>
           <div class="flex flex-col">
             <span class="text-white font-black uppercase tracking-wider text-sm">{{ value.title }}</span>
-            <span class="text-slate-400 text-[10px] font-medium group-hover/item:text-red-100 transition-colors">{{ value.desc }}</span>
+            <span class="text-slate-400 text-xs font-medium group-hover/item:text-red-100 transition-colors">{{ value.desc }}</span>
           </div>
         </div>
         
@@ -39,7 +38,7 @@
           </div>
           <div class="flex flex-col">
             <span class="text-white font-black uppercase tracking-wider text-sm">{{ value.title }}</span>
-            <span class="text-slate-400 text-[10px] font-medium group-hover/item:text-red-100 transition-colors">{{ value.desc }}</span>
+            <span class="text-slate-400 text-xs font-medium group-hover/item:text-red-100 transition-colors">{{ value.desc }}</span>
           </div>
         </div>
       </div>

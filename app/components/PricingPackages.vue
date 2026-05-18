@@ -7,7 +7,7 @@
       <div class="absolute -bottom-24 -right-24 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl -z-10 animate-pulse" style="animation-delay: 2s"></div>
 
       <!-- Slider on Mobile, Grid on Desktop -->
-      <div class="flex overflow-x-auto pb-8 gap-4 snap-x snap-mandatory lg:grid lg:grid-cols-4 lg:gap-3 xl:gap-4 lg:overflow-x-visible lg:pb-0 custom-scrollbar">
+      <div class="flex overflow-x-auto pt-6 pb-8 gap-4 snap-x snap-mandatory lg:grid lg:grid-cols-4 lg:gap-3 xl:gap-4 lg:overflow-x-visible lg:pt-8 lg:pb-0 custom-scrollbar">
         <div
           v-for="(pkg, i) in resolvedPackages"
           :key="i"
@@ -53,8 +53,8 @@
               <h4 :class="['text-[9px] font-black uppercase tracking-widest mb-3', pkg.popular ? 'text-red-100' : 'text-slate-400']">
                 {{ $t('home.packages.perfect_for') }}
               </h4>
-              <!-- Fixed height container for alignment (approx 2 rows of icons) -->
-              <div class="flex flex-wrap gap-3 min-h-[110px] content-start">
+              <!-- Fixed height container for alignment (1 row of icons) -->
+              <div class="flex flex-wrap gap-3 min-h-[56px] content-start">
                 <div v-for="(item, idx) in pkg.best_for" :key="idx" class="group/icon relative">
                   <div :class="['w-12 h-12 rounded-xl flex items-center justify-center text-3xl transition-all duration-300 cursor-help', pkg.popular ? 'bg-white/20 text-white hover:bg-white hover:text-red-500' : 'bg-white dark:bg-slate-800 text-slate-700 dark:text-white border border-slate-100 dark:border-slate-700 hover:bg-red-600 hover:text-white hover:scale-110 shadow-sm']">
                     {{ item.icon }}
@@ -69,8 +69,8 @@
             </div>
 
             <!-- Includes Section -->
-            <div class="mb-6">
-              <h4 :class="['text-[9px] font-black uppercase tracking-widest mb-3', pkg.popular ? 'text-red-100' : 'text-slate-400']">
+            <div class="mb-2">
+              <h4 :class="['text-[9px] font-black uppercase tracking-widest mb-2', pkg.popular ? 'text-red-100' : 'text-slate-400']">
                 {{ $t('home.packages.includes') }}
               </h4>
               <ul class="space-y-2.5">
@@ -78,13 +78,13 @@
                   <div :class="['w-4 h-4 rounded-full flex items-center justify-center mt-0.5 shrink-0 transition-transform duration-500 group-hover/card:rotate-12', pkg.popular ? 'bg-white text-red-600' : 'bg-green-100 dark:bg-green-900/30 text-green-600']">
                     <svg class="w-2.5 h-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
                   </div>
-                  <span :class="['text-[11px] leading-relaxed font-semibold', pkg.popular ? 'text-red-50' : 'text-slate-600 dark:text-slate-300']">{{ item }}</span>
+                  <span :class="['text-xs sm:text-sm lg:text-[11px] xl:text-xs leading-relaxed font-semibold', pkg.popular ? 'text-red-50' : 'text-slate-600 dark:text-slate-300']">{{ item }}</span>
                 </li>
               </ul>
             </div>
 
             <!-- Footer Section -->
-            <div class="mt-auto pt-5 border-t border-white/10">
+            <div class="mt-auto pt-2 border-t border-white/10">
               <a
                 :href="pkg.cta.link"
                 :class="[
@@ -132,26 +132,26 @@
     <div class="max-w-4xl mx-auto pt-8 border-t border-slate-100 dark:border-slate-800 px-6 lg:px-0">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 items-center text-center md:text-left">
         <div class="space-y-2">
-          <p class="text-[10px] text-slate-500 dark:text-slate-400 flex items-center justify-center md:justify-start gap-3">
+          <p class="text-xs sm:text-[13px] text-slate-500 dark:text-slate-400 flex items-center justify-center md:justify-start gap-3">
             <span class="w-1.5 h-1.5 rounded-full bg-red-500"></span>
             {{ $t('home.packages.footnote_vat') }}
           </p>
-          <p class="text-[10px] text-slate-500 dark:text-slate-400 flex items-center justify-center md:justify-start gap-3">
+          <p class="text-xs sm:text-[13px] text-slate-500 dark:text-slate-400 flex items-center justify-center md:justify-start gap-3">
             <span class="w-1.5 h-1.5 rounded-full bg-red-500"></span>
             {{ $t('home.packages.footnote_time') }}
           </p>
-          <p class="text-[10px] text-red-600 dark:text-red-400 font-bold flex items-center justify-center md:justify-start gap-3">
+          <p class="text-xs sm:text-[13px] text-red-600 dark:text-red-400 font-bold flex items-center justify-center md:justify-start gap-3">
             <span class="w-1.5 h-1.5 rounded-full bg-red-500 animate-ping"></span>
             🎓 {{ $t('home.packages.footnote_student') }}
           </p>
         </div>
         <div class="flex flex-col md:flex-row items-center md:justify-end gap-6">
           <div class="flex -space-x-3 overflow-hidden">
-            <img v-for="i in 5" :key="i" class="inline-block h-8 w-8 rounded-full ring-2 ring-white dark:ring-slate-900 shadow-sm" :src="`https://i.pravatar.cc/100?u=${i + 15}`" alt="Happy Customer">
+            <img v-for="(src, idx) in maleAvatars" :key="idx" class="inline-block h-10 w-10 rounded-full ring-2 ring-white dark:ring-slate-900 shadow-md object-cover" :src="src" alt="Happy Customer">
           </div>
           <div class="flex flex-col items-center md:items-end">
-            <div class="flex text-yellow-400 text-[10px] mb-0.5">★★★★★</div>
-            <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest whitespace-nowrap">Trusted by 2,500+ happy movers</p>
+            <div class="flex text-yellow-400 text-xs sm:text-sm mb-0.5">★★★★★</div>
+            <p class="text-[11px] sm:text-xs font-black text-slate-400 dark:text-slate-300 uppercase tracking-widest whitespace-nowrap">Trusted by 2,500+ happy movers</p>
           </div>
         </div>
       </div>
@@ -161,6 +161,14 @@
 
 <script setup>
 const { t, tm, rt } = useI18n()
+
+const maleAvatars = [
+  'https://randomuser.me/api/portraits/men/32.jpg',
+  'https://randomuser.me/api/portraits/men/46.jpg',
+  'https://randomuser.me/api/portraits/men/62.jpg',
+  'https://randomuser.me/api/portraits/men/82.jpg',
+  'https://randomuser.me/api/portraits/men/91.jpg'
+]
 
 const resolvedPackages = computed(() => {
   const resolvePkg = (key, icon) => {
