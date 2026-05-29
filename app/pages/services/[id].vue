@@ -1,5 +1,6 @@
 <template>
   <StudentMovingPage v-if="serviceId === 'student'" />
+  <ServiceDetailsPage v-else-if="isCustomService" :service-id="serviceId" />
   <div v-else class="pt-24 min-h-screen bg-slate-50 dark:bg-slate-950 transition-colors duration-300">
     <!-- HERO SECTION WITH PREMIUM BACKGROUND -->
     <section class="relative h-[60vh] md:h-[70vh] flex items-center justify-center overflow-hidden">
@@ -155,6 +156,14 @@ const { t, te, tm } = useI18n()
 const serviceId = computed(() => {
   const param = route.params.id || 'student'
   return param.replace(/-/g, '_')
+})
+
+const isCustomService = computed(() => {
+  const list = [
+    'local', 'long_distance', 'international', 'full_service', 'furniture_assembly',
+    'packing', 'lift_rental', 'piano', 'senior', 'storage', 'clearance'
+  ]
+  return list.includes(serviceId.value)
 })
 
 const title = computed(() => t(`services.list.${serviceId.value}.title`, 'Service'))

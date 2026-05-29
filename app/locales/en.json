@@ -536,5 +536,1391 @@
       "btn_quote": "Get Instant Quote",
       "btn_whatsapp": "Chat on WhatsApp"
     }
+  },
+  "local_page": {
+    "seo": {
+      "title": "Local Moving Services Maastricht & Limburg | MoveIt",
+      "desc": "Premium, fast, and stress-free local moving solutions in Maastricht and South Limburg. Vetted crews, transparent pricing, and fully insured."
+    },
+    "hero": {
+      "title": "Local Moving Services in Maastricht & Limburg",
+      "subtitle": "Fast, secure, and stress-free relocation solutions tailored for homes, studios, and offices in the region.",
+      "desc": "From room relocations and apartment moves to complete family house transfers — we handle the heavy lifting with care.",
+      "btn_quote": "Get Instant Quote",
+      "btn_whatsapp": "WhatsApp Us"
+    },
+    "section1": {
+      "title": "Why Choose Our Local Moving",
+      "intro": "Moving within Maastricht or Limburg requires local expertise. From navigating narrow historic streets to lifting furniture up steep stairs, moveit is built to make local moves smooth, quick, and completely stress-free.",
+      "features": {
+        "fast_response": "Fast Response Times",
+        "local_crew": "Experienced Local Crew",
+        "transparent": "Transparent Hourly Pricing",
+        "insured": "Fully Insured Relocations",
+        "flexible": "Flexible Hours & Dates",
+        "friendly": "Friendly & Helpful Team"
+      }
+    },
+    "section2": {
+      "title": "Our Local Services",
+      "sub1": {
+        "title": "Studio & Room Relocations",
+        "desc": "Perfect for students, young professionals, and single room moves. Our team works efficiently to load, transport, and unload your items in the shortest time.",
+        "bullets": [
+          "Fast loading & unloading",
+          "1 moving van + 1 mover",
+          "Ideal for small spaces",
+          "Budget-friendly hourly rate"
+        ],
+        "price": "From €69.99/hr Excl. VAT",
+        "cta": "Book Studio Move",
+        "tag": "🏠 Studio Move"
+      },
+      "sub2": {
+        "title": "1-2 Bedroom Apartment Moves",
+        "desc": "Relocating from or to an apartment? We handle stairs, tight spaces, and secure packing to make your move completely stress-free.",
+        "extra": "Recommended Package: 1 Moving Van + 2 Professional Movers",
+        "price": "From €94.99/hr Excl. VAT",
+        "cta": "Book Apartment Move",
+        "tag": "🏢 Apartment Move"
+      },
+      "sub3": {
+        "title": "Large House & Villa Relocations",
+        "desc": "Comprehensive moving services for larger properties. We deploy larger capacity trucks and multiple movers to handle all heavy lifting and secure transport.",
+        "extra": "Comprehensive packing protection included:",
+        "bullets": [
+          "Heavy-duty protection blankets",
+          "Specialized securing straps",
+          "Hydraulic lift access support",
+          "Furniture disassembly support"
+        ],
+        "price": "Get a Free Quote",
+        "cta": "Request Home Move",
+        "tag": "🏡 Family House Move"
+      },
+      "sub4": {
+        "title": "Single Item Transport",
+        "desc": "Bought a sofa on Marketplace or need a single heavy appliance moved? We pick it up and deliver it door-to-door.",
+        "extra": "Great for: Sofas, Washing Machines, Dining Tables, Wardrobes, and heavy furniture.",
+        "price": "From €35 Excl. VAT",
+        "cta": "Schedule Single Item Pickup"
+      },
+      "sub5": {
+        "title": "Urgent same-day moves",
+        "desc": "Need a last-minute moving service because plans fell through? We offer express same-day relocations when availability allows.",
+        "extra": "Ideal for: Last-minute lease changes, backup moving service, sudden schedule updates.",
+        "price": "Get Urgent Quote",
+        "cta": "Request Urgent Move"
+      }
+    },
+    "section3": {
+      "badge": "📅 MID-WEEK SPECIAL",
+      "title": "Move Mid-Week & Save Big",
+      "desc": "Moving on a weekend can be busy and expensive. Save on hourly rates and secure your preferred timing by booking your move between Tuesday and Thursday. Our mid-week benefits include:",
+      "steps": [
+        "Pick a Tuesday, Wednesday, or Thursday",
+        "Book your custom time slot",
+        "Enjoy lower rates and high priority"
+      ],
+      "logistics": "We'll handle the logistics and coordinate the delivery.",
+      "benefits": [
+        "Lower hourly rates",
+        "More flexible slots",
+        "Priority booking priority"
+      ],
+      "cta": "Secure Mid-Week Move"
+    },
+    "section4": {
+      "title": "Relocating Maastricht & Limburg Locals",
+      "desc1": "We are proud to serve the local community with high-quality and reliable moving solutions. We focus on:",
+      "points": [
+        "punctual arrival",
+        "narrow street handling",
+        "careful wrapping",
+        "steep stair mastery",
+        "affordable pricing",
+        "exceptional support"
+      ],
+      "desc2": "No matter how complex your local move is, our local knowledge and expert crew ensure a smooth and easy transition."
+    },
+    "section5": {
+      "title": "FAQ",
+      "q1": "Do you help with steep stairs in historic buildings?",
+      "a1": "Yes — our crew is highly experienced with Maastricht's traditional steep staircases and narrow doors.",
+      "q2": "What is your minimum booking time?",
+      "a2": "Our standard minimum booking for hourly packages is 2 hours.",
+      "q3": "Do you provide moving boxes and tape?",
+      "a3": "Yes — we can deliver high-quality packing materials to your doorstep at a low price before moving day.",
+      "q4": "Is fuel included in local moves?",
+      "a4": "Yes — fuel within Maastricht and surrounding Limburg regions is fully included in the hourly package.",
+      "q5": "Are my goods insured during a local move?",
+      "a5": "Absolutely. All our local moves include comprehensive Goods-in-Transit insurance."
+    },
+    "cta": {
+      "title": "Ready for a Stress-Free Local Move?",
+      "desc": "Get a free, no-obligation quote in minutes. Our local crew is ready to handle the heavy lifting for you.",
+      "btn_quote": "Get Instant Quote",
+      "btn_whatsapp": "WhatsApp Us"
+    }
+  },
+  "long_distance_page": {
+    "seo": {
+      "title": "Long Distance Moving Services Netherlands | MoveIt",
+      "desc": "Reliable long distance moving services across the Netherlands. Safe highway transport, GPS tracking, and fully insured flat-rate options."
+    },
+    "hero": {
+      "title": "Long Distance Moving Services",
+      "subtitle": "Seamless relocation solutions to any city across the Netherlands, handled with complete care.",
+      "desc": "From Limburg to Amsterdam, Rotterdam, Utrecht, or anywhere in between — we bridge the distance securely.",
+      "btn_quote": "Get Fixed Quote",
+      "btn_whatsapp": "WhatsApp Us"
+    },
+    "section1": {
+      "title": "Why Choose Our Long Distance Moving",
+      "intro": "Moving to another city in the Netherlands requires careful route planning and secure packing. Our highway-safe loading techniques and specialized transit securing ensure your goods travel safely.",
+      "features": {
+        "nl_coverage": "Full NL Coverage",
+        "secure_transit": "Secure Highway Transit",
+        "flat_rates": "Fixed Flat Rates",
+        "gps_tracking": "GPS & WhatsApp Updates",
+        "vetted_drivers": "Vetted Professional Drivers",
+        "insured": "Fully Insured Cargo"
+      }
+    },
+    "section2": {
+      "title": "Our Long Distance Offerings",
+      "sub1": {
+        "title": "Maastricht to Randstad Routes",
+        "desc": "We run regular routes between South Limburg and the Randstad area (Amsterdam, Utrecht, Rotterdam, The Hague). Perfect for student transfers or job relocations.",
+        "bullets": [
+          "Weekly consolidated trips",
+          "Dedicated van or shared load",
+          "Efficient route coordination",
+          "Affordable fixed transport rates"
+        ],
+        "price": "From €249 Excl. VAT",
+        "cta": "Book Randstad Route",
+        "tag": "🇳🇱 Route Special"
+      },
+      "sub2": {
+        "title": "National Full House Relocation",
+        "desc": "Moving your complete household to another province? We provide dedicated large moving trucks, a multi-person crew, and protective packing to cover the distance safely.",
+        "extra": "Recommended: 1 Large Truck + 2 or 3 Professional Movers",
+        "price": "Get a Free Quote",
+        "cta": "Book National Move",
+        "tag": "🚚 Full Relocation"
+      },
+      "sub3": {
+        "title": "Shared Long-Distance Loads (Consolidation)",
+        "desc": "Save up to 40% by sharing truck space with other clients on the same route. Your items are securely partitioned and labeled for total security.",
+        "extra": "Great for small moves with flexible delivery dates:",
+        "bullets": [
+          "Lower carbon footprint",
+          "Split highway toll/fuel costs",
+          "100% secure partitioned cargo",
+          "Flexible scheduling options"
+        ],
+        "price": "From €149 Excl. VAT",
+        "cta": "Inquire Shared Load",
+        "tag": "💰 Save 40%"
+      },
+      "sub4": {
+        "title": "Piano & Heavy Instrument Moving",
+        "desc": "Moving a piano, grand piano, or heavy antique across the country? We use specialized dollies, ramps, and custom packaging.",
+        "extra": "Ideal for: Pianos, heavy solid wood cabinets, large safes, and fragile valuables.",
+        "price": "From €99 Excl. VAT",
+        "cta": "Schedule Instrument Move"
+      },
+      "sub5": {
+        "title": "Expedited Dedicated Transport",
+        "desc": "Need direct, non-stop delivery to another city? We bypass all other stops to deliver your items as fast as humanly possible.",
+        "extra": "Includes: Dedicated cargo van, immediate dispatch, zero intermediate stops, direct route navigation.",
+        "price": "Get Direct Quote",
+        "cta": "Request Express Move"
+      }
+    },
+    "section3": {
+      "badge": "🚛 CONSIDERING CONSOLIDATION?",
+      "title": "Consolidate Your Cargo. Save Money.",
+      "desc": "If you don't need your items delivered immediately, you can combine your transport with other clients going the same way. All you need to do is:",
+      "steps": [
+        "Provide your inventory details",
+        "Select your delivery week",
+        "Get a discounted consolidated quote"
+      ],
+      "logistics": "We manage the loading partitions and route planning.",
+      "benefits": [
+        "Significant cost savings",
+        "Eco-friendly transport",
+        "Secure item separation"
+      ],
+      "cta": "Check Groupage Availability"
+    },
+    "section4": {
+      "title": "Connecting Limburg to the Rest of the Country",
+      "desc1": "We take the stress out of long-haul moves across the Netherlands. We prioritize:",
+      "points": [
+        "highway safety",
+        "real-time tracking",
+        "fixed pricing",
+        "careful strap loading",
+        "expert drivers",
+        "flexible scheduling"
+      ],
+      "desc2": "With moveit, a move to the other side of the country feels just as close as a move next door."
+    },
+    "section5": {
+      "title": "FAQ",
+      "q1": "How do you calculate long distance rates?",
+      "a1": "We calculate based on distance, cargo volume, and the crew size. We provide upfront fixed quotes so there are no surprises.",
+      "q2": "Can I ride in the moving van for long distances?",
+      "a2": "Yes — one passenger can ride along for free on national transits, saving you extra train or taxi fees.",
+      "q3": "How do you protect furniture during highway driving?",
+      "a3": "We use thick heavy-duty packing blankets, cardboard corner protections, and industrial tie-down straps in our vans.",
+      "q4": "Do you offer overnight storage if move-in is the next day?",
+      "a4": "Yes — we can arrange secure overnight storage in our locked vehicles or storage facilities.",
+      "q5": "What happens in case of highway traffic delays?",
+      "a5": "Our drivers communicate directly through WhatsApp to provide real-time location and arrival updates."
+    },
+    "cta": {
+      "title": "Ready to Plan Your National Move?",
+      "desc": "Get a fixed, clear quote for your long distance move today. No hidden fees, full transit insurance included.",
+      "btn_quote": "Get Fixed Quote",
+      "btn_whatsapp": "WhatsApp Us"
+    }
+  },
+  "international_page": {
+    "seo": {
+      "title": "International Moving Services Europe | MoveIt",
+      "desc": "Professional international moving services from Maastricht. Cross-border expertise to Germany, Belgium, France, and beyond. Fully insured."
+    },
+    "hero": {
+      "title": "International Moving Services",
+      "subtitle": "Reliable cross-border relocations across Europe, handled with care and logistics expertise.",
+      "desc": "From our strategic base in Maastricht, we specialize in moving homes and businesses across European borders.",
+      "btn_quote": "Get International Quote",
+      "btn_whatsapp": "WhatsApp Us"
+    },
+    "section1": {
+      "title": "Why Choose Our International Moving",
+      "intro": "Cross-border moves require knowledge of European roads, customs paperwork, and parking permits. Based in the heart of the Euregio, international moving is second nature to us.",
+      "features": {
+        "customs": "Customs & Permits Handling",
+        "english_coord": "English-Speaking Coordinator",
+        "secure_packing": "Secure Long-Haul Packing",
+        "eu_network": "Broad European Network",
+        "consolidated": "Consolidated Groupage Options",
+        "insured": "Fully Insured International Cargo"
+      }
+    },
+    "section2": {
+      "title": "Our International Offerings",
+      "sub1": {
+        "title": "Euregio Cross-Border Relocations",
+        "desc": "Quick and seamless moves between Maastricht and nearby cities in Germany and Belgium like Aachen, Liège, Genk, and Hasselt.",
+        "bullets": [
+          "Bilingual crew members",
+          "Local border-crossing knowledge",
+          "Quick day-trip turnarounds",
+          "Highly competitive local rates"
+        ],
+        "price": "From €199 Excl. VAT",
+        "cta": "Book Euregio Move",
+        "tag": "🇪🇺 Euregio Local"
+      },
+      "sub2": {
+        "title": "Western Europe Home Move",
+        "desc": "Relocating your household to Germany, Belgium, France, Luxembourg, or other EU countries. Complete dedicated transport with packing assistance.",
+        "extra": "Includes: Full transport inventory list, dedicated van, and toll/fuel clearance.",
+        "price": "Get Custom Quote",
+        "cta": "Book European Move",
+        "tag": "🌍 European Move"
+      },
+      "sub3": {
+        "title": "Consolidated European Shipping (Groupage)",
+        "desc": "Save significantly on international costs by sharing transit space. Ideal for expats and students moving smaller shipments to European capitals.",
+        "extra": "Great for small volumes with a flexible delivery window:",
+        "bullets": [
+          "Shared fuel & highway toll costs",
+          "Secure item separation & labeling",
+          "Door-to-door delivery tracking",
+          "Eco-friendly shared logistics"
+        ],
+        "price": "From €299 Excl. VAT",
+        "cta": "Request Consolidated Quote",
+        "tag": "💰 Save on Tolls"
+      },
+      "sub4": {
+        "title": "Expat & Corporate Relocation Support",
+        "desc": "Tailored moving services for professionals relocating to international offices. We coordinate timing and packing to match corporate timelines.",
+        "extra": "Ideal for: Corporate expats, university researchers, international embassy staff.",
+        "price": "Request Corporate Quote",
+        "cta": "Schedule Expat Move"
+      },
+      "sub5": {
+        "title": "Customs & Parking Permit Assistance",
+        "desc": "We arrange parking permits, road blocking notifications, and assist with custom declarations for non-EU transits if needed.",
+        "extra": "Includes: Full transport inventory list, customs paperwork assistance, parking permits coordination.",
+        "price": "Included in package",
+        "cta": "Inquire About Permits"
+      }
+    },
+    "section3": {
+      "badge": "🇪🇺 EUROPE-WIDE CONSOLIDATION",
+      "title": "Shared International Transport. Major Savings.",
+      "desc": "Consolidating your international move with other routes is the most cost-effective way to relocate across borders. To organize this:",
+      "steps": [
+        "Send your list of items & location",
+        "Choose a flexible 7-day delivery window",
+        "Receive a discounted cross-border quote"
+      ],
+      "logistics": "We handle all border routing, tolls, and loading details.",
+      "benefits": [
+        "Shared highway & fuel costs",
+        "Lower carbon emissions",
+        "Professional secure packaging"
+      ],
+      "cta": "Inquire About Shared Routes"
+    },
+    "section4": {
+      "title": "Your Gateway to Smooth European Relocations",
+      "desc1": "We cross borders daily, ensuring that international relocations are smooth and stress-free. We guarantee:",
+      "points": [
+        "border compliance",
+        "bilingual support",
+        "secure strapping",
+        "route optimization",
+        "clear fixed quotes",
+        "transit tracking"
+      ],
+      "desc2": "No matter where your next chapter in Europe begins, moveit gets you there safely."
+    },
+    "section5": {
+      "title": "FAQ",
+      "q1": "Do you handle moves outside of Germany and Belgium?",
+      "a1": "Yes — we regularly cover France, Luxembourg, and other Western European countries. Contact us for custom routes.",
+      "q2": "Are there extra costs like tolls or ferry fees?",
+      "a2": "Our international quotes are all-inclusive. All toll road fees, fuel, and transit costs are included in the quote.",
+      "q3": "Do you assist with international customs paperwork?",
+      "a3": "Yes, we guide you through required documentation and inventory listing for international borders.",
+      "q4": "How are international items protected for long transits?",
+      "a4": "We use export-grade wrapping, double-walled boxes, and secure cargo anchoring systems to guarantee zero shifts in transit.",
+      "q5": "What is the typical transit time for European moves?",
+      "a5": "Local border moves take 1 day. Deeper European relocations typically take 1 to 3 days depending on the distance."
+    },
+    "cta": {
+      "title": "Planning an International Move?",
+      "desc": "Get a comprehensive, fixed price quote for your European relocation today. Let's make your transition smooth.",
+      "btn_quote": "Get Free Quote",
+      "btn_whatsapp": "WhatsApp Us"
+    }
+  },
+  "full_service_page": {
+    "seo": {
+      "title": "Full-Service Moving Maastricht | Premium Relocation | MoveIt",
+      "desc": "Premium full-service moving in Maastricht. We pack, dismantle, transport, assemble, and unpack. Sit back and enjoy a stress-free move."
+    },
+    "hero": {
+      "title": "Full-Service Moving",
+      "subtitle": "A complete hands-off experience: we pack, move, dismantle, rebuild, and unpack for you.",
+      "desc": "Enjoy the ultimate convenience while our professional crew handles every detail of your relocation.",
+      "btn_quote": "Get Premium Quote",
+      "btn_whatsapp": "WhatsApp Us"
+    },
+    "section1": {
+      "title": "Why Choose Our Full-Service",
+      "intro": "Packing and preparing for a move is exhausting. With our full-service package, you don't have to lift a finger. Our expert packers handle your items with care, and our movers transport them safely.",
+      "features": {
+        "stress_free": "100% Stress-Free Experience",
+        "packing_included": "Professional Packing Service",
+        "free_boxes": "Free Premium Boxes & Tape",
+        "assembly_included": "Full Assembly & Disassembly",
+        "coordinator": "Dedicated Move Coordinator",
+        "full_insurance": "Comprehensive Transit Insurance"
+      }
+    },
+    "section2": {
+      "title": "Our Full-Service Offerings",
+      "sub1": {
+        "title": "Turnkey Residential Move",
+        "desc": "We pack all your boxes, wrap fragile items, dismantle furniture, transport everything, and set it up at your new home. Just walk in and start living.",
+        "bullets": [
+          "Premium packing materials included",
+          "Fragile wrapping & labeling",
+          "Furniture disassembly & reassembly",
+          "Unpacking and placement support"
+        ],
+        "price": "Get a Free Quote",
+        "cta": "Book Turnkey Move",
+        "tag": "✨ Turnkey Premium"
+      },
+      "sub2": {
+        "title": "Premium Office & Business Relocation",
+        "desc": "Relocate your business smoothly with minimal downtime. We offer evening and weekend packing and moving services, including IT hardware handling.",
+        "extra": "Includes: Workspace labeling, IT equipment bubble-wrapping, office desks setup.",
+        "price": "Request Office Quote",
+        "cta": "Book Office Move",
+        "tag": "💼 Office Special"
+      },
+      "sub3": {
+        "title": "Fragile & Fine Art Wrapping",
+        "desc": "Have valuable art, antique furniture, mirrors, or highly delicate glassware? Our team uses white-glove custom packing and padded boxes for max safety.",
+        "extra": "Specialized protection for precious items:",
+        "bullets": [
+          "Custom card protection borders",
+          "Double-wall glass boxes",
+          "Acid-free wrapping paper",
+          "Premium anti-shock padding"
+        ],
+        "price": "From €149 Excl. VAT",
+        "cta": "Inquire Fine Art Move",
+        "tag": "🛡️ White Glove"
+      },
+      "sub4": {
+        "title": "Decluttering & Eco-Disposal",
+        "desc": "Don't want to bring everything to the new place? We help sort, donate, or dispose of unwanted furniture and items in an eco-friendly way.",
+        "extra": "Great for: Clearing old basements, recycling broken items, sorting pre-move inventory.",
+        "price": "From €99 Excl. VAT",
+        "cta": "Schedule Eco-Disposal"
+      },
+      "sub5": {
+        "title": "Premium Unpacking & Home Setup",
+        "desc": "We don't just drop boxes. We unpack your items and place them on shelves, hangers, or cabinets, allowing you to settle in immediately.",
+        "extra": "Includes: Box unpacking, hanger clothing transfer, empty boxes removal on move day.",
+        "price": "Get Setup Quote",
+        "cta": "Request Setup Service"
+      }
+    },
+    "section3": {
+      "badge": "👑 WHITE GLOVE LUXURY",
+      "title": "Sit Back & Relax. We Handle the Rest.",
+      "desc": "The average house takes over 30 hours to pack. Our professional packing crew can wrap and box your entire home in just a single morning. Here's how it works:",
+      "steps": [
+        "We arrive with boxes, tape & bubble wrap",
+        "Our team packs and labels everything safely",
+        "We load, transport, unload & assemble at destination"
+      ],
+      "logistics": "A dedicated moving coordinator supervises the entire process.",
+      "benefits": [
+        "Massive time savings",
+        "Zero lifting or physical stress",
+        "Professional packing insurance"
+      ],
+      "cta": "Book Full-Service Move"
+    },
+    "section4": {
+      "title": "A Michelin-Star Moving Experience",
+      "desc1": "Our goal is to make your moving day feel like a breeze. We focus on:",
+      "points": [
+        "hands-off packing",
+        "premium wrapping",
+        "furniture rebuilds",
+        "labels & organization",
+        "eco-friendly waste removal",
+        "dedicated coordination"
+      ],
+      "desc2": "Why stress over boxes when you can let the professionals handle it? Experience moving in comfort."
+    },
+    "section5": {
+      "title": "FAQ",
+      "q1": "Do I need to buy my own boxes or bubble wrap?",
+      "a1": "No — all premium boxes, bubble wrap, tape, and protective packing papers are fully included in our package.",
+      "q2": "How long does a full-service move take?",
+      "a2": "Typically, packing takes place on Day 1, and the loading, transport, unloading, and assembly happen on Day 2.",
+      "q3": "Are my packed items insured?",
+      "a3": "Yes — because our professional team packs the items, they are fully covered under our transit insurance policy.",
+      "q4": "Can you pack clothes directly from my closets?",
+      "a4": "Yes — we use specialized wardrobe boxes so clothes can be hung directly and stay wrinkle-free.",
+      "q5": "Do you clean the home after moving?",
+      "a5": "We provide a 'broom-clean' service of the old property, removing all packing trash and cardboard waste."
+    },
+    "cta": {
+      "title": "Ready to Experience Premium Moving?",
+      "desc": "Get a custom, comprehensive quote for a premium full-service relocation. Speak with our coordinator today.",
+      "btn_quote": "Request Premium Quote",
+      "btn_whatsapp": "WhatsApp Us"
+    }
+  },
+  "furniture_assembly_page": {
+    "seo": {
+      "title": "Furniture Assembly Services Maastricht | Handyman | MoveIt",
+      "desc": "Professional furniture assembly and disassembly in Maastricht. Experienced handymen, proper tools, and wall-mounting services."
+    },
+    "hero": {
+      "title": "Furniture Assembly Services",
+      "subtitle": "Professional assembly and disassembly of all your furniture pieces, handled by expert handymen.",
+      "desc": "Skip the confusing manuals and missing screws. We build your beds, wardrobes, and desks safely.",
+      "btn_quote": "Book Assembly",
+      "btn_whatsapp": "WhatsApp Us"
+    },
+    "section1": {
+      "title": "Why Choose Our Assembly Service",
+      "intro": "Assembling flat-pack furniture is time-consuming and frustrating. Our professional team comes fully equipped with the right tools to build, adjust, and anchor your furniture quickly and correctly.",
+      "features": {
+        "expert_tools": "Professional Power Tools",
+        "all_brands": "Experience with All Brands",
+        "secure_anchoring": "Safety Wall Anchoring",
+        "time_saving": "Saves Hours of Frustration",
+        "clean_finish": "Waste & Cardboard Disposal",
+        "workmanship": "Fully Insured Workmanship"
+      }
+    },
+    "section2": {
+      "title": "Our Assembly Services",
+      "sub1": {
+        "title": "Bedroom Sets & Wardrobes",
+        "desc": "Assembly of complex bedroom furniture, including beds, chest of drawers, and sliding-door wardrobes (like IKEA PAX systems). We align doors and level drawers perfectly.",
+        "bullets": [
+          "IKEA PAX specialist build",
+          "Perfect door & drawer alignment",
+          "Sturdy frame reinforcement",
+          "Anti-topple wall anchoring"
+        ],
+        "price": "From €49 Excl. VAT",
+        "cta": "Book Bedroom Assembly",
+        "tag": "🛏️ Wardrobe Expert"
+      },
+      "sub2": {
+        "title": "Living & Dining Room Furniture",
+        "desc": "Assembly of TV units, dining tables, chairs, shelving units, and sideboards. We make sure all elements are stable and level on your floor.",
+        "extra": "Includes: Leveling adjustment, felt pad installation to protect your flooring.",
+        "price": "From €39 Excl. VAT",
+        "cta": "Book Living Room Assembly",
+        "tag": "🛋️ Living Room"
+      },
+      "sub3": {
+        "title": "Office Workstations & Desks",
+        "desc": "Setting up home offices or corporate workspaces. We build ergonomic desks, adjustable chairs, and file cabinets, and assist with clean cable routing.",
+        "extra": "Great for corporate offices and home working environments:",
+        "bullets": [
+          "Sit-stand desk specialists",
+          "Ergonomic chair adjustments",
+          "Shelving & cabinet assembly",
+          "Cable management support"
+        ],
+        "price": "From €35 Excl. VAT",
+        "cta": "Book Office Assembly",
+        "tag": "💼 Office Setup"
+      },
+      "sub4": {
+        "title": "Disassembly & Reassembly Service",
+        "desc": "Moving to a new home? We dismantle your current furniture safely at point A, transport it, and rebuild it at point B.",
+        "extra": "Ideal for: Large beds, wardrobes, and dining tables that cannot be moved in one piece.",
+        "price": "From €27.99/hr Excl. VAT",
+        "cta": "Schedule Reassembly"
+      },
+      "sub5": {
+        "title": "TV & Shelf Wall Mounting",
+        "desc": "Need a TV mounted, mirrors hung, or heavy floating shelves anchored? We use heavy-duty wall anchors suited for concrete or drywall.",
+        "extra": "Includes: Heavy-duty wall plugs, laser-level alignment, cable hiding assistance.",
+        "price": "From €29 Excl. VAT",
+        "cta": "Request Wall Mounting"
+      }
+    },
+    "section3": {
+      "badge": "🛠️ FRUSTRATION-FREE BUILDING",
+      "title": "Skip the Manuals. Enjoy Your Furniture.",
+      "desc": "Don't spend your weekend reading pages of confusing manuals. Our skilled handymen can assemble furniture in a fraction of the time. What we do:",
+      "steps": [
+        "Unpack and inspect all components",
+        "Build the furniture according to manufacturer specifications",
+        "Anchor heavy items to the wall and clean up packaging"
+      ],
+      "logistics": "We bring all required power drills, screwdrivers, and wall plugs.",
+      "benefits": [
+        "Saves your weekend",
+        "100% stable & safe builds",
+        "No cardboard clean-up needed"
+      ],
+      "cta": "Arrange Assembly Now"
+    },
+    "section4": {
+      "title": "Sturdy, Safe, and Professional Craftsmanship",
+      "desc1": "We build with precision to ensure your new furniture lasts for years to come. We guarantee:",
+      "points": [
+        "sturdy alignment",
+        "wall anchoring safety",
+        "brand compatibility",
+        "own tool dispatch",
+        "fast turnaround",
+        "insured handyman service"
+      ],
+      "desc2": "No wobbles, no leftover screws, and no stress. Just beautiful furniture ready to use."
+    },
+    "section5": {
+      "title": "FAQ",
+      "q1": "Do you bring your own tools?",
+      "a1": "Yes — our handymen carry professional power drills, levelers, screwdrivers, and specialized anchors.",
+      "q2": "Can you assemble furniture from brands other than IKEA?",
+      "a2": "Yes — we assemble furniture from all major retailers including Jysk, Leen Bakker, Made, and others.",
+      "q3": "Do you secure wardrobes and heavy items to the wall?",
+      "a3": "Yes — safety is our top priority. We anchor heavy furniture to prevent any tipping risk, especially for family homes.",
+      "q4": "Can you dismantle old furniture before setting up the new one?",
+      "a4": "Yes — we provide full disassembly services, perfect for clearing space or moving days.",
+      "q5": "Do you clean up the packaging and cardboard boxes?",
+      "a5": "Yes — we can gather, fold, and dispose of all cardboard and plastic packaging on request."
+    },
+    "cta": {
+      "title": "Need Furniture Assembled?",
+      "desc": "Get a quick estimate and book an expert handyman today. Professional, insured, and fast assembly services.",
+      "btn_quote": "Book Assembly",
+      "btn_whatsapp": "WhatsApp Us"
+    }
+  },
+  "packing_page": {
+    "seo": {
+      "title": "Professional Packing & Unpacking Services Maastricht | MoveIt",
+      "desc": "Take the stress out of moving with MoveIt's packing and unpacking services. Vetted packers, premium wrapping materials, and full insurance coverage."
+    },
+    "hero": {
+      "title": "Packing & Unpacking Services",
+      "subtitle": "Complete stress-free packing solutions using premium materials, handled with absolute care.",
+      "desc": "We wrap your fragile glassware, box your household items, and set up your new closets, saving you hours of work.",
+      "btn_quote": "Get Packing Quote",
+      "btn_whatsapp": "WhatsApp Us"
+    },
+    "section1": {
+      "title": "Why Choose Our Packing Service",
+      "intro": "Packing is often the most time-consuming part of a move. Our trained packing crews use systematic room-labeling, heavy-duty boxes, and specialized fragile-wrapping techniques to ensure everything arrives safely.",
+      "features": {
+        "expert_packers": "Vetted Expert Packers",
+        "premium_materials": "Premium Wrapping Materials",
+        "labeling_system": "Smart Room Labeling",
+        "insured_packing": "Fully Insured Packing",
+        "flexible_timing": "Flexible Packing Slots",
+        "unpacking_support": "Full Unpacking Assistance"
+      }
+    },
+    "section2": {
+      "title": "Our Packing Options",
+      "sub1": {
+        "title": "Complete House Packing",
+        "desc": "Our team arrives with boxes, wrapping paper, and tape to systematically wrap and box your entire household, room-by-room.",
+        "bullets": [
+          "Double-wall boxes & tape included",
+          "Fragile kitchenware wrapped",
+          "Closets packed & hangers boxed",
+          "Organized labeling per room"
+        ],
+        "price": "From €149 Excl. VAT",
+        "cta": "Request Full Pack",
+        "tag": "📦 Complete Pack"
+      },
+      "sub2": {
+        "title": "Fragile-Only Packing Service",
+        "desc": "Only need help protecting your most delicate belongings? We safely wrap glass, crystal, mirrors, artwork, and high-value electronics.",
+        "extra": "Recommended for: Delicate porcelain, mirrors, paintings, and collectibles.",
+        "price": "From €99 Excl. VAT",
+        "cta": "Book Fragile Pack",
+        "tag": "💎 Glass & Art Only"
+      },
+      "sub3": {
+        "title": "Unpacking & Wardrobe Setup",
+        "desc": "Don't spend days living out of boxes. We unpack your items, place clothes on hangers, arrange kitchen cabinets, and recycle all waste.",
+        "extra": "Complete empty boxes removal included on moving day:",
+        "bullets": [
+          "Careful item unpacking",
+          "Clothes hung in wardrobes",
+          "Kitchen and shelf setup",
+          "Box recycling & disposal"
+        ],
+        "price": "From €129 Excl. VAT",
+        "cta": "Book Unpacking",
+        "tag": "✨ Ready Home"
+      },
+      "sub4": {
+        "title": "Material Delivery Only",
+        "desc": "Want to pack yourself but need professional materials? We deliver premium double-walled boxes, bubble wrap, tape, and wrapping paper.",
+        "extra": "Great for: DIY packing, long-term storage preparations, and garage sorting.",
+        "price": "From €35 Excl. VAT",
+        "cta": "Order Materials"
+      },
+      "sub5": {
+        "title": "Partial & Single Room Packing",
+        "desc": "Need help with just a single room? Whether it's a library of books, kitchen shelves, or attic boxes, we handle it quickly.",
+        "extra": "Includes: 1 or 2 packing experts, dedicated boxes, and half-day packing support.",
+        "price": "From €59 Excl. VAT",
+        "cta": "Book Room Pack"
+      }
+    },
+    "section3": {
+      "badge": "📦 SAVE TIME & FRUSTRATION",
+      "title": "A Complete Home Packed in Hours",
+      "desc": "Packing a 3-bedroom house takes the average family over 30 hours of work. Our professional packing crew can wrap and box the entire property in just 4 to 6 hours. The process is simple:",
+      "steps": [
+        "We deliver materials and start wrapping",
+        "Boxes are labeled and sealed securely",
+        "Our team loads and moves them directly"
+      ],
+      "logistics": "We provide all bubble wrap, wrapping paper, tape, and boxes.",
+      "benefits": [
+        "Massive time savings",
+        "Safe packing techniques",
+        "Full coverage insurance"
+      ],
+      "cta": "Book Packing Service"
+    },
+    "section4": {
+      "title": "Expert Packing to Prevent Damage",
+      "desc1": "We wrap and pack every item as if it were our own. We prioritize:",
+      "points": [
+        "bubble protection",
+        "double-walled boxes",
+        "closet wardrobes",
+        "room organization",
+        "secure sealing",
+        "unwrapping help"
+      ],
+      "desc2": "Relocating with moveit means you skip the box folding and tape cutting. We handle it all."
+    },
+    "section5": {
+      "title": "FAQ",
+      "q1": "Are packing materials included in the price?",
+      "a1": "Yes — our full packing quotes always include all boxes, tape, protective wrapping papers, and bubble wrap.",
+      "q2": "Do I have to pack anything myself if I choose full-service?",
+      "a2": "No — our team will handle everything from kitchen spices to large wardrobes. Just leave it as it is.",
+      "q3": "Is the packing service covered by insurance?",
+      "a3": "Yes — items packed by our professional crew are fully covered under our Goods-in-Transit insurance policies.",
+      "q4": "Can you pack clothes on hangers directly?",
+      "a4": "Yes — we use specialized wardrobe boxes with metal bars so your clothes are transferred directly and stay clean.",
+      "q5": "Do you remove the empty boxes after unpacking?",
+      "a5": "Yes — when we perform the unpacking service, we collect and recycle all cardboard boxes and plastic wrapping waste."
+    },
+    "cta": {
+      "title": "Ready to Skip the Packing?",
+      "desc": "Get a free, custom quote for your packing and moving day. Speak to our coordination team.",
+      "btn_quote": "Get Free Quote",
+      "btn_whatsapp": "WhatsApp Us"
+    }
+  },
+  "lift_rental_page": {
+    "seo": {
+      "title": "Moving Lift Rental Maastricht | Furniture Elevator | MoveIt",
+      "desc": "Rent a moving lift with operator in Maastricht. Reach up to the 5th floor safely. Fast setup, secure hoisting, and fully insured."
+    },
+    "hero": {
+      "title": "Moving Lift Rental Services",
+      "subtitle": "Rent a high-reach furniture elevator with a certified operator for safe, fast hoisting.",
+      "desc": "Avoid steep stairs, tight corners, and damage. Hoist heavy sofas, washing machines, and beds directly through the window.",
+      "btn_quote": "Book Lift Rental",
+      "btn_whatsapp": "WhatsApp Us"
+    },
+    "section1": {
+      "title": "Why Rent a Moving Lift",
+      "intro": "Many historic apartments in Maastricht have steep, narrow stairwells. Renting a furniture lift is the safest way to move heavy items, preventing damage to your furniture and the building's walls.",
+      "features": {
+        "high_reach": "Up to 5th Floor Reach",
+        "certified_operator": "Certified Operator Included",
+        "safety_vetted": "Safety Vetted Systems",
+        "quick_setup": "Fast 15-Minute Setup",
+        "street_permits": "Permit Advisory Support",
+        "insured_lift": "Fully Insured Operations"
+      }
+    },
+    "section2": {
+      "title": "Our Lift Rental Services",
+      "sub1": {
+        "title": "Standard Lift Rental",
+        "desc": "Rent our modern trailer lift with a certified operator to hoist standard household furniture up or down.",
+        "bullets": [
+          "Up to 18 meters reach",
+          "Professional operator included",
+          "Secure loading platform",
+          "Safe furniture strapping"
+        ],
+        "price": "From €79/hr Excl. VAT",
+        "cta": "Book Lift + Operator",
+        "tag": "🏗️ Lift + Operator"
+      },
+      "sub2": {
+        "title": "Heavy Hoisting Elevator",
+        "desc": "Designed to lift exceptionally heavy goods like washing machines, heavy wooden wardrobes, American fridges, and large pianos.",
+        "extra": "Required for items that exceed stairs dimensions and load weight limits.",
+        "price": "From €99 Excl. VAT",
+        "cta": "Request Heavy Hoisting",
+        "tag": "⚡ Heavy Hoisting"
+      },
+      "sub3": {
+        "title": "Commercial & Renovation Lift Hire",
+        "desc": "Full-day rental options for office moves, large apartment complexes, or building materials hoisting. Includes operator.",
+        "extra": "Custom plans for housing associations and construction firms:",
+        "bullets": [
+          "8 hours dedicated lift access",
+          "Site safety assessment",
+          "Unlimited hoist cycles",
+          "Flexible weather rescheduling"
+        ],
+        "price": "Get Commercial Quote",
+        "cta": "Inquire Commercial Lift",
+        "tag": "🏢 Commercial Projects"
+      },
+      "sub4": {
+        "title": "Express Single Item Hoisting",
+        "desc": "Just bought a new couch or fridge and it doesn't fit the stairs? We set up and hoist it in under 30 minutes.",
+        "extra": "Great for: Large mattresses, TVs, wardrobes, and marketplace items.",
+        "price": "From €59 Excl. VAT",
+        "cta": "Schedule Express Hoist"
+      },
+      "sub5": {
+        "title": "Narrow Alley Historic Access",
+        "desc": "We operate compact, highly maneuverable trailer lifts designed to fit into narrow historic alleys in Maastricht's center.",
+        "extra": "Ideal for: Historic old town streets, small courtyards, narrow driveways.",
+        "price": "Get Custom Setup Quote",
+        "cta": "Inquire Alley Access"
+      }
+    },
+    "section3": {
+      "badge": "🏗️ AVOID STEEP STAIRS",
+      "title": "Hoist Your Furniture. Prevent Damage.",
+      "desc": "Maastricht's staircases are famously steep. A furniture lift bypasses the building interior entirely, reducing move time and eliminating risk. Setup is simple:",
+      "steps": [
+        "We park the lift under your window",
+        "Our operator secures the lift platforms",
+        "Items are hoisted down/up in seconds"
+      ],
+      "logistics": "We handle the lift positioning and platform operations.",
+      "benefits": [
+        "Zero staircase damage",
+        "Cuts moving time in half",
+        "Safe for heavy materials"
+      ],
+      "cta": "Secure Lift Rental"
+    },
+    "section4": {
+      "title": "Certified Lift Operators for Total Safety",
+      "desc1": "We never lease lifts without an operator. We ensure safety by prioritizing:",
+      "points": [
+        "wind speed checks",
+        "sturdy stabilizing legs",
+        "window protection",
+        "operator supervision",
+        "weight limit controls",
+        "secure strap locks"
+      ],
+      "desc2": "Let moveit's equipment handle the height. Your furniture reaches its destination without a scratch."
+    },
+    "section5": {
+      "title": "FAQ",
+      "q1": "Can I rent the lift without an operator?",
+      "a1": "No — for safety and insurance reasons, our lifts always include a certified operator who manages the lift controls.",
+      "q2": "How high can your moving lift reach?",
+      "a2": "Our standard trailer lifts reach up to 18 meters, which is typically the 5th floor of standard buildings.",
+      "q3": "Do I need a parking permit for the lift?",
+      "a3": "If the lift blocks public parking spots or roads, a permit may be needed. We can help advise on local municipality guidelines.",
+      "q4": "What window sizes are needed for hoisting?",
+      "a4": "The window or balcony door must be wide enough for your largest items to pass through. Windows should open fully.",
+      "q5": "What happens in case of strong winds or rain?",
+      "a5": "If wind speeds exceed safety limits, we reschedule the lift setup immediately to prevent any risk to your items."
+    },
+    "cta": {
+      "title": "Need to Rent a Moving Lift?",
+      "desc": "Speak to our team today to verify lift accessibility at your address and secure your date.",
+      "btn_quote": "Request Lift Quote",
+      "btn_whatsapp": "WhatsApp Us"
+    }
+  },
+  "piano_page": {
+    "seo": {
+      "title": "Specialist Piano Moving Maastricht | Insured Transport | MoveIt",
+      "desc": "Professional piano moving services in Maastricht. Padded wraps, heavy-duty dollies, and moving lifts. Fully insured piano transit."
+    },
+    "hero": {
+      "title": "Specialist Piano Moving",
+      "subtitle": "Safe, insured, and expert transport for upright and grand pianos in Maastricht and Limburg.",
+      "desc": "Delicate instruments deserve specialized care. We use padded frames, ramp loaders, and experienced piano handlers.",
+      "btn_quote": "Get Piano Quote",
+      "btn_whatsapp": "WhatsApp Us"
+    },
+    "section1": {
+      "title": "Why Choose Our Piano Moving",
+      "intro": "Pianos are heavy, structurally delicate, and highly sensitive to humidity and temperature. Standard moving techniques aren't enough. We use specialized equipment and a trained crew to guarantee safe transit.",
+      "features": {
+        "specialist_equipment": "Specialist Piano Dollies",
+        "expert_crew": "Experienced Piano Crew",
+        "thick_blankets": "Double Padded Blankets",
+        "secured_transit": "Heavy-Duty Strapping",
+        "temperature_protection": "Insulated Wrapping Sheets",
+        "insured_piano": "Fully Insured Instruments"
+      }
+    },
+    "section2": {
+      "title": "Our Piano Transport Options",
+      "sub1": {
+        "title": "Upright Piano Transport",
+        "desc": "Ground-floor or elevator transport of standard upright pianos using custom padded board wraps and specialized rubber-wheeled dollies.",
+        "bullets": [
+          "Thick padded wrapping sheets",
+          "Non-marking rubber dollies",
+          "Tailgate loader vehicles",
+          "Dedicated piano securing strap"
+        ],
+        "price": "From €149 Excl. VAT",
+        "cta": "Book Upright Move",
+        "tag": "🎹 Upright Piano"
+      },
+      "sub2": {
+        "title": "Grand Piano Transport",
+        "desc": "Expert logistics for baby grand and concert grand pianos. We dismantle legs, secure the lid, wrap the body, and load safely.",
+        "extra": "Includes complete mechanical safety locks check during handling.",
+        "price": "From €299 Excl. VAT",
+        "cta": "Book Grand Piano Move",
+        "tag": "👑 Grand Piano"
+      },
+      "sub3": {
+        "title": "Elevator Hoisted Piano Move",
+        "desc": "Moving a piano to a high floor with narrow stairs? We combine our moving lift with heavy-duty cranes and slings for exterior hoisting.",
+        "extra": "Includes setup safety check and custom window padding:",
+        "bullets": [
+          "Industrial weight slings",
+          "Platform lift coordination",
+          "Balcony access protection",
+          "Premium liability cover"
+        ],
+        "price": "From €249 Excl. VAT",
+        "cta": "Book Hoisted Move",
+        "tag": "🏗️ Hoisted Move"
+      },
+      "sub4": {
+        "title": "Digital Piano & Keyboard Move",
+        "desc": "Transporting high-end digital pianos, synthesizers, or stage keyboards. Packed securely in flight cases or protective bubbles.",
+        "extra": "Great for: Band gear, recording studios, marketplace pickups, student rooms.",
+        "price": "From €49 Excl. VAT",
+        "cta": "Schedule Keyboard Move"
+      },
+      "sub5": {
+        "title": "Insulated Climate-Safe Transit",
+        "desc": "We wrap precious wood instruments in insulated thermal sheets to prevent cracks or warping from temperature shocks.",
+        "extra": "Ideal for: Valuable concert grand pianos, antique harpsichords, old wooden instruments.",
+        "price": "From €35 Excl. VAT",
+        "cta": "Inquire Climate Wrap"
+      }
+    },
+    "section3": {
+      "badge": "🎹 DELICATE HANDLING CARE",
+      "title": "Protecting the Tuning & Wood Structure",
+      "desc": "A piano weighs between 150kg and 500kg. Moving it without proper tools can cause permanent damage to the soundboard and case. Our process ensures safety:",
+      "steps": [
+        "Keyboard cover and lid are locked",
+        "The body is wrapped in high-impact padding",
+        "Items are loaded via hydraulic tail-lifts"
+      ],
+      "logistics": "We use non-marking dollies to protect your home's flooring.",
+      "benefits": [
+        "Protects internal mechanics",
+        "Zero flooring marks or scratches",
+        "Full transit insurance coverage"
+      ],
+      "cta": "Arrange Piano Move"
+    },
+    "section4": {
+      "title": "Expert Instrument Movers Maastricht",
+      "desc1": "We transport delicate instruments across borders and cities. We guarantee:",
+      "points": [
+        "floor protection",
+        "secure strap loading",
+        "padded keyboard wraps",
+        "bilingual crew",
+        "custom flight cases",
+        "tuning conservation advisory"
+      ],
+      "desc2": "With moveit, your piano arrives safely, ready to be tuned and played in your new home."
+    },
+    "section5": {
+      "title": "FAQ",
+      "q1": "Do I need to tune my piano immediately after the move?",
+      "a1": "We recommend waiting 1 to 2 weeks after the move before tuning, allowing the wood to adjust to the temperature and humidity of the new room.",
+      "q2": "Are pianos insured during transport?",
+      "a2": "Yes — every piano move includes comprehensive Goods-in-Transit insurance, covering the full value of the instrument.",
+      "q3": "Can you carry a piano up stairs?",
+      "a3": "We handle standard ground-floor transfers. If stairs are narrow or steep, we strongly recommend using a moving lift through a window or balcony.",
+      "q4": "Do you bring your own ramps and lift gates?",
+      "a4": "Yes — our vehicles are equipped with hydraulic lift gates, ramp tracks, and securing straps designed specifically for instrument transport.",
+      "q5": "Can you transport organs or harpsichords?",
+      "a5": "Yes — our team is experienced in handling all types of keyboard instruments, organs, and valuable antiques."
+    },
+    "cta": {
+      "title": "Need a Professional Piano Mover?",
+      "desc": "Get a free, custom estimate for your instrument transport. Safe, insured, and handled by specialists.",
+      "btn_quote": "Request Piano Quote",
+      "btn_whatsapp": "WhatsApp Us"
+    }
+  },
+  "senior_page": {
+    "seo": {
+      "title": "Senior Moving Services Maastricht | Compassionate Relocations | MoveIt",
+      "desc": "Caring, patient, and stress-free senior moving services in Maastricht. Downsizing assistance, full packing, setup, and cleanup."
+    },
+    "hero": {
+      "title": "Senior Moving Services",
+      "subtitle": "Compassionate, patient, and stress-free relocation support designed for senior citizens.",
+      "desc": "We work at a relaxed pace, helping sort, pack, transport, and arrange the new home to feel familiar from day one.",
+      "btn_quote": "Request Caring Quote",
+      "btn_whatsapp": "WhatsApp Us"
+    },
+    "section1": {
+      "title": "Why Choose Our Senior Moving",
+      "intro": "Moving home in later years is an emotional and physical challenge. We go beyond standard logistics: we provide patient support, downsizing assistance, and careful room setup so seniors feel safe and respected.",
+      "features": {
+        "caring_staff": "Caring & Patient Movers",
+        "downsizing_help": "Downsizing Sorting Help",
+        "full_packing": "Full Packing & Labeling",
+        "furniture_setup": "Complete Room Setup",
+        "cleanup_service": "Broom-Clean Emptying",
+        "insured_support": "Fully Insured Support"
+      }
+    },
+    "section2": {
+      "title": "Our Senior Move Services",
+      "sub1": {
+        "title": "Downsizing & Sorting Assistance",
+        "desc": "Helping seniors sort through decades of memories. We assist in choosing what to keep, donate, or sell, working at their own pace.",
+        "bullets": [
+          "Patient sorting support",
+          "Vetted, polite moving crew",
+          "Organized labeling of boxes",
+          "Eco-friendly disposal support"
+        ],
+        "price": "From €99 Excl. VAT",
+        "cta": "Inquire Downsizing Help",
+        "tag": "❤️ Downsizing Sorting"
+      },
+      "sub2": {
+        "title": "Complete Turnkey Senior Relocation",
+        "desc": "A complete hands-off package. We pack boxes, dismantle furniture, transport, assemble beds, unpack, and arrange shelves in the new home.",
+        "extra": "Recommended: Includes full packaging, transport, and complete kitchen/closet setup.",
+        "price": "Get Custom Quote",
+        "cta": "Book Full Relocation",
+        "tag": "🏡 Full Transition"
+      },
+      "sub3": {
+        "title": "Assisted Living & Care Home Moves",
+        "desc": "We coordinate directly with care facility managers to ensure a quiet, respectful move-in matching all building guidelines.",
+        "extra": "Coordinates with care home rules and off-peak timing constraints:",
+        "bullets": [
+          "Quiet off-peak move-in times",
+          "Small room furniture placement",
+          "Assembly of medical/special beds",
+          "Facility policy compliance"
+        ],
+        "price": "From €129 Excl. VAT",
+        "cta": "Book Care Home Move",
+        "tag": "🏢 Care Facility Move"
+      },
+      "sub4": {
+        "title": "Broom-Clean Property Clearance",
+        "desc": "Once moved, we clear, clean, and empty the old property completely, preparing it for handovers or sale.",
+        "extra": "Great for: Handover cleanings, trash recycling, donation drops.",
+        "price": "From €99 Excl. VAT",
+        "cta": "Schedule Property Clearance"
+      },
+      "sub5": {
+        "title": "Dedicated Family Coordinator",
+        "desc": "We communicate directly with family members, keeping children or guardians updated via WhatsApp with status reports.",
+        "extra": "Ideal for: Out-of-town children, busy relatives, coordinated schedule updates.",
+        "price": "Included in service",
+        "cta": "Inquire Coordination"
+      }
+    },
+    "section3": {
+      "badge": "❤️ COMPASSIONATE CARE",
+      "title": "A Transition Handled with Patience & Care",
+      "desc": "Moving to a new home can be overwhelming for seniors. We structure our senior moves to minimize disruption and avoid stress. Our method:",
+      "steps": [
+        "We agree on a calm schedule with no rush",
+        "Items are packed carefully, preserving memories",
+        "The new home is set up immediately to feel cozy"
+      ],
+      "logistics": "We handle all communications with facility managers and family.",
+      "benefits": [
+        "Minimized stress and anxiety",
+        "Vetted, patient crew members",
+        "Broom-clean handover finish"
+      ],
+      "cta": "Arrange Senior Move"
+    },
+    "section4": {
+      "title": "Caring Relocations Across South Limburg",
+      "desc1": "We are proud to serve families with respectful and patient relocation services. We focus on:",
+      "points": [
+        "polite vetted movers",
+        "relaxed pacing",
+        "downsizing care",
+        "closet organization",
+        "waste clean-up",
+        "clear fixed pricing"
+      ],
+      "desc2": "Relocating your parents or relatives doesn't have to be stressful. Let moveit handle the transition with care."
+    },
+    "section5": {
+      "title": "FAQ",
+      "q1": "How do you handle fragile memories and photo albums?",
+      "a1": "We wrap photo albums, sentimental values, and family heirlooms in acid-free wrapping paper and pack them in dedicated, double-walled boxes.",
+      "q2": "Can you coordinate with care facility managers?",
+      "a2": "Yes — we coordinate elevator reservations, parking zones, and off-peak move-in times directly with assisted living staff.",
+      "q3": "Do you help with unpacking and making the bed?",
+      "a3": "Yes — our turnkey senior packages include assembling beds, unpacking clothes into closets, and organizing kitchen items so it feels ready to live in.",
+      "q4": "Can we pack some items ourselves and leave the rest to you?",
+      "a4": "Absolutely. We are flexible and can handle as much or as little of the packing as the family prefers.",
+      "q5": "Are your movers vetted and friendly?",
+      "a5": "Yes — all our crew members are thoroughly vetted, professionally trained, and chosen specifically for their polite and caring approach."
+    },
+    "cta": {
+      "title": "Planning a Relocation for a Loved One?",
+      "desc": "Get in touch with our team to discuss how we can support your parent or relative with a patient, caring move.",
+      "btn_quote": "Get Free Quote",
+      "btn_whatsapp": "WhatsApp Us"
+    }
+  },
+  "storage_page": {
+    "seo": {
+      "title": "Secure Storage Rental Maastricht | Climate Controlled | MoveIt",
+      "desc": "Secure, dry, and climate-controlled storage units in Maastricht. Short or long term. Transport & loading assistance, fully insured."
+    },
+    "hero": {
+      "title": "Secure Storage Rental Services",
+      "subtitle": "Secure, dry, and climate-controlled storage solutions for short or long-term needs.",
+      "desc": "We collect your furniture, store it in our monitored facilities, and deliver it whenever you are ready.",
+      "btn_quote": "Inquire Storage Rates",
+      "btn_whatsapp": "WhatsApp Us"
+    },
+    "section1": {
+      "title": "Why Choose Our Storage Units",
+      "intro": "Whether you are between apartments, remodeling your home, or studying abroad, our storage facility offers 24/7 security, climate-controls, and full loading and transport support.",
+      "features": {
+        "secure_facility": "24/7 Monitored Storage",
+        "climate_control": "Climate-Controlled Units",
+        "flexible_contracts": "Flexible Rolling Contracts",
+        "loading_help": "Transport & Loading Help",
+        "easy_access": "Easy Unit Retrieval",
+        "insured_storage": "Fully Insured Units"
+      }
+    },
+    "section2": {
+      "title": "Our Storage Options",
+      "sub1": {
+        "title": "Short-Term Storage Solutions",
+        "desc": "Perfect for storing household goods for a few weeks or months during renovations or moving delays. Includes rolling weekly contracts.",
+        "bullets": [
+          "Weekly rolling contracts",
+          "Van pickup from your address",
+          "Clean, dry, and secure units",
+          "Quick retrieval options"
+        ],
+        "price": "From €19/week Excl. VAT",
+        "cta": "Book Short-Term Storage",
+        "tag": "🔒 Short-Term"
+      },
+      "sub2": {
+        "title": "Student Summer Storage",
+        "desc": "Leaving Maastricht for the summer or studying abroad for a semester? Store your boxes and room furniture cheaply in our secure student lockers.",
+        "extra": "Special student package: Includes shared pickup options to split transport costs.",
+        "price": "From €9/week Excl. VAT",
+        "cta": "Book Student Storage",
+        "tag": "🎓 Student Special"
+      },
+      "sub3": {
+        "title": "Complete House Long-Term Storage",
+        "desc": "Moving abroad for work or downsizing? We pack your entire household, store it in sealed climate-controlled container units, and preserve it safely.",
+        "extra": "Includes monthly temperature logs and sealed unit security stamps:",
+        "bullets": [
+          "Large capacity containers",
+          "Insulated temperature control",
+          "High security lock systems",
+          "Complete item inventory list"
+        ],
+        "price": "Get Storage Quote",
+        "cta": "Request House Storage",
+        "tag": "🏡 House Container"
+      },
+      "sub4": {
+        "title": "Business & Archive Storage",
+        "desc": "Clear valuable space in your main office. Store archives, files, extra desks, and seasonal exhibition materials securely.",
+        "extra": "Great for: Law firms, medical clinics, corporate archive tax storage.",
+        "price": "From €29/month Excl. VAT",
+        "cta": "Inquire Business Storage"
+      },
+      "sub5": {
+        "title": "Full Move + Storage Combo Deal",
+        "desc": "We load your belongings, place them in storage, and deliver/assemble them at your new address whenever you receive your keys.",
+        "extra": "Includes: Full packing service, van transport, storage loading, and final home setup.",
+        "price": "Request Combo Quote",
+        "cta": "Schedule Combo Deal"
+      }
+    },
+    "section3": {
+      "badge": "🔒 SECURE CONTAINER SYSTEM",
+      "title": "Safe, Dry & Climate Controlled Storage",
+      "desc": "Moisture and temperature fluctuations can ruin wood furniture, fabrics, and documents. Our storage facilities maintain a stable climate to guarantee safety. Our booking is simple:",
+      "steps": [
+        "Select your unit size and duration",
+        "We pick up and wrap your furniture securely",
+        "Your goods are loaded into sealed units"
+      ],
+      "logistics": "We keep detailed inventory lists of all stored containers.",
+      "benefits": [
+        "Constant temperature control",
+        "24/7 CCTV surveillance",
+        "Transit + storage insurance cover"
+      ],
+      "cta": "Check Storage Availability"
+    },
+    "section4": {
+      "title": "Fully Vetted Storage Facilities Maastricht",
+      "desc1": "We take the safety of your goods seriously. Our storage units feature:",
+      "points": [
+        "fire suppression",
+        "alarm monitoring",
+        "climate regulation",
+        "dust protections",
+        "secure access keys",
+        "inventory lists"
+      ],
+      "desc2": "With moveit, your belongings stay clean, dry, and secure until you need them again."
+    },
+    "section5": {
+      "title": "FAQ",
+      "q1": "Can you pick up my furniture and bring it to storage?",
+      "a1": "Yes — our professional moving team can handle the packing, loading, and transport from your home directly to our storage facility.",
+      "q2": "Is there a minimum storage period?",
+      "a2": "Our short-term units have a minimum storage period of 1 week. Long-term containers are billed monthly.",
+      "q3": "Are my stored items insured?",
+      "a3": "Yes — we offer storage insurance options covering fire, water, and theft while your goods are stored in our facility.",
+      "q4": "How much notice do I need to withdraw my items?",
+      "a4": "We request a 48-hour notice prior to item withdrawals so we can prepare your unit and coordinate delivery vehicles.",
+      "q5": "Can I access my storage unit anytime?",
+      "a5": "Access can be coordinated during our business hours. For security and safety, all visits are supervised by our facility manager."
+    },
+    "cta": {
+      "title": "Need Storage Space in Maastricht?",
+      "desc": "Get in touch to check unit availability and get an instant quote for transport and storage.",
+      "btn_quote": "Check Unit Rates",
+      "btn_whatsapp": "WhatsApp Us"
+    }
+  },
+  "clearance_page": {
+    "seo": {
+      "title": "Professional Home Clearance Maastricht | Trash Disposal | MoveIt",
+      "desc": "Respectful and fast home clearance services in Maastricht. Deceased estates, rental handovers, attic clearing, and eco-friendly waste recycling."
+    },
+    "hero": {
+      "title": "Home Clearance Services",
+      "subtitle": "Respectful, fast, and professional clearing of residential and commercial spaces.",
+      "desc": "We clear furniture, remove carpets, recycle electronic waste, and leave the property clean and ready for landlord handover.",
+      "btn_quote": "Get Clearance Quote",
+      "btn_whatsapp": "WhatsApp Us"
+    },
+    "section1": {
+      "title": "Why Choose Our Clearance Service",
+      "intro": "Clearing out a home after a family bereavement or preparing a rental property for handover is physically and emotionally challenging. We handle the sorting, recycling, and cleaning with total respect and efficiency.",
+      "features": {
+        "fast_clearance": "Fast Complete Clearance",
+        "eco_disposal": "Eco-Friendly Recycling",
+        "donation_sorting": "Donation Sorting Care",
+        "broom_clean": "Broom-Clean Finish",
+        "fair_valuation": "Furniture Offset Options",
+        "insured_clearance": "Fully Insured Operations"
+      }
+    },
+    "section2": {
+      "title": "Our Clearance Options",
+      "sub1": {
+        "title": "Complete House & Flat Clearance",
+        "desc": "Complete removal of furniture, household items, trash, and carpets from houses or apartments, preparing the property for handovers.",
+        "bullets": [
+          "Fast 1-2 day turnaround",
+          "Eco-friendly waste recycling",
+          "Broom-clean floors finish",
+          "Removal of all trash/junk"
+        ],
+        "price": "From €199 Excl. VAT",
+        "cta": "Book Flat Clearance",
+        "tag": "🧹 Property Clearance"
+      },
+      "sub2": {
+        "title": "Office & Commercial Clearance",
+        "desc": "Clearing corporate office spaces, retail shops, or warehouses. We dismantle desks, recycle computers/IT waste, and remove partition walls.",
+        "extra": "Includes certificate for electronic waste disposal compliance.",
+        "price": "Get Free Quote",
+        "cta": "Book Commercial Clearance",
+        "tag": "🏢 Office & Shop"
+      },
+      "sub3": {
+        "title": "Basement, Attic & Garage Clearing",
+        "desc": "Clean out years of accumulated clutter from your cellar, attic, or garden shed. We sort metals, wood, and garbage for recycling.",
+        "extra": "Includes sorting and recycling at local municipal stations:",
+        "bullets": [
+          "Attic & cellar stairs clearing",
+          "Metal & electronics recycling",
+          "Fast half-day operations",
+          "Hazardous dust protection masks"
+        ],
+        "price": "From €99 Excl. VAT",
+        "cta": "Book Garage Clearing",
+        "tag": "📦 Cellar & Attic"
+      },
+      "sub4": {
+        "title": "Eco-Friendly Garbage Disposal",
+        "desc": "We sort cleared items to ensure wood, plastics, electronics, and metals are recycled correctly at local municipal waste centers.",
+        "extra": "Great for: Green waste reduction, eco-friendly renovations, and compliance.",
+        "price": "From €49 Excl. VAT",
+        "cta": "Inquire Disposal"
+      },
+      "sub5": {
+        "title": "Broom-Clean Handover Prep",
+        "desc": "We remove nails, fill holes in plaster walls, remove custom light fixtures, and vacuum/sweep the property to secure your security deposit.",
+        "extra": "Includes: Plaster wall hole patching, curtain rod removal, and final floor sweeps.",
+        "price": "From €79 Excl. VAT",
+        "cta": "Request Handover Prep"
+      }
+    },
+    "section3": {
+      "badge": "🧹 BROOM-CLEAN GUARANTEE",
+      "title": "Eco-Friendly Clearing & Sorting",
+      "desc": "We don't just dump items in landfills. We carefully sort through clearances, donating usable furniture to local charities and recycling electronics and wood at local stations. Our process is clear:",
+      "steps": [
+        "We inspect the items and agree on offsets",
+        "Our team clears the property room-by-room",
+        "We vacuum, sweep, and hand over the keys"
+      ],
+      "logistics": "We provide all garbage bags, recycling bins, and cleaning tools.",
+      "benefits": [
+        "Zero landfill dump focus",
+        "Secure landlord deposit return",
+        "Fast, respectful service crew"
+      ],
+      "cta": "Book Clearance Service"
+    },
+    "section4": {
+      "title": "Professional Clearance Maastricht & Limburg",
+      "desc1": "We take the stress out of emptying properties. We guarantee:",
+      "points": [
+        "respectful crew",
+        "eco recycling",
+        "donation deliveries",
+        "wall hole patching",
+        "speedy clearances",
+        "sweep clean finish"
+      ],
+      "desc2": "Emptying a home doesn't have to be overwhelming. Let moveit handle the clearing and cleaning."
+    },
+    "section5": {
+      "title": "FAQ",
+      "q1": "What do you do with items that are still in good condition?",
+      "a1": "We sort cleared items. Usable furniture and clean clothes are donated to local charity shops, while damaged items are recycled.",
+      "q2": "Do you clear houses after a bereavement?",
+      "a2": "Yes — we specialize in deceased estate clearances. Our crew works quietly, respectfully, and helps families sort through items.",
+      "q3": "Do you leave the property clean?",
+      "a3": "Yes — we guarantee a 'broom-clean' finish. All floors are swept or vacuumed, and we remove all dust and trash.",
+      "q4": "Can you remove custom carpets and lighting fixtures?",
+      "a4": "Yes — we can pull up old carpets, dismantle custom curtains, and remove ceiling light fixtures, replacing them with safety terminals.",
+      "q5": "How do you calculate clearance rates?",
+      "a5": "Pricing depends on the property size, the volume of waste/items to be cleared, and municipality waste dump fees."
+    },
+    "cta": {
+      "title": "Need a Home or Office Cleared?",
+      "desc": "Get in touch for a free site assessment and a transparent clearance quote today.",
+      "btn_quote": "Get Clearance Quote",
+      "btn_whatsapp": "WhatsApp Us"
+    }
   }
 }

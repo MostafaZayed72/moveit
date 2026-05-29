@@ -536,5 +536,1391 @@
       "btn_quote": "Direct Offerte Aanvragen",
       "btn_whatsapp": "Chat op WhatsApp"
     }
+  },
+  "local_page": {
+    "seo": {
+      "title": "Lokale Verhuisservice Maastricht & Limburg | MoveIt",
+      "desc": "Premium, snelle en stressvrije lokale verhuisoplossingen in Maastricht en Zuid-Limburg. Ervaren verhuizers, transparante prijzen en volledig verzekerd."
+    },
+    "hero": {
+      "title": "Lokale Verhuisservices in Maastricht & Limburg",
+      "subtitle": "Snelle, veilige en stressvrije verhuisoplossingen op maat voor woningen, studio's en kantoren in de regio.",
+      "desc": "Van kamerverhuizingen and studio-appartementen tot complete gezinswoningen — wij nemen het zware werk uit handen.",
+      "btn_quote": "Vraag Direct Offerte Aan",
+      "btn_whatsapp": "WhatsApp Ons"
+    },
+    "section1": {
+      "title": "Waarom Kiezen voor Onze Lokale Verhuisservice",
+      "intro": "Verhuizen binnen Maastricht of Limburg vraagt om lokale expertise. Van het navigeren door smalle historische straten tot het tillen van meubels over steile trappen, moveit is gebouwd om lokale verhuizingen soepel, snel en stressvrij te laten verlopen.",
+      "features": {
+        "fast_response": "Snelle Reactietijden",
+        "local_crew": "Ervaren Lokale Verhuizers",
+        "transparent": "Transparante Uurtarieven",
+        "insured": "Volledig Verzekerd",
+        "flexible": "Flexibele Tijden & Data",
+        "friendly": "Vriendelijk & Behulpzaam Team"
+      }
+    },
+    "section2": {
+      "title": "Onze Lokale Diensten",
+      "sub1": {
+        "title": "Studio & Kamer Verhuizingen",
+        "desc": "Perfect voor studenten, jonge professionals en verhuizingen van één kamer. Ons team laadt, transporteert en lost uw spullen zo snel mogelijk.",
+        "bullets": [
+          "Snel laden & lossen",
+          "1 verhuiswagen + 1 verhuizer",
+          "Ideaal voor kleine ruimtes",
+          "Budgetvriendelijk uurtarief"
+        ],
+        "price": "Vanaf €69.99/u Excl. BTW",
+        "cta": "Boek Studio Verhuizing",
+        "tag": "🏠 Studio Verhuizing"
+      },
+      "sub2": {
+        "title": "1-2 Slaapkamer Appartementen",
+        "desc": "Verhuizen van of naar een appartement? Wij regelen trappen, krappe ruimtes en veilige verpakking om uw verhuizing stressvrij te maken.",
+        "extra": "Aanbevolen Pakket: 1 Verhuiswagen + 2 Professionele Verhuizers",
+        "price": "Vanaf €94.99/u Excl. BTW",
+        "cta": "Boek Appartement Verhuizing",
+        "tag": "🏢 Appartement"
+      },
+      "sub3": {
+        "title": "Grote Woningen & Villa's",
+        "desc": "Uitgebreide verhuisdiensten voor grotere woningen. We zetten grotere vrachtwagens en meerdere verhuizers in voor al het zware werk.",
+        "extra": "Inclusief uitgebreide bescherming van uw spullen:",
+        "bullets": [
+          "Dikke verhuisdekens",
+          "Stevige spanbanden",
+          "Hydraulische laadklep",
+          "Hulp bij demontage"
+        ],
+        "price": "Gratis Offerte",
+        "cta": "Vraag Offerte Aan",
+        "tag": "🏡 Grote Verhuizing"
+      },
+      "sub4": {
+        "title": "Enkel Item Transport",
+        "desc": "Een bank gekocht op Marktplaats of een zwaar apparaat te verhuizen? Wij halen het op en bezorgen het van deur tot deur.",
+        "extra": "Ideaal voor: Banken, Wasmachines, Eettafels, Kasten en zware meubels.",
+        "price": "Vanaf €35 Excl. BTW",
+        "cta": "Plan Enkel Item Ophaling"
+      },
+      "sub5": {
+        "title": "Spoed & Zelfde-Dag Verhuizingen",
+        "desc": "Last-minute verhuizing nodig omdat uw plannen zijn gewijzigd? Wij bieden spoedverhuizingen op dezelfde dag aan op basis van beschikbaarheid.",
+        "extra": "Ideaal voor: Onverwachte wijzigingen in huurcontract, back-up verhuisservice, plotselinge updates.",
+        "price": "Vraag Spoedofferte Aan",
+        "cta": "Vraag Spoedverhuizing Aan"
+      }
+    },
+    "section3": {
+      "badge": "📅 DOORDWEEKSE ACTIE",
+      "title": "Verhuis Doordeweeks & Bespaar",
+      "desc": "Verhuizen in het weekend is vaak druk en duurder. Bespaar op uurtarieven en kies uw favoriete tijdslot door uw verhuizing te boeken tussen dinsdag en donderdag.",
+      "steps": [
+        "Kies een dinsdag, woensdag of donderdag",
+        "Boek uw gewenste tijdslot",
+        "Profiteer van lagere tarieven"
+      ],
+      "logistics": "Wij houden u via WhatsApp op de hoogte van de exacte planning.",
+      "benefits": [
+        "Lagere uurtarieven",
+        "Meer beschikbare tijdsloten",
+        "Hogere prioriteit bij boeking"
+      ],
+      "cta": "Plan Doordeweekse Move"
+    },
+    "section4": {
+      "title": "Verhuizen voor Inwoners van Maastricht & Limburg",
+      "desc1": "We zijn er trots op om de lokale gemeenschap te ondersteunen met hoogwaardige en betrouwbare verhuisdiensten. We focussen op:",
+      "points": [
+        "stiptheid",
+        "smalle straatjes",
+        "zorgvuldig inpakken",
+        "steile trappen",
+        "betaalbare tarieven",
+        "persoonlijke support"
+      ],
+      "desc2": "Hoe complex uw lokale verhuizing ook is, onze lokale kennis en ervaren team zorgen for een soepele overgang."
+    },
+    "section5": {
+      "title": "FAQ",
+      "q1": "Helpen jullie met steile trappen in historische panden?",
+      "a1": "Yes — ons team heeft veel ervaring met de typische steile trappen en smalle gangen in Maastricht.",
+      "q2": "Wat is de minimale boekingstijd?",
+      "a2": "Onze minimale boekingstijd voor uurtarieven is 2 uur.",
+      "q3": "Leveren jullie ook verhuisdozen en tape?",
+      "a3": "Ja — we kunnen voorafgaand aan de verhuizing stevige dozen en inpakmaterialen bij u bezorgen tegen een scherp tarief.",
+      "q4": "Is brandstof inbegrepen bij lokale verhuizingen?",
+      "a4": "Ja — brandstof binnen Maastricht en de omliggende regio is volledig inbegrepen in de uurtarieven.",
+      "q5": "Zijn mijn spullen verzekerd tijdens een lokale verhuizing?",
+      "a5": "Absoluut. Al onze lokale verhuizingen zijn gedekt door onze goederenverzekering tijdens transport."
+    },
+    "cta": {
+      "title": "Klaar voor een Stressvrije Lokale Verhuizing?",
+      "desc": "Ontvang binnen enkele minuten een gratis en vrijblijvende offerte. Ons lokale team staat voor u klaar.",
+      "btn_quote": "Vraag Direct Offerte Aan",
+      "btn_whatsapp": "WhatsApp Ons"
+    }
+  },
+  "long_distance_page": {
+    "seo": {
+      "title": "Lange Afstand Verhuisservice Nederland | MoveIt",
+      "desc": "Betrouwbare verhuisservice voor lange afstanden in heel Nederland. Veilig transport via snelwegen, GPS tracking en vaste tarieven."
+    },
+    "hero": {
+      "title": "Lange Afstand Verhuisservices",
+      "subtitle": "Zorgeloze verhuisoplossingen naar elke stad in Nederland, met de grootste zorg behandeld.",
+      "desc": "Van Limburg naar Amsterdam, Rotterdam, Utrecht, of ergens anders — wij overbruggen de afstand veilig.",
+      "btn_quote": "Vraag Vaste Prijs Aan",
+      "btn_whatsapp": "WhatsApp Ons"
+    },
+    "section1": {
+      "title": "Waarom Kiezen voor Lange Afstand Verhuizen",
+      "intro": "Verhuizen naar een andere stad in Nederland vereist een zorgvuldige routeplanning en veilige verpakking. Onze transportveiligheidstechnieken zorgen voor een veilige reis.",
+      "features": {
+        "nl_coverage": "Landelijk Dekking",
+        "secure_transit": "Veilig Snelweg Transport",
+        "flat_rates": "Vaste Tarieven",
+        "gps_tracking": "GPS & WhatsApp Updates",
+        "vetted_drivers": "Gecertificeerde Chauffeurs",
+        "insured": "Volledig Verzekerd Lading"
+      }
+    },
+    "section2": {
+      "title": "Onze Lange Afstands Diensten",
+      "sub1": {
+        "title": "Maastricht naar Randstad Routes",
+        "desc": "We rijden regelmatig tussen Zuid-Limburg en de Randstad (Amsterdam, Utrecht, Rotterdam, Den Haag). Ideaal voor studenten of verhuizingen voor werk.",
+        "bullets": [
+          "Wekelijkse gecombineerde ritten",
+          "Eigen verhuiswagen of deellading",
+          "Efficiënte routeplanning",
+          "Scherpe vaste tarieven"
+        ],
+        "price": "Vanaf €249 Excl. BTW",
+        "cta": "Boek Randstad Route",
+        "tag": "🇳🇱 Randstad Route"
+      },
+      "sub2": {
+        "title": "Landelijke Complete Verhuizing",
+        "desc": "Uw complete inboedel verhuizen naar een andere provincie? Wij leveren grote vrachtwagens, een ervaren team en inpakmaterialen om de afstand veilig te overbruggen.",
+        "extra": "Aanbevolen: 1 Grote Vrachtwagen + 2 of 3 Professionele Verhuizers",
+        "price": "Gratis Offerte",
+        "cta": "Boek Landelijke Move",
+        "tag": "🚚 Complete Verhuizing"
+      },
+      "sub3": {
+        "title": "Gedeelde Lange Afstand Transporten",
+        "desc": "Bespaar tot 40% door laadruimte te delen met andere klanten op dezelfde route. Uw spullen worden veilig gescheiden en gelabeld.",
+        "extra": "Ideaal voor kleinere zendingen met flexibele leverdata:",
+        "bullets": [
+          "Lagere CO2-voetafdruk",
+          "Gedeelde brandstof- en tolkosten",
+          "100% veilig gescheiden lading",
+          "Flexibele planningsopties"
+        ],
+        "price": "Vanaf €149 Excl. BTW",
+        "cta": "Vraag Gedeeld Transport Aan",
+        "tag": "💰 Bespaar 40%"
+      },
+      "sub4": {
+        "title": "Piano & Zwaar Transport",
+        "desc": "Een piano, orgel of zwaar antiek meubel verhuizen door heel Nederland? We gebruiken speciale transportmiddelen en verpakkingen.",
+        "extra": "Ideaal voor: Piano's, zware kasten, kluizen en kwetsbare kunstwerken.",
+        "price": "Vanaf €99 Excl. BTW",
+        "cta": "Plan Zwaar Transport"
+      },
+      "sub5": {
+        "title": "Direct & Exclusief Transport",
+        "desc": "Directe levering nodig zonder tussenstops? Wij rijden rechtstreeks van A naar B om uw spullen zo snel mogelijk te leveren.",
+        "extra": "Inclusief: Exclusieve verhuiswagen, directe verzending, geen andere tussenstops.",
+        "price": "Vraag Directe Offerte",
+        "cta": "Boek Exclusief Transport"
+      }
+    },
+    "section3": {
+      "badge": "🚛 GECOMBINEERD TRANSPORT?",
+      "title": "Combineer Uw Lading & Bespaar",
+      "desc": "Als uw spullen niet direct geleverd hoeven te worden, kunt u uw transport combineren met andere klanten op dezelfde route. Het werkt simpel:",
+      "steps": [
+        "Stuur ons uw inventarislijst",
+        "Kies een flexibele leverweek",
+        "Ontvang een scherpe gecombineerde prijs"
+      ],
+      "logistics": "Wij regelen de laadverdeling en routeplanning.",
+      "benefits": [
+        "Aanzienlijke kostenbesparing",
+        "Milieuvriendelijk transport",
+        "Veilig gescheiden goederen"
+      ],
+      "cta": "Check Beschikbaarheid"
+    },
+    "section4": {
+      "title": "Limburg Verbinden met de Rest van Nederland",
+      "desc1": "Wij nemen de stress weg bij lange verhuizingen door heel Nederland. Wij garanderen:",
+      "points": [
+        "veilig transport",
+        "real-time tracking",
+        "vaste tarieven",
+        "veilig vastzetten",
+        "ervaren chauffeurs",
+        "flexibele planning"
+      ],
+      "desc2": "Met moveit voelt een verhuizing naar de andere kant van het land net zo dichtbij als verhuizen naar de buren."
+    },
+    "section5": {
+      "title": "FAQ",
+      "q1": "Hoe berekenen jullie de tarieven voor lange afstanden?",
+      "a1": "Wij berekenen dit op basis van afstand, inboedelvolume en de benodigde teamgrootte. U ontvangt vooraf een vaste prijs.",
+      "q2": "Kan ik meerijden in de verhuiswagen?",
+      "a2": "Ja — één passagier kan gratis meerijden, wat u extra reiskosten met de trein of taxi bespaart.",
+      "q3": "Hoe beschermen jullie meubels tijdens snelwegritten?",
+      "a3": "Wij maken gebruik van dikke professionele verhuisdekens, kartonnen hoekbeschermers and stevige spanbanden.",
+      "q4": "Bieden jullie tijdelijke opslag als de sleuteloverdracht later is?",
+      "a4": "Ja — we kunnen veilige tijdelijke opslag regelen in onze beveiligde wagens of opslagloods.",
+      "q5": "Wat gebeurt er bij vertraging door file?",
+      "a5": "Onze chauffeurs houden u via WhatsApp direct op de hoogte van de actuele locatie en aankomsttijd."
+    },
+    "cta": {
+      "title": "Klaar om Uw Landelijke Move te Plannen?",
+      "desc": "Vraag vandaag nog een vaste prijs aan voor uw lange afstand verhuizing. Geen verborgen kosten, inclusief transportverzekering.",
+      "btn_quote": "Vraag Vaste Prijs Aan",
+      "btn_whatsapp": "WhatsApp Ons"
+    }
+  },
+  "international_page": {
+    "seo": {
+      "title": "Internationale Verhuisservice Europa | MoveIt",
+      "desc": "Professionele internationale verhuizingen vanuit Maastricht. Grensoverschrijdende expertise naar Duitsland, België en heel Europa."
+    },
+    "hero": {
+      "title": "Internationale Verhuisservices",
+      "subtitle": "Betrouwbare grensoverschrijdende verhuizingen in Europa, met logistieke zorg geregeld.",
+      "desc": "Vanuit onze strategische basis in Maastricht zijn wij gespecialiseerd in verhuizingen over de grens.",
+      "btn_quote": "Vraag Internationale Offerte",
+      "btn_whatsapp": "WhatsApp Ons"
+    },
+    "section1": {
+      "title": "Waarom Kiezen voor Onze Internationale Verhuisservice",
+      "intro": "Internationaal verhuizen vraagt om kennis van Europese regelgeving, tolwegen en parkeervergunningen. Gelegen in het hart van de Euregio is internationaal verhuizen voor ons dagelijks werk.",
+      "features": {
+        "customs": "Douane & Vergunningen Regelen",
+        "english_coord": "Engelstalige Coördinator",
+        "secure_packing": "Veilig Lange-Afstand Inpakken",
+        "eu_network": "Groot Europees Netwerk",
+        "consolidated": "Gecombineerde Transportopties",
+        "insured": "Volledig Verzekerd Transport"
+      }
+    },
+    "section2": {
+      "title": "Onze Internationale Diensten",
+      "sub1": {
+        "title": "Euregio Grensoverschrijdende Verhuizingen",
+        "desc": "Snelle en soepele verhuizingen tussen Maastricht en nabijgelegen steden in Duitsland en België (Aken, Luik, Genk, Hasselt).",
+        "bullets": [
+          "Meertalig team",
+          "Lokale grenskennis",
+          "Snelle oplevering binnen 1 dag",
+          "Zeer scherpe tarieven"
+        ],
+        "price": "Vanaf €199 Excl. BTW",
+        "cta": "Boek Euregio Move",
+        "tag": "🇪🇺 Euregio Lokaal"
+      },
+      "sub2": {
+        "title": "Verhuizen naar West-Europa",
+        "desc": "Relocatie van uw complete inboedel naar Duitsland, België, Frankrijk, Luxemburg of andere EU-landen. Inclusief professionele inpakservice.",
+        "extra": "Inclusief: Inventarislijst, tolwegen, brandstof en transportcoördinatie.",
+        "price": "Gratis Offerte",
+        "cta": "Boek Europese Move",
+        "tag": "🌍 West-Europa"
+      },
+      "sub3": {
+        "title": "Geconsolideerd Europees Transport (Groupage)",
+        "desc": "Bespaar flink op internationale kosten door transportruimte te delen. Ideaal voor expats en studenten die naar Europese steden verhuizen.",
+        "extra": "Ideaal voor kleinere inboedels met flexibele levering:",
+        "bullets": [
+          "Gedeelde brandstof & tolkosten",
+          "Veilig gemarkeerde & gescheiden ladingen",
+          "Tracking van deur tot deur",
+          "Milieubewuste logistiek"
+        ],
+        "price": "Vanaf €299 Excl. BTW",
+        "cta": "Vraag Groupage Offerte",
+        "tag": "💰 Bespaar op Tol"
+      },
+      "sub4": {
+        "title": "Expat & Bedrijfsverhuizingen",
+        "desc": "Verhuisservices op maat voor professionals die naar het buitenland verhuizen. Wij stemmen de planning af op uw zakelijke agenda.",
+        "extra": "Ideaal voor: Expats, internationale onderzoekers, ambassadepersoneel.",
+        "price": "Vraag Zakelijke Offerte",
+        "cta": "Plan Expat Move"
+      },
+      "sub5": {
+        "title": "Hulp bij Vergunningen & Documenten",
+        "desc": "Wij regelen parkeervergunningen, wegafzettingen en helpen bij de benodigde douaneformulieren voor niet-EU landen.",
+        "extra": "Inclusief: Lokale parkeervergunningen, douanedocumentatie hulp, wegafzetting borden.",
+        "price": "Inbegrepen in pakket",
+        "cta": "Info over Vergunningen"
+      }
+    },
+    "section3": {
+      "badge": "🇪🇺 EUROPA-WIJDE GROUPAGE",
+      "title": "Gedeeld Internationaal Transport",
+      "desc": "Het combineren van uw internationale verhuizing met andere ritten is de meest voordelige manier om te verhuizen over de grens. Hoe het werkt:",
+      "steps": [
+        "Stuur uw inventarislijst & bestemming",
+        "Kies een flexibele leverperiode van 7 dagen",
+        "Ontvang een scherpe gecombineerde offerte"
+      ],
+      "logistics": "Wij regelen alle douanepapieren, tol en laadindeling.",
+      "benefits": [
+        "Gedeelde snelweg- en brandstofkosten",
+        "Lagere CO2-uitstoot",
+        "Professionele export-verpakking"
+      ],
+      "cta": "Vraag Groupage Aan"
+    },
+    "section4": {
+      "title": "Uw Partner voor Internationale Relocaties",
+      "desc1": "Wij passeren dagelijks de grens en zorgen ervoor dat uw internationale verhuizing soepel verloopt. Wij bieden:",
+      "points": [
+        "grensoverschrijding",
+        "meertalig team",
+        "veilig transport",
+        "routeplanning",
+        "vaste all-in prijzen",
+        "whatsapp support"
+      ],
+      "desc2": "Waar uw nieuwe hoofdstuk in Europa ook begint, moveit brengt u er veilig naartoe."
+    },
+    "section5": {
+      "title": "FAQ",
+      "q1": "Verhuizen jullie ook buiten Duitsland en België?",
+      "a1": "Ja — we rijden regelmatig naar Frankrijk, Luxemburg en andere West-Europese landen. Neem contact op voor uw specifieke route.",
+      "q2": "Zijn er extra kosten zoals tol of veerboten?",
+      "a2": "Nee — onze offertes voor internationale verhuizingen zijn all-inclusive. Alle brandstof, tol en kosten zijn vooraf gedekt.",
+      "q3": "Helpen jullie bij de douaneformaliteiten?",
+      "a3": "Ja, we begeleiden u bij het invullen van de vereiste douanedocumenten en de verplichte inventarislijst.",
+      "q4": "Hoe worden mijn spullen beschermd voor lange ritten?",
+      "a4": "We gebruiken speciale export-wikkelfolie, stevige dubbelwandige dozen en professionele spanbanden om schuiven te voorkomen.",
+      "q5": "Wat is de gemiddelde levertijd binnen Europa?",
+      "a5": "Korte grensoverschrijdende ritten duren 1 dag. Langere ritten naar andere landen duren meestal 1 tot 3 dagen."
+    },
+    "cta": {
+      "title": "Plannen voor een Internationale Verhuizing?",
+      "desc": "Ontvang vandaag nog een all-in offerte voor uw internationale verhuizing. Wij maken de overstap eenvoudig.",
+      "btn_quote": "Vraag Gratis Offerte",
+      "btn_whatsapp": "WhatsApp Ons"
+    }
+  },
+  "full_service_page": {
+    "seo": {
+      "title": "Full-Service Verhuizen Maastricht | Premium Service | MoveIt",
+      "desc": "Zorgeloos verhuizen met onze premium full-service verhuizing in Maastricht. Wij pakken in, demonteren, transporteren, monteren en pakken uit."
+    },
+    "hero": {
+      "title": "Full-Service Verhuizen",
+      "subtitle": "Een volledig zorgeloze ervaring: wij pakken in, verhuizen, demonteren, monteren en pakken weer uit.",
+      "desc": "Geniet van maximaal gemak terwijl ons ervaren team elk detail van uw verhuizing regelt.",
+      "btn_quote": "Vraag Premium Offerte",
+      "btn_whatsapp": "WhatsApp Ons"
+    },
+    "section1": {
+      "title": "Waarom Kiezen voor Full-Service",
+      "intro": "Inpakken en voorbereiden kost enorm veel tijd en energie. Met ons full-service pakket hoeft u zelf niets te doen. Onze inpakexperts beschermen uw spullen en onze verhuizers regelen de rest.",
+      "features": {
+        "stress_free": "100% Zorgeloze Ervaring",
+        "packing_included": "Professionele Inpakservice",
+        "free_boxes": "Gratis Premium Dozen & Tape",
+        "assembly_included": "Inclusief Montage & Demontage",
+        "coordinator": "Eigen Verhuiscoördinator",
+        "full_insurance": "Uitgebreide Transportverzekering"
+      }
+    },
+    "section2": {
+      "title": "Onze Full-Service Diensten",
+      "sub1": {
+        "title": "Sleutelklare Verhuizing",
+        "desc": "Wij pakken al uw dozen in, beschermen breekbare spullen, demonteren grote meubels, transporteren alles en bouwen het weer op. U hoeft alleen maar binnen te stappen.",
+        "bullets": [
+          "Inclusief hoogwaardige inpakmaterialen",
+          "Zorgvuldig inpakken & labelen",
+          "Meubels demonteren & monteren",
+          "Uitpakservice & plaatsing"
+        ],
+        "price": "Gratis Offerte",
+        "cta": "Boek Sleutelklare Move",
+        "tag": "✨ Sleutelklaar"
+      },
+      "sub2": {
+        "title": "Zakelijke & Kantoorverhuizingen",
+        "desc": "Verhuis uw kantoor of bedrijf met minimale downtime. We bieden avond- en weekenddiensten aan, inclusief het veilig verhuizen van IT-apparatuur.",
+        "extra": "Inclusief: Werkpleklabeling, IT-apparatuur inpakken en kantoormeubilair montage.",
+        "price": "Vraag Zakelijke Offerte",
+        "cta": "Boek Kantoorverhuizing",
+        "tag": "💼 Kantoor Special"
+      },
+      "sub3": {
+        "title": "Breekbare Spullen & Kunst",
+        "desc": "Heeft u waardevolle schilderijen, antieke meubels, spiegels of kwetsbaar glaswerk? Wij gebruiken speciale bescherming en kratten.",
+        "extra": "Speciale bescherming voor kostbare goederen:",
+        "bullets": [
+          "Kartonnen beschermranden",
+          "Dubbelwandige dozen voor glaswerk",
+          "Zuurvrij inpakpapier",
+          "Schokabsorberende materialen"
+        ],
+        "price": "Vanaf €149 Excl. BTW",
+        "cta": "Info over Kunstverhuizing",
+        "tag": "🛡️ Premium Zorg"
+      },
+      "sub4": {
+        "title": "Opruimen & Milieuvriendelijk Afvoeren",
+        "desc": "Wilt u niet alles meenemen naar uw nieuwe woning? Wij helpen bij het sorteren, doneren of milieuvriendelijk afvoeren van oude meubels.",
+        "extra": "Ideaal voor: Kelders leegmaken, oude meubels recyclen, inventaris opruimen.",
+        "price": "Vanaf €99 Excl. BTW",
+        "cta": "Plan Afvoerservice"
+      },
+      "sub5": {
+        "title": "Uitpakservice & Inrichten",
+        "desc": "Wij laten de dozen niet zomaar staan. We pakken de spullen voor u uit en zetten ze in de kasten, zodat u direct kunt genieten van uw nieuwe thuis.",
+        "extra": "Inclusief: Dozen uitpakken, kleding ophangen, afvoeren van gebruikt karton op de verhuisdag.",
+        "price": "Vraag Offerte Aan",
+        "cta": "Vraag Inrichtservice Aan"
+      }
+    },
+    "section3": {
+      "badge": "👑 WHITE GLOVE PRESTIGE",
+      "title": "Relax. Wij Doen de Rest.",
+      "desc": "Het inpakken van een gemiddeld huis kost meer dan 30 uur. Ons professionele team doet dit in één ochtend. Dit is hoe we te werk gaan:",
+      "steps": [
+        "Wij komen langs met dozen, tape en noppenfolie",
+        "Ons team pakt alles veilig en gelabeld in",
+        "Wij transporteren, monteren en pakken alles weer uit"
+      ],
+      "logistics": "Een vaste verhuiscoördinator begeleidt het hele proces van A tot Z.",
+      "benefits": [
+        "Enorme tijdsbesparing",
+        "Geen fysieke stress of zwaar tillen",
+        "Volledige dekking bij schade"
+      ],
+      "cta": "Boek Full-Service Move"
+    },
+    "section4": {
+      "title": "Een Michelin-Ster Verhuiservaring",
+      "desc1": "Ons doel is om uw verhuisdag zo aangenaam en stressvrij mogelijk te maken. Wij focussen op:",
+      "points": [
+        "zorgeloos inpakken",
+        "premium bescherming",
+        "meubels opbouwen",
+        "georganiseerd labelen",
+        "afvalvrij opleveren",
+        "persoonlijke planning"
+      ],
+      "desc2": "Waarom zelf sjouwen met dozen als de verhuisexperts het kunnen doen? Ervaar verhuizen in alle comfort."
+    },
+    "section5": {
+      "title": "FAQ",
+      "q1": "Moet ik zelf dozen of tape kopen?",
+      "a1": "Nee — alle benodigde premium dozen, inpakpapier, tape en noppenfolie zijn volledig inbegrepen in ons full-service pakket.",
+      "q2": "Hoeveel dagen duurt een full-service verhuizing?",
+      "a2": "Meestal pakken we op dag 1 alles in, en vindt het laden, transport, lossen en monteren plaats op dag 2.",
+      "q3": "Zijn mijn zelf ingepakte dozen ook verzekerd?",
+      "a3": "Als ons professionele team de dozen inpakt, zijn alle spullen volledig gedekt door onze transportverzekering.",
+      "q4": "Kunnen jullie kleding direct vanuit de kledingkast meenemen?",
+      "a4": "Ja — we gebruiken speciale garderobedozen met roedes, zodat uw kleding hangend en kreukvrij wordt vervoerd.",
+      "q5": "Maken jullie de oude woning ook schoon?",
+      "a5": "We leveren de oude woning bezemschoon op en nemen al het gebruikte verpakkingsmateriaal en kartonafval mee."
+    },
+    "cta": {
+      "title": "Klaar voor Premium Verhuizen?",
+      "desc": "Vraag een offerte op maat aan voor een zorgeloze full-service verhuizing. Neem contact op met onze coördinator.",
+      "btn_quote": "Vraag Premium Offerte Aan",
+      "btn_whatsapp": "WhatsApp Ons"
+    }
+  },
+  "furniture_assembly_page": {
+    "hero": {
+      "title": "Meubelmontage Services",
+      "subtitle": "Professionele montage en demontage van al uw meubels, uitgevoerd door ervaren handymans.",
+      "desc": "Vermijd onduidelijke handleidingen en ontbrekende schroeven. Wij bouwen uw bedden en kasten stevig op.",
+      "btn_quote": "Boek Montage",
+      "btn_whatsapp": "WhatsApp Ons"
+    },
+    "seo": {
+      "title": "Meubelmontage Services Maastricht | Handyman | MoveIt",
+      "desc": "Professionele montage en demontage van meubels in Maastricht. Ervaren handymans, het juiste gereedschap en wandmontage diensten."
+    },
+    "section1": {
+      "title": "Waarom Kiezen voor Onze Montageservice",
+      "intro": "Het in elkaar zetten van bouwpakket-meubels kost veel tijd en frustratie. Onze professionele handymans komen volledig uitgerust om uw meubels snel, stabiel en veilig te monteren.",
+      "features": {
+        "expert_tools": "Professioneel Gereedschap",
+        "all_brands": "Ervaring met Alle Merken",
+        "secure_anchoring": "Veilige Muurverankering",
+        "time_saving": "Bespaart Uren Frustratie",
+        "clean_finish": "Karton & Afval Afvoeren",
+        "workmanship": "Volledig Verzekerd Vakwerk"
+      }
+    },
+    "section2": {
+      "title": "Onze Montagediensten",
+      "sub1": {
+        "title": "Slaapkamer & Kledingkasten",
+        "desc": "Montage van complexe slaapkamermeubels, inclusief bedden, nachtkastjes en schuifdeurkasten (zoals IKEA PAX-systemen). We lijnen deuren en laden perfect uit.",
+        "bullets": [
+          "IKEA PAX-kast specialist",
+          "Deuren & laden perfect stellen",
+          "Stevige frame-versterking",
+          "Veilige muurverankering"
+        ],
+        "price": "Vanaf €49 Excl. BTW",
+        "cta": "Boek Slaapkamermontage",
+        "tag": "🛏️ Kast Specialist"
+      },
+      "sub2": {
+        "title": "Woonkamer & Eethoek Meubels",
+        "desc": "Montage van tv-meubels, eettafels, stoelen, wandplanken en dressoirs. Wij zorgen ervoor dat alle meubels stabiel en waterpas op uw vloer staan.",
+        "extra": "Inclusief: Waterpas stellen, viltjes onder meubels ter bescherming van uw vloer.",
+        "price": "Vanaf €39 Excl. BTW",
+        "cta": "Boek Woonkamermontage",
+        "tag": "🛋️ Woonkamer"
+      },
+      "sub3": {
+        "title": "Kantoormeubilair & Bureaus",
+        "desc": "Inrichten van thuiswerkplekken of zakelijke kantoren. Wij monteren ergonomische bureaus, bureaustoelen, archiefkasten en helpen bij de kabelgeleiding.",
+        "extra": "Perfect voor zakelijke kantoren en thuiswerkplekken:",
+        "bullets": [
+          "Zit-sta bureau montage",
+          "Ergonomische bureaustoel instellen",
+          "Archiefkasten & stellingen",
+          "Hulp bij kabelmanagement"
+        ],
+        "price": "Vanaf €35 Excl. BTW",
+        "cta": "Boek Kantoormontage",
+        "tag": "💼 Kantoorinrichting"
+      },
+      "sub4": {
+        "title": "Demontage & Remontage (Verhuisdag)",
+        "desc": "Gaat u verhuizen? Wij demonteren uw grote meubels veilig in uw oude woning, transporteren ze en bouwen ze in de nieuwe woning weer op.",
+        "extra": "Ideaal voor: Grote bedden, kledingkasten en tafels die niet in één stuk kunnen worden vervoerd.",
+        "price": "Vanaf €27.99/u Excl. BTW",
+        "cta": "Plan Remontage"
+      },
+      "sub5": {
+        "title": "TV & Wandmontage Service",
+        "desc": "Wilt u een tv, grote spiegel of zware zwevende planken ophangen? Wij gebruiken de juiste pluggen en bouten voor beton of gipsplaten.",
+        "extra": "Inclusief: Heavy-duty wandpluggen, laser-uitlijning, kabelgoten wegwerken.",
+        "price": "Vanaf €29 Excl. BTW",
+        "cta": "Vraag Wandmontage Aan"
+      }
+    },
+    "section3": {
+      "badge": "🛠️ ZORGELOOS BOUWEN",
+      "title": "Handleiding Aan de Kant. Geniet Snel.",
+      "desc": "Besteed uw weekend niet aan ingewikkelde handleidingen. Onze handymans zetten uw meubels in een handomdraai in elkaar. Wat wij doen:",
+      "steps": [
+        "Uitpakken en controleren van alle onderdelen",
+        "Montage volgens de specificaties van de fabrikant",
+        "Zware meubels verankeren aan de muur en opruimen"
+      ],
+      "logistics": "Wij brengen alle benodigde boren, schroevendraaiers en muurpluggen mee.",
+      "benefits": [
+        "Bespaart u een hoop tijd",
+        "100% stabiele & veilige montage",
+        "Geen rommel of kartonafval"
+      ],
+      "cta": "Plan Montage In"
+    },
+    "section4": {
+      "title": "Stevig, Veilig en Professioneel Vakwerk",
+      "desc1": "Wij monteren met precisie, zodat uw nieuwe meubels jarenlang stevig blijven staan. Wij garanderen:",
+      "points": [
+        "strakke uitlijning",
+        "veilige verankering",
+        "ervaring met alle merken",
+        "eigen gereedschap",
+        "snelle service",
+        "verzekerd vakwerk"
+      ],
+      "desc2": "Geen gewiebel, geen schroeven over en geen stress. Gewoon mooie meubels, direct klaar voor gebruik."
+    },
+    "section5": {
+      "title": "FAQ",
+      "q1": "Brengen jullie je eigen gereedschap mee?",
+      "a1": "Ja — onze handymans hebben professionele schroefmachines, waterpassen, handgereedschap en muurpluggen bij zich.",
+      "q2": "Monteren jullie ook meubels van andere winkels dan IKEA?",
+      "a2": "Ja — we monteren meubels van alle bekende winkels zoals Jysk, Leen Bakker, Made, en andere online retailers.",
+      "q3": "Monteren jullie zware kasten standaard aan de muur?",
+      "a3": "Ja — veiligheid is onze prioriteit. We verankeren hoge kasten aan de muur om omvallen te voorkomen, ideaal voor gezinnen met kinderen.",
+      "q4": "Kunnen jullie ook oude meubels demonteren voor de verhuizing?",
+      "a4": "Ja — we kunnen oude kasten en bedden demonteren om ruimte te maken of voor te bereiden op de verhuisdag.",
+      "q5": "Nemen jullie het karton en verpakkingsmateriaal mee?",
+      "a5": "Ja — we kunnen op verzoek al het karton en plastic verpakkingsmateriaal verzamelen en voor u afvoeren."
+    },
+    "cta": {
+      "title": "Meubels Laten Monteren?",
+      "desc": "Ontvang direct een prijsindicatie en boek vandaag nog een ervaren handyman. Professioneel, verzekerd en snel.",
+      "btn_quote": "Boek Meubelmontage",
+      "btn_whatsapp": "WhatsApp Ons"
+    }
+  },
+  "packing_page": {
+    "seo": {
+      "title": "Professionele In- & Uitpakservice Maastricht | MoveIt",
+      "desc": "Verhuis zonder stress met de inpak- en uitpakdiensten van MoveIt. Ervaren inpakkers, premium inpakmaterialen en volledige verzekering."
+    },
+    "hero": {
+      "title": "In- & Uitpakservices",
+      "subtitle": "Volledig zorgeloze inpakoplossingen met hoogwaardige materialen, met absolute zorg uitgevoerd.",
+      "desc": "Wij pakken uw breekbare servies in, labelen de verhuisdozen en richten uw kasten in, zodat u uren werk bespaart.",
+      "btn_quote": "Vraag Inpakofferte Aan",
+      "btn_whatsapp": "WhatsApp Ons"
+    },
+    "section1": {
+      "title": "Waarom Kiezen voor Onze Inpakservice",
+      "intro": "Inpakken is vaak het meest tijdrovende onderdeel van een verhuizing. Onze getrainde inpakteams gebruiken slimme labeling, dubbelwandige dozen en speciale inpaktechnieken om te zorgen dat alles veilig aankomt.",
+      "features": {
+        "expert_packers": "Ervaren Inpakkers",
+        "premium_materials": "Premium Inpakmaterialen",
+        "labeling_system": "Slim Labelingsysteem",
+        "insured_packing": "Volledig Verzekerd Inpakken",
+        "flexible_timing": "Flexibele Inpakdata",
+        "unpacking_support": "Volledige Uitpakhulp"
+      }
+    },
+    "section2": {
+      "title": "Onze Inpakopties",
+      "sub1": {
+        "title": "Volledige Inpakservice Woningen",
+        "desc": "Ons team komt langs met verhuisdozen, inpakpapier and tape om uw complete inboedel systematisch kamer voor kamer in te pakken.",
+        "bullets": [
+          "Dubbelwandige dozen & tape inbegrepen",
+          "Breekbaar servies zorgvuldig ingepakt",
+          "Kledingkasten & garderobedozen ingeruimd",
+          "Gestructureerde labeling per kamer"
+        ],
+        "price": "Vanaf €149 Excl. BTW",
+        "cta": "Vraag Volledig Inpakken Aan",
+        "tag": "📦 Volledig Inpakken"
+      },
+      "sub2": {
+        "title": "Alleen Breekbare Spullen Inpakken",
+        "desc": "Heeft u alleen hulp nodig bij het beschermen van uw meest kwetsbare spullen? Wij pakken glaswerk, servies, spiegels en elektronica in.",
+        "extra": "Aanbevolen voor: Kostbaar servies, spiegels, schilderijen and kunstwerken.",
+        "price": "Vanaf €99 Excl. BTW",
+        "cta": "Boek Breekbaar Inpakken",
+        "tag": "💎 Glas & Servies"
+      },
+      "sub3": {
+        "title": "Uitpakservice & Kastinrichting",
+        "desc": "Voorkom dat u wekenlang tussen de verhuisdozen leeft. Wij pakken uw spullen uit, hangen kleding op en ruimen kasten in.",
+        "extra": "Inclusief het direct afvoeren van al het karton en plastic afval:",
+        "bullets": [
+          "Zorgvuldig uitpakken van goederen",
+          "Kleding direct in kledingkasten hangen",
+          "Keukeninrichting & servies opruimen",
+          "Afvoeren & recyclen van dozen"
+        ],
+        "price": "Vanaf €129 Excl. BTW",
+        "cta": "Boek Uitpakservice",
+        "tag": "✨ Direct Klaar"
+      },
+      "sub4": {
+        "title": "Alleen Levering Inpakmaterialen",
+        "desc": "Wilt u liever zelf inpakken maar heeft u professioneel materiaal nodig? Wij leveren dozen, noppenfolie and inpakpapier aan huis.",
+        "extra": "Ideaal voor: Zelf inpakken, opslagvoorbereiding and zolder opruimen.",
+        "price": "Vanaf €35 Excl. BTW",
+        "cta": "Bestel Materialen"
+      },
+      "sub5": {
+        "title": "Gedeeltelijke & Enkele Kamer Inpakservice",
+        "desc": "Hulp nodig bij slechts één kamer? Of het nu gaat om uw keuken, garage of boekencollectie, wij pakken het snel in.",
+        "extra": "Inclusief: 1 of 2 inpakexperts, inpakdozen and halve dag inpakondersteuning.",
+        "price": "Vanaf €59 Excl. BTW",
+        "cta": "Boek Kamer Inpakservice"
+      }
+    },
+    "section3": {
+      "badge": "📦 BESPAAR TIJD & STRESS",
+      "title": "Een Compleet Huis Ingepakt in Uren",
+      "desc": "Het inpakken van een gemiddelde gezinswoning kost al snel 30 uur werk. Ons professionele inpakteam doet dit in slechts 4 tot 6 uur. Het proces is simpel:",
+      "steps": [
+        "Wij leveren materialen and starten met inpakken",
+        "Alle verhuisdozen worden gelabeld and gesloten",
+        "Onze verhuizers laden alles direct in de wagen"
+      ],
+      "logistics": "Wij zorgen voor alle dozen, tape, inpakpapier and noppenfolie.",
+      "benefits": [
+        "Enorme tijdsbesparing",
+        "Veilige inpaktechnieken",
+        "Volledig verzekerde inboedel"
+      ],
+      "cta": "Boek Inpakservice"
+    },
+    "section4": {
+      "title": "Zorgvuldig Inpakken ter Voorkoming van Schade",
+      "desc1": "Wij behandelen and verpakken elke doos alsof het onze eigen spullen zijn. We focussen op:",
+      "points": [
+        "noppenfolie",
+        "dubbelwandige dozen",
+        "garderobedozen",
+        "kamerstructuur",
+        "stevig tapen",
+        "uitpakhulp"
+      ],
+      "desc2": "Met moveit hoeft u zelf geen dozen te vouwen of tape af te snijden. Wij regelen het allemaal."
+    },
+    "section5": {
+      "title": "FAQ",
+      "q1": "Zijn de inpakmaterialen bij de prijs inbegrepen?",
+      "a1": "Yes — onze offertes voor volledige inpakdiensten zijn altijd inclusief alle dozen, tape, inpakpapier and noppenfolie.",
+      "q2": "Moet ik zelf nog iets inpakken als ik kies voor full-service?",
+      "a2": "Nee — ons team regelt alles, van keukenkruiden tot kledingkasten. U kunt alles laten staan zoals het staat.",
+      "q3": "Zijn mijn spullen verzekerd als jullie ze inpakken?",
+      "a3": "Ja — goederen die door ons professionele team zijn ingepakt, zijn volledig gedekt onder onze transportverzekering.",
+      "q4": "Can you pack clothes directly from my closets?",
+      "a4": "Ja — wij gebruiken speciale garderobedozen met roedes, zodat uw kleding hangend and kreukvrij wordt vervoerd.",
+      "q5": "Do you remove the empty boxes after unpacking?",
+      "a5": "Ja — als wij ook de uitpakservice verzorgen, nemen we na afloop alle lege kartonnen dozen and plastic afval mee voor recycling."
+    },
+    "cta": {
+      "title": "Klaar om het Inpakken over te Laten?",
+      "desc": "Ontvang een vrijblijvende offerte voor inpakken and verhuizen. Neem contact op met ons team.",
+      "btn_quote": "Vraag Gratis Offerte",
+      "btn_whatsapp": "WhatsApp Ons"
+    }
+  },
+  "lift_rental_page": {
+    "seo": {
+      "title": "Verhuislift Huren Maastricht | Meubellift | MoveIt",
+      "desc": "Huur een verhuislift met operator in Maastricht. Bereik tot de 5e verdieping. Snelle opbouw, veilig hijsen and volledig verzekerd."
+    },
+    "hero": {
+      "title": "Verhuislift Huren Services",
+      "subtitle": "Huur een meubellift met gecertificeerde operator voor veilig and snel hijswerk.",
+      "desc": "Vermijd steile trappen, smalle gangen and schade. Hijs zware banken, wasmachines and bedden direct door het raam.",
+      "btn_quote": "Boek Verhuislift",
+      "btn_whatsapp": "WhatsApp Ons"
+    },
+    "section1": {
+      "title": "Waarom een Verhuislift Huren",
+      "intro": "Veel historische panden in Maastricht hebben steile and smalle trappenhuizen. Het huren van een verhuislift is de veiligste manier om zware meubels te verhuizen, zonder schade aan uw spullen of muren.",
+      "features": {
+        "high_reach": "Tot 5e Verdieping Bereik",
+        "certified_operator": "Inclusief Gecertificeerde Operator",
+        "safety_vetted": "Veilig Gekeurde Liften",
+        "quick_setup": "Snelle 15-Minuten Opbouw",
+        "street_permits": "Advies bij Parkeervergunning",
+        "insured_lift": "Volledig Verzekerd"
+      }
+    },
+    "section2": {
+      "title": "Onze Verhuislift Diensten",
+      "sub1": {
+        "title": "Standaard Verhuislift Huren",
+        "desc": "Huur onze moderne aanhangerlift met een ervaren operator om uw meubels veilig naar boven of beneden te transporteren.",
+        "bullets": [
+          "Tot 18 meter reikwijdte",
+          "Ervaren liftoperator inbegrepen",
+          "Veilig laadplatform",
+          "Bescherming met verhuisdekens"
+        ],
+        "price": "Vanaf €79/u Excl. BTW",
+        "cta": "Boek Lift + Operator",
+        "tag": "🏗️ Lift + Operator"
+      },
+      "sub2": {
+        "title": "Zware Hijsservice Meubellift",
+        "desc": "Speciaal ontworpen voor zeer zware goederen zoals wasmachines, grote kasten, Amerikaanse koelkasten and piano's.",
+        "extra": "Vereist wanneer objecten te zwaar zijn voor reguliere handmatige verhuizing.",
+        "price": "Vanaf €99 Excl. BTW",
+        "cta": "Vraag Hijsservice Aan",
+        "tag": "⚡ Zwaar Hijswerk"
+      },
+      "sub3": {
+        "title": "Zakelijke & Renovatie Liftverhuur",
+        "desc": "Verhuur voor een hele dag ten behoeve van kantoorverhuizingen of bouwprojecten. Altijd inclusief operator.",
+        "extra": "Speciale zakelijke tarieven voor aannemers and woningbouwverenigingen:",
+        "bullets": [
+          "8 uur lang exclusieve lifttoegang",
+          "Veiligheidskeuring op locatie",
+          "Onbeperkt aantal hijscycli",
+          "Flexibel verplaatsen bij storm"
+        ],
+        "price": "Vraag Projecttarief Aan",
+        "cta": "Inquire Zakelijke Lift",
+        "tag": "🏢 Zakelijke Projecten"
+      },
+      "sub4": {
+        "title": "Express Enkel Item Hijsservice",
+        "desc": "Heeft u een nieuwe bank of koelkast gekocht die niet door het trappenhuis past? Wij bouwen op and hijsen het binnen 30 minutes.",
+        "extra": "Ideaal voor: Banken, matrassen, kasten and witgoed via Marktplaats.",
+        "price": "Vanaf €59 Excl. BTW",
+        "cta": "Plan Express Hijs"
+      },
+      "sub5": {
+        "title": "Smalle Straatjes & Historisch Centrum",
+        "desc": "Wij beschikken over compacte aanhangerliften die speciaal zijn ontworpen voor de smalle straatjes and binnentuinen in Maastricht.",
+        "extra": "Ideaal voor: Historische binnenstad, kleine hofjes, smalle opritten.",
+        "price": "Vraag Toegangsadvies Aan",
+        "cta": "Inquire Binnenstad Lift"
+      }
+    },
+    "section3": {
+      "badge": "🏗️ VERMIJD STEILE TRAPPEN",
+      "title": "Hijs Uw Meubels. Voorkom Schade.",
+      "desc": "De trappenhuizen in Maastricht zijn vaak erg steil. Een verhuislift omzeilt de binnenzijde van het pand volledig, waardoor de verhuizing sneller verloopt and schade wordt voorkomen.",
+      "steps": [
+        "Wij parkeren de lift onder het raam",
+        "Onze operator stelt the lift veilig op",
+        "Uw spullen staan binnen enkele seconden boven"
+      ],
+      "logistics": "Wij verzorgen de complete opbouw and bediening van de lift.",
+      "benefits": [
+        "Geen schade aan trappenhuis",
+        "Halveert de verhuistijd",
+        "Veilig voor zware materialen"
+      ],
+      "cta": "Reserveer Verhuislift"
+    },
+    "section4": {
+      "title": "Gecertificeerde Liftoperators voor Maximale Veiligheid",
+      "desc1": "Wij verhuren onze liften nooit zonder operator. Wij garanderen veiligheid door te letten op:",
+      "points": [
+        "windmetingen",
+        "stempels and stabiliteit",
+        "raambescherming",
+        "professionele bediening",
+        "maximale gewichten",
+        "veilige sjorbanden"
+      ],
+      "desc2": "Laat het zware hijswerk over aan moveit. Uw spullen komen gegarandeerd krasvrij op hun plek."
+    },
+    "section5": {
+      "title": "FAQ",
+      "q1": "Can I rent the lift without an operator?",
+      "a1": "Nee — om veiligheids- and verzekeringsredenen bedient onze gecertificeerde operator altijd zelf de lift.",
+      "q2": "How high can your moving lift reach?",
+      "a2": "Onze standaard aanhangerliften reiken tot 18 meter hoog, wat overeenkomt met de 5e verdieping van de meeste gebouwen.",
+      "q3": "Do I need a parking permit for the lift?",
+      "a3": "Als de lift op de openbare weg of op parkeervakken moet staan, is soms een vergunning nodig. Wij kunnen u hierin adviseren.",
+      "q4": "What window sizes are needed for hoisting?",
+      "a4": "Het raam of de balkondeur moet breed genoeg zijn om uw grootste meubelstukken door te laten. Het raam moet volledig open kunnen.",
+      "q5": "What happens in case of strong winds or rain?",
+      "a5": "Bij te harde wind (boven windkracht 5/6) stelt onze operator de lift uit veiligheidsoverwegingen niet op. We verplaatsen de afspraak kosteloos."
+    },
+    "cta": {
+      "title": "Verhuislift Nodig?",
+      "desc": "Neem vandaag nog contact op om te controleren of een verhuislift op uw adres geplaatst kan worden.",
+      "btn_quote": "Vraag Lift-Offerte Aan",
+      "btn_whatsapp": "WhatsApp Ons"
+    }
+  },
+  "piano_page": {
+    "seo": {
+      "title": "Professioneel Pianotransport Maastricht | Verzekerd | MoveIt",
+      "desc": "Gespecialiseerd pianotransport in Maastricht. Plooibare verhuishoezen, zware karren and verhuisliften. Uw piano 100% verzekerd."
+    },
+    "hero": {
+      "title": "Gespecialiseerd Pianotransport",
+      "subtitle": "Veilig, verzekerd and vakkundig transport van piano's and vleugels in Maastricht and Limburg.",
+      "desc": "Kostbare instrumenten vereisen speciale zorg. Wij maken gebruik van beschermende hoezen and ervaren pianoverhuizers.",
+      "btn_quote": "Vraag Piano-Offerte Aan",
+      "btn_whatsapp": "WhatsApp Ons"
+    },
+    "section1": {
+      "title": "Waarom Kiezen voor Ons Pianotransport",
+      "intro": "Piano's zijn zwaar, mechanisch zeer complex and gevoelig voor temperatuur- and vochtschommelingen. Gewone verhuizers volstaan niet. Onze specialisten zorgen voor een risicovrij transport.",
+      "features": {
+        "specialist_equipment": "Speciale Pianosledes",
+        "expert_crew": "Ervaren Pianoverhuizers",
+        "thick_blankets": "Extra Dikke Verhuisdekens",
+        "secured_transit": "Stevige Spanbanden",
+        "temperature_protection": "Klimaatfolie Bescherming",
+        "insured_piano": "100% Verzekerd Transport"
+      }
+    },
+    "section2": {
+      "title": "Onze Pianotransport Opties",
+      "sub1": {
+        "title": "Upright Piano Transport",
+        "desc": "Verhuizen van een standaard staande piano (upright piano) via de begane grond of lift met behulp van speciale hoezen and karren.",
+        "bullets": [
+          "Dikke beschermende hoezen",
+          "Zachte rubberen transportwielen",
+          "Hydraulische laadkleppen",
+          "Speciale vastzetbanden"
+        ],
+        "price": "Vanaf €149 Excl. BTW",
+        "cta": "Boek Upright Transport",
+        "tag": "🎹 Staande Piano"
+      },
+      "sub2": {
+        "title": "Vleugel Transport (Grand Piano)",
+        "desc": "Professionele logistiek for babyvleugels and concertvleugels. Demontage van poten, klep and lier, and verpakking in speciale hoezen.",
+        "extra": "Inclusief professional disassembly and assembly op de bestemming.",
+        "price": "Vanaf €299 Excl. BTW",
+        "cta": "Boek Vleugel Transport",
+        "tag": "👑 Vleugel"
+      },
+      "sub3": {
+        "title": "Pianotransport met Verhuislift",
+        "desc": "Moet de piano naar een hogere verdieping met een smalle trap? Wij hijsen uw piano veilig via het raam met onze verhuislift.",
+        "extra": "Inclusief veiligheidskeuring and hijsbanden:",
+        "bullets": [
+          "Gekeurde zware hijsbanden",
+          "Stabiele liftplatform opstelling",
+          "Raam- and kozijnbescherming",
+          "Volledige aansprakelijkheidsdekking"
+        ],
+        "price": "Vanaf €249 Excl. BTW",
+        "cta": "Boek Lifttransport",
+        "tag": "🏗️ Hijsservice"
+      },
+      "sub4": {
+        "title": "Digitale Piano & Keyboard Transport",
+        "desc": "Veilig transport van digitale piano's, keyboards of synthesizers. Verpakt in flightcases of professionele noppenfolie.",
+        "extra": "Ideaal for: Band gear, studio setups, studentenkamers, Marktplaats pickups.",
+        "price": "Vanaf €49 Excl. BTW",
+        "cta": "Plan Keyboard Transport"
+      },
+      "sub5": {
+        "title": "Geïsoleerd Klimaattransport",
+        "desc": "We wikkelen kostbare houten instrumenten in thermische folie om ze te beschermen tegen plotselinge temperatuurschommelingen.",
+        "extra": "Aanbevolen for: Antieke piano's, klavecimbels, concertvleugels.",
+        "price": "Vanaf €35 Excl. BTW",
+        "cta": "Info over Klimaatfolie"
+      }
+    },
+    "section3": {
+      "badge": "🎹 EXPERT INSTRUMENT CARE",
+      "title": "Bescherming van Mechaniek & Klankbord",
+      "desc": "Een piano weegt tussen de 150 kg and 500 kg. Ondeskundig tillen kan leiden tot breuken in het klankbord of ontstemming. Onze methode voorkomt schade:",
+      "steps": [
+        "Klavierklep and deksel worden stevig vergrendeld",
+        "Het instrument wordt verpakt in schokdempende hoezen",
+        "Laden and lossen gebeurt via de laadklep"
+      ],
+      "logistics": "Wij maken uitsluitend gebruik van zachte, streeploze transportwielen.",
+      "benefits": [
+        "Beschermt het kwetsbare mechaniek",
+        "Geen krassen op uw vloeren",
+        "Goederen-in-transit verzekeringsdekking"
+      ],
+      "cta": "Plan Pianotransport"
+    },
+    "section4": {
+      "title": "Ervaren Pianoverhuizers in Maastricht & Regio",
+      "desc1": "Wij vervoeren uw piano met uiterste precisie over de weg and trappen. Wij garanderen:",
+      "points": [
+        "vloerbescherming",
+        "veilig vastzetten",
+        "klavierbescherming",
+        "ervaren verhuizers",
+        "all-in vaste prijzen",
+        "persoonlijke support"
+      ],
+      "desc2": "Bij moveit is uw kostbare instrument in veilige handen, ready to be tuned and played in uw nieuwe woning."
+    },
+    "section5": {
+      "title": "FAQ",
+      "q1": "Do I need to tune my piano immediately after the move?",
+      "a1": "We raden aan om na de verhuizing 1 tot 2 weken te wachten met stemmen, zodat het hout kan wennen aan de luchtvochtigheid and temperatuur van de nieuwe kamer.",
+      "q2": "Are pianos insured during transport?",
+      "a2": "Ja — al ons pianotransport is volledig gedekt door onze goederenverzekering tijdens transport.",
+      "q3": "Can you carry a piano up stairs?",
+      "a3": "Wij transporteren piano's via de begane grond of liften. Bij steile trappenhuizen raden we ten zeerste aan om een verhuislift in te zetten.",
+      "q4": "Do you bring your own ramps and lift gates?",
+      "a4": "Ja — onze wagens zijn uitgerust met hydraulische laadkleppen, oprijplaten and speciale spanbanden voor instrumenten.",
+      "q5": "Can you transport organs or harpsichords?",
+      "a5": "Ja — ons team is ervaren met alle soorten klassieke toetsinstrumenten, synthesizers and antieke meubels."
+    },
+    "cta": {
+      "title": "Piano Laten Verhuizen?",
+      "desc": "Vraag direct een prijsindicatie aan. Veilig, vakkundig and met zorg uitgevoerd door specialisten.",
+      "btn_quote": "Vraag Piano-Offerte Aan",
+      "btn_whatsapp": "WhatsApp Ons"
+    }
+  },
+  "senior_page": {
+    "seo": {
+      "title": "Seniorenverhuizing Maastricht | Zorgzame Service | MoveIt",
+      "desc": "Zorgzame, geduldige and stressvrije seniorenverhuizingen in Maastricht. Hulp bij downsizing, inpakken, inrichten and bezemschoon opleveren."
+    },
+    "hero": {
+      "title": "Seniorenverhuizing Services",
+      "subtitle": "Zorgzame, geduldige and volledig ontzorgde verhuisservice speciaal voor senioren.",
+      "desc": "Wij werken in een rustig tempo, helpen bij het sorteren and inpakken, and richten de nieuwe woning direct sfeervol in.",
+      "btn_quote": "Vraag Zorgzame Offerte Aan",
+      "btn_whatsapp": "WhatsApp Ons"
+    },
+    "section1": {
+      "title": "Waarom Kiezen voor Onze Seniorenverhuizing",
+      "intro": "Verhuizen op latere leeftijd is emotioneel and fysiek ingrijpend. Wij gaan verder dan alleen logistiek: we bieden geduldige hulp bij downsizing, inpakken and het inrichten van de nieuwe kamer.",
+      "features": {
+        "caring_staff": "Zorgzame & Geduldige Verhuizers",
+        "downsizing_help": "Hulp bij Downsizing & Sorteren",
+        "full_packing": "Volledig Inpakken & Labelen",
+        "furniture_setup": "Nieuwe Woning Direct Klaar",
+        "cleanup_service": "Bezemschone Oplevering",
+        "insured_support": "Betrouwbare & Verzekerde Hulp"
+      }
+    },
+    "section2": {
+      "title": "Onze Senioren Verhuisdiensten",
+      "sub1": {
+        "title": "Hulp bij Downsizing & Sorteren",
+        "desc": "Ondersteuning bij het sorteren van jaren aan herinneringen. We helpen beslissen wat mee gaat, wat naar familie gaat of gedoneerd wordt.",
+        "bullets": [
+          "Geduldige sorteringshulp",
+          "Beleefd en rustig verhuisteam",
+          "Duidelijk gelabelde dozen",
+          "Afvoeren van overtollige spullen"
+        ],
+        "price": "Vanaf €99 Excl. BTW",
+        "cta": "Info over Sorteringshulp",
+        "tag": "❤️ Downsizing"
+      },
+      "sub2": {
+        "title": "Volledige Sleutelklare Seniorenverhuizing",
+        "desc": "De ultieme ontzorging. Wij pakken in, demonteren, transporteren, bouwen meubels op, pakken dozen uit and richten kasten in.",
+        "extra": "Recommended: Inclusief inpakken, transport and het volledig inrichten van keuken and kledingkasten.",
+        "price": "Gratis Offerte",
+        "cta": "Boek Seniorenverhuizing",
+        "tag": "🏡 Complete Ontzorging"
+      },
+      "sub3": {
+        "title": "Verhuizen naar Zorginstelling of Aanleunwoning",
+        "desc": "Wij stemmen de planning af met de beheerders van het zorgcentrum voor een rustige verhuizing volgens alle huisregels.",
+        "extra": "Coordinates with care home rules and timing:",
+        "bullets": [
+          "Verhuizen op rustige uren",
+          "Inrichten van compacte kamers",
+          "Montage van senioren- of hoog-laagbedden",
+          "Afstemming met zorglocatie"
+        ],
+        "price": "Vanaf €129 Excl. BTW",
+        "cta": "Plan Zorgverhuizing",
+        "tag": "🏢 Naar Zorginstelling"
+      },
+      "sub4": {
+        "title": "Bezemschone Oplevering Oude Woning",
+        "desc": "Na de verhuizing leveren we de oude woning volledig leeg, schoon and bezemschoon opleveren voor verkoop of verhuurder.",
+        "extra": "Great for: Handover cleanings, trash recycling, donation drops.",
+        "price": "Vanaf €99 Excl. BTW",
+        "cta": "Plan Bezemschoon Opleveren"
+      },
+      "sub5": {
+        "title": "Direct Contact met Familie",
+        "desc": "We houden nauw contact met kinderen of vertegenwoordigers and sturen updates via WhatsApp voor een soepel verloop.",
+        "extra": "Ideal for: Distant family members, busy relatives, coordinated updates.",
+        "price": "Inbegrepen in service",
+        "cta": "Info over Familie-afstemming"
+      }
+    },
+    "section3": {
+      "badge": "❤️ RUST & AANDACHT",
+      "title": "Een Overstap met Rust en Respect",
+      "desc": "Een verhuizing kan ingrijpend zijn. Wij zorgen ervoor dat de verhuisdag in alle rust verloopt, zonder haast. Onze werkwijze:",
+      "steps": [
+        "We maken een ontspannen planning vooraf",
+        "Spullen worden zorgvuldig and respectvol ingepakt",
+        "De nieuwe woning wordt direct sfeervol ingericht"
+      ],
+      "logistics": "Wij verzorgen alle afspraken met het zorgtehuis and familie.",
+      "benefits": [
+        "Minimaal stressniveau",
+        "Vriendelijk en rustig verhuisteam",
+        "Bezemschone oplevering van het oude pand"
+      ],
+      "cta": "Plan Zorgzame Move"
+    },
+    "section4": {
+      "title": "Zorgzaam Verhuizen in Maastricht & Limburg",
+      "desc1": "We zijn er trots op senioren and hun families te mogen ondersteunen met een respectvolle service. We letten op:",
+      "points": [
+        "beleefde verhuizers",
+        "ontspannen tempo",
+        "downsizing hulp",
+        "kasten inruimen",
+        "afvalverwerking",
+        "transparante prijzen"
+      ],
+      "desc2": "Het verhuizen van uw ouders of familie hoeft niet stressvol te zijn. Laat moveit de zorg dragen."
+    },
+    "section5": {
+      "title": "FAQ",
+      "q1": "How do you handle fragile memories?",
+      "a1": "Wij pakken fotoalbums, erfstukken and persoonlijke spullen met de grootste zorg and speciaal inpakpapier in in dubbelwandige dozen.",
+      "q2": "Can you coordinate with care facility managers?",
+      "a2": "Ja — we reserveren de lift, stemmen parkeerplekken af and houden rekening met rusttijden and huisregels van de instelling.",
+      "q3": "Do you help with unpacking and making the bed?",
+      "a3": "Ja — bij onze complete pakketten zorgen we dat het bed is opgemaakt, kleding in de kast hangt and de keuken is ingericht bij binnenkomst.",
+      "q4": "Can we pack some items ourselves?",
+      "a4": "Absoluut. U bepaalt zelf hoeveel u uit handen wilt geven. Wij vullen aan waar nodig.",
+      "q5": "Are your movers vetted and friendly?",
+      "a5": "Ja — ons team is geselecteerd op vriendelijkheid and geduld, and heeft ruime ervaring met seniorenverhuizingen."
+    },
+    "cta": {
+      "title": "Een Seniorenverhuizing Plannen?",
+      "desc": "Neem gerust contact met ons op om de mogelijkheden te bespreken voor een zorgzame and rustige verhuizing.",
+      "btn_quote": "Vraag Zorgzame Offerte",
+      "btn_whatsapp": "WhatsApp Ons"
+    }
+  },
+  "storage_page": {
+    "seo": {
+      "title": "Beveiligde Opslagruimte Huren Maastricht | MoveIt",
+      "desc": "Huur een veilige, droge and klimaatgecontroleerde opslagruimte in Maastricht. Korte of lange termijn. Inclusief transport and inpakken."
+    },
+    "hero": {
+      "title": "Beveiligde Opslagruimte Huren",
+      "subtitle": "Droge, schone and klimaatgecontroleerde opslagruimtes for korte of lange periodes.",
+      "desc": "Wij halen uw meubels op, slaan ze veilig op in onze beveiligde loods and bezorgen ze zodra u de sleutels heeft.",
+      "btn_quote": "Bekijk Opslagtarieven",
+      "btn_whatsapp": "WhatsApp Ons"
+    },
+    "section1": {
+      "title": "Waarom Kiezen voor Onze Opslagruimtes",
+      "intro": "Of u nu tijdelijk wilt huren tussen twee huurcontracten, gaat verbouwen of in het buitenland studeert: onze opslagloods biedt 24/7 camerabewaking, klimaatbeheersing and transport.",
+      "features": {
+        "secure_facility": "24/7 Camerabewaking",
+        "climate_control": "Klimaatbeheersing (Vocht & Temp)",
+        "flexible_contracts": "Flexibele Maandcontracten",
+        "loading_help": "Inclusief Ophalen & Laden",
+        "easy_access": "Snelle Toegang & Retrieval",
+        "insured_storage": "Volledig Verzekerde Opslag"
+      }
+    },
+    "section2": {
+      "title": "Onze Opslagmogelijkheden",
+      "sub1": {
+        "title": "Tijdelijke Opslag (Korte Termijn)",
+        "desc": "Ideaal om uw inboedel een paar weken of maanden op te slaan tijdens een verbouwing of verhuisvertraging. Wekelijks opzegbaar.",
+        "bullets": [
+          "Wekelijks opzegbare contracten",
+          "Ophaalservice voor de deur",
+          "Schone en droge opslagboxen",
+          "Snelle toegang tot uw spullen"
+        ],
+        "price": "Vanaf €19/week Excl. BTW",
+        "cta": "Boek Tijdelijke Opslag",
+        "tag": "🔒 Korte Termijn"
+      },
+      "sub2": {
+        "title": "Studenten Zomeropslag",
+        "desc": "Verlaat u Maastricht in de zomervakantie of gaat u een semester in het buitenland studeren? Sla uw spullen goedkoop op in onze beveiligde lockers.",
+        "extra": "Special student deal: Combineer met medestudenten om transportkosten te delen.",
+        "price": "Vanaf €9/week Excl. BTW",
+        "cta": "Boek Studentenopslag",
+        "tag": "🎓 Studenten Deal"
+      },
+      "sub3": {
+        "title": "Lange Termijn Inboedelopslag",
+        "desc": "Verhuizen naar het buitenland of tijdelijk kleiner wonen? Wij slaan uw complete inboedel op in verzegelde, geconditioneerde containers.",
+        "extra": "Inclusief maandelijkse temperatuurrapportages and verzegeling:",
+        "bullets": [
+          "Grote container opslagboxen",
+          "Klimaatbeheersing tegen vocht",
+          "Verzegelde sloten voor veiligheid",
+          "Gedetailleerde inventarislijst"
+        ],
+        "price": "Vraag Opslagtarief Aan",
+        "cta": "Vraag Langdurige Opslag Aan",
+        "tag": "🏡 Inboedelopslag"
+      },
+      "sub4": {
+        "title": "Archief- & Documentenopslag",
+        "desc": "Bespaar kantoorruimte. Sla uw belastingarchieven, dossiers and overtollige kantoormeubels veilig op.",
+        "extra": "Great for: Law firms, medical clinics, tax document archives.",
+        "price": "Vanaf €29/maand Excl. BTW",
+        "cta": "Info over Archiefopslag"
+      },
+      "sub5": {
+        "title": "Combinatiedeal: Verhuizen + Opslag",
+        "desc": "Wij laden uw inboedel in, slaan het op in onze loods and bezorgen/monteren alles zodra uw nieuwe woning gereed is.",
+        "extra": "Includes: packing, transport, storage, and final delivery.",
+        "price": "Vraag Combinatieprijs Aan",
+        "cta": "Plan Combinatiedeal"
+      }
+    },
+    "section3": {
+      "badge": "🔒 KLIMAATGECONTROLEERD",
+      "title": "Veilige, Droge & Verwarmde Opslag",
+      "desc": "Vocht and kou kunnen houten meubels, matrassen and documenten beschadigen. Onze opslagloods behoudt een constante temperatuur for maximale bescherming. Zo werkt het:",
+      "steps": [
+        "Kies uw gewenste opslaggrootte and duur",
+        "Wij halen uw spullen op and pakken ze in",
+        "Uw inboedel wordt veilig opgeslagen in een box"
+      ],
+      "logistics": "Wij houden een nauwkeurige inventaris bij van al uw opgeslagen goederen.",
+      "benefits": [
+        "Constante temperatuur & vochtigheid",
+        "24/7 camerabewaking & alarm",
+        "Verzekering tijdens transport and opslag"
+      ],
+      "cta": "Controleer Beschikbaarheid"
+    },
+    "section4": {
+      "title": "Beveiligde Opslagfaciliteit Maastricht",
+      "desc1": "De veiligheid van uw inboedel is onze hoogste prioriteit. Onze opslag beschikt over:",
+      "points": [
+        "brandbeveiliging",
+        "alarmsystemen",
+        "klimaatcontrole",
+        "stofvrije boxen",
+        "persoonlijke toegang",
+        "inventaris controle"
+      ],
+      "desc2": "Bij moveit staan uw spullen schoon, droog and veilig opgeslagen tot u ze weer nodig heeft."
+    },
+    "section5": {
+      "title": "FAQ",
+      "q1": "Komen jullie mijn meubels ook ophalen voor opslag?",
+      "a1": "Ja — ons professionele verhuisteam kan het inpakken, laden and het transport van uw woning direct naar onze opslagloods verzorgen.",
+      "q2": "Wat is de minimale huurperiode van een opslagbox?",
+      "a2": "Onze korte-termijn boxen hebben een minimale huurperiode van 1 week. Lange-termijn containers worden per maand gefactureerd.",
+      "q3": "Zijn mijn spullen verzekerd tijdens de opslag?",
+      "a3": "Ja — we bieden opslagverzekeringen die dekking bieden tegen brand, water and diefstal tijdens de opslagperiode.",
+      "q4": "Hoe snel kan ik bij mijn spullen?",
+      "a4": "We vragen u om minimaal 48 uur van tevoren contact op te nemen, zodat we uw box gereed kunnen maken voor toegang of levering.",
+      "q5": "Can I access my storage unit anytime?",
+      "a5": "Toegang kan worden gepland tijdens onze openingstijden. Uit veiligheidsoverwegingen gebeurt dit altijd onder begeleiding van onze beheerder."
+    },
+    "cta": {
+      "title": "Opslagruimte Nodig in Maastricht?",
+      "desc": "Neem contact op om de beschikbaarheid te controleren and ontvang direct een prijs voor transport and opslag.",
+      "btn_quote": "Bekijk Tarieven",
+      "btn_whatsapp": "WhatsApp Ons"
+    }
+  },
+  "clearance_page": {
+    "seo": {
+      "title": "Woningontruiming Maastricht | Boedelruiming | MoveIt",
+      "desc": "Respectvolle en snelle woningontruiming in Maastricht. Bezemschone oplevering, recycling, afval afvoeren and donaties sorteren."
+    },
+    "hero": {
+      "title": "Woningontruiming Services",
+      "subtitle": "Respectvolle, snelle and professionele ontruiming van woningen and bedrijfspanden.",
+      "desc": "Wij voeren meubels af, verwijderen vloerbedekking, recyclen witgoed and leveren de woning bezemschoon op voor de verhuurder.",
+      "btn_quote": "Vraag Ontruimings-Offerte",
+      "btn_whatsapp": "WhatsApp Ons"
+    },
+    "section1": {
+      "title": "Waarom Kiezen voor Onze Ontruimingsservice",
+      "intro": "Het leeghalen van een woning na een overlijden of voor een verhuurdersoplevering is emotioneel and fysiek zwaar. Wij nemen dit werk met respect and discretie volledig uit handen.",
+      "features": {
+        "fast_clearance": "Snelle & Complete Ontruiming",
+        "eco_disposal": "Milieubewuste Afvalverwerking",
+        "donation_sorting": "Sorteren van Bruikbare Spullen",
+        "broom_clean": "Bezemschone Oplevering",
+        "fair_valuation": "Inboedelwaarde Verrekening",
+        "insured_clearance": "Volledig Verzekerde Boedelruiming"
+      }
+    },
+    "section2": {
+      "title": "Onze Ontruimingsopties",
+      "sub1": {
+        "title": "Complete Woningontruiming",
+        "desc": "Volledige ontruiming van meubels, vloerbedekking, afval and inboedel uit woningen of appartementen voor verhuurder of verkoop.",
+        "bullets": [
+          "Snelle oplevering in 1-2 dagen",
+          "Milieuvriendelijk scheiden & storten",
+          "Bezemschone oplevering vloeren",
+          "Verwijderen van alle rommel/afval"
+        ],
+        "price": "Vanaf €199 Excl. BTW",
+        "cta": "Boek Woningontruiming",
+        "tag": "🧹 Woningontruiming"
+      },
+      "sub2": {
+        "title": "Kantoor- & Bedrijfsontruiming",
+        "desc": "Ontruimen van kantoren, winkels of magazijnen. Wij demonteren bureaus, voeren computers/IT-afval af and verwijderen scheidingswanden.",
+        "extra": "Inclusief afvalstortingscertificaten voor zakelijke e-waste recycling.",
+        "price": "Gratis Offerte",
+        "cta": "Boek Bedrijfsontruiming",
+        "tag": "🏢 Kantoor & Winkel"
+      },
+      "sub3": {
+        "title": "Kelder, Zolder & Garage Leegruimen",
+        "desc": "Jaren aan verzamelde rommel in de kelder of garage? Wij sorteren metalen, hout and restafval and voeren het direct af naar de milieustraat.",
+        "extra": "Inclusief sorteren and inleveren bij de milieustraat:",
+        "bullets": [
+          "Ontruimen via steile keldertrappen",
+          "Milieubewust scheiden van metalen",
+          "Snelle halve-dag ontruimingen",
+          "Beschermende kleding & maskers"
+        ],
+        "price": "Vanaf €99 Excl. BTW",
+        "cta": "Boek Garage Ontruiming",
+        "tag": "📦 Kelder & Zolder"
+      },
+      "sub4": {
+        "title": "Milieuvriendelijke Afvalafvoer",
+        "desc": "Wij scheiden alle inboedel om te garanderen dat hout, plastic, ijzer and elektronica correct worden gerecycled bij lokale milieustations.",
+        "extra": "Ideal for: Green building certifications, eco-friendly renovations.",
+        "price": "Vanaf €49 Excl. BTW",
+        "cta": "Info over Afvalafvoer"
+      },
+      "sub5": {
+        "title": "Opleveringsklaar Maken (Verhuurder)",
+        "desc": "Wij halen pluggen uit muren, dichten gaten, demonteren zelfbouwlampen and herstellen de woning in de originele staat voor de verhuurder.",
+        "extra": "Inclusief: Muurgaten dichten, gordijnrails verwijderen, kroonsteentjes plaatsen.",
+        "price": "Vanaf €79 Excl. BTW",
+        "cta": "Vraag Opleveringshulp Aan"
+      }
+    },
+    "section3": {
+      "badge": "🧹 BEZEMSCHOON GARANTIE",
+      "title": "Milieubewust Ontruimen & Sorteren",
+      "desc": "Wij gooien bruikbare spullen niet zomaar weg. Goede meubels and kleding schenken we aan lokale kringloopwinkels in Maastricht, and elektronica wordt gerecycled. Ons proces:",
+      "steps": [
+        "We beoordelen de inboedel and eventuele waarde",
+        "Ons team ontruimt de woning kamer voor kamer",
+        "We vegen and stofzuigen de hele woning schoon"
+      ],
+      "logistics": "Wij zorgen voor alle afvalzakken, gereedschappen and bezems.",
+      "benefits": [
+        "Focus op hergebruik & recycling",
+        "Garantie op teruggaaf borg verhuurder",
+        "Snel en respectvol verhuisteam"
+      ],
+      "cta": "Boek Ontruimingsservice"
+    },
+    "section4": {
+      "title": "Bezemschone Opleveringen in Zuid-Limburg",
+      "desc1": "Wij nemen de zorg and het zware werk van ontruimen uit handen. Wij garanderen:",
+      "points": [
+        "discreet team",
+        "milieuvriendelijk",
+        "kringloop donaties",
+        "muurgaten dichten",
+        "snelle ontruiming",
+        "bezemschoon vegen"
+      ],
+      "desc2": "Het leeghalen van een huis hoeft geen zware last te zijn. Laat moveit de ontruiming and reiniging verzorgen."
+    },
+    "section5": {
+      "title": "FAQ",
+      "q1": "What do you do with items in good condition?",
+      "a1": "Wij sorteren de inboedel zorgvuldig. Bruikbare meubels, boeken and kleding doneren we aan lokale kringloopwinkels, de rest wordt milieuvriendelijk gerecycled.",
+      "q2": "Do you clear houses after a bereavement?",
+      "a2": "Ja — wij zijn gespecialiseerd in boedelruimingen na overlijden. Ons team werkt discreet, respectvol and helpt families bij het uitzoeken van persoonlijke spullen.",
+      "q3": "Do you leave the property clean?",
+      "a3": "Ja — we leveren de woning bezemschoon op. Dit betekent dat alle vloeren worden geveegd of gezogen and alle rommel and stof is verwijderd.",
+      "q4": "Can you remove carpets and fixtures?",
+      "a4": "Ja — wij kunnen tapijt, laminaat and zeil verwijderen, evenals gordijnrails and lampen, inclusief het afdoppen van elektra.",
+      "q5": "How do you calculate clearance rates?",
+      "a5": "De prijs is afhankelijk van de grootte van de woning, de hoeveelheid af te voeren goederen and de stortkosten bij de milieustraat."
+    },
+    "cta": {
+      "title": "Woning of Kantoor Laten Ontruimen?",
+      "desc": "Neem contact op voor een gratis bezichtiging op locatie and ontvang direct een heldere, vrijblijvende offerte.",
+      "btn_quote": "Vraag Offerte Aan",
+      "btn_whatsapp": "WhatsApp Ons"
+    }
   }
 }

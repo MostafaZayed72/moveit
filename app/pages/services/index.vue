@@ -2,10 +2,11 @@
   <div class="pt-32">
     <BaseSection :title="$t('services.title')" :subtitle="$t('services.subtitle')">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <div 
+        <NuxtLink 
           v-for="(service, key) in serviceList" 
           :key="key"
-          class="premium-card group flex flex-col h-full"
+          :to="localePath('/services/' + service.id)"
+          class="premium-card group flex flex-col h-full cursor-pointer"
           data-aos="fade-up"
           :data-aos-delay="key * 50"
         >
@@ -27,12 +28,12 @@
             </p>
             
             <div class="mt-auto">
-              <NuxtLink :to="localePath('/services/' + service.id)" class="btn-primary w-full py-3 text-center block">
+              <span class="btn-primary w-full py-3 text-center block">
                 {{ $t('services.btn_details') }}
-              </NuxtLink>
+              </span>
             </div>
           </div>
-        </div>
+        </NuxtLink>
       </div>
     </BaseSection>
   </div>
