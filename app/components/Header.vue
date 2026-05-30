@@ -20,15 +20,71 @@
 
       <!-- Desktop Nav -->
       <nav class="hidden lg:flex items-center space-x-8">
-        <NuxtLink 
-          v-for="item in navItems" 
-          :key="item.key" 
-          :to="localePath(item.path)" 
-          class="nav-link font-medium"
-          :class="!isScrolled ? 'text-white/90 hover:text-white' : ''"
-        >
-          {{ $t(`nav.${item.key}`) }}
-        </NuxtLink>
+        <template v-for="item in navItems" :key="item.key">
+          <!-- Services Dropdown for Desktop -->
+          <div 
+            v-if="item.key === 'services'" 
+            class="relative group py-2"
+          >
+            <NuxtLink 
+              :to="localePath(item.path)" 
+              class="nav-link font-medium inline-flex items-center gap-1 cursor-pointer group-hover:after:w-full transition-colors"
+              :class="[
+                !isScrolled 
+                  ? 'text-white/90 group-hover:text-white' 
+                  : 'group-hover:text-slate-900 dark:group-hover:text-white'
+              ]"
+            >
+              {{ $t(`nav.${item.key}`) }}
+              <svg class="w-4 h-4 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </NuxtLink>
+            
+            <!-- Dropdown Content (Desktop) -->
+            <div class="absolute left-1/2 -translate-x-1/2 top-full pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 ease-out z-50">
+              <div class="w-[560px] rounded-2xl p-4 bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 shadow-2xl">
+                <div class="grid grid-cols-2 gap-2">
+                  <NuxtLink 
+                    v-for="subService in servicesList" 
+                    :key="subService"
+                    :to="localePath('/services/' + subService)"
+                    class="flex items-start gap-3 p-3 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-900/60 transition-colors text-left"
+                  >
+                    <span class="text-xl mt-0.5">{{ getServiceIcon(subService) }}</span>
+                    <div>
+                      <div class="font-bold text-sm text-slate-800 dark:text-slate-200 hover:text-red-500 transition-colors">
+                        {{ $t(`services.list.${subService}.title`) }}
+                      </div>
+                      <div class="text-xs text-slate-500 dark:text-slate-400 line-clamp-1 mt-0.5">
+                        {{ $t(`services.list.${subService}.desc`) }}
+                      </div>
+                    </div>
+                  </NuxtLink>
+                </div>
+                <!-- View all link -->
+                <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-900 flex justify-end">
+                  <NuxtLink 
+                    :to="localePath('/services')"
+                    class="text-xs font-bold text-red-500 hover:text-red-600 inline-flex items-center gap-1"
+                  >
+                    {{ $t('services.title') }} &rarr;
+                  </NuxtLink>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Normal nav items -->
+          <NuxtLink 
+            v-else
+            :to="localePath(item.path)" 
+            class="nav-link font-medium"
+            :class="!isScrolled ? 'text-white/90 hover:text-white' : ''"
+          >
+            {{ $t(`nav.${item.key}`) }}
+          </NuxtLink>
+        </template>
       </nav>
 
       <div class="flex items-center gap-3">
@@ -132,15 +188,64 @@
         v-if="isMenuOpen" 
         :class="['absolute top-full left-0 w-full border-b lg:hidden py-8 px-6 space-y-6 shadow-2xl', isDark ? 'bg-slate-950 border-slate-800' : 'bg-white border-slate-200']"
       >
-        <NuxtLink 
-          v-for="item in navItems" 
-          :key="item.key" 
-          :to="localePath(item.path)" 
-          :class="['block text-xl font-bold hover:text-red-500', isDark ? 'text-slate-300' : 'text-slate-700']"
-          @click="isMenuOpen = false"
-        >
-          {{ $t(`nav.${item.key}`) }}
-        </NuxtLink>
+        <div v-for="item in navItems" :key="item.key" class="w-full">
+          <!-- Services link with dropdown toggle on click (Mobile) -->
+          <div v-if="item.key === 'services'" class="w-full">
+            <button 
+              @click="isMobileServicesOpen = !isMobileServicesOpen"
+              :class="['w-full flex items-center justify-between text-xl font-bold hover:text-red-500 text-left', isDark ? 'text-slate-300' : 'text-slate-700']"
+            >
+              <span>{{ $t(`nav.${item.key}`) }}</span>
+              <svg 
+                class="w-5 h-5 transition-transform duration-200" 
+                :class="isMobileServicesOpen ? 'rotate-180' : ''" 
+                fill="none" 
+                stroke="currentColor" 
+                viewBox="0 0 24 24"
+              >
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </button>
+            
+            <!-- Mobile services list -->
+            <div 
+              v-show="isMobileServicesOpen" 
+              class="mt-3 pl-4 border-l-2 border-slate-200 dark:border-slate-800 space-y-3"
+            >
+              <!-- Direct link to services overview -->
+              <NuxtLink 
+                :to="localePath('/services')"
+                class="block text-base font-bold text-red-500 hover:text-red-600 py-1"
+                @click="isMenuOpen = false; isMobileServicesOpen = false"
+              >
+                {{ $t('services.title') }} ({{ $t('services.btn_details') }} &rarr;)
+              </NuxtLink>
+              
+              <!-- Sub-service items -->
+              <NuxtLink 
+                v-for="subService in servicesList" 
+                :key="subService"
+                :to="localePath('/services/' + subService)"
+                class="flex items-center gap-3 text-base py-1.5 hover:text-red-500 transition-colors"
+                :class="isDark ? 'text-slate-400' : 'text-slate-600'"
+                @click="isMenuOpen = false; isMobileServicesOpen = false"
+              >
+                <span>{{ getServiceIcon(subService) }}</span>
+                <span>{{ $t(`services.list.${subService}.title`) }}</span>
+              </NuxtLink>
+            </div>
+          </div>
+
+          <!-- Other items -->
+          <NuxtLink 
+            v-else
+            :to="localePath(item.path)" 
+            :class="['block text-xl font-bold hover:text-red-500', isDark ? 'text-slate-300' : 'text-slate-700']"
+            @click="isMenuOpen = false"
+          >
+            {{ $t(`nav.${item.key}`) }}
+          </NuxtLink>
+        </div>
         <!-- Mobile Lang + Dark toggle -->
         <div class="pt-6 border-t border-slate-800/30 flex items-center gap-4">
           <button @click="setLocale('en'); isMenuOpen = false" :class="['w-12 h-12 rounded-full overflow-hidden transition-all', locale === 'en' ? 'ring-2 ring-red-500' : 'opacity-40']">
@@ -174,11 +279,47 @@
 </template>
 
 <script setup>
+import { ref, computed, watch, onMounted } from 'vue'
+
 const { locale, locales, setLocale } = useI18n()
 const localePath = useLocalePath()
 const route = useRoute()
 const isScrolled = ref(false)
 const isMenuOpen = ref(false)
+const isMobileServicesOpen = ref(false)
+
+const servicesList = [
+  'student',
+  'local',
+  'long_distance',
+  'international',
+  'full_service',
+  'furniture_assembly',
+  'packing',
+  'lift_rental',
+  'piano',
+  'senior',
+  'storage',
+  'clearance'
+]
+
+const getServiceIcon = (id) => {
+  const icons = {
+    student: '🎓',
+    local: '🏠',
+    long_distance: '🚚',
+    international: '🌍',
+    full_service: '✨',
+    furniture_assembly: '🛠️',
+    packing: '📦',
+    lift_rental: '🏗️',
+    piano: '🎹',
+    senior: '❤️',
+    storage: '🔒',
+    clearance: '🧹'
+  }
+  return icons[id] || '📦'
+}
 
 const isHomePage = computed(() => route.path === '/' || route.path === '/en' || route.path === '/nl')
 
@@ -200,6 +341,12 @@ const navItems = [
   { key: 'contact', path: '/contact' },
   { key: 'blog', path: '/blog' }
 ]
+
+watch(isMenuOpen, (newVal) => {
+  if (!newVal) {
+    isMobileServicesOpen.value = false
+  }
+})
 
 onMounted(() => {
   window.addEventListener('scroll', () => {

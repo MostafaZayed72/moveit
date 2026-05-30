@@ -6,16 +6,16 @@
   body {
     font-family: 'Inter', sans-serif;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
-    @apply antialiased selection:bg-red-500 selection:text-white;
-    @apply bg-slate-50 text-slate-900 transition-colors duration-300;
+    @apply antialiased selection:bg-brand-red selection:text-white;
+    @apply bg-brand-cream text-brand-black transition-colors duration-300;
   }
 
   .dark body {
-    @apply bg-slate-950 text-slate-100;
+    @apply bg-brand-black text-slate-100;
   }
 
   h1, h2, h3, h4 {
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Montserrat', sans-serif;
     letter-spacing: -0.025em;
   }
 }
