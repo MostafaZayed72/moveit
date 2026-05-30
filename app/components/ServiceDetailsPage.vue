@@ -215,12 +215,12 @@
               <div class="bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 p-4 rounded-xl text-sm font-medium mb-6">
                 {{ $t(serviceId + '_page.section2.sub4.extra') }}
               </div>
-              <div class="flex items-center justify-between border-t border-slate-100 dark:border-white/5 pt-6">
-                <span class="font-black text-red-500 text-xl">
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-t border-slate-100 dark:border-white/5 pt-6">
+                <span class="font-black text-red-500 text-lg sm:text-xl leading-tight">
                   {{ $t(serviceId + '_page.section2.sub4.price') }}
                 </span>
-                <a :href="whatsappLink" target="_blank" class="text-red-500 hover:text-red-600 font-bold flex items-center gap-1 group">
-                  {{ $t(serviceId + '_page.section2.sub4.cta') }} <span class="group-hover:translate-x-1 transition-transform">→</span>
+                <a :href="whatsappLink" target="_blank" class="inline-flex items-center justify-center px-5 py-2.5 bg-slate-900 dark:bg-white text-white dark:text-slate-900 hover:bg-red-600 dark:hover:bg-red-500 dark:hover:text-white rounded-xl font-bold transition-colors text-sm shrink-0">
+                  {{ $t(serviceId + '_page.section2.sub4.cta') }} &rarr;
                 </a>
               </div>
             </div>
@@ -239,12 +239,12 @@
               <div class="bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-300 p-4 rounded-xl text-sm font-medium mb-6">
                 {{ $t(serviceId + '_page.section2.sub5.extra') }}
               </div>
-              <div class="flex items-center justify-between border-t border-slate-100 dark:border-white/5 pt-6">
-                <span class="font-black text-red-500 text-xl">
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-t border-slate-100 dark:border-white/5 pt-6">
+                <span class="font-black text-red-500 text-lg sm:text-xl leading-tight">
                   {{ $t(serviceId + '_page.section2.sub5.price') }}
                 </span>
-                <a :href="whatsappLink" target="_blank" class="text-red-500 hover:text-red-600 font-bold flex items-center gap-1 group">
-                  {{ $t(serviceId + '_page.section2.sub5.cta') }} <span class="group-hover:translate-x-1 transition-transform">→</span>
+                <a :href="whatsappLink" target="_blank" class="inline-flex items-center justify-center px-5 py-2.5 bg-slate-900 dark:bg-white text-white dark:text-slate-900 hover:bg-red-600 dark:hover:bg-red-500 dark:hover:text-white rounded-xl font-bold transition-colors text-sm shrink-0">
+                  {{ $t(serviceId + '_page.section2.sub5.cta') }} &rarr;
                 </a>
               </div>
             </div>
