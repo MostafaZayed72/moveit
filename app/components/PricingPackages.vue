@@ -34,12 +34,12 @@
               <h3 :class="['text-lg font-black leading-tight', pkg.popular ? 'text-white' : 'text-slate-900 dark:text-white']">
                 {{ pkg.name }}
               </h3>
-              <p :class="['text-[9px] font-bold mt-1 uppercase tracking-widest opacity-80 mb-3', pkg.popular ? 'text-white' : 'text-red-500']">
+              <p :class="['text-[10px] font-bold mt-1 uppercase tracking-widest opacity-80 mb-3', pkg.popular ? 'text-white' : 'text-red-500']">
                 {{ pkg.subtitle }}
               </p>
               
               <div class="flex items-baseline gap-1">
-                <span :class="['text-3xl xl:text-4xl font-black tracking-tight', pkg.popular ? 'text-white' : 'text-slate-900 dark:text-white']">{{ pkg.price }}</span>
+                <span :class="[pkg.price.length > 8 ? 'text-xl md:text-2xl xl:text-3xl' : 'text-3xl xl:text-4xl', 'font-black tracking-tight', pkg.popular ? 'text-white' : 'text-slate-900 dark:text-white']">{{ pkg.price }}</span>
                 <span :class="['text-sm font-medium', pkg.popular ? 'text-red-100' : 'text-slate-500']">{{ pkg.unit }}</span>
               </div>
               <p :class="['text-[9px] font-bold mt-0.5 uppercase tracking-wider opacity-60', pkg.popular ? 'text-white' : 'text-slate-400']">{{ $t('home.packages.excl_vat') }}</p>
@@ -78,7 +78,7 @@
                   <div :class="['w-4 h-4 rounded-full flex items-center justify-center mt-0.5 shrink-0 transition-transform duration-500 group-hover/card:rotate-12', pkg.popular ? 'bg-white text-red-600' : 'bg-green-100 dark:bg-green-900/30 text-green-600']">
                     <svg class="w-2.5 h-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
                   </div>
-                  <span :class="['text-xs sm:text-sm lg:text-[11px] xl:text-xs leading-relaxed font-semibold', pkg.popular ? 'text-red-50' : 'text-slate-600 dark:text-slate-300']">{{ item }}</span>
+                  <span :class="['text-sm lg:text-[13px] xl:text-sm leading-relaxed font-semibold', pkg.popular ? 'text-red-50' : 'text-slate-600 dark:text-slate-300']">{{ item }}</span>
                 </li>
               </ul>
             </div>

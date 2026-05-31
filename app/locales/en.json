@@ -59,6 +59,9 @@
       "Keep moving forward."
     ],
     "get_quote": "Get an Instant Quote",
+    "moving_from": "Moving from address",
+    "moving_to": "Moving to address",
+    "or_get_call": "Or get a call from us",
     "our_services": "Our Specialized Services",
     "trust_pilot": "Rated Excellent on Trustpilot",
     "stats": {
@@ -343,6 +346,8 @@
     "form_email": "Email Address",
     "form_phone": "Phone Number",
     "form_message": "Message",
+    "form_moving_from": "Moving From Address",
+    "form_moving_to": "Moving To Address",
     "form_submit": "Send Message",
     "direct_info": "Direct Contact",
     "direct_desc": "Prefer to call or email? Our customer service team is available 24/7 to assist with your relocation needs.",

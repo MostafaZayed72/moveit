@@ -4,26 +4,36 @@
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
         <!-- Contact Form -->
         <div class="glass-panel p-10 rounded-3xl" data-aos="fade-right">
-          <form @submit.prevent class="space-y-6">
+          <form @submit.prevent="handleSubmit" class="space-y-6">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div class="space-y-2">
                 <label class="text-xs font-bold uppercase tracking-widest text-slate-500">{{ $t('contact.form_name') }}</label>
-                <input type="text" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-6 py-4 text-slate-900 dark:text-white focus:border-red-500 outline-none transition-all shadow-sm dark:shadow-none" />
+                <input type="text" v-model="name" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-6 py-4 text-slate-900 dark:text-white focus:border-red-500 outline-none transition-all shadow-sm dark:shadow-none" required />
               </div>
               <div class="space-y-2">
                 <label class="text-xs font-bold uppercase tracking-widest text-slate-500">{{ $t('contact.form_email') }}</label>
-                <input type="email" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-6 py-4 text-slate-900 dark:text-white focus:border-red-500 outline-none transition-all shadow-sm dark:shadow-none" />
+                <input type="email" v-model="email" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-6 py-4 text-slate-900 dark:text-white focus:border-red-500 outline-none transition-all shadow-sm dark:shadow-none" required />
               </div>
             </div>
             <div class="space-y-2">
               <label class="text-xs font-bold uppercase tracking-widest text-slate-500">{{ $t('contact.form_phone') }}</label>
-              <input type="tel" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-6 py-4 text-slate-900 dark:text-white focus:border-red-500 outline-none transition-all shadow-sm dark:shadow-none" />
+              <input type="tel" v-model="phone" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-6 py-4 text-slate-900 dark:text-white focus:border-red-500 outline-none transition-all shadow-sm dark:shadow-none" required />
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div class="space-y-2">
+                <label class="text-xs font-bold uppercase tracking-widest text-slate-500">{{ $t('contact.form_moving_from') }}</label>
+                <input type="text" v-model="movingFrom" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-6 py-4 text-slate-900 dark:text-white focus:border-red-500 outline-none transition-all shadow-sm dark:shadow-none" required />
+              </div>
+              <div class="space-y-2">
+                <label class="text-xs font-bold uppercase tracking-widest text-slate-500">{{ $t('contact.form_moving_to') }}</label>
+                <input type="text" v-model="movingTo" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-6 py-4 text-slate-900 dark:text-white focus:border-red-500 outline-none transition-all shadow-sm dark:shadow-none" required />
+              </div>
             </div>
             <div class="space-y-2">
               <label class="text-xs font-bold uppercase tracking-widest text-slate-500">{{ $t('contact.form_message') }}</label>
-              <textarea rows="4" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-6 py-4 text-slate-900 dark:text-white focus:border-red-500 outline-none transition-all shadow-sm dark:shadow-none"></textarea>
+              <textarea rows="4" v-model="message" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-6 py-4 text-slate-900 dark:text-white focus:border-red-500 outline-none transition-all shadow-sm dark:shadow-none"></textarea>
             </div>
-            <button class="btn-primary w-full py-5 text-lg">{{ $t('contact.form_submit') }}</button>
+            <button type="submit" class="btn-primary w-full py-5 text-lg">{{ $t('contact.form_submit') }}</button>
           </form>
         </div>
 
@@ -59,3 +69,27 @@
     </BaseSection>
   </div>
 </template>
+
+<script setup>
+const route = useRoute()
+
+const name = ref('')
+const email = ref('')
+const phone = ref('')
+const movingFrom = ref('')
+const movingTo = ref('')
+const message = ref('')
+
+onMounted(() => {
+  if (route.query.from) {
+    movingFrom.value = String(route.query.from)
+  }
+  if (route.query.to) {
+    movingTo.value = String(route.query.to)
+  }
+})
+
+const handleSubmit = () => {
+  alert(`Thank you for your request! Moving from "${movingFrom.value}" to "${movingTo.value}". We will contact you soon.`)
+}
+</script>

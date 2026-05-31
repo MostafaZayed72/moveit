@@ -186,7 +186,7 @@
     >
       <div 
         v-if="isMenuOpen" 
-        :class="['absolute top-full left-0 w-full border-b lg:hidden py-8 px-6 space-y-6 shadow-2xl', isDark ? 'bg-slate-950 border-slate-800' : 'bg-white border-slate-200']"
+        :class="['absolute top-full left-0 w-full border-b lg:hidden py-8 px-6 space-y-6 shadow-2xl max-h-[calc(100vh-80px)] overflow-y-auto', isDark ? 'bg-slate-950 border-slate-800' : 'bg-white border-slate-200']"
       >
         <div v-for="item in navItems" :key="item.key" class="w-full">
           <!-- Services link with dropdown toggle on click (Mobile) -->

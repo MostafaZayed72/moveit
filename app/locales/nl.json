@@ -59,6 +59,9 @@
       "Blijf vooruit gaan."
     ],
     "get_quote": "Vraag een Offerte aan",
+    "moving_from": "Vertrekadres (van)",
+    "moving_to": "Aankomstadres (naar)",
+    "or_get_call": "Of word gebeld",
     "our_services": "Onze Gespecialiseerde Diensten",
     "trust_pilot": "Uitstekend beoordeeld op Trustpilot",
     "stats": {
@@ -343,6 +346,8 @@
     "form_email": "E-mailadres",
     "form_phone": "Telefoonnummer",
     "form_message": "Bericht",
+    "form_moving_from": "Vertrekadres (van)",
+    "form_moving_to": "Aankomstadres (naar)",
     "form_submit": "Bericht Verzenden",
     "direct_info": "Direct Contact",
     "direct_desc": "Belt of mailt u liever? Onze klantenservice is 24/7 bereikbaar om u te helpen met uw verhuizing.",
