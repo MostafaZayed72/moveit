@@ -13,40 +13,26 @@
           <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
             
             <!-- Left Column: Headline & Subtitle -->
-            <div class="lg:col-span-7 text-left space-y-8" data-aos="fade-right">
-              <div class="inline-flex items-center space-x-2 px-4 py-2 bg-white/5 border border-white/10 rounded-full text-slate-200 text-sm font-semibold backdrop-blur-md">
+            <div class="lg:col-span-7 text-center lg:text-left space-y-8" data-aos="fade-right">
+              <!-- Trustpilot & Badges -->
+              <div class="inline-flex items-center space-x-2 px-5 py-2.5 bg-white/5 border border-white/10 rounded-full text-slate-200 text-xs md:text-sm font-semibold backdrop-blur-md">
                 <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                <span>{{ $t('home.trust_pilot') }}</span>
+                <span>{{ $t('home.hero_badge') }}</span>
               </div>
               
-              <!-- Rotating Main Title -->
-              <h1 class="flex flex-col items-start text-5xl md:text-7xl lg:text-8xl font-black leading-none text-white tracking-tighter text-left">
-                <span class="opacity-90">{{ $t('home.hero_prefix') }}</span>
-                <div class="relative h-[1.2em] overflow-hidden flex items-center justify-start py-2">
-                  <Transition name="slide-up" mode="out-in">
-                    <div :key="currentCity" class="inline-flex items-center">
-                      <span 
-                        v-for="(char, i) in currentCity.split('')" 
-                        :key="i"
-                        class="inline-block animate-wave text-gradient-red"
-                        :style="{ animationDelay: `${i * 0.1}s` }"
-                      >
-                        {{ char === ' ' ? '\u00A0' : char }}
-                      </span>
-                    </div>
-                  </Transition>
-                </div>
-                <span class="opacity-90">{{ $t('home.hero_suffix') }}</span>
+              <!-- Title -->
+              <h1 class="text-4xl md:text-6xl lg:text-7xl font-black leading-tight text-white tracking-tighter text-center lg:text-left">
+                {{ $t('home.hero_title_part1') }} {{ $t('home.hero_title_part2') }} <span class="text-red-500">{{ $t('home.hero_title_stress') }}</span>
+                <br />
+                <span class="block mt-2 text-3xl md:text-5xl lg:text-6xl font-extrabold text-slate-100/90 leading-tight">
+                  {{ $t('home.hero_title_part3') }}
+                </span>
               </h1>
 
-              <!-- Rotating Subtitle -->
-              <div class="relative h-20 md:h-28">
-                <Transition name="fade-up" mode="out-in">
-                  <p :key="currentSubtitle" class="text-xl md:text-3xl text-slate-300 leading-relaxed max-w-2xl font-medium drop-shadow-md tracking-tight">
-                    {{ currentSubtitle }}
-                  </p>
-                </Transition>
-              </div>
+              <!-- Description -->
+              <p class="text-base md:text-xl text-slate-300 leading-relaxed max-w-2xl mx-auto lg:mx-0 font-medium drop-shadow-md tracking-tight">
+                {{ $t('home.hero_desc') }}
+              </p>
             </div>
 
             <!-- Right Column: Quote Form CTA -->
@@ -57,30 +43,27 @@
                   <p class="text-sm text-slate-400 mt-2">Get an all-inclusive quote within minutes.</p>
                 </div>
                 <form @submit.prevent="handleQuoteSubmit" class="space-y-4">
-                  <div class="relative group">
-                    <span class="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-red-500 transition-colors">
+                  <AddressAutocomplete 
+                    v-model="movingFrom"
+                    :placeholder="$t('home.moving_from')"
+                    input-class="w-full pr-6 py-4 bg-white/5 border border-white/10 rounded-2xl text-white placeholder-slate-400 focus:bg-white/10 focus:border-red-500 outline-none transition-all shadow-inner"
+                    required
+                  >
+                    <template #icon>
                       <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                    </span>
-                    <input 
-                      type="text" 
-                      v-model="movingFrom" 
-                      :placeholder="$t('home.moving_from')" 
-                      class="w-full pl-12 pr-6 py-4 bg-white/5 border border-white/10 rounded-2xl text-white placeholder-slate-400 focus:bg-white/10 focus:border-red-500 outline-none transition-all shadow-inner"
-                      required
-                    />
-                  </div>
-                  <div class="relative group">
-                    <span class="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-red-500 transition-colors">
+                    </template>
+                  </AddressAutocomplete>
+
+                  <AddressAutocomplete 
+                    v-model="movingTo"
+                    :placeholder="$t('home.moving_to')"
+                    input-class="w-full pr-6 py-4 bg-white/5 border border-white/10 rounded-2xl text-white placeholder-slate-400 focus:bg-white/10 focus:border-red-500 outline-none transition-all shadow-inner"
+                    required
+                  >
+                    <template #icon>
                       <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/></svg>
-                    </span>
-                    <input 
-                      type="text" 
-                      v-model="movingTo" 
-                      :placeholder="$t('home.moving_to')" 
-                      class="w-full pl-12 pr-6 py-4 bg-white/5 border border-white/10 rounded-2xl text-white placeholder-slate-400 focus:bg-white/10 focus:border-red-500 outline-none transition-all shadow-inner"
-                      required
-                    />
-                  </div>
+                    </template>
+                  </AddressAutocomplete>
                   <div class="pt-4 space-y-4">
                     <button type="submit" class="w-full btn-primary text-lg py-4 flex items-center justify-center gap-2 group transform hover:scale-[1.02] active:scale-95 transition-all">
                       <span>{{ $t('home.get_quote') }}</span>
@@ -100,7 +83,7 @@
           </div>
 
           <!-- Bottom stats row -->
-          <div class="mt-16 grid grid-cols-3 gap-6 max-w-4xl pt-10 border-t border-white/10 backdrop-blur-md rounded-[2.5rem] p-6 md:p-8 bg-white/5" data-aos="fade-up" data-aos-delay="200">
+          <div class="mt-16 grid grid-cols-3 gap-6 max-w-4xl mx-auto lg:mx-0 pt-10 border-t border-white/10 backdrop-blur-md rounded-[2.5rem] p-6 md:p-8 bg-white/5" data-aos="fade-up" data-aos-delay="200">
             <div v-for="stat in heroStats" :key="stat.key" class="space-y-1 text-center md:text-left">
               <div class="text-2xl md:text-5xl font-black text-white">
                 <StatCounter :value="stat.value" :suffix="stat.suffix" :decimals="stat.decimals || 0" />
@@ -117,8 +100,7 @@
     <!-- TRUST BADGES & RATINGS -->
     <TrustSection />
 
-    <!-- OUR VALUES TICKER -->
-    <ValuesTicker />
+
 
     <!-- 2. SERVICES / PACKAGES -->
     <BaseSection :title="$t('home.packages.title')" :subtitle="$t('home.packages.subtitle')">
@@ -156,7 +138,59 @@
       <HowItWorks />
     </BaseSection>
 
-    <!-- 6. CITIES WE SERVE -->
+    <!-- 6. BENTO GRID SERVICES SUMMARY -->
+    <BaseSection :title="$t('home.bento_services.title')" :subtitle="$t('home.bento_services.subtitle')">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
+        <NuxtLink
+          v-for="(service, idx) in bentoServices"
+          :key="service.id"
+          :to="localePath('/services/' + service.id)"
+          :class="[
+            'group relative rounded-[2rem] overflow-hidden h-72 cursor-pointer shadow-lg border border-slate-200/50 dark:border-slate-800/50 flex flex-col justify-between p-8',
+            service.spanClass
+          ]"
+          data-aos="fade-up"
+          :data-aos-delay="idx * 50"
+        >
+          <!-- Background Image -->
+          <img :src="service.image" :alt="service.id" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+          
+          <!-- Gradient Overlay -->
+          <div class="absolute inset-0 bg-gradient-to-b from-slate-950/70 via-slate-950/20 to-slate-950/60 group-hover:from-slate-950/80 group-hover:to-slate-950/75 transition-all duration-300"></div>
+
+          <!-- Top: Title & Icon -->
+          <div class="relative z-10 flex justify-between items-start">
+            <h4 class="text-2xl font-black text-white tracking-tight leading-tight max-w-[80%]">
+              {{ $t(`services.list.${service.id}.title`) }}
+            </h4>
+            <div class="w-12 h-12 bg-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center text-white border border-white/10 group-hover:bg-red-600 group-hover:border-red-500 group-hover:scale-110 transition-all duration-300 flex-shrink-0">
+              <span class="text-xl">{{ service.icon }}</span>
+            </div>
+          </div>
+
+          <!-- Bottom: Description & Arrow -->
+          <div class="relative z-10 flex justify-between items-end opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-y-2 group-hover:translate-y-0 transition-transform">
+            <p class="text-xs text-slate-300 max-w-[80%] leading-relaxed">
+              {{ $t(`services.list.${service.id}.desc`) }}
+            </p>
+            <div class="text-red-500 group-hover:text-white transition-colors">
+              <svg class="w-6 h-6 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+            </div>
+          </div>
+        </NuxtLink>
+      </div>
+
+      <!-- View All Services CTA Button -->
+      <div class="text-center mt-12" data-aos="fade-up">
+        <NuxtLink :to="localePath('/services')">
+          <button class="btn-primary px-10 py-4 text-lg font-extrabold shadow-xl tracking-tight">
+            {{ $t('home.bento_services.view_all') }}
+          </button>
+        </NuxtLink>
+      </div>
+    </BaseSection>
+
+    <!-- 7. CITIES WE SERVE -->
     <BaseSection :title="$t('home.cities.title')" :subtitle="$t('home.cities.subtitle')">
       <CitiesGrid />
     </BaseSection>
@@ -246,9 +280,9 @@ onMounted(() => {
 })
 
 const heroStats = [
-  { key: 'completed', value: 10000, suffix: '+' },
+  { key: 'completed', value: 9983, suffix: '+' },
   { key: 'rating', value: 4.9, suffix: '/5', decimals: 1 },
-  { key: 'coverage', value: 15, suffix: '+' }
+  { key: 'coverage', value: 14, suffix: '+' }
 ]
 
 const whyUsItems = [
@@ -256,6 +290,17 @@ const whyUsItems = [
   { key: 'student', icon: '🎓', image: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&q=80&w=600' },
   { key: 'transparent', icon: '💰', image: 'https://images.unsplash.com/photo-1519003722824-194d4455a60c?auto=format&fit=crop&q=80&w=600' },
   { key: 'insured', icon: '🛡️', image: 'https://images.unsplash.com/photo-1508962914676-134849a727f0?auto=format&fit=crop&q=80&w=600' }
+]
+
+const bentoServices = [
+  { id: 'local', icon: '🏠', image: 'https://images.unsplash.com/photo-1558522195-e1201b090344?auto=format&fit=crop&q=80&w=800', spanClass: 'lg:col-span-2' },
+  { id: 'long_distance', icon: '🚚', image: 'https://images.unsplash.com/photo-1553413077-190dd305871c?auto=format&fit=crop&q=80&w=800', spanClass: 'lg:col-span-2' },
+  { id: 'packing', icon: '📦', image: 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&q=80&w=800', spanClass: 'lg:col-span-1' },
+  { id: 'piano', icon: '🎹', image: 'https://images.unsplash.com/photo-1550684848-fac1c5b4e853?auto=format&fit=crop&q=80&w=800', spanClass: 'lg:col-span-1' },
+  { id: 'furniture_assembly', icon: '🔧', image: 'https://images.unsplash.com/photo-1585412727339-54e4bae3bbf9?auto=format&fit=crop&q=80&w=800', spanClass: 'lg:col-span-2' },
+  { id: 'international', icon: '✈️', image: 'https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&q=80&w=800', spanClass: 'lg:col-span-2' },
+  { id: 'storage', icon: '🏢', image: 'https://images.unsplash.com/photo-1565610222536-ef125c59da2e?auto=format&fit=crop&q=80&w=800', spanClass: 'lg:col-span-1' },
+  { id: 'student', icon: '🎓', image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=800', spanClass: 'lg:col-span-1' }
 ]
 
 useSeoMeta({

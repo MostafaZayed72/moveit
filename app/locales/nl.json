@@ -6,7 +6,10 @@
     "locations": "Locaties",
     "faq": "Veelgestelde Vragen",
     "contact": "Contact",
-    "blog": "Blog"
+    "blog": "Blog",
+    "referral": "Verwijs een Vriend",
+    "company": "Bedrijf",
+    "resources": "Bronnen"
   },
   "about": {
     "title": "Verhuizen Eenvoudig Gemaakt. Met Zorg Gebouwd.",
@@ -49,6 +52,12 @@
     "cta_button": "Vraag een Directe Offerte aan"
   },
   "home": {
+    "hero_badge": "Uitstekend beoordeeld op Trustpilot • Volledig verzekerd • Geen verborgen kosten",
+    "hero_title_part1": "Verhuisdag Zonder",
+    "hero_title_part2": "de",
+    "hero_title_stress": "Stress.",
+    "hero_title_part3": "Goed Gedaan — Gegarandeerd.",
+    "hero_desc": "De meeste mensen zien op tegen de verhuisdag om goede redenen: annuleringen, kapot meubilair, onverwachte kosten. We hebben meer dan 9.983 verhuizingen in heel Nederland afgerond met een beoordeling van 4.9/5. Je zult zien waarom.",
     "hero_prefix": "Verhuist",
     "hero_suffix": "Vooruit",
     "hero_cities": ["Maastricht", "Sittard", "Heerlen", "Kerkrade", "Geleen", "Limburg", "Nederland"],
@@ -69,6 +78,11 @@
       "rating": "Gemiddelde Beoordeling",
       "coverage": "Steden Gedekt",
       "reviews": "5-Sterren Reviews"
+    },
+    "bento_services": {
+      "title": "Professionele verhuisdiensten voor elke behoefte",
+      "subtitle": "Een overzicht van onze gespecialiseerde verhuizingen ontworpen om uw verhuisdag stressvrij te maken.",
+      "view_all": "Bekijk alle diensten"
     },
     "why_us": {
       "title": "Waarom Kiezen voor MoveIt?",
@@ -1926,6 +1940,47 @@
       "desc": "Neem contact op voor een gratis bezichtiging op locatie and ontvang direct een heldere, vrijblijvende offerte.",
       "btn_quote": "Vraag Offerte Aan",
       "btn_whatsapp": "WhatsApp Ons"
+    }
+  },
+  "referral_program": {
+    "seo": {
+      "title": "Verwijs een Vriend | MoveIt",
+      "desc": "Verwijs een vriend naar MoveIt en jullie worden allebei beloond! Een win-win verhuiservaring."
+    },
+    "title": "Verwijs een Vriend naar MoveIt",
+    "subtitle": "Zij krijgen korting. Jij krijgt een beloning. Win-win!",
+    "desc": "Bij MoveIt geloven we dat geweldige ervaringen gedeeld moeten worden. Introduceer vrienden, familie of collega's bij onze premium verhuisdiensten en verdien beloningen voor elke succesvolle verhuizing.",
+    "how_it_works": {
+      "title": "Hoe Het Werkt",
+      "step1_title": "Deel de liefde",
+      "step1_desc": "Vul het onderstaande formulier in om een vriend uit te nodigen die een stressvrije verhuizing nodig heeft.",
+      "step2_title": "Zij boeken een verhuizing",
+      "step2_desc": "Je vriend boekt een verhuizing bij ons en ontvangt automatisch 10% korting op de totale kosten.",
+      "step3_title": "Jij wordt beloond",
+      "step3_desc": "Zodra hun verhuizing is afgerond, ontvang jij een contante beloning van €20 als dank!"
+    },
+    "form": {
+      "title": "Nodig Vandaag Nog Een Vriend Uit",
+      "name_label": "Jouw Volledige Naam",
+      "email_label": "Jouw E-mailadres",
+      "friend_name_label": "Naam van Vriend",
+      "friend_email_label": "E-mailadres van Vriend",
+      "message_label": "Persoonlijk Bericht (Optioneel)",
+      "submit_btn": "Uitnodiging Verzenden",
+      "success_msg": "Je uitnodiging is succesvol verzonden!"
+    },
+    "faq": {
+      "title": "Referral FAQ",
+      "q1": "Wanneer ontvang ik mijn beloning van €20?",
+      "a1": "Je ontvangt je beloning binnen 14 dagen nadat de verhuizing van je vriend succesvol is afgerond en betaald.",
+      "q2": "Is er een limiet aan het aantal vrienden dat ik kan verwijzen?",
+      "a2": "Nee! Je kunt zoveel vrienden verwijzen als je wilt. Er zit geen maximum aan je beloningen."
+    },
+    "carousel": {
+      "heading": "Te mooi om waar te zijn? Dat is gewoon hoe wij werken.",
+      "subheading": "Bij MoveIt waarderen we onze klanten en de manier waarop zij onze toewijding aan premium service hebben erkend.",
+      "promo_text": "Zelfs als ze geen verwijzing ontgrendelen, bieden we onze klanten nog steeds gulle kortingen en promotiecodes aan.",
+      "promo_subtext": "Tevreden Klanten, Tevreden Leven."
     }
   }
 }

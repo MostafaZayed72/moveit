@@ -22,11 +22,19 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div class="space-y-2">
                 <label class="text-xs font-bold uppercase tracking-widest text-slate-500">{{ $t('contact.form_moving_from') }}</label>
-                <input type="text" v-model="movingFrom" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-6 py-4 text-slate-900 dark:text-white focus:border-red-500 outline-none transition-all shadow-sm dark:shadow-none" required />
+                <AddressAutocomplete 
+                  v-model="movingFrom" 
+                  input-class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl py-4 text-slate-900 dark:text-white focus:border-red-500 outline-none transition-all shadow-sm dark:shadow-none" 
+                  required 
+                />
               </div>
               <div class="space-y-2">
                 <label class="text-xs font-bold uppercase tracking-widest text-slate-500">{{ $t('contact.form_moving_to') }}</label>
-                <input type="text" v-model="movingTo" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-6 py-4 text-slate-900 dark:text-white focus:border-red-500 outline-none transition-all shadow-sm dark:shadow-none" required />
+                <AddressAutocomplete 
+                  v-model="movingTo" 
+                  input-class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl py-4 text-slate-900 dark:text-white focus:border-red-500 outline-none transition-all shadow-sm dark:shadow-none" 
+                  required 
+                />
               </div>
             </div>
             <div class="space-y-2">
@@ -53,7 +61,7 @@
                 <svg v-else class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
               </div>
               <div class="text-slate-900 dark:text-white font-bold mb-1">{{ i === 1 ? $t('contact.phone') : $t('contact.email') }}</div>
-              <div class="text-slate-600 dark:text-slate-400 text-sm">{{ i === 1 ? '+31 20 123 4567' : 'hello@moveit.nl' }}</div>
+              <div class="text-slate-600 dark:text-slate-400 text-sm">{{ i === 1 ? '+31 6 84094271' : 'info@moveitmaastricht.nl' }}</div>
             </div>
           </div>
 

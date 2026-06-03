@@ -75,6 +75,39 @@
             </div>
           </div>
 
+          <!-- Generic Dropdown for Desktop -->
+          <div 
+            v-else-if="item.subItems" 
+            class="relative group py-2"
+          >
+            <span 
+              class="nav-link font-medium inline-flex items-center gap-1 cursor-pointer group-hover:after:w-full transition-colors"
+              :class="[
+                !isScrolled 
+                  ? 'text-white/90 group-hover:text-white' 
+                  : 'group-hover:text-slate-900 dark:group-hover:text-white'
+              ]"
+            >
+              {{ $t(`nav.${item.key}`) }}
+              <svg class="w-4 h-4 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </span>
+            
+            <div class="absolute left-1/2 -translate-x-1/2 top-full pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 ease-out z-50">
+              <div class="w-48 rounded-xl p-2 bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 shadow-xl flex flex-col gap-1">
+                <NuxtLink 
+                  v-for="sub in item.subItems" 
+                  :key="sub.key"
+                  :to="localePath(sub.path)"
+                  class="px-4 py-2.5 text-sm font-medium rounded-lg hover:bg-slate-50 dark:hover:bg-slate-900 text-slate-700 dark:text-slate-300 hover:text-red-500 transition-colors"
+                >
+                  {{ $t(`nav.${sub.key}`) }}
+                </NuxtLink>
+              </div>
+            </div>
+          </div>
+
           <!-- Normal nav items -->
           <NuxtLink 
             v-else
@@ -236,12 +269,48 @@
             </div>
           </div>
 
+          <!-- Generic Dropdown for Mobile -->
+          <div v-else-if="item.subItems" class="w-full">
+            <button 
+              @click="toggleMobileSubMenu(item.key)"
+              :class="['w-full flex items-center justify-between text-xl font-bold hover:text-red-500 text-left', isDark ? 'text-slate-300' : 'text-slate-700']"
+            >
+              <span>{{ $t(`nav.${item.key}`) }}</span>
+              <svg 
+                class="w-5 h-5 transition-transform duration-200" 
+                :class="mobileSubMenus[item.key] ? 'rotate-180' : ''" 
+                fill="none" 
+                stroke="currentColor" 
+                viewBox="0 0 24 24"
+              >
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </button>
+            
+            <!-- Mobile submenu list -->
+            <div 
+              v-show="mobileSubMenus[item.key]" 
+              class="mt-3 pl-4 border-l-2 border-slate-200 dark:border-slate-800 space-y-3"
+            >
+              <NuxtLink 
+                v-for="sub in item.subItems" 
+                :key="sub.key"
+                :to="localePath(sub.path)"
+                class="block text-base py-1.5 hover:text-red-500 transition-colors font-medium"
+                :class="isDark ? 'text-slate-400' : 'text-slate-600'"
+                @click="isMenuOpen = false; resetMobileMenus()"
+              >
+                {{ $t(`nav.${sub.key}`) }}
+              </NuxtLink>
+            </div>
+          </div>
+
           <!-- Other items -->
           <NuxtLink 
             v-else
             :to="localePath(item.path)" 
             :class="['block text-xl font-bold hover:text-red-500', isDark ? 'text-slate-300' : 'text-slate-700']"
-            @click="isMenuOpen = false"
+            @click="isMenuOpen = false; resetMobileMenus()"
           >
             {{ $t(`nav.${item.key}`) }}
           </NuxtLink>
@@ -287,6 +356,16 @@ const route = useRoute()
 const isScrolled = ref(false)
 const isMenuOpen = ref(false)
 const isMobileServicesOpen = ref(false)
+const mobileSubMenus = ref({})
+
+const toggleMobileSubMenu = (key) => {
+  mobileSubMenus.value[key] = !mobileSubMenus.value[key]
+}
+
+const resetMobileMenus = () => {
+  isMobileServicesOpen.value = false
+  mobileSubMenus.value = {}
+}
 
 const servicesList = [
   'student',
@@ -334,17 +413,30 @@ const toggleDark = useToggle(isDark)
 
 const navItems = [
   { key: 'home', path: '/' },
-  { key: 'about', path: '/about' },
   { key: 'services', path: '/services' },
   { key: 'locations', path: '/locations' },
-  { key: 'faq', path: '/faq' },
-  { key: 'contact', path: '/contact' },
-  { key: 'blog', path: '/blog' }
+  { 
+    key: 'resources', 
+    path: '#',
+    subItems: [
+      { key: 'faq', path: '/faq' },
+      { key: 'blog', path: '/blog' },
+      { key: 'referral', path: '/referral-program' }
+    ]
+  },
+  { 
+    key: 'company', 
+    path: '#',
+    subItems: [
+      { key: 'about', path: '/about' },
+      { key: 'contact', path: '/contact' }
+    ]
+  }
 ]
 
 watch(isMenuOpen, (newVal) => {
   if (!newVal) {
-    isMobileServicesOpen.value = false
+    resetMobileMenus()
   }
 })
 

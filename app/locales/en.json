@@ -6,7 +6,10 @@
     "locations": "Locations",
     "faq": "FAQs",
     "contact": "Contact",
-    "blog": "Blog"
+    "blog": "Blog",
+    "referral": "Refer a Friend",
+    "company": "Company",
+    "resources": "Resources"
   },
   "about": {
     "title": "Moving Made Simple. Built with Care.",
@@ -49,6 +52,12 @@
     "cta_button": "Get an Instant Quote"
   },
   "home": {
+    "hero_badge": "Rated Excellent on Trustpilot • Fully Insured • No Hidden Fees",
+    "hero_title_part1": "Moving Day Without",
+    "hero_title_part2": "the",
+    "hero_title_stress": "Stress.",
+    "hero_title_part3": "Done Right — Guaranteed.",
+    "hero_desc": "Most people dread moving day for good reason: no-shows, broken furniture, surprise fees. We've completed 9,983+ moves across the Netherlands with a 4.9/5 rating. You'll see why.",
     "hero_prefix": "Moving",
     "hero_suffix": "Forward",
     "hero_cities": ["Maastricht", "Sittard", "Heerlen", "Kerkrade", "Geleen", "Limburg", "Netherlands"],
@@ -69,6 +78,11 @@
       "rating": "Average Rating",
       "coverage": "Cities Covered",
       "reviews": "5-Star Reviews"
+    },
+    "bento_services": {
+      "title": "Pro Moving Services for Every Need",
+      "subtitle": "A summary of our specialized relocations designed to make your moving day stress-free.",
+      "view_all": "View All Services"
     },
     "why_us": {
       "title": "Why Choose MoveIt?",
@@ -1926,6 +1940,47 @@
       "desc": "Get in touch for a free site assessment and a transparent clearance quote today.",
       "btn_quote": "Get Clearance Quote",
       "btn_whatsapp": "WhatsApp Us"
+    }
+  },
+  "referral_program": {
+    "seo": {
+      "title": "Referral Program | MoveIt",
+      "desc": "Refer a friend to MoveIt and both of you get rewarded! A win-win moving experience."
+    },
+    "title": "Refer a Friend to MoveIt",
+    "subtitle": "They get a discount. You get a reward. Win-win!",
+    "desc": "At MoveIt, we believe that great experiences should be shared. Introduce your friends, family, or colleagues to our premium moving services and earn rewards for every successful move.",
+    "how_it_works": {
+      "title": "How It Works",
+      "step1_title": "Share the love",
+      "step1_desc": "Fill out the form below to invite a friend who needs a stress-free move.",
+      "step2_title": "They book a move",
+      "step2_desc": "Your friend books a move with us and automatically receives a 10% discount on their total cost.",
+      "step3_title": "You get rewarded",
+      "step3_desc": "Once their move is completed, you will receive a €20 cash reward as a thank you!"
+    },
+    "form": {
+      "title": "Invite a Friend Today",
+      "name_label": "Your Full Name",
+      "email_label": "Your Email",
+      "friend_name_label": "Friend's Full Name",
+      "friend_email_label": "Friend's Email Address",
+      "message_label": "Personal Message (Optional)",
+      "submit_btn": "Send Invitation",
+      "success_msg": "Your invitation has been sent successfully!"
+    },
+    "faq": {
+      "title": "Referral FAQ",
+      "q1": "When do I receive my €20 reward?",
+      "a1": "You will receive your reward within 14 days after your friend's move has been successfully completed and paid for.",
+      "q2": "Is there a limit to how many friends I can refer?",
+      "a2": "No! You can refer as many friends as you like. There is no cap on your rewards."
+    },
+    "carousel": {
+      "heading": "Too Good to Be True? It's Just the Way We Roll.",
+      "subheading": "At MoveIt, we value our clients and how they've recognized our commitment to premium service.",
+      "promo_text": "Even if they don't unlock a referral, we still offer generous discounts and promo codes to our customers.",
+      "promo_subtext": "Happy Customers, Happy Life."
     }
   }
 }
