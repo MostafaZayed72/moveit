@@ -100,7 +100,80 @@
     <!-- TRUST BADGES & RATINGS -->
     <TrustSection />
 
+    <!-- THE MOVEIT DIFFERENCE -->
+    <BaseSection :title="$t('home.comparison.title')" :subtitle="$t('home.comparison.subtitle')">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto items-stretch">
+        
+        <!-- Left: The Industry Standard Card -->
+        <div class="glass-panel p-8 md:p-12 rounded-[2.5rem] border border-slate-200/50 dark:border-slate-800/80 bg-slate-50/50 dark:bg-slate-900/20 flex flex-col justify-between" data-aos="fade-right">
+          <div>
+            <div class="inline-flex items-center space-x-2 px-4 py-1.5 bg-red-500/10 text-red-500 rounded-full text-xs font-bold uppercase tracking-wider mb-6">
+              <span>{{ $t('home.comparison.bad_badge') }}</span>
+            </div>
+            <h3 class="text-3xl font-black text-slate-900 dark:text-white mb-8 tracking-tight leading-tight">
+              {{ $t('home.comparison.bad_title') }}
+            </h3>
+            
+            <div class="space-y-6">
+              <div v-for="item in badComparisonItems" :key="item.key" class="flex items-start space-x-4 p-4 rounded-2xl bg-white dark:bg-slate-900/50 border border-slate-100 dark:border-slate-800/50 shadow-sm">
+                <div class="text-2xl p-2 bg-red-100 dark:bg-red-500/10 rounded-xl flex-shrink-0">
+                  {{ item.icon }}
+                </div>
+                <div>
+                  <h4 class="font-bold text-slate-900 dark:text-white text-base">
+                    {{ $t(`home.comparison.bad.${item.key}.title`) }}
+                  </h4>
+                  <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">
+                    {{ $t(`home.comparison.bad.${item.key}.desc`) }}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
+        <!-- Right: The MoveIt Difference Card -->
+        <div class="relative rounded-[2.5rem] overflow-hidden p-8 md:p-12 bg-gradient-to-br from-red-600 to-red-700 text-white flex flex-col justify-between shadow-2xl" data-aos="fade-left">
+          <!-- Background decoration -->
+          <div class="absolute inset-0 bg-gradient-to-tr from-black/20 to-transparent pointer-events-none"></div>
+          
+          <div class="relative z-10">
+            <div class="inline-flex items-center space-x-2 px-4 py-1.5 bg-white/20 text-white rounded-full text-xs font-bold uppercase tracking-wider mb-6">
+              <span>{{ $t('home.comparison.good_badge') }}</span>
+            </div>
+            <h3 class="text-3xl font-black text-white mb-8 tracking-tight leading-tight">
+              {{ $t('home.comparison.good_title') }}
+            </h3>
+            
+            <div class="space-y-6">
+              <div v-for="item in goodComparisonItems" :key="item.key" class="flex items-start space-x-4 p-4 rounded-2xl bg-white/10 backdrop-blur-md border border-white/10 shadow-lg">
+                <div class="text-2xl p-2 bg-white/10 rounded-xl flex-shrink-0">
+                  {{ item.icon }}
+                </div>
+                <div>
+                  <h4 class="font-bold text-white text-base">
+                    {{ $t(`home.comparison.good.${item.key}.title`) }}
+                  </h4>
+                  <p class="text-xs text-red-100 mt-1">
+                    {{ $t(`home.comparison.good.${item.key}.desc`) }}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- CTA Button inside Card -->
+          <div class="relative z-10 mt-12 text-center">
+            <NuxtLink :to="localePath('/contact')">
+              <button class="w-full py-4 bg-white hover:bg-red-50 text-red-600 font-black rounded-full text-lg shadow-xl hover:scale-[1.02] active:scale-95 transition-all">
+                {{ $t('home.comparison.cta_btn') }}
+              </button>
+            </NuxtLink>
+          </div>
+        </div>
+
+      </div>
+    </BaseSection>
 
     <!-- 2. SERVICES / PACKAGES -->
     <BaseSection :title="$t('home.packages.title')" :subtitle="$t('home.packages.subtitle')">
@@ -283,6 +356,22 @@ const heroStats = [
   { key: 'completed', value: 9983, suffix: '+' },
   { key: 'rating', value: 4.9, suffix: '/5', decimals: 1 },
   { key: 'coverage', value: 14, suffix: '+' }
+]
+
+const badComparisonItems = [
+  { key: 'late', icon: '⏳' },
+  { key: 'broken', icon: '💔' },
+  { key: 'price', icon: '💸' },
+  { key: 'team', icon: '👥' },
+  { key: 'slow', icon: '✉️' }
+]
+
+const goodComparisonItems = [
+  { key: 'ontime', icon: '⏱️' },
+  { key: 'insured', icon: '🛡️' },
+  { key: 'price', icon: '💰' },
+  { key: 'team', icon: '🤝' },
+  { key: 'whatsapp', icon: '⚡' }
 ]
 
 const whyUsItems = [

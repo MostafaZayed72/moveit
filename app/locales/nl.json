@@ -79,6 +79,29 @@
       "coverage": "Steden Gedekt",
       "reviews": "5-Sterren Reviews"
     },
+    "comparison": {
+      "title": "Waarom Wij Anders Zijn",
+      "subtitle": "Verhuizen is een van de meest stressvolle gebeurtenissen. We hebben MoveIt gebouwd om dat op te lossen — volledig.",
+      "bad_badge": "Klinkt Dit Bekend?",
+      "bad_title": "De meeste verhuizers maken het erger.",
+      "bad": {
+        "late": { "title": "2 Uur te Laat", "desc": "Geen communicatie, planning verpest." },
+        "broken": { "title": "Beschadigde Spullen", "desc": "Grootmoeders kast komt in drie stukken aan." },
+        "price": { "title": "Onverwachte Facturen", "desc": "Offerte van €300, factuur van €520." },
+        "team": { "title": "Willekeurige Teams", "desc": "Andere verhuizers dan u gesproken heeft." },
+        "slow": { "title": "Eindeloze E-mails", "desc": "Duurt 3 dagen en 4 e-mails voor een offerte." }
+      },
+      "good_badge": "Hoe Wij Het Anders Doen",
+      "good_title": "We houden ons aan een hogere standaard.",
+      "good": {
+        "ontime": { "title": "Altijd op Tijd", "desc": "Tot op de minuut gepland. Uw agenda wordt gerespecteerd." },
+        "insured": { "title": "Volledig Verzekerd", "desc": "Uitgebreide transportverzekering voor elk item." },
+        "price": { "title": "Geen Verborgen Kosten", "desc": "De prijs in de offerte is de prijs die u betaalt." },
+        "team": { "title": "Toegewijd Team", "desc": "Hetzelfde team dat u heeft gesproken, verhuist u." },
+        "whatsapp": { "title": "Minuten via WhatsApp", "desc": "Snelle, directe offertes en boekingsbevestiging." }
+      },
+      "cta_btn": "Vraag Mijn Gratis Offerte aan"
+    },
     "bento_services": {
       "title": "Professionele verhuisdiensten voor elke behoefte",
       "subtitle": "Een overzicht van onze gespecialiseerde verhuizingen ontworpen om uw verhuisdag stressvrij te maken.",
@@ -147,7 +170,7 @@
       "student_ride_free": "Gratis meerijden voor studenten binnen Maastricht",
       "footnote_vat": "Alle prijzen zijn exclusief 21% BTW.",
       "footnote_time": "Tijd wordt berekend vanaf vertrek en terugkeer naar onze locatie in Maastricht.",
-      "footnote_student": "Gratis meerijdservice voor alle studenten (max. 1 passagier)",
+      "footnote_student": "Gratis meerijden voor studenten binnen Maastricht",
       "optional_addons_list": [
         "Meubelmontage €27.99",
         "Inpakservice (offerte op maat)",
@@ -156,60 +179,60 @@
         "Extra verhuizer (€15.99/u)"
       ],
       "package1": {
-        "name": "MOVE SOLO",
-        "subtitle": "ALLEEN BUS",
+        "name": "Alleen Bestelwagen",
         "price": "€59.99",
-        "unit": "/u",
+        "unit": "/uur",
         "best_for": [
           { "icon": "🎓", "text": "Studenten" },
           { "icon": "🛋", "text": "Enkele meubelstukken" },
-          { "icon": "📦", "text": "Marktplaats ophalen" },
+          { "icon": "📦", "text": "Marktplaats ophaalservice" },
           { "icon": "🛠", "text": "Doe-het-zelf verhuizers" }
         ],
         "includes": [
-          "Verhuisbus",
+          "Inclusief verhuiswagen",
           "Professionele chauffeur",
           "Transportverzekering",
           "Brandstof binnen Maastricht"
-        ]
+        ],
+        "cta_text": "Boek via WhatsApp"
       },
       "package2": {
-        "name": "MOVE EASY",
-        "subtitle": "BUS + 1 VERHUIZER",
+        "name": "Wagen + 1 Verhuizer",
         "price": "€69.99",
-        "unit": "/u",
-        "popular": true,
+        "unit": "/uur",
         "best_for": [
           { "icon": "🏠", "text": "Studio verhuizingen" },
           { "icon": "🎓", "text": "Studenten verhuizingen" },
           { "icon": "📦", "text": "Kleine huishoudens" }
         ],
         "includes": [
-          "Bus + verhuizer",
-          "Laden & lossen",
-          "Transportverzekering"
-        ]
+          "Alles in Alleen Bestelwagen",
+          "1 Professionele verhuizer",
+          "Hulp bij laden & lossen",
+          "Inclusief dekens & spanbanden"
+        ],
+        "cta_text": "Reserveer Mijn Datum"
       },
       "package3": {
-        "name": "MOVE PLUS",
-        "subtitle": "BUS + 2 VERHUIZERS",
-        "price": "€94.99",
-        "unit": "/u",
+        "name": "Wagen + 2 Verhuizers",
+        "price": "€89.99",
+        "unit": "/uur",
         "best_for": [
-          { "icon": "🛏", "text": "1-slaapkamer appartement" },
-          { "icon": "💪", "text": "Zware meubels" },
-          { "icon": "⚡", "text": "Snellere verhuisdag" }
+          { "icon": "🛏", "text": "1-slaapkamer appartementen" },
+          { "icon": "💪", "text": "Zwaar meubilair" },
+          { "icon": "⚡", "text": "Snellere verhuisdagen" }
         ],
         "includes": [
-          "2 professionele verhuizers",
-          "Laden & lossen",
-          "Meubelafhandeling"
-        ]
+          "Alles in Alleen Bestelwagen",
+          "2 Professionele verhuizers",
+          "Volledig fysieke arbeid",
+          "Inclusief traplopen"
+        ],
+        "cta_text": "Vraag een Offerte aan"
       },
       "package4": {
-        "name": "MOVE COMPLETE",
-        "subtitle": "VOLLEDIGE VERHUISSERVICE",
-        "price": "Vanaf €349",
+        "name": "Volledige Service",
+        "price": "Maatwerk",
         "unit": "",
         "best_for": [
           { "icon": "🌍", "text": "Internationale verhuizingen" },
@@ -217,12 +240,12 @@
           { "icon": "💼", "text": "Drukke professionals" }
         ],
         "includes": [
-          "Verhuizers + Bus",
-          "Montage/demontage",
-          "Verhuiscoördinatie",
-          "Spoedverhuizingen",
-          "24/7 WhatsApp coördinatie"
-        ]
+          "Volledige inpakservice",
+          "Demontage & montage",
+          "Prioriteitsplanning",
+          "Toegewijde verhuiscoördinator"
+        ],
+        "cta_text": "Vraag een Offerte aan"
       }
     }
   },

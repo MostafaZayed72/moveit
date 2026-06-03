@@ -79,6 +79,29 @@
       "coverage": "Cities Covered",
       "reviews": "5-Star Reviews"
     },
+    "comparison": {
+      "title": "Why We Are Different",
+      "subtitle": "Moving is one of life's most stressful events. We built MoveIt to fix that — completely.",
+      "bad_badge": "A Sound Familiar?",
+      "bad_title": "Most moving companies make it worse.",
+      "bad": {
+        "late": { "title": "2 Hours Late", "desc": "No communication, calendar ruined." },
+        "broken": { "title": "Damaged Belongings", "desc": "Grandmother's cabinet in three pieces." },
+        "price": { "title": "Surprise Invoices", "desc": "Quoted €300, invoiced €520." },
+        "team": { "title": "Random Crews", "desc": "Different movers than you spoke to." },
+        "slow": { "title": "Endless Emails", "desc": "Takes 3 days and 4 emails to get a quote." }
+      },
+      "good_badge": "How We Do It Differently",
+      "good_title": "We hold ourselves to a higher standard.",
+      "good": {
+        "ontime": { "title": "On Time, Every Time", "desc": "Scheduled to the minute. Your calendar is respected." },
+        "insured": { "title": "Fully Insured", "desc": "Comprehensive transport insurance for every item." },
+        "price": { "title": "No Hidden Fees", "desc": "The price we quote is the exact price you pay." },
+        "team": { "title": "Dedicated Crew", "desc": "The same team you spoke to handles your move." },
+        "whatsapp": { "title": "Minutes via WhatsApp", "desc": "Quick, direct quotes and booking confirmation." }
+      },
+      "cta_btn": "Get My Free Quote"
+    },
     "bento_services": {
       "title": "Pro Moving Services for Every Need",
       "subtitle": "A summary of our specialized relocations designed to make your moving day stress-free.",
@@ -147,7 +170,7 @@
       "student_ride_free": "Free ride along for students within Maastricht",
       "footnote_vat": "All prices exclude 21% VAT.",
       "footnote_time": "Time is calculated from departure and return to our Maastricht location.",
-      "footnote_student": "Free ride along service for all students (1 passenger only)",
+      "footnote_student": "Free ride along for students within Maastricht",
       "optional_addons_list": [
         "Furniture assembly €27.99",
         "Packing service (custom quote)",
@@ -156,8 +179,7 @@
         "Extra mover (€15.99/hr)"
       ],
       "package1": {
-        "name": "MOVE SOLO",
-        "subtitle": "VAN ONLY",
+        "name": "Van Only",
         "price": "€59.99",
         "unit": "/hr",
         "best_for": [
@@ -167,33 +189,33 @@
           { "icon": "🛠", "text": "DIY Movers" }
         ],
         "includes": [
-          "Moving van",
+          "Moving van included",
           "Professional driver",
           "Transport insurance",
           "Fuel within Maastricht"
-        ]
+        ],
+        "cta_text": "Book via WhatsApp"
       },
       "package2": {
-        "name": "MOVE EASY",
-        "subtitle": "VAN + 1 MOVER",
+        "name": "Van + 1 Mover",
         "price": "€69.99",
         "unit": "/hr",
-        "popular": true,
         "best_for": [
           { "icon": "🏠", "text": "Studio moves" },
           { "icon": "🎓", "text": "Student moves" },
           { "icon": "📦", "text": "Small households" }
         ],
         "includes": [
-          "Van + mover",
-          "Loading & unloading",
-          "Transport insurance"
-        ]
+          "Everything in Van Only",
+          "1 Professional mover",
+          "Loading & unloading help",
+          "Blankets & straps included"
+        ],
+        "cta_text": "Reserve My Date"
       },
       "package3": {
-        "name": "MOVE PLUS",
-        "subtitle": "VAN + 2 MOVERS",
-        "price": "€94.99",
+        "name": "Van + 2 Movers",
+        "price": "€89.99",
         "unit": "/hr",
         "best_for": [
           { "icon": "🛏", "text": "1BD Apartments" },
@@ -201,15 +223,16 @@
           { "icon": "⚡", "text": "Faster moving days" }
         ],
         "includes": [
-          "2 professional movers",
-          "Loading & unloading",
-          "Furniture handling"
-        ]
+          "Everything in Van Only",
+          "2 Professional movers",
+          "Full physical labor",
+          "Stair navigation included"
+        ],
+        "cta_text": "Get Custom Quote"
       },
       "package4": {
-        "name": "MOVE COMPLETE",
-        "subtitle": "FULL-SERVICE MOVE",
-        "price": "Starting from €349",
+        "name": "Full Service",
+        "price": "Custom",
         "unit": "",
         "best_for": [
           { "icon": "🌍", "text": "International relocations" },
@@ -217,12 +240,12 @@
           { "icon": "💼", "text": "Busy professionals" }
         ],
         "includes": [
-          "Movers + Van",
-          "Assembly/disassembly",
-          "Move coordination",
-          "Urgent/Same-day relocations",
-          "24/7 Whatsapp coordination"
-        ]
+          "Full packing service",
+          "Disassembly & assembly",
+          "Priority scheduling",
+          "Dedicated moving coordinator"
+        ],
+        "cta_text": "Get Custom Quote"
       }
     }
   },

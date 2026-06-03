@@ -14,8 +14,8 @@
           :class="[
             'relative rounded-[2.5rem] p-1 transition-all duration-700 hover:-translate-y-3 flex flex-col group/card snap-center shrink-0 w-[85vw] md:w-[45vw] lg:w-full',
             pkg.popular
-              ? 'bg-gradient-to-br from-red-600 via-red-500 to-orange-500 shadow-[0_20px_50px_rgba(239,68,68,0.3)] z-10 scale-[1.02] lg:scale-[1.05]'
-              : 'bg-white/40 dark:bg-slate-900/40 backdrop-blur-xl border border-slate-200 dark:border-slate-800 shadow-xl'
+              ? 'bg-gradient-to-b from-red-500 to-red-600 text-white shadow-[0_20px_50px_rgba(239,68,68,0.25)] z-10 scale-[1.02] lg:scale-[1.05]'
+              : 'bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xl'
           ]"
           data-aos="fade-up"
           :data-aos-delay="i * 100"
@@ -31,14 +31,11 @@
               <div :class="['w-12 h-12 rounded-2xl flex items-center justify-center mb-4 text-2xl shadow-inner transition-transform duration-500 group-hover/card:scale-110', pkg.popular ? 'bg-white/20' : 'bg-red-50 dark:bg-red-900/20']">
                 {{ pkg.icon }}
               </div>
-              <h3 :class="['text-lg font-black leading-tight', pkg.popular ? 'text-white' : 'text-slate-900 dark:text-white']">
+              <h3 :class="['text-xl font-black leading-tight', pkg.popular ? 'text-white' : 'text-slate-900 dark:text-white']">
                 {{ pkg.name }}
               </h3>
-              <p :class="['text-[10px] font-bold mt-1 uppercase tracking-widest opacity-80 mb-3', pkg.popular ? 'text-white' : 'text-red-500']">
-                {{ pkg.subtitle }}
-              </p>
               
-              <div class="flex items-baseline gap-1">
+              <div class="flex items-baseline gap-1 mt-4">
                 <span :class="[pkg.price.length > 8 ? 'text-xl md:text-2xl xl:text-3xl' : 'text-3xl xl:text-4xl', 'font-black tracking-tight', pkg.popular ? 'text-white' : 'text-slate-900 dark:text-white']">{{ pkg.price }}</span>
                 <span :class="['text-sm font-medium', pkg.popular ? 'text-red-100' : 'text-slate-500']">{{ pkg.unit }}</span>
               </div>
@@ -75,7 +72,7 @@
               </h4>
               <ul class="space-y-2.5">
                 <li v-for="item in pkg.includes" :key="item" class="flex items-start gap-2.5">
-                  <div :class="['w-4 h-4 rounded-full flex items-center justify-center mt-0.5 shrink-0 transition-transform duration-500 group-hover/card:rotate-12', pkg.popular ? 'bg-white text-red-600' : 'bg-green-100 dark:bg-green-900/30 text-green-600']">
+                  <div :class="['w-4 h-4 rounded-full flex items-center justify-center mt-0.5 shrink-0 transition-transform duration-500 group-hover/card:rotate-12', pkg.popular ? 'bg-white text-red-600' : 'bg-red-50 dark:bg-red-950 text-red-600']">
                     <svg class="w-2.5 h-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
                   </div>
                   <span :class="['text-sm lg:text-[13px] xl:text-sm leading-relaxed font-semibold', pkg.popular ? 'text-red-50' : 'text-slate-600 dark:text-slate-300']">{{ item }}</span>
@@ -91,11 +88,11 @@
                   'group/btn relative overflow-hidden block w-full text-center py-3.5 rounded-2xl font-black text-[11px] uppercase tracking-widest transition-all duration-300 active:scale-95 shadow-lg',
                   pkg.popular
                     ? 'bg-white text-red-600 hover:bg-slate-900 hover:text-white'
-                    : 'bg-red-600 text-white hover:bg-slate-900 shadow-red-600/20'
+                    : 'bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-white hover:bg-red-600 hover:text-white shadow-sm'
                 ]"
               >
                 <span class="relative z-10">{{ pkg.cta.text }}</span>
-                <div class="absolute inset-0 bg-slate-900 translate-y-full group-hover/btn:translate-y-0 transition-transform duration-300 -z-0"></div>
+                <div v-if="pkg.popular" class="absolute inset-0 bg-slate-900 translate-y-full group-hover/btn:translate-y-0 transition-transform duration-300 -z-0"></div>
               </a>
             </div>
           </div>
@@ -176,7 +173,6 @@ const resolvedPackages = computed(() => {
     return {
       icon,
       name,
-      subtitle: t(`home.packages.${key}.subtitle`),
       price: t(`home.packages.${key}.price`),
       unit: t(`home.packages.${key}.unit`),
       popular: key === 'package2',
@@ -188,9 +184,7 @@ const resolvedPackages = computed(() => {
       }),
       includes: (tm(`home.packages.${key}.includes`) || []).map(item => rt(item)),
       cta: { 
-        text: name.includes('SOLO') ? t('home.packages.reserve_slot') : 
-              name.includes('COMPLETE') ? t('home.packages.request_fixed_quote') : 
-              t('home.packages.get_instant_quote'), 
+        text: t(`home.packages.${key}.cta_text`), 
         link: '/contact' 
       }
     }
