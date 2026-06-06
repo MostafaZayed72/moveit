@@ -1,10 +1,11 @@
 <template>
   <div>
     <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
-      <div
+      <NuxtLink
         v-for="(city, i) in cities"
-        :key="city.name"
-        class="group relative rounded-2xl overflow-hidden h-40 cursor-pointer"
+        :key="city.name || i"
+        :to="city.slug ? localePath('/locations/' + city.slug) : localePath('/contact')"
+        class="group relative rounded-2xl overflow-hidden h-40 cursor-pointer block"
         data-aos="fade-up"
         :data-aos-delay="(i % 5) * 50"
       >
@@ -21,27 +22,29 @@
         <div class="absolute top-3 right-3 w-6 h-6 bg-red-500 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-lg">
           <svg class="w-3.5 h-3.5 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/></svg>
         </div>
-      </div>
+      </NuxtLink>
     </div>
   </div>
 </template>
 
 <script setup>
+const localePath = useLocalePath()
+
 const cities = [
-  { name: 'Maastricht', country: null, image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=400' },
-  { name: 'Geleen', country: null, image: 'https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?auto=format&fit=crop&q=80&w=400' },
-  { name: 'Roermond', country: null, image: 'https://images.unsplash.com/photo-1517705008128-361805f42e86?auto=format&fit=crop&q=80&w=400' },
-  { name: 'Sittard', country: null, image: 'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?auto=format&fit=crop&q=80&w=400' },
-  { name: 'Venlo', country: null, image: 'https://images.unsplash.com/photo-1518391846015-55a9cc003b25?auto=format&fit=crop&q=80&w=400' },
-  { name: 'Weert', country: null, image: 'https://images.unsplash.com/photo-1514924013411-cbf25faa35bb?auto=format&fit=crop&q=80&w=400' },
-  { name: 'Eijsden', country: null, image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&q=80&w=400' },
-  { name: 'Meerssen', country: null, image: 'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?auto=format&fit=crop&q=80&w=400' },
-  { name: 'Vaals', country: null, image: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&q=80&w=400' },
-  { name: 'Aachen', country: '🇩🇪 Germany', image: 'https://images.unsplash.com/photo-1467269204594-9661b134dd2b?auto=format&fit=crop&q=80&w=400' },
-  { name: 'Genk', country: '🇧🇪 Belgium', image: 'https://images.unsplash.com/photo-1491557345352-5929e343eb89?auto=format&fit=crop&q=80&w=400' },
-  { name: 'Brunssum', country: null, image: 'https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fit=crop&q=80&w=400' },
-  { name: 'Valkenburg', country: null, image: 'https://images.unsplash.com/photo-1444723121867-7a241cacace9?auto=format&fit=crop&q=80&w=400' },
-  { name: 'Brussels', country: '🇧🇪 Belgium', image: 'https://images.unsplash.com/photo-1559113202-c916b8e44373?auto=format&fit=crop&q=80&w=400' },
+  { name: 'Maastricht', slug: 'maastricht', country: null, image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=400' },
+  { name: 'Geleen', slug: 'geleen', country: null, image: 'https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?auto=format&fit=crop&q=80&w=400' },
+  { name: 'Roermond', slug: 'roermond', country: null, image: 'https://images.unsplash.com/photo-1517705008128-361805f42e86?auto=format&fit=crop&q=80&w=400' },
+  { name: 'Sittard', slug: 'sittard', country: null, image: 'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?auto=format&fit=crop&q=80&w=400' },
+  { name: 'Venlo', slug: 'venlo', country: null, image: 'https://images.unsplash.com/photo-1518391846015-55a9cc003b25?auto=format&fit=crop&q=80&w=400' },
+  { name: 'Weert', slug: 'weert', country: null, image: 'https://images.unsplash.com/photo-1514924013411-cbf25faa35bb?auto=format&fit=crop&q=80&w=400' },
+  { name: 'Eijsden', slug: 'eijsden', country: null, image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&q=80&w=400' },
+  { name: 'Meerssen', slug: 'meerssen', country: null, image: 'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?auto=format&fit=crop&q=80&w=400' },
+  { name: 'Vaals', slug: 'vaals', country: null, image: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&q=80&w=400' },
+  { name: 'Aachen', slug: 'aachen', country: '🇩🇪 Germany', image: 'https://images.unsplash.com/photo-1467269204594-9661b134dd2b?auto=format&fit=crop&q=80&w=400' },
+  { name: 'Genk', slug: 'genk', country: '🇧🇪 Belgium', image: 'https://images.unsplash.com/photo-1491557345352-5929e343eb89?auto=format&fit=crop&q=80&w=400' },
+  { name: 'Brunssum', slug: 'brunssum', country: null, image: 'https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fit=crop&q=80&w=400' },
+  { name: 'Valkenburg', slug: 'valkenburg', country: null, image: 'https://images.unsplash.com/photo-1444723121867-7a241cacace9?auto=format&fit=crop&q=80&w=400' },
+  { name: 'Brussels', slug: 'brussels', country: '🇧🇪 Belgium', image: 'https://images.unsplash.com/photo-1559113202-c916b8e44373?auto=format&fit=crop&q=80&w=400' },
   { isMore: true, image: 'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&q=80&w=400' },
 ]
 </script>
