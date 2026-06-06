@@ -1,5 +1,4 @@
 import type { LocationData } from './locations/types';
-import { generateGenericLocation } from './locations/generic';
 import { maastrichtLocation } from './locations/maastricht';
 import { venloLocation } from './locations/venlo';
 import { aachenLocation } from './locations/aachen';
@@ -10,22 +9,26 @@ import { sittardLocation } from './locations/sittard';
 import { weertLocation } from './locations/weert';
 import { eijsdenLocation } from './locations/eijsden';
 import { meerssenLocation } from './locations/meerssen';
+import { vaalsLocation } from './locations/vaals';
+import { genkLocation } from './locations/genk';
+import { brunssumLocation } from './locations/brunssum';
+import { valkenburgLocation } from './locations/valkenburg';
 
 export const locations: LocationData[] = [
-  maastrichtLocation, // 100% Unique
-  venloLocation,      // 100% Unique
-  aachenLocation,     // 100% Unique
-  brusselsLocation,   // 100% Unique
-  roermondLocation,   // 100% Unique
-  geleenLocation,     // 100% Unique
-  sittardLocation,    // 100% Unique
-  weertLocation,      // 100% Unique
-  eijsdenLocation,    // 100% Unique
-  meerssenLocation,   // 100% Unique
-  generateGenericLocation('Vaals', 'vaals', 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&q=80&w=400'),
-  generateGenericLocation('Genk', 'genk', 'https://images.unsplash.com/photo-1491557345352-5929e343eb89?auto=format&fit=crop&q=80&w=400', '🇧🇪 Belgium'),
-  generateGenericLocation('Brunssum', 'brunssum', 'https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fit=crop&q=80&w=400'),
-  generateGenericLocation('Valkenburg', 'valkenburg', 'https://images.unsplash.com/photo-1444723121867-7a241cacace9?auto=format&fit=crop&q=80&w=400'),
+  maastrichtLocation,
+  venloLocation,
+  aachenLocation,
+  brusselsLocation,
+  roermondLocation,
+  geleenLocation,
+  sittardLocation,
+  weertLocation,
+  eijsdenLocation,
+  meerssenLocation,
+  vaalsLocation,
+  genkLocation,
+  brunssumLocation,
+  valkenburgLocation,
 ];
 
 export const getLocationsData = () => locations;
