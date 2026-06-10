@@ -40,11 +40,11 @@ const cities = [
   { name: 'Eijsden', slug: 'eijsden', country: null, image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&q=80&w=400' },
   { name: 'Meerssen', slug: 'meerssen', country: null, image: 'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?auto=format&fit=crop&q=80&w=400' },
   { name: 'Vaals', slug: 'vaals', country: null, image: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&q=80&w=400' },
-  { name: 'Aachen', slug: 'aachen', country: '🇩🇪 Germany', image: 'https://images.unsplash.com/photo-1467269204594-9661b134dd2b?auto=format&fit=crop&q=80&w=400' },
-  { name: 'Genk', slug: 'genk', country: '🇧🇪 Belgium', image: 'https://images.unsplash.com/photo-1491557345352-5929e343eb89?auto=format&fit=crop&q=80&w=400' },
+  { name: 'Aachen 🇩🇪', slug: 'aachen', country: null, image: 'https://images.unsplash.com/photo-1467269204594-9661b134dd2b?auto=format&fit=crop&q=80&w=400' },
+  { name: 'Genk 🇧🇪', slug: 'genk', country: null, image: 'https://images.unsplash.com/photo-1491557345352-5929e343eb89?auto=format&fit=crop&q=80&w=400' },
   { name: 'Brunssum', slug: 'brunssum', country: null, image: 'https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fit=crop&q=80&w=400' },
   { name: 'Valkenburg', slug: 'valkenburg', country: null, image: 'https://images.unsplash.com/photo-1444723121867-7a241cacace9?auto=format&fit=crop&q=80&w=400' },
-  { name: 'Brussels', slug: 'brussels', country: '🇧🇪 Belgium', image: 'https://images.unsplash.com/photo-1559113202-c916b8e44373?auto=format&fit=crop&q=80&w=400' },
+  { name: 'Hasselt 🇧🇪', slug: 'hasselt', country: null, image: 'https://images.unsplash.com/photo-1559113202-c916b8e44373?auto=format&fit=crop&q=80&w=400' },
   { isMore: true, image: 'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&q=80&w=400' },
 ]
 </script>

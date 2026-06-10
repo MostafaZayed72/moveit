@@ -9,7 +9,14 @@
     "blog": "Blog",
     "referral": "Refer a Friend",
     "company": "Company",
-    "resources": "Resources"
+    "resources": "Resources",
+    "maastricht": "Maastricht",
+    "valkenburg": "Valkenburg",
+    "sittard": "Sittard",
+    "roermond": "Roermond",
+    "aachen": "Aachen (DE)",
+    "genk": "Genk (BE)",
+    "all_locations": "View All Locations"
   },
   "about": {
     "title": "Moving Made Simple. Built with Care.",
@@ -57,7 +64,7 @@
     "hero_title_part2": "the",
     "hero_title_stress": "Stress.",
     "hero_title_part3": "Done Right — Guaranteed.",
-    "hero_desc": "Most people dread moving day for good reason: no-shows, broken furniture, surprise fees. We've completed 9,983+ moves across the Netherlands with a 4.9/5 rating. You'll see why.",
+    "hero_desc": "Most people dread moving day for good reason: no-shows, broken furniture, surprise fees. We've completed 1,000+ moves across the Netherlands with a 4.9/5 rating. You'll see why.",
     "hero_prefix": "Moving",
     "hero_suffix": "Forward",
     "hero_cities": ["Maastricht", "Sittard", "Heerlen", "Kerkrade", "Geleen", "Limburg", "Netherlands"],
@@ -68,6 +75,11 @@
       "Keep moving forward."
     ],
     "get_quote": "Get an Instant Quote",
+    "quote_form_desc": "Fill out the form below for a quick flat-price quote.",
+    "move_date": "Estimated move date",
+    "move_type": "Type of move",
+    "choose_option": "Choose an option",
+    "custom_move": "Custom / Other",
     "moving_from": "Moving from address",
     "moving_to": "Moving to address",
     "or_get_call": "Or get a call from us",
@@ -82,62 +94,70 @@
     "comparison": {
       "title": "Why We Are Different",
       "subtitle": "Moving is one of life's most stressful events. We built MoveIt to fix that — completely.",
-      "bad_badge": "A Sound Familiar?",
-      "bad_title": "Most moving companies make it worse.",
+      "bad_badge": "DOES THIS SOUND FAMILIAR?",
+      "bad_title": "Moving is One of Life's Most Stressful Events. And Most Companies Make It Worse.",
+      "bad_subtitle": "You've probably heard the horror stories. Or lived one. The moving industry has a well-earned reputation — and for good reason.",
       "bad": {
-        "late": { "title": "2 Hours Late", "desc": "No communication, calendar ruined." },
-        "broken": { "title": "Damaged Belongings", "desc": "Grandmother's cabinet in three pieces." },
-        "price": { "title": "Surprise Invoices", "desc": "Quoted €300, invoiced €520." },
-        "team": { "title": "Random Crews", "desc": "Different movers than you spoke to." },
-        "slow": { "title": "Endless Emails", "desc": "Takes 3 days and 4 emails to get a quote." }
+        "late": { "title": "Late Arrivals", "desc": "No communication. Your day is thrown off." },
+        "broken": { "title": "Damaged Belongings", "desc": "Scratches, broken furniture and careless handling." },
+        "price": { "title": "Surprise Invoices", "desc": "Quoted €300. Charged €520." },
+        "team": { "title": "Random Crews", "desc": "The people who show up aren't the people you spoke with." },
+        "slow": { "title": "Endless Back-and-Forth", "desc": "Three days and four emails just to get a quote." }
       },
-      "good_badge": "How We Do It Differently",
-      "good_title": "We hold ourselves to a higher standard.",
+      "good_badge": "HOW WE DO IT DIFFERENTLY",
+      "good_title": "We Built moveit to Fix Every Single One of Those Problems. Not Partially. Completely.",
+      "good_subtitle": "1,000 moves later, here's the standard we hold ourselves to on every job:",
       "good": {
-        "ontime": { "title": "On Time, Every Time", "desc": "Scheduled to the minute. Your calendar is respected." },
-        "insured": { "title": "Fully Insured", "desc": "Comprehensive transport insurance for every item." },
-        "price": { "title": "No Hidden Fees", "desc": "The price we quote is the exact price you pay." },
-        "team": { "title": "Dedicated Crew", "desc": "The same team you spoke to handles your move." },
-        "whatsapp": { "title": "Minutes via WhatsApp", "desc": "Quick, direct quotes and booking confirmation." }
+        "ontime": { "title": "On Time, Every Time", "desc": "We respect your schedule and keep you informed." },
+        "insured": { "title": "Protected Before They're Insured", "desc": "Furniture blankets, wrapping, straps and careful handling come first. Insurance is there as a backup." },
+        "price": { "title": "Transparent Pricing", "desc": "The price we quote is the price you pay." },
+        "team": { "title": "Dedicated Move Coordinator", "desc": "One point of contact from quote to completion." },
+        "whatsapp": { "title": "Quotes Within Minutes", "desc": "Fast responses via WhatsApp, phone or email." }
       },
       "cta_btn": "Get My Free Quote"
     },
     "bento_services": {
+      "badge": "SERVICES",
       "title": "Pro Moving Services for Every Need",
       "subtitle": "A summary of our specialized relocations designed to make your moving day stress-free.",
       "view_all": "View All Services"
     },
     "why_us": {
+      "badge": "WHY MOVEIT",
       "title": "Why Choose MoveIt?",
-      "fast": { "title": "Fast Response", "desc": "We respond to every inquiry within minutes via WhatsApp." },
-      "student": { "title": "Student Friendly", "desc": "Free ride along for students. Budget-friendly packages for small moves." },
-      "transparent": { "title": "Transparent Pricing", "desc": "No hidden fees. What you see is what you pay, always." },
-      "insured": { "title": "Insured Moves", "desc": "Every item is fully covered by our comprehensive transport insurance." }
+      "fast": { "title": "Fast Response", "desc": "Message us on WhatsApp and get a confirmed quote within minutes, not days." },
+      "student": { "title": "Student Friendly", "desc": "Flexible hourly pricing and a free ride-along. Built for tight budgets and tight deadlines." },
+      "transparent": { "title": "Transparent Pricing", "desc": "The rate you see is the rate you pay. No fuel charges, no stair fees. Ever." },
+      "insured": { "title": "Insured Moves", "desc": "Every item covered from pickup to delivery. If something goes wrong, we make it right." }
     },
     "how_it_works": {
-      "title": "How It Works",
-      "subtitle": "Moving made simple in just 3 easy steps",
-      "step1": { "title": "Request a Quote", "desc": "Choose your package or request a custom quote via WhatsApp. We respond within minutes." },
-      "step2": { "title": "Confirm Booking", "desc": "Pick your preferred date and time. We confirm instantly with all details and pricing." },
-      "step3": { "title": "Move Day", "desc": "Our professional team arrives on time, handles everything with care, and gets you settled." },
+      "badge": "PROCESS",
+      "title": "3 Steps to Your New Place",
+      "subtitle": "No complicated processes. No back-and-forth. Just a fast, clean move.",
+      "step1": { "title": "Get Your Quote", "desc": "Tell us about your move via WhatsApp or the quote form. We respond within minutes with a fixed price and zero obligations." },
+      "step2": { "title": "Lock In Your Date", "desc": "Pick the day that works for you. We confirm instantly — date, time, price, and team. Everything in writing." },
+      "step3": { "title": "Relax. We've Got It.", "desc": "Our crew shows up on time, handles your belongings with care, and has you settled in your new place before the day is done." },
       "step_prefix": "Step"
     },
     "cities": {
+      "badge": "COVERAGE",
       "title": "Cities We Move To",
-      "subtitle": "From Maastricht to anywhere — local, national & cross-border",
+      "subtitle": "From Maastricht to anywhere — local, national & cross-border.",
       "and_more": "And more...",
       "request_quote": "Request a quote"
     },
     "testimonials": {
-      "title": "What Our Clients Say",
-      "subtitle": "Trusted by thousands of happy movers across the Netherlands"
+      "badge": "REVIEWS",
+      "title": "Don't Take Our Word for It",
+      "subtitle": "1,000 moves. Here's what the people behind them have to say."
     },
     "faqs": {
-      "title": "Frequently Asked Questions",
-      "subtitle": "Quick answers to common moving questions",
+      "badge": "FAQS",
+      "title": "Questions Before You Book? We've Heard Them All.",
+      "subtitle": "The most common things people ask us before their move — answered straight.",
       "view_all": "View All FAQs",
       "q1": "How far in advance should I book?",
-      "a1": "We recommend booking at least 3-5 days in advance for local moves. For international relocations, 2-3 weeks is ideal. However, we also accommodate urgent same-day moves when availability allows.",
+      "a1": "For local moves, 3-5 days ahead is ideal. For international relocations, 2-3 weeks gives us the best chance to plan everything properly. That said, we do accommodate same-day moves when availability allows — just message us on WhatsApp.",
       "q2": "Are there any hidden fees?",
       "a2": "Absolutely not. Our pricing is transparent. The hourly rate covers the van, driver, and movers as specified in your package. VAT (21%) is added on top. Time is calculated from departure to return to our Maastricht location.",
       "q3": "Do you offer student discounts?",
@@ -148,12 +168,13 @@
       "a5": "Yes! Within Maastricht it is €10 fixed. Outside Maastricht (25-50km) it is €0.50/km. Students ride free within Maastricht. For long-distance moves, we provide a custom quote."
     },
     "cta": {
-      "title": "Ready to Move?",
-      "subtitle": "Get a free, no-obligation quote in minutes. Our team is ready to make your next move stress-free.",
-      "btn_quote": "Get Free Quote",
+      "title": "Your Next Chapter Starts With One Click",
+      "subtitle": "Get a fixed-price quote in under 2 minutes. No commitment, no pressure — just a fast, clear answer so you can book with confidence.",
+      "btn_quote": "Get My Free Quote",
       "btn_whatsapp": "Chat on WhatsApp"
     },
     "packages": {
+      "badge": "PRICING",
       "title": "Our Moving Packages",
       "subtitle": "Transparent pricing. No hidden fees. Choose the package that fits your move.",
       "most_popular": "MOST POPULAR",

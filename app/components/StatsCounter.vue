@@ -21,9 +21,9 @@
 
 <script setup>
 const stats = [
-  { value: 10000, suffix: '+', label: 'Moves Completed' },
-  { value: 15, suffix: '+', label: 'Cities Covered' },
+  { value: 1000, suffix: '+', label: 'Moves Completed' },
+  { value: 14, suffix: '+', label: 'Cities Covered' },
   { value: 4.9, suffix: '/5', label: 'Average Rating', decimals: 1 },
-  { value: 500, suffix: '+', label: '5-Star Reviews' },
+  { value: 102, suffix: '+', label: '5-Star Reviews' },
 ]
 </script>

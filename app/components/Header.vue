@@ -414,7 +414,19 @@ const toggleDark = useToggle(isDark)
 const navItems = [
   { key: 'home', path: '/' },
   { key: 'services', path: '/services' },
-  { key: 'locations', path: '/locations' },
+  { 
+    key: 'locations', 
+    path: '#',
+    subItems: [
+      { key: 'maastricht', path: '/locations/maastricht' },
+      { key: 'valkenburg', path: '/locations/valkenburg' },
+      { key: 'sittard', path: '/locations/sittard' },
+      { key: 'roermond', path: '/locations/roermond' },
+      { key: 'aachen', path: '/locations/aachen' },
+      { key: 'genk', path: '/locations/genk' },
+      { key: 'all_locations', path: '/locations' }
+    ]
+  },
   { 
     key: 'resources', 
     path: '#',

@@ -63,9 +63,12 @@
         </div>
       </div>
 
-      <div :class="['border-t pt-12 flex flex-col md:flex-row justify-between items-center text-sm', isDark ? 'border-slate-900 text-slate-600' : 'border-slate-200 text-slate-400']">
-        <p>{{ $t('footer.rights') }}</p>
-        <div class="flex space-x-6 mt-4 md:mt-0">
+      <div :class="['border-t pt-12 flex flex-col md:flex-row justify-between items-end text-sm', isDark ? 'border-slate-900 text-slate-600' : 'border-slate-200 text-slate-400']">
+        <div class="flex flex-col items-start gap-6">
+          <img src="/images/moving_van.png" alt="MoveIt Van" class="w-64 md:w-80 rounded-2xl shadow-2xl object-cover" />
+          <p>{{ $t('footer.rights') }}</p>
+        </div>
+        <div class="flex space-x-6 mt-8 md:mt-0">
           <span>{{ $t('footer.handcrafted') }}</span>
         </div>
       </div>

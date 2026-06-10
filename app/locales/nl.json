@@ -9,7 +9,14 @@
     "blog": "Blog",
     "referral": "Verwijs een Vriend",
     "company": "Bedrijf",
-    "resources": "Bronnen"
+    "resources": "Bronnen",
+    "maastricht": "Maastricht",
+    "valkenburg": "Valkenburg",
+    "sittard": "Sittard",
+    "roermond": "Roermond",
+    "aachen": "Aken (DE)",
+    "genk": "Genk (BE)",
+    "all_locations": "Alle Locaties"
   },
   "about": {
     "title": "Verhuizen Eenvoudig Gemaakt. Met Zorg Gebouwd.",
@@ -57,7 +64,7 @@
     "hero_title_part2": "de",
     "hero_title_stress": "Stress.",
     "hero_title_part3": "Goed Gedaan — Gegarandeerd.",
-    "hero_desc": "De meeste mensen zien op tegen de verhuisdag om goede redenen: annuleringen, kapot meubilair, onverwachte kosten. We hebben meer dan 9.983 verhuizingen in heel Nederland afgerond met een beoordeling van 4.9/5. Je zult zien waarom.",
+    "hero_desc": "De meeste mensen zien op tegen de verhuisdag om goede redenen: annuleringen, kapot meubilair, onverwachte kosten. We hebben meer dan 1.000 verhuizingen in heel Nederland afgerond met een beoordeling van 4.9/5. Je zult zien waarom.",
     "hero_prefix": "Verhuist",
     "hero_suffix": "Vooruit",
     "hero_cities": ["Maastricht", "Sittard", "Heerlen", "Kerkrade", "Geleen", "Limburg", "Nederland"],
@@ -68,6 +75,11 @@
       "Blijf vooruit gaan."
     ],
     "get_quote": "Vraag een Offerte aan",
+    "quote_form_desc": "Vul onderstaand formulier in voor een snelle vaste prijs.",
+    "move_date": "Verwachte verhuisdatum",
+    "move_type": "Type verhuizing",
+    "choose_option": "Kies een optie",
+    "custom_move": "Anders / Maatwerk",
     "moving_from": "Vertrekadres (van)",
     "moving_to": "Aankomstadres (naar)",
     "or_get_call": "Of word gebeld",
@@ -82,62 +94,56 @@
     "comparison": {
       "title": "Waarom Wij Anders Zijn",
       "subtitle": "Verhuizen is een van de meest stressvolle gebeurtenissen. We hebben MoveIt gebouwd om dat op te lossen — volledig.",
-      "bad_badge": "Klinkt Dit Bekend?",
-      "bad_title": "De meeste verhuizers maken het erger.",
-      "bad": {
-        "late": { "title": "2 Uur te Laat", "desc": "Geen communicatie, planning verpest." },
-        "broken": { "title": "Beschadigde Spullen", "desc": "Grootmoeders kast komt in drie stukken aan." },
-        "price": { "title": "Onverwachte Facturen", "desc": "Offerte van €300, factuur van €520." },
-        "team": { "title": "Willekeurige Teams", "desc": "Andere verhuizers dan u gesproken heeft." },
-        "slow": { "title": "Eindeloze E-mails", "desc": "Duurt 3 dagen en 4 e-mails voor een offerte." }
-      },
-      "good_badge": "Hoe Wij Het Anders Doen",
-      "good_title": "We houden ons aan een hogere standaard.",
-      "good": {
-        "ontime": { "title": "Altijd op Tijd", "desc": "Tot op de minuut gepland. Uw agenda wordt gerespecteerd." },
-        "insured": { "title": "Volledig Verzekerd", "desc": "Uitgebreide transportverzekering voor elk item." },
-        "price": { "title": "Geen Verborgen Kosten", "desc": "De prijs in de offerte is de prijs die u betaalt." },
-        "team": { "title": "Toegewijd Team", "desc": "Hetzelfde team dat u heeft gesproken, verhuist u." },
-        "whatsapp": { "title": "Minuten via WhatsApp", "desc": "Snelle, directe offertes en boekingsbevestiging." }
-      },
+      "bad_badge": "KLINKT DIT BEKEND?",
+      "bad_title": "Verhuizen is een van de meest stressvolle gebeurtenissen. En de meeste bedrijven maken het erger.",
+      "bad_desc": "Je hebt vast wel eens horrorverhalen gehoord. Of er een meegemaakt. De verhuisbranche heeft een welverdiende reputatie — en met goede reden.",
+      "good_badge": "HOE WIJ HET ANDERS DOEN",
+      "good_title": "We hebben moveit gebouwd om elk van die problemen op te lossen. Niet gedeeltelijk. Volledig.",
+      "good_desc": "1.000 verhuizingen later is dit de standaard waaraan we ons bij elke klus houden:",
       "cta_btn": "Vraag Mijn Gratis Offerte aan"
     },
     "bento_services": {
+      "badge": "DIENSTEN",
       "title": "Professionele verhuisdiensten voor elke behoefte",
       "subtitle": "Een overzicht van onze gespecialiseerde verhuizingen ontworpen om uw verhuisdag stressvrij te maken.",
       "view_all": "Bekijk alle diensten"
     },
     "why_us": {
+      "badge": "WAAROM MOVEIT",
       "title": "Waarom Kiezen voor MoveIt?",
-      "fast": { "title": "Snelle Reactie", "desc": "We reageren binnen enkele minuten op elke aanvraag via WhatsApp." },
-      "student": { "title": "Studentvriendelijk", "desc": "Gratis meerijden voor studenten. Budgetvriendelijke pakketten voor kleine verhuizingen." },
-      "transparent": { "title": "Transparante Prijzen", "desc": "Geen verborgen kosten. Wat u ziet is wat u betaalt, altijd." },
-      "insured": { "title": "Verzekerde Verhuizingen", "desc": "Elk item is volledig gedekt door onze uitgebreide transportverzekering." }
+      "fast": { "title": "Snelle Reactie", "desc": "Stuur ons een bericht via WhatsApp en ontvang binnen enkele minuten, niet dagen, een bevestigde offerte." },
+      "student": { "title": "Studentvriendelijk", "desc": "Flexibele uurprijzen en gratis meerijden. Gebouwd voor strakke budgetten en strakke deadlines." },
+      "transparent": { "title": "Transparante Prijzen", "desc": "De prijs die je ziet is de prijs die je betaalt. Geen brandstofkosten, geen trappenkosten. Nooit." },
+      "insured": { "title": "Verzekerde Verhuizingen", "desc": "Elk item gedekt van ophalen tot bezorgen. Als er iets misgaat, lossen we het op." }
     },
     "how_it_works": {
-      "title": "Hoe Het Werkt",
-      "subtitle": "Verhuizen eenvoudig gemaakt in slechts 3 stappen",
-      "step1": { "title": "Vraag Offerte Aan", "desc": "Kies uw pakket of vraag een offerte op maat aan via WhatsApp. We reageren direct." },
-      "step2": { "title": "Bevestig Boeking", "desc": "Kies uw voorkeursdatum en -tijd. We bevestigen direct met alle details en prijzen." },
-      "step3": { "title": "Verhuisdag", "desc": "Ons professionele team arriveert op tijd, gaat zorgvuldig te werk en helpt u settelen." },
+      "badge": "PROCES",
+      "title": "3 Stappen naar je Nieuwe Plek",
+      "subtitle": "Geen ingewikkelde processen. Geen heen-en-weer. Gewoon een snelle, vlotte verhuizing.",
+      "step1": { "title": "Vraag je Offerte Aan", "desc": "Vertel ons over je verhuizing via WhatsApp of het offerteformulier. We reageren binnen enkele minuten met een vaste prijs en zonder verplichtingen." },
+      "step2": { "title": "Leg je Datum Vast", "desc": "Kies de dag die voor jou werkt. We bevestigen direct — datum, tijd, prijs en team. Alles zwart op wit." },
+      "step3": { "title": "Ontspan. Wij regelen het.", "desc": "Ons team arriveert op tijd, gaat zorgvuldig met je spullen om en zorgt dat je gesetteld bent in je nieuwe plek voordat de dag voorbij is." },
       "step_prefix": "Stap"
     },
     "cities": {
+      "badge": "DEKKING",
       "title": "Steden Waar We Verhuizen",
-      "subtitle": "Van Maastricht naar overal — lokaal, nationaal & over de grens",
+      "subtitle": "Van Maastricht naar overal — lokaal, nationaal & over de grens.",
       "and_more": "En meer...",
       "request_quote": "Vraag een offerte aan"
     },
     "testimonials": {
-      "title": "Wat Onze Klanten Zeggen",
-      "subtitle": "Vertrouwd door duizenden tevreden verhuizers in heel Nederland"
+      "badge": "REVIEWS",
+      "title": "Geloof Ons Niet Alleen op Ons Woord",
+      "subtitle": "1.000 verhuizingen. Dit is wat de mensen erachter te zeggen hebben."
     },
     "faqs": {
-      "title": "Veelgestelde Vragen",
-      "subtitle": "Snelle antwoorden op veelvoorkomende verhuisvragen",
+      "badge": "FAQS",
+      "title": "Vragen Voordat je Boekt? We Hebben Ze Allemaal Gehoord.",
+      "subtitle": "De meest voorkomende dingen die mensen ons vragen voor hun verhuizing — direct beantwoord.",
       "view_all": "Bekijk Alle FAQ's",
       "q1": "Hoe ver van tevoren moet ik boeken?",
-      "a1": "We raden aan om minimaal 3-5 dagen van tevoren te boeken voor lokale verhuizingen. Voor internationale verhuizingen is 2-3 weken ideaal. We kunnen echter ook dringende verhuizingen op dezelfde dag verzorgen, indien beschikbaar.",
+      "a1": "Voor lokale verhuizingen is 3-5 dagen van tevoren ideaal. Voor internationale verhuizingen geeft 2-3 weken ons de beste kans om alles goed te plannen. We kunnen echter ook dringende verhuizingen op dezelfde dag verzorgen, mits de beschikbaarheid het toelaat — stuur ons gewoon een bericht op WhatsApp.",
       "q2": "Zijn er verborgen kosten?",
       "a2": "Absoluut niet. Onze prijzen zijn transparant. Het uurtarief dekt de bestelbus, chauffeur en verhuizers zoals aangegeven in uw pakket. BTW (21%) komt hier nog bij. Tijd wordt berekend vanaf vertrek tot terugkomst op onze locatie in Maastricht.",
       "q3": "Bieden jullie studentenkorting?",
@@ -148,12 +154,13 @@
       "a5": "Ja! Binnen Maastricht is het €10 vast. Buiten Maastricht (25-50km) is het €0.50/km. Studenten rijden gratis mee binnen Maastricht. Voor langeafstandsverhuizingen maken we een offerte op maat."
     },
     "cta": {
-      "title": "Klaar om te Verhuizen?",
-      "subtitle": "Ontvang binnen enkele minuten een gratis, vrijblijvende offerte. Ons team staat klaar om uw volgende verhuizing stressvrij te maken.",
-      "btn_quote": "Gratis Offerte",
+      "title": "Jouw Volgende Hoofdstuk Begint Met Eén Klik",
+      "subtitle": "Ontvang binnen 2 minuten een vaste prijsopgave. Geen verplichtingen, geen druk — gewoon een snel, duidelijk antwoord zodat je met vertrouwen kunt boeken.",
+      "btn_quote": "Vraag Mijn Gratis Offerte aan",
       "btn_whatsapp": "Chat op WhatsApp"
     },
     "packages": {
+      "badge": "PRIJZEN",
       "title": "Onze Verhuispakketten",
       "subtitle": "Transparante prijzen. Geen verborgen kosten. Kies het pakket dat bij uw verhuizing past.",
       "most_popular": "MEEST POPULAIR",

@@ -37,47 +37,7 @@
 
             <!-- Right Column: Quote Form CTA -->
             <div class="lg:col-span-5 w-full" data-aos="fade-left">
-              <div class="p-6 md:p-10 bg-slate-950/60 border border-white/10 rounded-[2.5rem] backdrop-blur-xl shadow-2xl space-y-6">
-                <div>
-                  <h3 class="text-3xl font-black text-white tracking-tight">{{ $t('home.get_quote') }}</h3>
-                  <p class="text-sm text-slate-400 mt-2">Get an all-inclusive quote within minutes.</p>
-                </div>
-                <form @submit.prevent="handleQuoteSubmit" class="space-y-4">
-                  <AddressAutocomplete 
-                    v-model="movingFrom"
-                    :placeholder="$t('home.moving_from')"
-                    input-class="w-full pr-6 py-4 bg-white/5 border border-white/10 rounded-2xl text-white placeholder-slate-400 focus:bg-white/10 focus:border-red-500 outline-none transition-all shadow-inner"
-                    required
-                  >
-                    <template #icon>
-                      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                    </template>
-                  </AddressAutocomplete>
-
-                  <AddressAutocomplete 
-                    v-model="movingTo"
-                    :placeholder="$t('home.moving_to')"
-                    input-class="w-full pr-6 py-4 bg-white/5 border border-white/10 rounded-2xl text-white placeholder-slate-400 focus:bg-white/10 focus:border-red-500 outline-none transition-all shadow-inner"
-                    required
-                  >
-                    <template #icon>
-                      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/></svg>
-                    </template>
-                  </AddressAutocomplete>
-                  <div class="pt-4 space-y-4">
-                    <button type="submit" class="w-full btn-primary text-lg py-4 flex items-center justify-center gap-2 group transform hover:scale-[1.02] active:scale-95 transition-all">
-                      <span>{{ $t('home.get_quote') }}</span>
-                      <svg class="w-5 h-5 transform group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
-                    </button>
-                    <div class="text-center pt-2">
-                      <a href="https://wa.me/31612345678" target="_blank" class="text-slate-300 hover:text-white transition-colors inline-flex items-center gap-2 font-bold tracking-tight text-base group">
-                        <svg class="w-5 h-5 text-emerald-500 transform group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-                        <span>{{ $t('home.or_get_call') }}</span>
-                      </a>
-                    </div>
-                  </div>
-                </form>
-              </div>
+              <QuoteForm />
             </div>
 
           </div>
@@ -110,9 +70,12 @@
             <div class="inline-flex items-center space-x-2 px-4 py-1.5 bg-red-500/10 text-red-500 rounded-full text-xs font-bold uppercase tracking-wider mb-6">
               <span>{{ $t('home.comparison.bad_badge') }}</span>
             </div>
-            <h3 class="text-3xl font-black text-slate-900 dark:text-white mb-8 tracking-tight leading-tight">
+            <h3 class="text-3xl font-black text-slate-900 dark:text-white mb-4 tracking-tight leading-tight">
               {{ $t('home.comparison.bad_title') }}
             </h3>
+            <p class="text-slate-600 dark:text-slate-400 mb-8 leading-relaxed font-medium">
+              {{ $t('home.comparison.bad_subtitle') }}
+            </p>
             
             <div class="space-y-6">
               <div v-for="item in badComparisonItems" :key="item.key" class="flex items-start space-x-4 p-4 rounded-2xl bg-white dark:bg-slate-900/50 border border-slate-100 dark:border-slate-800/50 shadow-sm">
@@ -141,9 +104,12 @@
             <div class="inline-flex items-center space-x-2 px-4 py-1.5 bg-white/20 text-white rounded-full text-xs font-bold uppercase tracking-wider mb-6">
               <span>{{ $t('home.comparison.good_badge') }}</span>
             </div>
-            <h3 class="text-3xl font-black text-white mb-8 tracking-tight leading-tight">
+            <h3 class="text-3xl font-black text-white mb-4 tracking-tight leading-tight">
               {{ $t('home.comparison.good_title') }}
             </h3>
+            <p class="text-red-100 mb-8 leading-relaxed font-medium">
+              {{ $t('home.comparison.good_subtitle') }}
+            </p>
             
             <div class="space-y-6">
               <div v-for="item in goodComparisonItems" :key="item.key" class="flex items-start space-x-4 p-4 rounded-2xl bg-white/10 backdrop-blur-md border border-white/10 shadow-lg">
@@ -176,7 +142,7 @@
     </BaseSection>
 
     <!-- 2. SERVICES / PACKAGES -->
-    <BaseSection :title="$t('home.packages.title')" :subtitle="$t('home.packages.subtitle')">
+    <BaseSection :badge="$t('home.packages.badge')" :title="$t('home.packages.title')" :subtitle="$t('home.packages.subtitle')">
       <PricingPackages />
     </BaseSection>
 
@@ -184,7 +150,7 @@
     <StatsCounter />
 
     <!-- 4. WHY CHOOSE US -->
-    <BaseSection :title="$t('home.why_us.title')">
+    <BaseSection :badge="$t('home.why_us.badge')" :title="$t('home.why_us.title')">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <div
           v-for="(reason, index) in whyUsItems"
@@ -207,12 +173,12 @@
     </BaseSection>
 
     <!-- 5. HOW IT WORKS -->
-    <BaseSection :title="$t('home.how_it_works.title')" :subtitle="$t('home.how_it_works.subtitle')">
+    <BaseSection :badge="$t('home.how_it_works.badge')" :title="$t('home.how_it_works.title')" :subtitle="$t('home.how_it_works.subtitle')">
       <HowItWorks />
     </BaseSection>
 
     <!-- 6. BENTO GRID SERVICES SUMMARY -->
-    <BaseSection :title="$t('home.bento_services.title')" :subtitle="$t('home.bento_services.subtitle')">
+    <BaseSection :badge="$t('home.bento_services.badge')" :title="$t('home.bento_services.title')" :subtitle="$t('home.bento_services.subtitle')">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
         <NuxtLink
           v-for="(service, idx) in bentoServices"
@@ -264,17 +230,17 @@
     </BaseSection>
 
     <!-- 7. CITIES WE SERVE -->
-    <BaseSection :title="$t('home.cities.title')" :subtitle="$t('home.cities.subtitle')">
+    <BaseSection :badge="$t('home.cities.badge')" :title="$t('home.cities.title')" :subtitle="$t('home.cities.subtitle')">
       <CitiesGrid />
     </BaseSection>
 
     <!-- 7. TESTIMONIALS -->
-    <BaseSection :title="$t('home.testimonials.title')" :subtitle="$t('home.testimonials.subtitle')">
+    <BaseSection :badge="$t('home.testimonials.badge')" :title="$t('home.testimonials.title')" :subtitle="$t('home.testimonials.subtitle')">
       <TestimonialsCarousel />
     </BaseSection>
 
     <!-- 8. FAQ PREVIEW -->
-    <BaseSection :title="$t('home.faqs.title')" :subtitle="$t('home.faqs.subtitle')">
+    <BaseSection :badge="$t('home.faqs.badge')" :title="$t('home.faqs.title')" :subtitle="$t('home.faqs.subtitle')">
       <FaqPreview />
       <div class="text-center mt-10">
         <NuxtLink :to="localePath('/faq')" class="text-red-500 font-bold hover:text-red-600 transition-colors inline-flex items-center gap-2">
@@ -353,7 +319,7 @@ onMounted(() => {
 })
 
 const heroStats = [
-  { key: 'completed', value: 9983, suffix: '+' },
+  { key: 'completed', value: 1000, suffix: '+' },
   { key: 'rating', value: 4.9, suffix: '/5', decimals: 1 },
   { key: 'coverage', value: 14, suffix: '+' }
 ]
