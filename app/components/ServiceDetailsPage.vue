@@ -661,7 +661,7 @@ const brandImage = computed(() => currentConfig.value.brandImage)
 const features = computed(() => currentConfig.value.features)
 
 const whatsappLink = computed(() => {
-  return `https://wa.me/31612345678?text=Hi! I'm interested in your ${title.value} service.`
+  return `https://wa.me/31684094271?text=Hi! I'm interested in your ${title.value} service.`
 })
 
 const getImage = (service, subKey) => {

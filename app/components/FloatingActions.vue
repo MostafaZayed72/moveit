@@ -23,7 +23,7 @@
 
     <!-- WhatsApp Button -->
     <a
-      href="https://wa.me/31612345678"
+      href="https://wa.me/31684094271"
       target="_blank"
       class="w-14 h-14 bg-green-500 text-white rounded-full shadow-2xl flex items-center justify-center hover:bg-green-600 transition-all hover:scale-110 active:scale-90 relative group"
       title="Chat on WhatsApp"
