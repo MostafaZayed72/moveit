@@ -14,15 +14,18 @@
             <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400 z-10">
               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
             </div>
+            
             <input 
               v-model="moveDate" 
-              :type="isDateFocused || moveDate ? 'date' : 'text'"
-              @focus="isDateFocused = true"
-              @blur="isDateFocused = false"
-              placeholder="DD/MM/YYYY"
+              type="date"
               required
-              class="w-full pl-12 pr-6 py-4 bg-white/5 border border-white/10 rounded-2xl text-white placeholder-slate-400 focus:bg-white/10 focus:border-red-500 outline-none transition-all shadow-inner [color-scheme:dark] cursor-pointer"
+              class="date-input-custom w-full pl-12 pr-6 py-4 bg-white/5 border border-white/10 rounded-2xl focus:bg-white/10 focus:border-red-500 outline-none transition-all shadow-inner [color-scheme:dark] cursor-pointer"
+              :class="moveDate ? 'text-white' : 'text-transparent'"
             />
+            
+            <div v-if="!moveDate" class="absolute inset-y-0 left-12 flex items-center pointer-events-none text-slate-400">
+              DD/MM/YYYY
+            </div>
           </div>
         </div>
         
@@ -155,5 +158,19 @@ Move Type: ${moveType.value}
 input[type="date"]::-webkit-calendar-picker-indicator {
   filter: invert(1);
   opacity: 0.5;
+}
+
+/* Make the native calendar icon invisible but span the entire input so clicking anywhere opens the picker */
+.date-input-custom {
+  position: relative;
+}
+.date-input-custom::-webkit-calendar-picker-indicator {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
 }
 </style>
