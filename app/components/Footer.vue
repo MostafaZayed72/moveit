@@ -46,6 +46,11 @@
                 {{ $t(`services.list.${service.id}.title`) }}
               </NuxtLink>
             </li>
+            <li class="mt-2 pt-2 border-t border-slate-200/10 dark:border-slate-800/50">
+              <NuxtLink :to="localePath('/services')" class="text-red-500 dark:text-red-400 font-extrabold hover:text-red-600 transition-colors inline-flex items-center gap-1 text-sm">
+                {{ $t('home.bento_services.view_all') }} &rarr;
+              </NuxtLink>
+            </li>
           </ul>
         </div>
 
@@ -58,6 +63,11 @@
                 {{ $t('nav.' + loc.key) }}
               </NuxtLink>
             </li>
+            <li class="mt-2 pt-2 border-t border-slate-200/10 dark:border-slate-800/50">
+              <NuxtLink :to="localePath('/locations')" class="text-red-500 dark:text-red-400 font-extrabold hover:text-red-600 transition-colors inline-flex items-center gap-1 text-sm">
+                {{ $t('nav.all_locations') }} &rarr;
+              </NuxtLink>
+            </li>
           </ul>
         </div>
 
@@ -67,7 +77,7 @@
           <ul class="space-y-6">
             <li class="flex items-start space-x-4">
               <div class="w-6 h-6 text-red-500"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg></div>
-              <span :class="isDark ? 'text-slate-300' : 'text-slate-600'">{{ $t('footer.address') }}<br/>Prinsengracht 123</span>
+              <span :class="isDark ? 'text-slate-300' : 'text-slate-600'" class="whitespace-pre-line">{{ $t('footer.address') }}</span>
             </li>
             <li class="flex items-center space-x-4">
               <div class="w-6 h-6 text-red-500"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg></div>
@@ -155,6 +165,11 @@ const socialLinks = [
     name: 'LinkedIn',
     url: 'https://www.linkedin.com/company/moveit-maastricht/',
     icon: 'M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.779-1.75-1.75s.784-1.75 1.75-1.75 1.75.779 1.75 1.75-.784 1.75-1.75 1.75zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z'
+  },
+  {
+    name: 'TikTok',
+    url: 'https://www.tiktok.com/@moveitmaastricht?_r=1&_t=ZG-977C3Im0Z8a',
+    icon: 'M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.02 1.59 4.23.94 1.14 2.26 1.89 3.69 2.15v3.9c-.83-.02-1.66-.23-2.42-.58a7.03 7.03 0 0 1-3.25-3.12v8.31c-.04 2.06-.88 4.09-2.44 5.37-1.53 1.34-3.66 1.95-5.67 1.67A7.27 7.27 0 0 1 2.37 13.9c-.31-2-.04-4.08 1.05-5.75C4.7 6.2 6.94 5.07 9.22 5.09h1.15v3.89c-1.39.02-2.79.62-3.66 1.7-.89 1.07-1.12 2.58-.69 3.91.4 1.25 1.48 2.22 2.78 2.47 1.29.28 2.68-.14 3.48-1.18.66-.8 1.01-1.83.99-2.86l.01-13c-.02-.01-.04-.01-.06-.02z'
   }
 ]
 </script>

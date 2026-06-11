@@ -75,6 +75,50 @@
             </div>
           </div>
 
+          <!-- Locations Dropdown for Desktop -->
+          <div 
+            v-else-if="item.key === 'locations'" 
+            class="relative group py-2"
+          >
+            <span 
+              class="nav-link font-medium inline-flex items-center gap-1 cursor-pointer group-hover:after:w-full transition-colors"
+              :class="[
+                !isScrolled 
+                  ? 'text-white/90 group-hover:text-white' 
+                  : 'group-hover:text-slate-900 dark:group-hover:text-white'
+              ]"
+            >
+              {{ $t(`nav.${item.key}`) }}
+              <svg class="w-4 h-4 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </span>
+            
+            <div class="absolute left-1/2 -translate-x-1/2 top-full pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 ease-out z-50">
+              <div class="w-[480px] rounded-2xl p-4 bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 shadow-2xl">
+                <div class="grid grid-cols-2 gap-x-4 gap-y-1">
+                  <NuxtLink 
+                    v-for="sub in item.subItems.filter(s => s.key !== 'all_locations')" 
+                    :key="sub.key"
+                    :to="localePath(sub.path)"
+                    class="px-4 py-2 text-sm font-medium rounded-lg hover:bg-slate-50 dark:hover:bg-slate-900 text-slate-700 dark:text-slate-300 hover:text-red-500 transition-colors text-left"
+                  >
+                    {{ $t(`nav.${sub.key}`) }}
+                  </NuxtLink>
+                </div>
+                <!-- View all link -->
+                <div class="mt-3 pt-3 border-t border-slate-100 dark:border-slate-900 flex justify-end">
+                  <NuxtLink 
+                    :to="localePath('/locations')"
+                    class="text-xs font-bold text-red-500 hover:text-red-600 inline-flex items-center gap-1"
+                  >
+                    {{ $t('nav.all_locations') }} &rarr;
+                  </NuxtLink>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <!-- Generic Dropdown for Desktop -->
           <div 
             v-else-if="item.subItems" 
@@ -419,11 +463,19 @@ const navItems = [
     path: '#',
     subItems: [
       { key: 'maastricht', path: '/locations/maastricht' },
-      { key: 'valkenburg', path: '/locations/valkenburg' },
-      { key: 'sittard', path: '/locations/sittard' },
+      { key: 'geleen', path: '/locations/geleen' },
       { key: 'roermond', path: '/locations/roermond' },
+      { key: 'sittard', path: '/locations/sittard' },
+      { key: 'venlo', path: '/locations/venlo' },
+      { key: 'weert', path: '/locations/weert' },
+      { key: 'eijsden', path: '/locations/eijsden' },
+      { key: 'meerssen', path: '/locations/meerssen' },
+      { key: 'vaals', path: '/locations/vaals' },
       { key: 'aachen', path: '/locations/aachen' },
       { key: 'genk', path: '/locations/genk' },
+      { key: 'brunssum', path: '/locations/brunssum' },
+      { key: 'valkenburg', path: '/locations/valkenburg' },
+      { key: 'hasselt', path: '/locations/hasselt' },
       { key: 'all_locations', path: '/locations' }
     ]
   },

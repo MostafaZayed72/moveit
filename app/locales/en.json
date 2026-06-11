@@ -16,6 +16,14 @@
     "roermond": "Roermond",
     "aachen": "Aachen (DE)",
     "genk": "Genk (BE)",
+    "geleen": "Geleen",
+    "venlo": "Venlo",
+    "weert": "Weert",
+    "eijsden": "Eijsden",
+    "meerssen": "Meerssen",
+    "vaals": "Vaals",
+    "brunssum": "Brunssum",
+    "hasselt": "Hasselt (BE)",
     "all_locations": "View All Locations"
   },
   "about": {
@@ -474,7 +482,7 @@
     "terms": "Terms",
     "cookie_policy": "Cookie Policy",
     "contact_us": "Contact Us",
-    "address": "Maastricht, Netherlands",
+    "address": "Dokter van Kleefstraat 46C\n6217 JK, Maastricht\nNetherlands",
     "handcrafted": "Handcrafted by MoveIt Team"
   },
   "student_page": {
