@@ -209,7 +209,7 @@
 
           <!-- Bottom: Description & Arrow -->
           <div class="relative z-10 flex justify-between items-end opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-y-2 group-hover:translate-y-0 transition-transform">
-            <p class="text-xs text-slate-300 max-w-[80%] leading-relaxed">
+            <p class="text-sm md:text-base text-slate-200 font-medium max-w-[85%] leading-relaxed">
               {{ $t(`services.list.${service.id}.desc`) }}
             </p>
             <div class="text-red-500 group-hover:text-white transition-colors">

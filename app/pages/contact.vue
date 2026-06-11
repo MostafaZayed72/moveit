@@ -21,6 +21,21 @@
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div class="space-y-2">
+                <label class="text-xs font-bold uppercase tracking-widest text-slate-500">{{ $t('home.move_date') }}</label>
+                <input type="date" v-model="moveDate" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-6 py-4 text-slate-900 dark:text-white focus:border-red-500 outline-none transition-all shadow-sm dark:shadow-none cursor-pointer" required />
+              </div>
+              <div class="space-y-2">
+                <label class="text-xs font-bold uppercase tracking-widest text-slate-500">{{ $t('home.move_type') }}</label>
+                <select v-model="moveType" class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-6 py-4 text-slate-900 dark:text-white focus:border-red-500 outline-none transition-all shadow-sm dark:shadow-none cursor-pointer" required>
+                  <option value="" disabled>{{ $t('home.choose_option') }}</option>
+                  <option v-for="option in moveOptions" :key="option.value" :value="option.value">
+                    {{ $t(option.key) }}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div class="space-y-2">
                 <label class="text-xs font-bold uppercase tracking-widest text-slate-500">{{ $t('contact.form_moving_from') }}</label>
                 <AddressAutocomplete 
                   v-model="movingFrom" 
@@ -80,13 +95,23 @@
 
 <script setup>
 const route = useRoute()
+const { t } = useI18n()
 
 const name = ref('')
 const email = ref('')
 const phone = ref('')
 const movingFrom = ref('')
 const movingTo = ref('')
+const moveDate = ref('')
+const moveType = ref('')
 const message = ref('')
+
+const moveOptions = [
+  { value: 'van_only', key: 'home.packages.package1.name' },
+  { value: 'van_1', key: 'home.packages.package2.name' },
+  { value: 'van_2', key: 'home.packages.package3.name' },
+  { value: 'custom', key: 'home.custom_move' }
+]
 
 onMounted(() => {
   if (route.query.from) {
@@ -95,9 +120,29 @@ onMounted(() => {
   if (route.query.to) {
     movingTo.value = String(route.query.to)
   }
+  if (route.query.date) {
+    moveDate.value = String(route.query.date)
+  }
+  if (route.query.type) {
+    moveType.value = String(route.query.type)
+  }
 })
 
 const handleSubmit = () => {
-  alert(`Thank you for your request! Moving from "${movingFrom.value}" to "${movingTo.value}". We will contact you soon.`)
+  const typeText = moveType.value ? t(moveOptions.find(o => o.value === moveType.value)?.key || '') : ''
+  const text = `Hi MoveIt! I would like to request a quote.
+  
+Name: ${name.value}
+Email: ${email.value}
+Phone: ${phone.value}
+From: ${movingFrom.value}
+To: ${movingTo.value}
+Date: ${moveDate.value}
+Move Type: ${typeText}
+Message: ${message.value}
+`
+  const whatsappPhone = '31684094271'
+  const url = `https://wa.me/${whatsappPhone}?text=${encodeURIComponent(text)}`
+  window.open(url, '_blank')
 }
 </script>

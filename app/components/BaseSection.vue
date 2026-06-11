@@ -8,7 +8,7 @@
     <div class="container mx-auto max-w-7xl relative z-10">
       <div v-if="badge || title || subtitle" class="mb-16 text-center max-w-3xl mx-auto" data-aos="fade-up">
         <div v-if="badge" class="mb-4">
-          <span class="text-xs font-bold uppercase tracking-widest text-orange-500">{{ badge }}</span>
+          <span class="text-sm md:text-base font-extrabold uppercase tracking-widest text-orange-600 dark:text-orange-500">{{ badge }}</span>
         </div>
         <h2 v-if="title" class="section-title">
           {{ title }}
