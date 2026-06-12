@@ -238,11 +238,19 @@
         </button>
 
         <!-- CTA Button -->
-        <NuxtLink :to="localePath('/contact')" class="hidden md:block">
-          <button class="px-6 py-2.5 bg-red-600 text-white rounded-full font-bold text-sm hover:bg-red-700 transition-all shadow-xl active:scale-95">
-            {{ $t('home.get_quote') }}
-          </button>
-        </NuxtLink>
+        <div class="hidden md:flex flex-col items-center gap-1">
+          <NuxtLink :to="localePath('/contact')">
+            <button class="px-6 py-2.5 bg-red-600 text-white rounded-full font-bold text-sm hover:bg-red-700 transition-all shadow-xl active:scale-95">
+              {{ $t('home.get_quote') }}
+            </button>
+          </NuxtLink>
+          <span :class="[
+            'text-xs font-bold tracking-wide transition-colors duration-300 whitespace-nowrap',
+            !isScrolled ? 'text-white/95' : (isDark ? 'text-slate-300' : 'text-slate-600')
+          ]">
+            {{ $t('nav.working_hours') }}
+          </span>
+        </div>
 
         <!-- Mobile Menu Toggle -->
         <button @click="isMenuOpen = !isMenuOpen" :class="['lg:hidden p-2 transition-colors', !isScrolled ? 'text-white' : (isDark ? 'text-white' : 'text-slate-900')]">

@@ -138,28 +138,33 @@ const closeDropdown = () => {
   isDropdownOpen.value = false
 }
 
+const localePath = useLocalePath()
+
 const handleQuoteSubmit = () => {
-  // Construct WhatsApp message with the form details
-  const text = `Hi MoveIt! I would like to request a quote.
-  
-From: ${movingFrom.value}
-To: ${movingTo.value}
-Date: ${moveDate.value}
-Move Type: ${moveType.value}
-`
-  const phone = '31684094271'
-  const url = `https://wa.me/${phone}?text=${encodeURIComponent(text)}`
-  window.open(url, '_blank')
+  // Track conversion event
+  const { $trackEvent } = useNuxtApp()
+  if (typeof $trackEvent === 'function') {
+    $trackEvent('quote_request', {
+      from: movingFrom.value,
+      to: movingTo.value,
+      date: moveDate.value,
+      type: moveType.value
+    })
+  }
+
+  navigateTo({
+    path: localePath('/contact'),
+    query: {
+      from: movingFrom.value,
+      to: movingTo.value,
+      date: moveDate.value,
+      type: moveType.value
+    }
+  })
 }
 </script>
 
 <style scoped>
-/* Customizing HTML date input placeholder text colors if needed */
-input[type="date"]::-webkit-calendar-picker-indicator {
-  filter: invert(1);
-  opacity: 0.5;
-}
-
 /* Make the native calendar icon invisible but span the entire input so clicking anywhere opens the picker */
 .date-input-custom {
   position: relative;

@@ -42,16 +42,6 @@
             </div>
           </div>
 
-          <!-- Erkende Verhuizers -->
-          <div class="flex items-center gap-4 group/item cursor-pointer shrink-0">
-            <div class="w-14 h-14 bg-red-600 rounded-2xl flex items-center justify-center text-white font-black text-[10px] text-center leading-none shadow-lg shadow-red-600/20 rotate-3 transition-transform group-hover/item:rotate-0">
-              ERKENDE<br/>VERHUIZERS
-            </div>
-            <div class="flex flex-col shrink-0">
-              <span class="text-xs font-black text-slate-900 dark:text-white uppercase tracking-tight">Certified Member</span>
-              <span class="text-[10px] text-slate-500 dark:text-slate-400 font-bold">Dutch Association</span>
-            </div>
-          </div>
 
           <!-- SIRE -->
           <div class="flex items-center gap-4 group/item cursor-pointer shrink-0">
@@ -111,16 +101,6 @@
             </div>
           </div>
 
-          <!-- Erkende Verhuizers -->
-          <div class="flex items-center gap-4 group/item cursor-pointer shrink-0">
-            <div class="w-14 h-14 bg-red-600 rounded-2xl flex items-center justify-center text-white font-black text-[10px] text-center leading-none shadow-lg shadow-red-600/20 rotate-3 transition-transform group-hover/item:rotate-0">
-              ERKENDE<br/>VERHUIZERS
-            </div>
-            <div class="flex flex-col shrink-0">
-              <span class="text-xs font-black text-slate-900 dark:text-white uppercase tracking-tight">Certified Member</span>
-              <span class="text-[10px] text-slate-500 dark:text-slate-400 font-bold">Dutch Association</span>
-            </div>
-          </div>
 
           <!-- SIRE -->
           <div class="flex items-center gap-4 group/item cursor-pointer shrink-0">

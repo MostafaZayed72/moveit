@@ -1,9 +1,9 @@
 <template>
   <footer :class="['border-t pt-24 pb-12 px-6 transition-colors duration-300', isDark ? 'bg-slate-950 border-slate-900' : 'bg-slate-100 border-slate-200']">
     <div class="container mx-auto max-w-7xl">
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 lg:gap-8 mb-24">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8 mb-24">
         <!-- Brand -->
-        <div class="space-y-8">
+        <div class="space-y-8 lg:col-span-3">
           <NuxtLink to="/" class="block">
             <img 
               :src="'/images/logo.png'" 
@@ -26,7 +26,7 @@
         </div>
 
         <!-- Navigation Links -->
-        <div class="space-y-8">
+        <div class="space-y-8 lg:col-span-2">
           <h4 :class="isDark ? 'text-slate-500' : 'text-slate-400'" class="text-sm font-bold uppercase tracking-widest">{{ $t('footer.navigation') }}</h4>
           <ul class="space-y-4">
             <li v-for="item in navItems" :key="item.key">
@@ -38,7 +38,7 @@
         </div>
 
         <!-- Services Links -->
-        <div class="space-y-8">
+        <div class="space-y-8 lg:col-span-2">
           <h4 :class="isDark ? 'text-slate-500' : 'text-slate-400'" class="text-sm font-bold uppercase tracking-widest">{{ $t('nav.services') }}</h4>
           <ul class="space-y-4">
             <li v-for="service in footerServices" :key="service.id">
@@ -55,7 +55,7 @@
         </div>
 
         <!-- Locations Links -->
-        <div class="space-y-8">
+        <div class="space-y-8 lg:col-span-2">
           <h4 :class="isDark ? 'text-slate-500' : 'text-slate-400'" class="text-sm font-bold uppercase tracking-widest">{{ $t('nav.locations') }}</h4>
           <ul class="space-y-4">
             <li v-for="loc in footerLocations" :key="loc.slug">
@@ -72,7 +72,7 @@
         </div>
 
         <!-- Support & Contact Info -->
-        <div class="space-y-8">
+        <div class="space-y-8 lg:col-span-3">
           <h4 :class="isDark ? 'text-slate-500' : 'text-slate-400'" class="text-sm font-bold uppercase tracking-widest">{{ $t('footer.contact_us') }}</h4>
           <ul class="space-y-6">
             <li class="flex items-start space-x-4">
@@ -82,6 +82,13 @@
             <li class="flex items-center space-x-4">
               <div class="w-6 h-6 text-red-500"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg></div>
               <span :class="isDark ? 'text-slate-300' : 'text-slate-600'">+31 6 84094271</span>
+            </li>
+            <li class="flex items-start space-x-4">
+              <div class="w-6 h-6 text-red-500 flex-shrink-0"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg></div>
+              <div :class="isDark ? 'text-slate-300' : 'text-slate-600'" class="text-sm flex flex-col font-medium gap-1">
+                <span>{{ $t('footer.coc') }}</span>
+                <span>{{ $t('footer.vat') }}</span>
+              </div>
             </li>
           </ul>
 
