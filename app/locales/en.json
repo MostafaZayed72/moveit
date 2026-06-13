@@ -465,7 +465,8 @@
     "hear_other": "Other",
     "success_title": "Quote Request Sent!",
     "success_desc": "Thank you! We will review your request and get back to you within 2 hours.",
-    "send_another": "Send Another Request"
+    "send_another": "Send Another Request",
+    "sending": "Sending..."
   },
   "blog": {
     "title": "Relocation Insights",

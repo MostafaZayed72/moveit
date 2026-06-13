@@ -451,7 +451,8 @@
     "hear_other": "Anders",
     "success_title": "Offerteaanvraag Verzonden!",
     "success_desc": "Bedankt! We bekijken uw aanvraag en nemen binnen 2 uur contact met u op.",
-    "send_another": "Nog een aanvraag sturen"
+    "send_another": "Nog een aanvraag sturen",
+    "sending": "Verzenden..."
   },
   "blog": {
     "title": "Verhuis Inzichten",

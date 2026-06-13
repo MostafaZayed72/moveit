@@ -187,8 +187,12 @@
               ></textarea>
             </div>
 
-            <button type="submit" class="btn-primary w-full py-5 text-lg">
-              {{ $t('contact.form_submit') }}
+            <button type="submit" class="btn-primary w-full py-5 text-lg flex items-center justify-center gap-2" :disabled="loading">
+              <svg v-if="loading" class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+              <span>{{ loading ? $t('contact.sending') : $t('contact.form_submit') }}</span>
             </button>
           </form>
         </div>
@@ -247,6 +251,7 @@ const dropoffAccess = ref('')
 const hearAboutUs  = ref('')
 const message      = ref('')
 const submitted    = ref(false)
+const loading      = ref(false)
 
 // Pre-fill from query parameters (coming from homepage quote form)
 onMounted(() => {
@@ -291,43 +296,9 @@ const hearLabels = {
   other:      'Other',
 }
 
-const handleSubmit = () => {
+const handleSubmit = async () => {
   const fullName = `${firstName.value} ${lastName.value}`
-
-  const emailBody = `Hi MoveIt Team!
-
-I would like to request a moving quote. Here are my details:
-
-───────────────────────────
- PERSONAL INFORMATION
-───────────────────────────
-Name:   ${fullName}
-Email:  ${email.value}
-Phone:  ${phone.value}
-
-───────────────────────────
- MOVE DETAILS
-───────────────────────────
-Moving From:   ${movingFrom.value}
-Moving To:     ${movingTo.value}
-Move Date:     ${moveDate.value}
-Time of Day:   ${timeLabels[moveTimeOfDay.value] || moveTimeOfDay.value}
-Type of Move:  ${moveType.value === 'residential' ? 'Residential' : 'Commercial / Office'}
-Move Size:     ${moveSize.value || 'N/A'}
-Storage Needed: ${storageRequired.value === 'yes' ? 'Yes' : 'No'}
-
-───────────────────────────
- ACCESS INFORMATION
-───────────────────────────
-Pickup Access:   ${accessLabels[pickupAccess.value] || pickupAccess.value || 'Not specified'}
-Dropoff Access:  ${accessLabels[dropoffAccess.value] || dropoffAccess.value || 'Not specified'}
-
-───────────────────────────
- OTHER
-───────────────────────────
-How they found us: ${hearLabels[hearAboutUs.value] || hearAboutUs.value || 'Not specified'}
-Additional Notes:  ${message.value || 'None'}
-`
+  loading.value = true
 
   // Track conversion event
   const { $trackEvent } = useNuxtApp()
@@ -344,13 +315,37 @@ Additional Notes:  ${message.value || 'None'}
   }
 
   const subject = `Quote Request from ${fullName} — ${moveDate.value}`
-  const mailtoUrl = `mailto:info@moveitmaastricht.nl?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(emailBody)}`
-  window.location.href = mailtoUrl
 
-  // Show success message after a short delay to allow mailto to open
-  setTimeout(() => {
+  try {
+    await $fetch('https://formsubmit.co/ajax/info@moveitmaastricht.nl', {
+      method: 'POST',
+      body: {
+        _subject: subject,
+        _replyto: email.value,
+        _template: 'table',
+        Name: fullName,
+        Email: email.value,
+        Phone: phone.value,
+        'Moving From': movingFrom.value,
+        'Moving To': movingTo.value,
+        'Move Date': moveDate.value,
+        'Time of Day': timeLabels[moveTimeOfDay.value] || moveTimeOfDay.value,
+        'Type of Move': moveType.value === 'residential' ? 'Residential' : 'Commercial / Office',
+        'Move Size': moveSize.value || 'N/A',
+        'Storage Needed': storageRequired.value === 'yes' ? 'Yes' : 'No',
+        'Pickup Access': accessLabels[pickupAccess.value] || pickupAccess.value || 'Not specified',
+        'Dropoff Access': accessLabels[dropoffAccess.value] || dropoffAccess.value || 'Not specified',
+        'How they found us': hearLabels[hearAboutUs.value] || hearAboutUs.value || 'Not specified',
+        'Additional Notes': message.value || 'None'
+      }
+    })
     submitted.value = true
-  }, 800)
+  } catch (error) {
+    console.error('Error submitting form:', error)
+    alert('Failed to send quote request. Please try again or contact us directly.')
+  } finally {
+    loading.value = false
+  }
 }
 </script>
 

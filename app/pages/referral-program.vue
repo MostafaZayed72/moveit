@@ -190,11 +190,27 @@ const resetForm = () => {
 const handleSubmit = async () => {
   loading.value = true
   
-  // Simulate API call
-  await new Promise(resolve => setTimeout(resolve, 1500))
-  
-  loading.value = false
-  submitted.value = true
+  try {
+    await $fetch('https://formsubmit.co/ajax/info@moveitmaastricht.nl', {
+      method: 'POST',
+      body: {
+        _subject: `New Referral Program Submission from ${form.name}`,
+        _replyto: form.email,
+        _template: 'table',
+        'Referrer Name': form.name,
+        'Referrer Email': form.email,
+        'Friend Name': form.friendName,
+        'Friend Email': form.friendEmail,
+        'Message': form.message || 'None'
+      }
+    })
+    submitted.value = true
+  } catch (error) {
+    console.error('Error submitting referral:', error)
+    alert('Failed to send invitation. Please try again.')
+  } finally {
+    loading.value = false
+  }
 }
 
 const carouselContainer = ref(null)
