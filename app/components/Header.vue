@@ -501,6 +501,7 @@ const navItems = [
     path: '#',
     subItems: [
       { key: 'about', path: '/about' },
+      { key: 'team', path: '/team' },
       { key: 'contact', path: '/contact' }
     ]
   }
