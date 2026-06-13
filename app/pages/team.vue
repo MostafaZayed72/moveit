@@ -45,10 +45,7 @@
                 @error="(e) => { e.target.style.display='none'; e.target.nextElementSibling.style.display='flex' }"
               />
               <div class="card-avatar" :style="{ display: member.photo ? 'none' : 'flex' }">
-                <svg class="avatar-svg" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <circle cx="40" cy="28" r="16" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.3)" stroke-width="2"/>
-                  <path d="M10 72c0-16.569 13.431-30 30-30s30 13.431 30 30" fill="rgba(255,255,255,0.12)" stroke="rgba(255,255,255,0.3)" stroke-width="2" stroke-linecap="round"/>
-                </svg>
+                <span class="avatar-icon">{{ member.icon }}</span>
               </div>
             </div>
 
@@ -364,10 +361,9 @@ const visionValues = [
   justify-content: center;
   background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
 }
-.avatar-svg {
-  width: 120px;
-  height: 120px;
-  opacity: 0.7;
+.avatar-icon {
+  font-size: 4rem;
+  filter: drop-shadow(0 4px 12px rgba(0,0,0,.3));
 }
 
 /* ─── Card Body ─── */
