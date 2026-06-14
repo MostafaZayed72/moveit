@@ -19,181 +19,301 @@
             </button>
           </div>
 
-          <form v-else @submit.prevent="handleSubmit" class="space-y-6">
-
-            <!-- Row 1: First Name + Last Name -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div class="space-y-2">
-                <label class="form-label">{{ $t('contact.form_first_name') }}</label>
-                <input type="text" v-model="firstName" class="form-input" required :placeholder="$t('contact.placeholder_first_name')" />
+          <form v-else @submit.prevent="nextStep" class="space-y-6">
+            <!-- Stepper Header (Progress Bar) -->
+            <div class="mb-8 bg-slate-50 dark:bg-slate-900/50 p-4 rounded-2xl border border-slate-100 dark:border-slate-800/80">
+              <div class="flex justify-between mb-3">
+                <span class="text-[10px] font-bold tracking-wider uppercase transition-colors duration-300"
+                      :class="currentStep === 1 ? 'text-red-600' : currentStep > 1 ? 'text-emerald-500' : 'text-slate-400 dark:text-slate-500'">
+                  {{ $t('contact.step_move_details') }}
+                </span>
+                <span class="text-[10px] font-bold tracking-wider uppercase transition-colors duration-300"
+                      :class="currentStep === 2 ? 'text-red-600' : currentStep > 2 ? 'text-emerald-500' : 'text-slate-400 dark:text-slate-500'">
+                  {{ $t('contact.step_access') }}
+                </span>
+                <span class="text-[10px] font-bold tracking-wider uppercase transition-colors duration-300"
+                      :class="currentStep === 3 ? 'text-red-600' : currentStep > 3 ? 'text-emerald-500' : 'text-slate-400 dark:text-slate-500'">
+                  {{ $t('contact.step_services') }}
+                </span>
+                <span class="text-[10px] font-bold tracking-wider uppercase transition-colors duration-300"
+                      :class="currentStep === 4 ? 'text-red-600' : currentStep > 4 ? 'text-emerald-500' : 'text-slate-400 dark:text-slate-500'">
+                  {{ $t('contact.step_contact') }}
+                </span>
               </div>
-              <div class="space-y-2">
-                <label class="form-label">{{ $t('contact.form_last_name') }}</label>
-                <input type="text" v-model="lastName" class="form-input" required :placeholder="$t('contact.placeholder_last_name')" />
+              <div class="w-full h-1 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
+                <div class="h-full bg-gradient-to-r from-red-500 to-red-600 transition-all duration-500 ease-out"
+                     :style="{ width: `${(currentStep / 4) * 100}%` }">
+                </div>
               </div>
             </div>
 
-            <!-- Row 2: Email + Phone -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div class="space-y-2">
-                <label class="form-label">{{ $t('contact.form_email') }}</label>
-                <input type="email" v-model="email" class="form-input" required :placeholder="$t('contact.placeholder_email')" />
+            <!-- STEP 1: Move Details -->
+            <div v-show="currentStep === 1" class="space-y-6">
+              <div>
+                <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-1">{{ $t('contact.step_heading_1') }}</h3>
+                <p class="text-xs text-slate-500 dark:text-slate-400">{{ $t('contact.step_sub_1') }}</p>
               </div>
-              <div class="space-y-2">
-                <label class="form-label">{{ $t('contact.form_phone') }}</label>
-                <input type="tel" v-model="phone" class="form-input" required :placeholder="$t('contact.placeholder_phone')" />
-              </div>
-            </div>
 
-            <!-- Row 3: Pickup Address + Dropoff Address -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div class="space-y-2">
+                <label class="form-label" for="moving_size">{{ $t('contact.what_are_you_moving') }}</label>
+                <select id="moving_size" v-model="moveSize" class="form-input cursor-pointer" required>
+                  <option value="" disabled>{{ $t('contact.select_size') }}</option>
+                  <option value="studio">{{ $t('contact.studio_single') }}</option>
+                  <option value="1bed">{{ $t('contact.1bed_apt') }}</option>
+                  <option value="2bed">{{ $t('contact.2bed_apt') }}</option>
+                  <option value="3bed">{{ $t('contact.3bed_house') }}</option>
+                  <option value="items">{{ $t('contact.few_items') }}</option>
+                </select>
+              </div>
+
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="space-y-2">
+                  <label class="form-label">{{ $t('contact.preferred_date') }}</label>
+                  <input type="date" v-model="moveDate" class="form-input cursor-pointer" :min="todayDate" required />
+                </div>
+                <div class="space-y-2">
+                  <label class="form-label">{{ $t('contact.alternative_date') }}</label>
+                  <input type="date" v-model="alternativeDate" class="form-input cursor-pointer" :min="todayDate" />
+                </div>
+              </div>
+
               <div class="space-y-2">
                 <label class="form-label">{{ $t('contact.form_moving_from') }}</label>
-                <AddressAutocomplete
-                  v-model="movingFrom"
-                  input-class="form-input"
-                  required
-                />
+                <AddressAutocomplete v-model="movingFrom" input-class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl py-4 text-slate-900 dark:text-white focus:border-red-500 outline-none transition-all shadow-sm dark:shadow-none" required />
               </div>
+
               <div class="space-y-2">
                 <label class="form-label">{{ $t('contact.form_moving_to') }}</label>
-                <AddressAutocomplete
-                  v-model="movingTo"
-                  input-class="form-input"
-                  required
-                />
+                <AddressAutocomplete v-model="movingTo" input-class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl py-4 text-slate-900 dark:text-white focus:border-red-500 outline-none transition-all shadow-sm dark:shadow-none" required />
               </div>
             </div>
 
-            <!-- Row 4: Move Date + Time of Day -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- STEP 2: Property Access -->
+            <div v-show="currentStep === 2" class="space-y-6">
+              <div>
+                <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-1">{{ $t('contact.step_heading_2') }}</h3>
+                <p class="text-xs text-slate-500 dark:text-slate-400">{{ $t('contact.step_sub_2') }}</p>
+              </div>
+
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="space-y-2">
+                  <label class="form-label">{{ $t('contact.pickup_floor') }}</label>
+                  <select v-model="pickupFloor" class="form-input cursor-pointer" required>
+                    <option value="" disabled>{{ $t('contact.select_floor') }}</option>
+                    <option>Ground Floor</option>
+                    <option>1st Floor</option>
+                    <option>2nd Floor</option>
+                    <option>3rd Floor</option>
+                    <option>4th Floor</option>
+                    <option>5th Floor or higher</option>
+                  </select>
+                </div>
+                <div class="space-y-2">
+                  <label class="form-label">{{ $t('contact.delivery_floor') }}</label>
+                  <select v-model="deliveryFloor" class="form-input cursor-pointer" required>
+                    <option value="" disabled>{{ $t('contact.select_floor') }}</option>
+                    <option>Ground Floor</option>
+                    <option>1st Floor</option>
+                    <option>2nd Floor</option>
+                    <option>3rd Floor</option>
+                    <option>4th Floor</option>
+                    <option>5th Floor or higher</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="space-y-3">
+                <label class="form-label">{{ $t('contact.elevator_available') }}</label>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  <label class="flex items-center gap-3 p-4 rounded-xl border-2 transition-all cursor-pointer bg-slate-50/50 dark:bg-slate-900/30"
+                         :class="elevatorAvailable === 'both' ? 'border-red-500 bg-red-500/5 dark:bg-red-500/5' : 'border-slate-100 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'">
+                    <input type="radio" v-model="elevatorAvailable" value="both" class="accent-red-600 h-4 w-4" />
+                    <span class="text-sm font-medium text-slate-700 dark:text-slate-300">{{ $t('contact.elevator_both', 'Yes — at both locations') }}</span>
+                  </label>
+                  <label class="flex items-center gap-3 p-4 rounded-xl border-2 transition-all cursor-pointer bg-slate-50/50 dark:bg-slate-900/30"
+                         :class="elevatorAvailable === 'pickup' ? 'border-red-500 bg-red-500/5 dark:bg-red-500/5' : 'border-slate-100 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'">
+                    <input type="radio" v-model="elevatorAvailable" value="pickup" class="accent-red-600 h-4 w-4" />
+                    <span class="text-sm font-medium text-slate-700 dark:text-slate-300">{{ $t('contact.elevator_pickup', 'Yes — pickup only') }}</span>
+                  </label>
+                  <label class="flex items-center gap-3 p-4 rounded-xl border-2 transition-all cursor-pointer bg-slate-50/50 dark:bg-slate-900/30"
+                         :class="elevatorAvailable === 'delivery' ? 'border-red-500 bg-red-500/5 dark:bg-red-500/5' : 'border-slate-100 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'">
+                    <input type="radio" v-model="elevatorAvailable" value="delivery" class="accent-red-600 h-4 w-4" />
+                    <span class="text-sm font-medium text-slate-700 dark:text-slate-300">{{ $t('contact.elevator_delivery', 'Yes — delivery only') }}</span>
+                  </label>
+                  <label class="flex items-center gap-3 p-4 rounded-xl border-2 transition-all cursor-pointer bg-slate-50/50 dark:bg-slate-900/30"
+                         :class="elevatorAvailable === 'none' ? 'border-red-500 bg-red-500/5 dark:bg-red-500/5' : 'border-slate-100 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'">
+                    <input type="radio" v-model="elevatorAvailable" value="none" class="accent-red-600 h-4 w-4" />
+                    <span class="text-sm font-medium text-slate-700 dark:text-slate-300">{{ $t('contact.elevator_none', 'No elevator') }}</span>
+                  </label>
+                </div>
+              </div>
+
+              <div class="space-y-3">
+                <label class="form-label">{{ $t('contact.moving_lift') }}</label>
+                <div class="grid grid-cols-3 gap-3">
+                  <label class="flex flex-col items-center justify-center p-3 rounded-xl border-2 transition-all cursor-pointer bg-slate-50/50 dark:bg-slate-900/30 text-center"
+                         :class="movingLiftNeeded === 'yes' ? 'border-red-500 bg-red-500/5 dark:bg-red-500/5' : 'border-slate-100 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'">
+                    <input type="radio" v-model="movingLiftNeeded" value="yes" class="sr-only" />
+                    <span class="text-sm font-bold" :class="movingLiftNeeded === 'yes' ? 'text-red-600' : 'text-slate-700 dark:text-slate-300'">{{ $t('contact.yes') }}</span>
+                  </label>
+                  <label class="flex flex-col items-center justify-center p-3 rounded-xl border-2 transition-all cursor-pointer bg-slate-50/50 dark:bg-slate-900/30 text-center"
+                         :class="movingLiftNeeded === 'no' ? 'border-red-500 bg-red-500/5 dark:bg-red-500/5' : 'border-slate-100 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'">
+                    <input type="radio" v-model="movingLiftNeeded" value="no" class="sr-only" />
+                    <span class="text-sm font-bold" :class="movingLiftNeeded === 'no' ? 'text-red-600' : 'text-slate-700 dark:text-slate-300'">{{ $t('contact.no') }}</span>
+                  </label>
+                  <label class="flex flex-col items-center justify-center p-3 rounded-xl border-2 transition-all cursor-pointer bg-slate-50/50 dark:bg-slate-900/30 text-center"
+                         :class="movingLiftNeeded === 'unsure' ? 'border-red-500 bg-red-500/5 dark:bg-red-500/5' : 'border-slate-100 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'">
+                    <input type="radio" v-model="movingLiftNeeded" value="unsure" class="sr-only" />
+                    <span class="text-sm font-bold text-ellipsis overflow-hidden whitespace-nowrap" :class="movingLiftNeeded === 'unsure' ? 'text-red-600' : 'text-slate-700 dark:text-slate-300'">{{ $t('contact.unsure') }}</span>
+                  </label>
+                </div>
+                <p class="text-[11px] text-slate-500 dark:text-slate-400 italic mt-2">{{ $t('contact.lift_hint') }}</p>
+              </div>
+            </div>
+
+            <!-- STEP 3: Additional Services -->
+            <div v-show="currentStep === 3" class="space-y-6">
+              <div>
+                <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-1">{{ $t('contact.step_heading_3') }}</h3>
+                <p class="text-xs text-slate-500 dark:text-slate-400">{{ $t('contact.step_sub_3') }}</p>
+              </div>
+
+              <div class="space-y-3">
+                <label class="form-label">{{ $t('contact.packing_needed') }}</label>
+                <div class="flex gap-4">
+                  <label class="flex-1 text-center p-3 rounded-xl border-2 transition-all cursor-pointer bg-slate-50/50 dark:bg-slate-900/30"
+                         :class="packingService === 'yes' ? 'border-red-500 bg-red-500/5 dark:bg-red-500/5 text-red-600 font-bold' : 'border-slate-100 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 text-slate-600 dark:text-slate-400'">
+                    <input type="radio" v-model="packingService" value="yes" class="sr-only" />
+                    <span>{{ $t('contact.yes_pack') }}</span>
+                  </label>
+                  <label class="flex-1 text-center p-3 rounded-xl border-2 transition-all cursor-pointer bg-slate-50/50 dark:bg-slate-900/30"
+                         :class="packingService === 'no' ? 'border-red-500 bg-red-500/5 dark:bg-red-500/5 text-red-600 font-bold' : 'border-slate-100 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 text-slate-600 dark:text-slate-400'">
+                    <input type="radio" v-model="packingService" value="no" class="sr-only" />
+                    <span>{{ $t('contact.no_pack') }}</span>
+                  </label>
+                </div>
+              </div>
+
+              <div class="space-y-3">
+                <label class="form-label">{{ $t('contact.furniture_assembly') }}</label>
+                <div class="flex gap-4">
+                  <label class="flex-1 text-center p-3 rounded-xl border-2 transition-all cursor-pointer bg-slate-50/50 dark:bg-slate-900/30"
+                         :class="furnitureAssembly === 'yes' ? 'border-red-500 bg-red-500/5 dark:bg-red-500/5 text-red-600 font-bold' : 'border-slate-100 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 text-slate-600 dark:text-slate-400'">
+                    <input type="radio" v-model="furnitureAssembly" value="yes" class="sr-only" />
+                    <span>{{ $t('contact.yes_please') }}</span>
+                  </label>
+                  <label class="flex-1 text-center p-3 rounded-xl border-2 transition-all cursor-pointer bg-slate-50/50 dark:bg-slate-900/30"
+                         :class="furnitureAssembly === 'no' ? 'border-red-500 bg-red-500/5 dark:bg-red-500/5 text-red-600 font-bold' : 'border-slate-100 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 text-slate-600 dark:text-slate-400'">
+                    <input type="radio" v-model="furnitureAssembly" value="no" class="sr-only" />
+                    <span>{{ $t('contact.no_thanks') }}</span>
+                  </label>
+                </div>
+              </div>
+
+              <div class="space-y-3">
+                <label class="form-label">{{ $t('contact.fragile_special') }}</label>
+                <div class="flex gap-4">
+                  <label class="flex-1 text-center p-3 rounded-xl border-2 transition-all cursor-pointer bg-slate-50/50 dark:bg-slate-900/30"
+                         :class="fragileItems === 'yes' ? 'border-red-500 bg-red-500/5 dark:bg-red-500/5 text-red-600 font-bold' : 'border-slate-100 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 text-slate-600 dark:text-slate-400'">
+                    <input type="radio" v-model="fragileItems" value="yes" class="sr-only" />
+                    <span>{{ $t('contact.yes') }}</span>
+                  </label>
+                  <label class="flex-1 text-center p-3 rounded-xl border-2 transition-all cursor-pointer bg-slate-50/50 dark:bg-slate-900/30"
+                         :class="fragileItems === 'no' ? 'border-red-500 bg-red-500/5 dark:bg-red-500/5 text-red-600 font-bold' : 'border-slate-100 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 text-slate-600 dark:text-slate-400'">
+                    <input type="radio" v-model="fragileItems" value="no" class="sr-only" />
+                    <span>{{ $t('contact.no') }}</span>
+                  </label>
+                </div>
+                <div v-show="fragileItems === 'yes'" class="transition-all duration-300 ease-out mt-3">
+                  <textarea :placeholder="$t('contact.special_placeholder')"
+                            v-model="specialItemsDescription"
+                            class="form-input resize-none h-24"
+                            :required="fragileItems === 'yes'"></textarea>
+                </div>
+              </div>
+
               <div class="space-y-2">
-                <label class="form-label">{{ $t('home.move_date') }}</label>
-                <input type="date" v-model="moveDate" class="form-input cursor-pointer" required />
+                <label class="form-label">{{ $t('contact.anything_else') }}</label>
+                <textarea :placeholder="$t('contact.notes_placeholder')"
+                          v-model="notes"
+                          class="form-input resize-none h-24"></textarea>
               </div>
+            </div>
+
+            <!-- STEP 4: Contact Info -->
+            <div v-show="currentStep === 4" class="space-y-6">
+              <div>
+                <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-1">{{ $t('contact.step_heading_4') }}</h3>
+                <p class="text-xs text-slate-500 dark:text-slate-400">{{ $t('contact.step_sub_4') }}</p>
+              </div>
+
               <div class="space-y-2">
-                <label class="form-label">{{ $t('contact.form_time_of_day') }}</label>
-                <select v-model="moveTimeOfDay" class="form-input cursor-pointer" required>
-                  <option value="" disabled>{{ $t('home.choose_option') }}</option>
-                  <option value="morning">{{ $t('contact.time_morning') }}</option>
-                  <option value="afternoon">{{ $t('contact.time_afternoon') }}</option>
-                  <option value="evening">{{ $t('contact.time_evening') }}</option>
-                </select>
+                <label class="form-label">{{ $t('contact.form_name') }}</label>
+                <input type="text" v-model="fullName" class="form-input" required :placeholder="$t('contact.form_name')" />
+              </div>
+
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="space-y-2">
+                  <label class="form-label">{{ $t('contact.form_email') }}</label>
+                  <input type="email" v-model="email" class="form-input" required :placeholder="$t('contact.placeholder_email')" />
+                </div>
+                <div class="space-y-2">
+                  <label class="form-label">{{ $t('contact.form_phone') }}</label>
+                  <input type="tel" v-model="phone" class="form-input" required :placeholder="$t('contact.placeholder_phone')" />
+                </div>
+              </div>
+
+              <div class="space-y-3">
+                <label class="form-label">{{ $t('contact.how_contact') }}</label>
+                <div class="grid grid-cols-3 gap-3">
+                  <label class="flex flex-col items-center justify-center p-3 rounded-xl border-2 transition-all cursor-pointer bg-slate-50/50 dark:bg-slate-900/30 text-center"
+                         :class="contactPreference === 'whatsapp' ? 'border-red-500 bg-red-500/5 dark:bg-red-500/5' : 'border-slate-100 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'">
+                    <input type="radio" v-model="contactPreference" value="whatsapp" class="sr-only" />
+                    <span class="text-xs font-bold" :class="contactPreference === 'whatsapp' ? 'text-red-600' : 'text-slate-700 dark:text-slate-300'">{{ $t('contact.whatsapp') }}</span>
+                  </label>
+                  <label class="flex flex-col items-center justify-center p-3 rounded-xl border-2 transition-all cursor-pointer bg-slate-50/50 dark:bg-slate-900/30 text-center"
+                         :class="contactPreference === 'email' ? 'border-red-500 bg-red-500/5 dark:bg-red-500/5' : 'border-slate-100 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'">
+                    <input type="radio" v-model="contactPreference" value="email" class="sr-only" />
+                    <span class="text-xs font-bold" :class="contactPreference === 'email' ? 'text-red-600' : 'text-slate-700 dark:text-slate-300'">{{ $t('contact.email') }}</span>
+                  </label>
+                  <label class="flex flex-col items-center justify-center p-3 rounded-xl border-2 transition-all cursor-pointer bg-slate-50/50 dark:bg-slate-900/30 text-center"
+                         :class="contactPreference === 'call' ? 'border-red-500 bg-red-500/5 dark:bg-red-500/5' : 'border-slate-100 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'">
+                    <input type="radio" v-model="contactPreference" value="call" class="sr-only" />
+                    <span class="text-xs font-bold text-ellipsis overflow-hidden whitespace-nowrap" :class="contactPreference === 'call' ? 'text-red-600' : 'text-slate-700 dark:text-slate-300'">{{ $t('contact.phone_call') }}</span>
+                  </label>
+                </div>
               </div>
             </div>
 
-            <!-- Row 5: Type of Move + Move Size (conditional) -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div class="space-y-2">
-                <label class="form-label">{{ $t('home.move_type') }}</label>
-                <select v-model="moveType" class="form-input cursor-pointer" required>
-                  <option value="" disabled>{{ $t('home.choose_option') }}</option>
-                  <option value="residential">{{ $t('contact.type_residential') }}</option>
-                  <option value="commercial">{{ $t('contact.type_commercial') }}</option>
-                </select>
-              </div>
-              <div class="space-y-2" v-if="moveType === 'residential'">
-                <label class="form-label">{{ $t('contact.form_move_size') }}</label>
-                <select v-model="moveSize" class="form-input cursor-pointer">
-                  <option value="" disabled>{{ $t('home.choose_option') }}</option>
-                  <option value="studio">{{ $t('contact.size_studio') }}</option>
-                  <option value="1br">{{ $t('contact.size_1br') }}</option>
-                  <option value="2br">{{ $t('contact.size_2br') }}</option>
-                  <option value="3br">{{ $t('contact.size_3br') }}</option>
-                  <option value="4br+">{{ $t('contact.size_4br') }}</option>
-                  <option value="other">{{ $t('contact.size_other') }}</option>
-                </select>
-              </div>
-            </div>
-
-            <!-- Row 6: Storage Required -->
-            <div class="space-y-3">
-              <label class="form-label">{{ $t('contact.form_storage') }}</label>
-              <div class="flex gap-6">
-                <label class="flex items-center gap-3 cursor-pointer group">
-                  <div class="relative">
-                    <input type="radio" v-model="storageRequired" value="yes" class="sr-only" />
-                    <div class="w-5 h-5 rounded-full border-2 transition-all"
-                         :class="storageRequired === 'yes' ? 'border-red-500 bg-red-500' : 'border-slate-300 dark:border-slate-600'">
-                      <div v-if="storageRequired === 'yes'" class="w-2 h-2 bg-white rounded-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"></div>
-                    </div>
-                  </div>
-                  <span class="text-slate-700 dark:text-slate-300 font-medium">{{ $t('contact.storage_yes') }}</span>
-                </label>
-                <label class="flex items-center gap-3 cursor-pointer group">
-                  <div class="relative">
-                    <input type="radio" v-model="storageRequired" value="no" class="sr-only" />
-                    <div class="w-5 h-5 rounded-full border-2 transition-all"
-                         :class="storageRequired === 'no' ? 'border-red-500 bg-red-500' : 'border-slate-300 dark:border-slate-600'">
-                      <div v-if="storageRequired === 'no'" class="w-2 h-2 bg-white rounded-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"></div>
-                    </div>
-                  </div>
-                  <span class="text-slate-700 dark:text-slate-300 font-medium">{{ $t('contact.storage_no') }}</span>
-                </label>
-              </div>
-            </div>
-
-            <!-- Row 7: Pickup Access + Dropoff Access -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div class="space-y-2">
-                <label class="form-label">{{ $t('contact.form_pickup_access') }}</label>
-                <select v-model="pickupAccess" class="form-input cursor-pointer">
-                  <option value="" disabled>{{ $t('home.choose_option') }}</option>
-                  <option value="elevator">{{ $t('contact.access_elevator') }}</option>
-                  <option value="stairs_1">{{ $t('contact.access_stairs_1') }}</option>
-                  <option value="stairs_2">{{ $t('contact.access_stairs_2') }}</option>
-                  <option value="stairs_3">{{ $t('contact.access_stairs_3') }}</option>
-                  <option value="stairs_4">{{ $t('contact.access_stairs_4') }}</option>
-                  <option value="stairs_5">{{ $t('contact.access_stairs_5') }}</option>
-                  <option value="stairs_6plus">{{ $t('contact.access_stairs_6plus') }}</option>
-                </select>
-              </div>
-              <div class="space-y-2">
-                <label class="form-label">{{ $t('contact.form_dropoff_access') }}</label>
-                <select v-model="dropoffAccess" class="form-input cursor-pointer">
-                  <option value="" disabled>{{ $t('home.choose_option') }}</option>
-                  <option value="elevator">{{ $t('contact.access_elevator') }}</option>
-                  <option value="stairs_1">{{ $t('contact.access_stairs_1') }}</option>
-                  <option value="stairs_2">{{ $t('contact.access_stairs_2') }}</option>
-                  <option value="stairs_3">{{ $t('contact.access_stairs_3') }}</option>
-                  <option value="stairs_4">{{ $t('contact.access_stairs_4') }}</option>
-                  <option value="stairs_5">{{ $t('contact.access_stairs_5') }}</option>
-                  <option value="stairs_6plus">{{ $t('contact.access_stairs_6plus') }}</option>
-                </select>
-              </div>
-            </div>
-
-            <!-- Row 8: How did you hear about us -->
-            <div class="space-y-2">
-              <label class="form-label">{{ $t('contact.form_hear') }}</label>
-              <select v-model="hearAboutUs" class="form-input cursor-pointer">
-                <option value="" disabled>{{ $t('home.choose_option') }}</option>
-                <option value="google">{{ $t('contact.hear_google') }}</option>
-                <option value="social_media">{{ $t('contact.hear_social') }}</option>
-                <option value="referral">{{ $t('contact.hear_referral') }}</option>
-                <option value="trustpilot">{{ $t('contact.hear_trustpilot') }}</option>
-                <option value="other">{{ $t('contact.hear_other') }}</option>
-              </select>
-            </div>
-
-            <!-- Row 9: Message -->
-            <div class="space-y-2">
-              <label class="form-label">{{ $t('contact.form_message') }}</label>
-              <textarea
-                rows="4"
-                v-model="message"
-                class="form-input resize-none"
-                :placeholder="$t('contact.placeholder_message')"
-              ></textarea>
-            </div>
-
-            <button type="submit" class="btn-primary w-full py-5 text-lg flex items-center justify-center gap-2" :disabled="loading">
-              <svg v-if="loading" class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            <!-- Validation Error message -->
+            <div v-if="validationError" class="text-xs font-bold text-red-600 bg-red-500/5 border border-red-500/20 rounded-xl p-3 flex items-center gap-2 animate-pulse">
+              <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
               </svg>
-              <span>{{ loading ? $t('contact.sending') : $t('contact.form_submit') }}</span>
-            </button>
+              <span>{{ validationError }}</span>
+            </div>
+
+            <!-- Footer Actions -->
+            <div class="flex items-center justify-between pt-6 border-t border-slate-100 dark:border-slate-800/80 mt-8 gap-4">
+              <span class="text-[11px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">
+                {{ $t('contact.step_counter', { current: currentStep, total: 4 }) !== 'contact.step_counter' ? $t('contact.step_counter', { current: currentStep, total: 4 }) : `Step ${currentStep} of 4` }}
+              </span>
+              <div class="flex gap-3">
+                <button v-if="currentStep > 1" type="button" @click="prevStep" class="btn px-5 py-3 border border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 rounded-xl hover:border-slate-300 dark:hover:border-slate-700 text-xs font-bold transition-all bg-white dark:bg-slate-900">
+                  {{ $t('contact.back') }}
+                </button>
+                <button v-if="currentStep < 4" type="button" @click="nextStep" class="btn bg-red-600 hover:bg-red-700 text-white px-5 py-3 rounded-xl text-xs font-bold transition-all shadow-md shadow-red-500/20">
+                  {{ $t('contact.continue') }}
+                </button>
+                <button v-else type="submit" class="btn bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-xl text-xs font-bold transition-all shadow-md shadow-red-500/20 flex items-center gap-2" :disabled="loading">
+                  <svg v-if="loading" class="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                  <span>{{ loading ? $t('contact.sending') : $t('contact.get_quote') }}</span>
+                </button>
+              </div>
+            </div>
           </form>
         </div>
 
@@ -235,23 +355,38 @@ const route = useRoute()
 const { t } = useI18n()
 
 // Form state
-const firstName    = ref('')
-const lastName     = ref('')
+const fullName     = ref('')
 const email        = ref('')
 const phone        = ref('')
 const movingFrom   = ref('')
 const movingTo     = ref('')
 const moveDate     = ref('')
-const moveTimeOfDay = ref('')
-const moveType     = ref('')
+const alternativeDate = ref('')
 const moveSize     = ref('')
-const storageRequired = ref('no')
-const pickupAccess = ref('')
-const dropoffAccess = ref('')
-const hearAboutUs  = ref('')
-const message      = ref('')
+
+// Step 2 Property Access
+const pickupFloor  = ref('')
+const deliveryFloor = ref('')
+const elevatorAvailable = ref('')
+const movingLiftNeeded = ref('')
+
+// Step 3 Additional Services
+const packingService = ref('')
+const furnitureAssembly = ref('')
+const fragileItems = ref('')
+const specialItemsDescription = ref('')
+const notes = ref('')
+
+// Step 4 Contact Info
+const contactPreference = ref('')
+
+// UI state
+const currentStep  = ref(1)
 const submitted    = ref(false)
 const loading      = ref(false)
+const validationError = ref('')
+
+const todayDate = computed(() => new Date().toISOString().split('T')[0])
 
 // Pre-fill from query parameters (coming from homepage quote form)
 onMounted(() => {
@@ -259,62 +394,99 @@ onMounted(() => {
   if (route.query.to)    movingTo.value    = String(route.query.to)
   if (route.query.date)  moveDate.value    = String(route.query.date)
 
-  // Map homepage move type values to form values
   const typeMap = {
-    van_only: { type: 'residential', size: 'studio' },
-    van_1:    { type: 'residential', size: '1br' },
-    van_2:    { type: 'residential', size: '2br' },
-    custom:   { type: 'residential', size: '' },
+    van_only: 'studio',
+    van_1:    '1bed',
+    van_2:    '2bed',
+    custom:   ''
   }
   if (route.query.type && typeMap[String(route.query.type)]) {
-    const mapped = typeMap[String(route.query.type)]
-    moveType.value = mapped.type
-    moveSize.value = mapped.size
+    moveSize.value = typeMap[String(route.query.type)]
   }
 })
 
-// Human-readable label helpers
-const timeLabels = {
-  morning:   'Morning (8AM - 12PM)',
-  afternoon: 'Afternoon (12PM - 4PM)',
-  evening:   'Evening (4PM onwards)',
+// Human-readable label helpers for the FormSubmit email
+const elevatorLabels = {
+  both: 'Yes — at both locations',
+  pickup: 'Yes — pickup only',
+  delivery: 'Yes — delivery only',
+  none: 'No elevator'
 }
-const accessLabels = {
-  elevator:   'Elevator',
-  stairs_1:   'Stairs - 1st Floor',
-  stairs_2:   'Stairs - 2nd Floor',
-  stairs_3:   'Stairs - 3rd Floor',
-  stairs_4:   'Stairs - 4th Floor',
-  stairs_5:   'Stairs - 5th Floor',
-  stairs_6plus: 'Stairs - 6th Floor or Higher',
+
+const liftLabels = {
+  yes: 'Yes',
+  no: 'No',
+  unsure: 'Not sure'
 }
-const hearLabels = {
-  google:     'Google',
-  social_media: 'Social Media',
-  referral:   'Referral',
-  trustpilot: 'Trustpilot',
-  other:      'Other',
+
+const contactPrefLabels = {
+  whatsapp: 'WhatsApp',
+  email: 'Email',
+  call: 'Phone Call'
+}
+
+const sizeLabels = {
+  studio: 'Studio / Single Room',
+  '1bed': '1-Bedroom Apartment',
+  '2bed': '2-Bedroom Apartment',
+  '3bed': '3+ Bedroom House',
+  items: 'Just a few large items'
+}
+
+const prevStep = () => {
+  validationError.value = ''
+  if (currentStep.value > 1) {
+    currentStep.value--
+  }
+}
+
+const nextStep = () => {
+  validationError.value = ''
+  if (currentStep.value === 1) {
+    if (!moveSize.value || !moveDate.value || !movingFrom.value || !movingTo.value) {
+      validationError.value = t('contact.validation_step_1') !== 'contact.validation_step_1' ? t('contact.validation_step_1') : 'Please fill in all fields (size, date, and addresses)'
+      return
+    }
+  } else if (currentStep.value === 2) {
+    if (!pickupFloor.value || !deliveryFloor.value || !elevatorAvailable.value || !movingLiftNeeded.value) {
+      validationError.value = t('contact.validation_step_2') !== 'contact.validation_step_2' ? t('contact.validation_step_2') : 'Please complete all access questions'
+      return
+    }
+  } else if (currentStep.value === 3) {
+    if (!packingService.value || !furnitureAssembly.value || !fragileItems.value) {
+      validationError.value = t('contact.validation_step_3') !== 'contact.validation_step_3' ? t('contact.validation_step_3') : 'Please answer all service options'
+      return
+    }
+    if (fragileItems.value === 'yes' && !specialItemsDescription.value.trim()) {
+      validationError.value = t('contact.validation_step_3_special') !== 'contact.validation_step_3_special' ? t('contact.validation_step_3_special') : 'Please describe your fragile/specialty items'
+      return
+    }
+  }
+
+  if (currentStep.value < 4) {
+    currentStep.value++
+  } else {
+    handleSubmit()
+  }
 }
 
 const handleSubmit = async () => {
-  const fullName = `${firstName.value} ${lastName.value}`
   loading.value = true
 
   // Track conversion event
   const { $trackEvent } = useNuxtApp()
   if (typeof $trackEvent === 'function') {
     $trackEvent('quote_request', {
-      name: fullName,
+      name: fullName.value,
       email: email.value,
       phone: phone.value,
       from: movingFrom.value,
       to: movingTo.value,
       date: moveDate.value,
-      type: moveType.value,
     })
   }
 
-  const subject = `Quote Request from ${fullName} — ${moveDate.value}`
+  const subject = `Quote Request from ${fullName.value} — ${moveDate.value}`
 
   try {
     await $fetch('https://formsubmit.co/ajax/info@moveitmaastricht.nl', {
@@ -323,20 +495,23 @@ const handleSubmit = async () => {
         _subject: subject,
         _replyto: email.value,
         _template: 'table',
-        Name: fullName,
+        Name: fullName.value,
         Email: email.value,
         Phone: phone.value,
         'Moving From': movingFrom.value,
         'Moving To': movingTo.value,
-        'Move Date': moveDate.value,
-        'Time of Day': timeLabels[moveTimeOfDay.value] || moveTimeOfDay.value,
-        'Type of Move': moveType.value === 'residential' ? 'Residential' : 'Commercial / Office',
-        'Move Size': moveSize.value || 'N/A',
-        'Storage Needed': storageRequired.value === 'yes' ? 'Yes' : 'No',
-        'Pickup Access': accessLabels[pickupAccess.value] || pickupAccess.value || 'Not specified',
-        'Dropoff Access': accessLabels[dropoffAccess.value] || dropoffAccess.value || 'Not specified',
-        'How they found us': hearLabels[hearAboutUs.value] || hearAboutUs.value || 'Not specified',
-        'Additional Notes': message.value || 'None'
+        'Preferred Date': moveDate.value,
+        'Alternative Date': alternativeDate.value || 'None',
+        'Move Size': sizeLabels[moveSize.value] || moveSize.value || 'Not specified',
+        'Pickup Floor': pickupFloor.value || 'Not specified',
+        'Delivery Floor': deliveryFloor.value || 'Not specified',
+        'Elevator Available': elevatorLabels[elevatorAvailable.value] || elevatorAvailable.value || 'Not specified',
+        'Moving Lift Needed': liftLabels[movingLiftNeeded.value] || movingLiftNeeded.value || 'Not specified',
+        'Packing Service': packingService.value === 'yes' ? 'Yes, pack for me' : 'No, I\'ll pack myself',
+        'Furniture Assembly': furnitureAssembly.value === 'yes' ? 'Yes, please' : 'No thanks',
+        'Fragile/Specialty Items': fragileItems.value === 'yes' ? specialItemsDescription.value : 'No',
+        'Contact Preference': contactPrefLabels[contactPreference.value] || contactPreference.value || 'Not specified',
+        'Additional Notes': notes.value || 'None'
       }
     })
     submitted.value = true
