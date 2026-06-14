@@ -72,7 +72,7 @@
         <!-- Navigation Tabs -->
         <div class="flex border-b border-slate-800 mb-8 overflow-x-auto overflow-y-hidden gap-2 scrollbar-none">
           <button 
-            v-for="tab in ['locations', 'blog', 'services']" 
+            v-for="tab in ['locations', 'blog', 'services', 'pricing']" 
             :key="tab"
             @click="activeTab = tab"
             :class="[
@@ -300,6 +300,89 @@
               ▶
             </button>
           </div>
+        </div>
+
+        <!-- TAB CONTENT: PRICING -->
+        <div v-if="activeTab === 'pricing'" class="space-y-12" data-aos="fade-up">
+          
+          <!-- 1. PRICING PACKAGES -->
+          <div class="space-y-6">
+            <div class="flex justify-between items-center">
+              <h2 class="text-2xl font-black text-white">Manage Pricing Packages</h2>
+              <button @click="openAddPackageModal" class="px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl flex items-center gap-2 shadow-lg shadow-red-600/10">
+                ➕ Add New Package
+              </button>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div v-for="pkg in dbPackages" :key="pkg.id" class="glass-panel border border-slate-800 rounded-2xl p-6 bg-slate-950/40 flex gap-6">
+                <div class="w-16 h-16 rounded-xl shrink-0 bg-slate-900 border border-slate-800 flex items-center justify-center text-3xl">
+                  {{ pkg.icon }}
+                </div>
+                <div class="flex-grow flex flex-col justify-between min-w-0">
+                  <div>
+                    <div class="flex justify-between items-start">
+                      <h3 class="text-lg font-bold text-white truncate">{{ pkg.name_en }}</h3>
+                      <span v-if="pkg.popular" class="px-2 py-0.5 bg-red-600/20 text-red-500 border border-red-500/30 rounded-full text-[9px] font-black uppercase tracking-wider">Popular</span>
+                    </div>
+                    <p class="text-xs text-slate-400 mt-1">
+                      Price: {{ pkg.price_en }} {{ pkg.unit_en }} | Price (NL): {{ pkg.price_nl }} {{ pkg.unit_nl }}
+                    </p>
+                  </div>
+                  <div class="flex justify-between items-center mt-4 border-t border-slate-900/65 pt-3">
+                    <span class="text-[10px] text-slate-500 font-mono truncate">key: {{ pkg.key_name }}</span>
+                    <div class="flex gap-2">
+                      <button @click="openEditPackageModal(pkg)" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold rounded-lg transition-colors border border-slate-700">
+                        Edit
+                      </button>
+                      <button @click="deletePackage(pkg)" class="p-2 bg-red-500/10 hover:bg-red-500/20 text-red-500 rounded-lg transition-colors">
+                        🗑️
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div v-if="dbPackages.length === 0" class="col-span-full py-16 text-center text-slate-500 bg-slate-950/20 border border-slate-900 rounded-3xl">
+                No pricing packages found. Run seeding to import default values or add a new one.
+              </div>
+            </div>
+          </div>
+
+          <!-- 2. OPTIONAL ADD-ONS -->
+          <div class="space-y-6">
+            <div class="flex justify-between items-center">
+              <h2 class="text-2xl font-black text-white">Manage Optional Add-ons</h2>
+              <button @click="openAddAddonModal" class="px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl flex items-center gap-2 shadow-lg shadow-red-600/10">
+                ➕ Add New Add-on
+              </button>
+            </div>
+
+            <div class="glass-panel border border-slate-800 rounded-2xl bg-slate-950/40 p-6">
+              <div class="divide-y divide-slate-800">
+                <div v-for="(addon, index) in dbAddons" :key="addon.id" class="py-4 flex justify-between items-center first:pt-0 last:pb-0">
+                  <div class="flex items-center gap-4">
+                    <span class="text-slate-500 font-bold text-sm">#{{ index + 1 }}</span>
+                    <div>
+                      <h4 class="font-bold text-white text-base">{{ addon.name_en }}</h4>
+                      <p class="text-xs text-slate-400">NL Name: {{ addon.name_nl }}</p>
+                    </div>
+                  </div>
+                  <div class="flex gap-2">
+                    <button @click="openEditAddonModal(addon)" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold rounded-lg transition-colors border border-slate-700">
+                      Edit
+                    </button>
+                    <button @click="deleteAddon(addon)" class="p-2 bg-red-500/10 hover:bg-red-500/20 text-red-500 rounded-lg transition-colors">
+                      🗑️
+                    </button>
+                  </div>
+                </div>
+                <div v-if="dbAddons.length === 0" class="py-8 text-center text-slate-500">
+                  No optional add-ons found.
+                </div>
+              </div>
+            </div>
+          </div>
+
         </div>
 
       </div>
@@ -1137,6 +1220,118 @@
     </div>
 
 
+    <!-- MODAL: ADD/EDIT PRICING PACKAGE -->
+    <div v-if="modals.pricingPackage" class="fixed inset-0 z-50 flex items-center justify-center p-6 bg-slate-950/80 backdrop-blur-sm overflow-y-auto">
+      <div class="glass-panel w-full max-w-2xl rounded-3xl border border-slate-800 bg-slate-900 p-8 shadow-2xl my-8 space-y-6 flex flex-col max-h-[90vh]">
+        <div class="flex justify-between items-center border-b border-slate-800 pb-4 shrink-0">
+          <h3 class="text-xl font-black text-white">{{ isEditing ? 'Edit Pricing Package' : 'Add New Pricing Package' }}</h3>
+          <button @click="modals.pricingPackage = false" class="text-slate-400 hover:text-white">✕</button>
+        </div>
+
+        <div class="flex-grow overflow-y-auto space-y-6 pr-2">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="space-y-1">
+              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Package Identifier Key (e.g., package1)</label>
+              <input type="text" v-model="packageForm.key_name" placeholder="e.g. package1" :disabled="isEditing" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white outline-none focus:border-red-500 text-sm" />
+            </div>
+            <div class="space-y-1">
+              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Icon Emoji</label>
+              <input type="text" v-model="packageForm.icon" placeholder="e.g. 🚐" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white outline-none focus:border-red-500 text-sm" />
+            </div>
+            <div class="space-y-1">
+              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Name EN</label>
+              <input type="text" v-model="packageForm.name_en" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white outline-none focus:border-red-500 text-sm" />
+            </div>
+            <div class="space-y-1">
+              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Name NL</label>
+              <input type="text" v-model="packageForm.name_nl" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white outline-none focus:border-red-500 text-sm" />
+            </div>
+            <div class="space-y-1">
+              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Price EN</label>
+              <input type="text" v-model="packageForm.price_en" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white outline-none focus:border-red-500 text-sm" />
+            </div>
+            <div class="space-y-1">
+              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Price NL</label>
+              <input type="text" v-model="packageForm.price_nl" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white outline-none focus:border-red-500 text-sm" />
+            </div>
+            <div class="space-y-1">
+              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Unit EN (optional)</label>
+              <input type="text" v-model="packageForm.unit_en" placeholder="e.g. /hr" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white outline-none focus:border-red-500 text-sm" />
+            </div>
+            <div class="space-y-1">
+              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Unit NL (optional)</label>
+              <input type="text" v-model="packageForm.unit_nl" placeholder="e.g. /uur" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white outline-none focus:border-red-500 text-sm" />
+            </div>
+            <div class="space-y-1">
+              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">CTA Button Text EN</label>
+              <input type="text" v-model="packageForm.cta_text_en" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white outline-none focus:border-red-500 text-sm" />
+            </div>
+            <div class="space-y-1">
+              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">CTA Button Text NL</label>
+              <input type="text" v-model="packageForm.cta_text_nl" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white outline-none focus:border-red-500 text-sm" />
+            </div>
+            <div class="space-y-1">
+              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">CTA Link (URL or Page Path)</label>
+              <input type="text" v-model="packageForm.cta_link" placeholder="e.g. /contact" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white outline-none focus:border-red-500 text-sm" />
+            </div>
+            <div class="flex items-center space-x-3 pt-6">
+              <input type="checkbox" id="pkgPopular" v-model="packageForm.popular" class="w-4 h-4 bg-slate-950 border-slate-800 rounded text-red-600 focus:ring-red-500" />
+              <label for="pkgPopular" class="text-sm font-bold text-slate-300">Mark as Most Popular</label>
+            </div>
+            <div class="space-y-1 md:col-span-2">
+              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Best For EN (Format: Icon|Text - one per line)</label>
+              <textarea v-model="packageForm.best_for_raw_en" placeholder="e.g.&#10;🎓|Students&#10;🛋|Single-item moves" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 h-24 text-xs"></textarea>
+            </div>
+            <div class="space-y-1 md:col-span-2">
+              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Best For NL (Format: Icon|Text - one per line)</label>
+              <textarea v-model="packageForm.best_for_raw_nl" placeholder="e.g.&#10;🎓|Studenten&#10;🛋|Enkele meubelstukken" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 h-24 text-xs"></textarea>
+            </div>
+            <div class="space-y-1 md:col-span-2">
+              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Inclusions EN (one per line)</label>
+              <textarea v-model="packageForm.includes_raw_en" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 h-24 text-xs"></textarea>
+            </div>
+            <div class="space-y-1 md:col-span-2">
+              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Inclusions NL (one per line)</label>
+              <textarea v-model="packageForm.includes_raw_nl" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 h-24 text-xs"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex justify-end gap-3 pt-4 border-t border-slate-800 shrink-0">
+          <button @click="modals.pricingPackage = false" class="px-5 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold rounded-xl text-sm transition-all border border-slate-700">Cancel</button>
+          <button @click="savePackage" class="px-6 py-2.5 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl text-sm transition-all shadow-md">
+            {{ isEditing ? 'Save Changes' : 'Create Package' }}
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL: ADD/EDIT PRICING ADDON -->
+    <div v-if="modals.pricingAddon" class="fixed inset-0 z-50 flex items-center justify-center p-6 bg-slate-950/80 backdrop-blur-sm overflow-y-auto">
+      <div class="glass-panel w-full max-w-md rounded-3xl border border-slate-800 bg-slate-900 p-8 shadow-2xl my-8 space-y-6">
+        <div class="flex justify-between items-center border-b border-slate-800 pb-4">
+          <h3 class="text-xl font-black text-white">{{ isEditing ? 'Edit Add-on' : 'Add New Add-on' }}</h3>
+          <button @click="modals.pricingAddon = false" class="text-slate-400 hover:text-white">✕</button>
+        </div>
+        <div class="space-y-4">
+          <div class="space-y-1">
+            <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Add-on Name EN</label>
+            <input type="text" v-model="addonForm.name_en" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white outline-none focus:border-red-500 text-sm" />
+          </div>
+          <div class="space-y-1">
+            <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Add-on Name NL</label>
+            <input type="text" v-model="addonForm.name_nl" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white outline-none focus:border-red-500 text-sm" />
+          </div>
+        </div>
+        <div class="flex justify-end gap-3 pt-4 border-t border-slate-800">
+          <button @click="modals.pricingAddon = false" class="px-5 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold rounded-xl text-sm transition-all border border-slate-700">Cancel</button>
+          <button @click="saveAddon" class="px-6 py-2.5 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl text-sm transition-all shadow-md">
+            {{ isEditing ? 'Save Changes' : 'Create Add-on' }}
+          </button>
+        </div>
+      </div>
+    </div>
+
   </div>
 </template>
 
@@ -1214,6 +1409,36 @@ const blogPosts = ref([])
 const services = ref([])
 const serviceSections = ref([])
 
+// Pricing state
+const dbPackages = ref([])
+const dbAddons = ref([])
+
+const packageForm = ref({
+  key_name: '',
+  icon: '🚐',
+  popular: false,
+  name_en: '',
+  name_nl: '',
+  price_en: '',
+  price_nl: '',
+  unit_en: '',
+  unit_nl: '',
+  cta_text_en: '',
+  cta_text_nl: '',
+  cta_link: '/contact',
+  best_for_raw_en: '',
+  best_for_raw_nl: '',
+  includes_raw_en: '',
+  includes_raw_nl: '',
+  sort_order: 0
+})
+
+const addonForm = ref({
+  name_en: '',
+  name_nl: '',
+  sort_order: 0
+})
+
 // Pagination Setup
 const itemsPerPage = 10
 const locationsPage = ref(1)
@@ -1262,6 +1487,14 @@ const loadAllData = async () => {
   // Load Services
   const { data: servs } = await $supabase.from('services').select('*').order('id')
   if (servs) services.value = servs
+
+  // Load Pricing Packages
+  const { data: pkgs } = await $supabase.from('pricing_packages').select('*').order('sort_order')
+  if (pkgs) dbPackages.value = pkgs
+
+  // Load Pricing Addons
+  const { data: ads } = await $supabase.from('pricing_addons').select('*').order('sort_order')
+  if (ads) dbAddons.value = ads
 }
 
 
@@ -1733,6 +1966,220 @@ const deleteLocationSection = async (sec) => {
   }
 }
 
+// Pricing CRUD methods
+const openAddPackageModal = () => {
+  isEditing.value = false
+  packageForm.value = {
+    key_name: '',
+    icon: '🚐',
+    popular: false,
+    name_en: '',
+    name_nl: '',
+    price_en: '',
+    price_nl: '',
+    unit_en: '',
+    unit_nl: '',
+    cta_text_en: '',
+    cta_text_nl: '',
+    cta_link: '/contact',
+    best_for_raw_en: '',
+    best_for_raw_nl: '',
+    includes_raw_en: '',
+    includes_raw_nl: '',
+    sort_order: dbPackages.value.length
+  }
+  modals.value.pricingPackage = true
+}
+
+const openEditPackageModal = (pkg) => {
+  isEditing.value = true
+  selectedItem.value = pkg
+  packageForm.value = {
+    key_name: pkg.key_name,
+    icon: pkg.icon,
+    popular: pkg.popular,
+    name_en: pkg.name_en,
+    name_nl: pkg.name_nl,
+    price_en: pkg.price_en,
+    price_nl: pkg.price_nl,
+    unit_en: pkg.unit_en,
+    unit_nl: pkg.unit_nl,
+    cta_text_en: pkg.cta_text_en,
+    cta_text_nl: pkg.cta_text_nl,
+    cta_link: pkg.cta_link,
+    best_for_raw_en: (pkg.best_for || []).map(item => `${item.icon || '📦'}|${item.text || ''}`).join('\n'),
+    best_for_raw_nl: (pkg.best_for_nl || []).map(item => `${item.icon || '📦'}|${item.text || ''}`).join('\n'),
+    includes_raw_en: (pkg.includes_en || []).join('\n'),
+    includes_raw_nl: (pkg.includes_nl || []).join('\n'),
+    sort_order: pkg.sort_order
+  }
+  modals.value.pricingPackage = true
+}
+
+const savePackage = async () => {
+  if (!$supabase || !packageForm.value.key_name) return
+
+  // Parse best_for and includes
+  const best_for = packageForm.value.best_for_raw_en
+    .split('\n')
+    .filter(line => line.trim())
+    .map(line => {
+      const [icon, ...textParts] = line.split('|')
+      return { icon: icon ? icon.trim() : '📦', text: textParts.join('|').trim() }
+    })
+
+  const best_for_nl = packageForm.value.best_for_raw_nl
+    .split('\n')
+    .filter(line => line.trim())
+    .map(line => {
+      const [icon, ...textParts] = line.split('|')
+      return { icon: icon ? icon.trim() : '📦', text: textParts.join('|').trim() }
+    })
+
+  const includes_en = packageForm.value.includes_raw_en
+    .split('\n')
+    .filter(line => line.trim())
+
+  const includes_nl = packageForm.value.includes_raw_nl
+    .split('\n')
+    .filter(line => line.trim())
+
+  const payload = {
+    key_name: packageForm.value.key_name,
+    icon: packageForm.value.icon,
+    popular: packageForm.value.popular,
+    name_en: packageForm.value.name_en,
+    name_nl: packageForm.value.name_nl,
+    price_en: packageForm.value.price_en,
+    price_nl: packageForm.value.price_nl,
+    unit_en: packageForm.value.unit_en,
+    unit_nl: packageForm.value.unit_nl,
+    cta_text_en: packageForm.value.cta_text_en,
+    cta_text_nl: packageForm.value.cta_text_nl,
+    cta_link: packageForm.value.cta_link,
+    best_for,
+    best_for_nl,
+    includes_en,
+    includes_nl,
+    sort_order: packageForm.value.sort_order
+  }
+
+  if (isEditing.value && selectedItem.value) {
+    const { error } = await $supabase
+      .from('pricing_packages')
+      .update(payload)
+      .eq('id', selectedItem.value.id)
+
+    if (!error) {
+      const idx = dbPackages.value.findIndex(p => p.id === selectedItem.value.id)
+      if (idx !== -1) dbPackages.value[idx] = { ...selectedItem.value, ...payload }
+      modals.value.pricingPackage = false
+    } else {
+      alert('Error updating package: ' + error.message)
+    }
+  } else {
+    const { data, error } = await $supabase
+      .from('pricing_packages')
+      .insert([payload])
+      .select()
+
+    if (!error && data) {
+      dbPackages.value.push(data[0])
+      dbPackages.value.sort((a, b) => a.sort_order - b.sort_order)
+      modals.value.pricingPackage = false
+    } else {
+      alert('Error creating package: ' + error.message)
+    }
+  }
+}
+
+const deletePackage = async (pkg) => {
+  if (!$supabase || !confirm(`Delete package "${pkg.name_en}"?`)) return
+  const { error } = await $supabase
+    .from('pricing_packages')
+    .delete()
+    .eq('id', pkg.id)
+
+  if (!error) {
+    dbPackages.value = dbPackages.value.filter(p => p.id !== pkg.id)
+  } else {
+    alert('Error deleting package: ' + error.message)
+  }
+}
+
+const openAddAddonModal = () => {
+  isEditing.value = false
+  addonForm.value = {
+    name_en: '',
+    name_nl: '',
+    sort_order: dbAddons.value.length
+  }
+  modals.value.pricingAddon = true
+}
+
+const openEditAddonModal = (addon) => {
+  isEditing.value = true
+  selectedItem.value = addon
+  addonForm.value = {
+    name_en: addon.name_en,
+    name_nl: addon.name_nl,
+    sort_order: addon.sort_order
+  }
+  modals.value.pricingAddon = true
+}
+
+const saveAddon = async () => {
+  if (!$supabase) return
+
+  const payload = {
+    name_en: addonForm.value.name_en,
+    name_nl: addonForm.value.name_nl,
+    sort_order: addonForm.value.sort_order
+  }
+
+  if (isEditing.value && selectedItem.value) {
+    const { error } = await $supabase
+      .from('pricing_addons')
+      .update(payload)
+      .eq('id', selectedItem.value.id)
+
+    if (!error) {
+      const idx = dbAddons.value.findIndex(a => a.id === selectedItem.value.id)
+      if (idx !== -1) dbAddons.value[idx] = { ...selectedItem.value, ...payload }
+      modals.value.pricingAddon = false
+    } else {
+      alert('Error updating add-on: ' + error.message)
+    }
+  } else {
+    const { data, error } = await $supabase
+      .from('pricing_addons')
+      .insert([payload])
+      .select()
+
+    if (!error && data) {
+      dbAddons.value.push(data[0])
+      dbAddons.value.sort((a, b) => a.sort_order - b.sort_order)
+      modals.value.pricingAddon = false
+    } else {
+      alert('Error creating add-on: ' + error.message)
+    }
+  }
+}
+
+const deleteAddon = async (addon) => {
+  if (!$supabase || !confirm(`Delete add-on "${addon.name_en}"?`)) return
+  const { error } = await $supabase
+    .from('pricing_addons')
+    .delete()
+    .eq('id', addon.id)
+
+  if (!error) {
+    dbAddons.value = dbAddons.value.filter(a => a.id !== addon.id)
+  } else {
+    alert('Error deleting add-on: ' + error.message)
+  }
+}
+
 // Modals display control
 const modals = ref({
   location: false,
@@ -1740,7 +2187,9 @@ const modals = ref({
   service: false,
   sections: false,
   blogSections: false,
-  locationSections: false
+  locationSections: false,
+  pricingPackage: false,
+  pricingAddon: false
 })
 
 </script>

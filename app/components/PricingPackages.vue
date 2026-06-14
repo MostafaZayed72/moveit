@@ -157,7 +157,48 @@
 </template>
 
 <script setup>
-const { t, tm, rt } = useI18n()
+import { ref, computed, onMounted } from 'vue'
+
+const { $supabase } = useNuxtApp()
+const { t, tm, rt, locale } = useI18n()
+
+const isNl = computed(() => locale.value === 'nl')
+
+const dbPackages = ref([])
+const dbAddons = ref([])
+const loading = ref(true)
+
+const fetchPricing = async () => {
+  if (!$supabase) {
+    loading.value = false
+    return
+  }
+  try {
+    const { data: pkgs } = await $supabase
+      .from('pricing_packages')
+      .select('*')
+      .order('sort_order')
+    if (pkgs && pkgs.length > 0) {
+      dbPackages.value = pkgs
+    }
+
+    const { data: ads } = await $supabase
+      .from('pricing_addons')
+      .select('*')
+      .order('sort_order')
+    if (ads && ads.length > 0) {
+      dbAddons.value = ads
+    }
+  } catch (err) {
+    console.error('Error fetching pricing from Supabase:', err)
+  } finally {
+    loading.value = false
+  }
+}
+
+onMounted(() => {
+  fetchPricing()
+})
 
 const maleAvatars = [
   'https://randomuser.me/api/portraits/men/32.jpg',
@@ -168,6 +209,22 @@ const maleAvatars = [
 ]
 
 const resolvedPackages = computed(() => {
+  if (dbPackages.value.length > 0) {
+    return dbPackages.value.map(pkg => ({
+      icon: pkg.icon,
+      name: isNl.value ? pkg.name_nl : pkg.name_en,
+      price: isNl.value ? pkg.price_nl : pkg.price_en,
+      unit: isNl.value ? pkg.unit_nl : pkg.unit_en,
+      popular: pkg.popular,
+      best_for: isNl.value ? pkg.best_for_nl : pkg.best_for,
+      includes: isNl.value ? pkg.includes_nl : pkg.includes_en,
+      cta: {
+        text: isNl.value ? pkg.cta_text_nl : pkg.cta_text_en,
+        link: pkg.cta_link || '/contact'
+      }
+    }))
+  }
+
   const resolvePkg = (key, icon) => {
     const name = t(`home.packages.${key}.name`)
     return {
@@ -199,6 +256,10 @@ const resolvedPackages = computed(() => {
 })
 
 const resolvedAddons = computed(() => {
+  if (dbAddons.value.length > 0) {
+    return dbAddons.value.map(ad => isNl.value ? ad.name_nl : ad.name_en)
+  }
+
   const list = tm('home.packages.optional_addons_list')
   return Array.isArray(list) ? list.map(item => rt(item)) : []
 })

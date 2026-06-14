@@ -345,6 +345,90 @@ export default defineEventHandler(async (event) => {
       }
     }
 
+    // ==========================================
+    // SEED PRICING PACKAGES
+    // ==========================================
+    const packagesKeys = ['package1', 'package2', 'package3', 'package4']
+    const packageIcons = ['🚐', '📦', '🏠', '🌍']
+    
+    // Clear existing packages first
+    await supabase.from('pricing_packages').delete().neq('id', 0)
+
+    for (let idx = 0; idx < packagesKeys.length; idx++) {
+      const key = packagesKeys[idx]
+      const pkgEN = en.home.packages[key]
+      const pkgNL = nl.home.packages?.[key] || pkgEN
+
+      const resolvedBestForEN = (pkgEN.best_for || []).map((item: any) => ({
+        icon: item.icon || '📦',
+        text: item.text
+      }))
+      const resolvedBestForNL = (pkgNL.best_for || []).map((item: any) => ({
+        icon: item.icon || '📦',
+        text: item.text
+      }))
+
+      const resolvedIncludesEN = pkgEN.includes || []
+      const resolvedIncludesNL = pkgNL.includes || []
+
+      const packageRow = {
+        key_name: key,
+        icon: packageIcons[idx],
+        popular: key === 'package2',
+        name_en: pkgEN.name,
+        name_nl: pkgNL.name,
+        price_en: pkgEN.price,
+        price_nl: pkgNL.price,
+        unit_en: pkgEN.unit || '',
+        unit_nl: pkgNL.unit || '',
+        best_for: resolvedBestForEN,
+        best_for_nl: resolvedBestForNL,
+        includes_en: resolvedIncludesEN,
+        includes_nl: resolvedIncludesNL,
+        cta_text_en: pkgEN.cta_text || 'Book Now',
+        cta_text_nl: pkgNL.cta_text || 'Boek nu',
+        cta_link: '/contact',
+        sort_order: idx
+      }
+
+      const { error: pkgError } = await supabase
+        .from('pricing_packages')
+        .insert([packageRow])
+
+      if (!pkgError) {
+        results.pricing_packages = (results.pricing_packages || 0) + 1
+      } else {
+        errors.push({ type: 'pricing_package', key, message: pkgError.message })
+      }
+    }
+
+    // ==========================================
+    // SEED PRICING ADDONS
+    // ==========================================
+    const addonsEN = en.home.packages.optional_addons_list || []
+    const addonsNL = nl.home.packages?.optional_addons_list || addonsEN
+
+    // Clear existing addons first
+    await supabase.from('pricing_addons').delete().neq('id', 0)
+
+    for (let idx = 0; idx < addonsEN.length; idx++) {
+      const addonRow = {
+        name_en: addonsEN[idx],
+        name_nl: addonsNL[idx] || addonsEN[idx],
+        sort_order: idx
+      }
+
+      const { error: addonError } = await supabase
+        .from('pricing_addons')
+        .insert([addonRow])
+
+      if (!addonError) {
+        results.pricing_addons = (results.pricing_addons || 0) + 1
+      } else {
+        errors.push({ type: 'pricing_addon', index: idx, message: addonError.message })
+      }
+    }
+
     return {
       success: true,
       message: 'Static configurations seeded to Supabase database completed.',

@@ -492,6 +492,7 @@ const navItems = [
     path: '#',
     subItems: [
       { key: 'faq', path: '/faq' },
+      { key: 'pricing', path: '/pricing' },
       { key: 'blog', path: '/blog' },
       { key: 'referral', path: '/referral-program' }
     ]
