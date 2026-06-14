@@ -113,30 +113,6 @@
       </div>
     </div>
 
-    <!-- Optional Add-ons Section -->
-    <div class="relative group" data-aos="fade-up">
-      <div class="absolute inset-0 bg-gradient-to-r from-red-600/5 to-blue-600/5 rounded-[3rem] blur-xl -z-10 group-hover:opacity-100 opacity-50 transition-opacity"></div>
-      <div class="max-w-5xl mx-auto p-8 md:p-10 rounded-[3rem] bg-white/60 dark:bg-slate-900/60 backdrop-blur-2xl border border-white dark:border-slate-800 shadow-2xl">
-        <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-8 lg:gap-12">
-          <div class="shrink-0">
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-100 dark:bg-red-900/30 text-red-600 text-[10px] font-black uppercase tracking-widest mb-3">
-              <span class="w-1.5 h-1.5 rounded-full bg-red-600 animate-pulse"></span>
-              Extras
-            </div>
-            <h3 class="text-2xl font-black text-slate-900 dark:text-white mb-1">{{ $t('home.packages.optional_addons') }}</h3>
-            <p class="text-slate-500 dark:text-slate-400 font-medium italic text-sm">“{{ $t('home.packages.available_during_booking') }}”</p>
-          </div>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-5 flex-grow">
-            <div v-for="addon in resolvedAddons" :key="addon" class="flex items-center gap-4 group/addon">
-              <div class="w-9 h-9 rounded-xl bg-white dark:bg-slate-800 shadow-sm border border-slate-100 dark:border-slate-700 flex items-center justify-center text-red-600 group-hover/addon:bg-red-600 group-hover/addon:text-white transition-colors duration-300">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/></svg>
-              </div>
-              <span class="text-sm font-bold text-slate-700 dark:text-slate-300 group-hover/addon:text-red-600 transition-colors">{{ addon }}</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
 
     <!-- Footnotes Section -->
     <div class="max-w-4xl mx-auto pt-8 border-t border-slate-100 dark:border-slate-800 px-6 lg:px-0">
@@ -178,7 +154,6 @@ const { t, tm, rt, locale } = useI18n()
 const isNl = computed(() => locale.value === 'nl')
 
 const dbPackages = ref([])
-const dbAddons = ref([])
 const loading = ref(true)
 
 const fetchPricing = async () => {
@@ -195,13 +170,6 @@ const fetchPricing = async () => {
       dbPackages.value = pkgs
     }
 
-    const { data: ads } = await $supabase
-      .from('pricing_addons')
-      .select('*')
-      .order('sort_order')
-    if (ads && ads.length > 0) {
-      dbAddons.value = ads
-    }
   } catch (err) {
     console.error('Error fetching pricing from Supabase:', err)
   } finally {
@@ -303,14 +271,6 @@ const resolvedPackages = computed(() => {
   ]
 })
 
-const resolvedAddons = computed(() => {
-  if (dbAddons.value.length > 0) {
-    return dbAddons.value.map(ad => isNl.value ? ad.name_nl : ad.name_en)
-  }
-
-  const list = tm('home.packages.optional_addons_list')
-  return Array.isArray(list) ? list.map(item => rt(item)) : []
-})
 </script>
 
 <style scoped>

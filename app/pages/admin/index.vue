@@ -348,40 +348,6 @@
             </div>
           </div>
 
-          <!-- 2. OPTIONAL ADD-ONS -->
-          <div class="space-y-6">
-            <div class="flex justify-between items-center">
-              <h2 class="text-2xl font-black text-white">Manage Optional Add-ons</h2>
-              <button @click="openAddAddonModal" class="px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl flex items-center gap-2 shadow-lg shadow-red-600/10">
-                ➕ Add New Add-on
-              </button>
-            </div>
-
-            <div class="glass-panel border border-slate-800 rounded-2xl bg-slate-950/40 p-6">
-              <div class="divide-y divide-slate-800">
-                <div v-for="(addon, index) in dbAddons" :key="addon.id" class="py-4 flex justify-between items-center first:pt-0 last:pb-0">
-                  <div class="flex items-center gap-4">
-                    <span class="text-slate-500 font-bold text-sm">#{{ index + 1 }}</span>
-                    <div>
-                      <h4 class="font-bold text-white text-base">{{ addon.name_en }}</h4>
-                      <p class="text-xs text-slate-400">NL Name: {{ addon.name_nl }}</p>
-                    </div>
-                  </div>
-                  <div class="flex gap-2">
-                    <button @click="openEditAddonModal(addon)" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold rounded-lg transition-colors border border-slate-700">
-                      Edit
-                    </button>
-                    <button @click="deleteAddon(addon)" class="p-2 bg-red-500/10 hover:bg-red-500/20 text-red-500 rounded-lg transition-colors">
-                      🗑️
-                    </button>
-                  </div>
-                </div>
-                <div v-if="dbAddons.length === 0" class="py-8 text-center text-slate-500">
-                  No optional add-ons found.
-                </div>
-              </div>
-            </div>
-          </div>
 
         </div>
 
@@ -1322,31 +1288,7 @@
       </div>
     </div>
 
-    <!-- MODAL: ADD/EDIT PRICING ADDON -->
-    <div v-if="modals.pricingAddon" class="fixed inset-0 z-50 flex items-center justify-center p-6 bg-slate-950/80 backdrop-blur-sm overflow-y-auto">
-      <div class="glass-panel w-full max-w-md rounded-3xl border border-slate-800 bg-slate-900 p-8 shadow-2xl my-8 space-y-6">
-        <div class="flex justify-between items-center border-b border-slate-800 pb-4">
-          <h3 class="text-xl font-black text-white">{{ isEditing ? 'Edit Add-on' : 'Add New Add-on' }}</h3>
-          <button @click="modals.pricingAddon = false" class="text-slate-400 hover:text-white">✕</button>
-        </div>
-        <div class="space-y-4">
-          <div class="space-y-1">
-            <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Add-on Name EN</label>
-            <input type="text" v-model="addonForm.name_en" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white outline-none focus:border-red-500 text-sm" />
-          </div>
-          <div class="space-y-1">
-            <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Add-on Name NL</label>
-            <input type="text" v-model="addonForm.name_nl" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white outline-none focus:border-red-500 text-sm" />
-          </div>
-        </div>
-        <div class="flex justify-end gap-3 pt-4 border-t border-slate-800">
-          <button @click="modals.pricingAddon = false" class="px-5 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold rounded-xl text-sm transition-all border border-slate-700">Cancel</button>
-          <button @click="saveAddon" class="px-6 py-2.5 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl text-sm transition-all shadow-md">
-            {{ isEditing ? 'Save Changes' : 'Create Add-on' }}
-          </button>
-        </div>
-      </div>
-    </div>
+
 
   </div>
 </template>
@@ -1427,7 +1369,6 @@ const serviceSections = ref([])
 
 // Pricing state
 const dbPackages = ref([])
-const dbAddons = ref([])
 
 const packageForm = ref({
   key_name: '',
@@ -1450,12 +1391,6 @@ const packageForm = ref({
   best_for_raw_nl: '',
   includes_raw_en: '',
   includes_raw_nl: '',
-  sort_order: 0
-})
-
-const addonForm = ref({
-  name_en: '',
-  name_nl: '',
   sort_order: 0
 })
 
@@ -1511,10 +1446,6 @@ const loadAllData = async () => {
   // Load Pricing Packages
   const { data: pkgs } = await $supabase.from('pricing_packages').select('*').order('sort_order')
   if (pkgs) dbPackages.value = pkgs
-
-  // Load Pricing Addons
-  const { data: ads } = await $supabase.from('pricing_addons').select('*').order('sort_order')
-  if (ads) dbAddons.value = ads
 }
 
 
@@ -2162,80 +2093,6 @@ const deletePackage = async (pkg) => {
     alert('Error deleting package: ' + error.message)
   }
 }
-
-const openAddAddonModal = () => {
-  isEditing.value = false
-  addonForm.value = {
-    name_en: '',
-    name_nl: '',
-    sort_order: dbAddons.value.length
-  }
-  modals.value.pricingAddon = true
-}
-
-const openEditAddonModal = (addon) => {
-  isEditing.value = true
-  selectedItem.value = addon
-  addonForm.value = {
-    name_en: addon.name_en,
-    name_nl: addon.name_nl,
-    sort_order: addon.sort_order
-  }
-  modals.value.pricingAddon = true
-}
-
-const saveAddon = async () => {
-  if (!$supabase) return
-
-  const payload = {
-    name_en: addonForm.value.name_en,
-    name_nl: addonForm.value.name_nl,
-    sort_order: addonForm.value.sort_order
-  }
-
-  if (isEditing.value && selectedItem.value) {
-    const { error } = await $supabase
-      .from('pricing_addons')
-      .update(payload)
-      .eq('id', selectedItem.value.id)
-
-    if (!error) {
-      const idx = dbAddons.value.findIndex(a => a.id === selectedItem.value.id)
-      if (idx !== -1) dbAddons.value[idx] = { ...selectedItem.value, ...payload }
-      modals.value.pricingAddon = false
-    } else {
-      alert('Error updating add-on: ' + error.message)
-    }
-  } else {
-    const { data, error } = await $supabase
-      .from('pricing_addons')
-      .insert([payload])
-      .select()
-
-    if (!error && data) {
-      dbAddons.value.push(data[0])
-      dbAddons.value.sort((a, b) => a.sort_order - b.sort_order)
-      modals.value.pricingAddon = false
-    } else {
-      alert('Error creating add-on: ' + error.message)
-    }
-  }
-}
-
-const deleteAddon = async (addon) => {
-  if (!$supabase || !confirm(`Delete add-on "${addon.name_en}"?`)) return
-  const { error } = await $supabase
-    .from('pricing_addons')
-    .delete()
-    .eq('id', addon.id)
-
-  if (!error) {
-    dbAddons.value = dbAddons.value.filter(a => a.id !== addon.id)
-  } else {
-    alert('Error deleting add-on: ' + error.message)
-  }
-}
-
 // Modals display control
 const modals = ref({
   location: false,
@@ -2244,8 +2101,7 @@ const modals = ref({
   sections: false,
   blogSections: false,
   locationSections: false,
-  pricingPackage: false,
-  pricingAddon: false
+  pricingPackage: false
 })
 
 </script>
