@@ -283,6 +283,20 @@
                   </label>
                 </div>
               </div>
+
+              <div class="space-y-2">
+                <label class="form-label" for="hear_about">{{ $t('contact.form_hear') }}</label>
+                <select id="hear_about" v-model="hearAbout" class="form-input cursor-pointer" required>
+                  <option value="" disabled>{{ $t('contact.choose_option', 'Choose an option') }}</option>
+                  <option value="referral">{{ $t('contact.hear_referral') }}</option>
+                  <option value="returning">{{ $t('contact.hear_returning') }}</option>
+                  <option value="social">{{ $t('contact.hear_social') }}</option>
+                  <option value="google">{{ $t('contact.hear_google') }}</option>
+                  <option value="real_estate">{{ $t('contact.hear_real_estate') }}</option>
+                  <option value="student_center">{{ $t('contact.hear_student_center') }}</option>
+                  <option value="other">{{ $t('contact.hear_other') }}</option>
+                </select>
+              </div>
             </div>
 
             <!-- Validation Error message -->
@@ -379,6 +393,7 @@ const notes = ref('')
 
 // Step 4 Contact Info
 const contactPreference = ref('')
+const hearAbout = ref('')
 
 // UI state
 const currentStep  = ref(1)
@@ -433,6 +448,16 @@ const sizeLabels = {
   items: 'Just a few large items'
 }
 
+const hearLabels = {
+  referral: 'Referral word of mouth',
+  returning: 'Returning customer',
+  social: 'Social media',
+  google: 'Google',
+  real_estate: 'Real Estate Agent Referral',
+  student_center: 'Student Service Center Referral',
+  other: 'Other'
+}
+
 const prevStep = () => {
   validationError.value = ''
   if (currentStep.value > 1) {
@@ -459,6 +484,11 @@ const nextStep = () => {
     }
     if (fragileItems.value === 'yes' && !specialItemsDescription.value.trim()) {
       validationError.value = t('contact.validation_step_3_special') !== 'contact.validation_step_3_special' ? t('contact.validation_step_3_special') : 'Please describe your fragile/specialty items'
+      return
+    }
+  } else if (currentStep.value === 4) {
+    if (!fullName.value.trim() || !email.value.trim() || !phone.value.trim() || !contactPreference.value || !hearAbout.value) {
+      validationError.value = 'Please fill in all contact details and select how you heard about us'
       return
     }
   }
@@ -511,6 +541,7 @@ const handleSubmit = async () => {
         'Furniture Assembly': furnitureAssembly.value === 'yes' ? 'Yes, please' : 'No thanks',
         'Fragile/Specialty Items': fragileItems.value === 'yes' ? specialItemsDescription.value : 'No',
         'Contact Preference': contactPrefLabels[contactPreference.value] || contactPreference.value || 'Not specified',
+        'How Did You Hear': hearLabels[hearAbout.value] || hearAbout.value || 'Not specified',
         'Additional Notes': notes.value || 'None'
       }
     })

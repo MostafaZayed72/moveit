@@ -1278,6 +1278,22 @@
               <input type="checkbox" id="pkgPopular" v-model="packageForm.popular" class="w-4 h-4 bg-slate-950 border-slate-800 rounded text-red-600 focus:ring-red-500" />
               <label for="pkgPopular" class="text-sm font-bold text-slate-300">Mark as Most Popular</label>
             </div>
+            <div class="space-y-1">
+              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Tag EN</label>
+              <input type="text" v-model="packageForm.tag_en" placeholder="e.g. VAN ONLY" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white outline-none focus:border-red-500 text-sm" />
+            </div>
+            <div class="space-y-1">
+              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Tag NL</label>
+              <input type="text" v-model="packageForm.tag_nl" placeholder="e.g. ALLEEN BUS" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white outline-none focus:border-red-500 text-sm" />
+            </div>
+            <div class="space-y-1 md:col-span-2">
+              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Description EN</label>
+              <textarea v-model="packageForm.description_en" placeholder="You handle the lifting - we handle the drive." class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 h-16 text-xs"></textarea>
+            </div>
+            <div class="space-y-1 md:col-span-2">
+              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Description NL</label>
+              <textarea v-model="packageForm.description_nl" placeholder="U regelt het tillen - wij regelen de rit." class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 h-16 text-xs"></textarea>
+            </div>
             <div class="space-y-1 md:col-span-2">
               <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Best For EN (Format: Icon|Text - one per line)</label>
               <textarea v-model="packageForm.best_for_raw_en" placeholder="e.g.&#10;🎓|Students&#10;🛋|Single-item moves" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 h-24 text-xs"></textarea>
@@ -1426,6 +1442,10 @@ const packageForm = ref({
   cta_text_en: '',
   cta_text_nl: '',
   cta_link: '/contact',
+  tag_en: '',
+  tag_nl: '',
+  description_en: '',
+  description_nl: '',
   best_for_raw_en: '',
   best_for_raw_nl: '',
   includes_raw_en: '',
@@ -1969,6 +1989,7 @@ const deleteLocationSection = async (sec) => {
 // Pricing CRUD methods
 const openAddPackageModal = () => {
   isEditing.value = false
+  selectedItem.value = null
   packageForm.value = {
     key_name: '',
     icon: '🚐',
@@ -1982,6 +2003,10 @@ const openAddPackageModal = () => {
     cta_text_en: '',
     cta_text_nl: '',
     cta_link: '/contact',
+    tag_en: '',
+    tag_nl: '',
+    description_en: '',
+    description_nl: '',
     best_for_raw_en: '',
     best_for_raw_nl: '',
     includes_raw_en: '',
@@ -1994,6 +2019,19 @@ const openAddPackageModal = () => {
 const openEditPackageModal = (pkg) => {
   isEditing.value = true
   selectedItem.value = pkg
+  
+  const bestForListEN = pkg.best_for || []
+  const bestForListNL = pkg.best_for_nl || []
+  
+  const tagItemEN = bestForListEN.find(item => item.icon === 'tag')
+  const descItemEN = bestForListEN.find(item => item.icon === 'description')
+  
+  const tagItemNL = bestForListNL.find(item => item.icon === 'tag')
+  const descItemNL = bestForListNL.find(item => item.icon === 'description')
+  
+  const filteredBestForEN = bestForListEN.filter(item => item.icon !== 'tag' && item.icon !== 'description')
+  const filteredBestForNL = bestForListNL.filter(item => item.icon !== 'tag' && item.icon !== 'description')
+
   packageForm.value = {
     key_name: pkg.key_name,
     icon: pkg.icon,
@@ -2007,8 +2045,12 @@ const openEditPackageModal = (pkg) => {
     cta_text_en: pkg.cta_text_en,
     cta_text_nl: pkg.cta_text_nl,
     cta_link: pkg.cta_link,
-    best_for_raw_en: (pkg.best_for || []).map(item => `${item.icon || '📦'}|${item.text || ''}`).join('\n'),
-    best_for_raw_nl: (pkg.best_for_nl || []).map(item => `${item.icon || '📦'}|${item.text || ''}`).join('\n'),
+    tag_en: tagItemEN ? tagItemEN.text : '',
+    tag_nl: tagItemNL ? tagItemNL.text : '',
+    description_en: descItemEN ? descItemEN.text : '',
+    description_nl: descItemNL ? descItemNL.text : '',
+    best_for_raw_en: filteredBestForEN.map(item => `${item.icon || '📦'}|${item.text || ''}`).join('\n'),
+    best_for_raw_nl: filteredBestForNL.map(item => `${item.icon || '📦'}|${item.text || ''}`).join('\n'),
     includes_raw_en: (pkg.includes_en || []).join('\n'),
     includes_raw_nl: (pkg.includes_nl || []).join('\n'),
     sort_order: pkg.sort_order
@@ -2035,6 +2077,20 @@ const savePackage = async () => {
       const [icon, ...textParts] = line.split('|')
       return { icon: icon ? icon.trim() : '📦', text: textParts.join('|').trim() }
     })
+
+  // Add tag and description to best_for arrays
+  if (packageForm.value.tag_en) {
+    best_for.push({ icon: 'tag', text: packageForm.value.tag_en })
+  }
+  if (packageForm.value.tag_nl) {
+    best_for_nl.push({ icon: 'tag', text: packageForm.value.tag_nl })
+  }
+  if (packageForm.value.description_en) {
+    best_for.push({ icon: 'description', text: packageForm.value.description_en })
+  }
+  if (packageForm.value.description_nl) {
+    best_for_nl.push({ icon: 'description', text: packageForm.value.description_nl })
+  }
 
   const includes_en = packageForm.value.includes_raw_en
     .split('\n')

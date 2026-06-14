@@ -211,71 +211,91 @@
         "Extra mover (€15.99/hr)"
       ],
       "package1": {
-        "name": "Van Only",
-        "price": "€59.99",
-        "unit": "/hr",
-        "best_for": [
-          { "icon": "🎓", "text": "Students" },
-          { "icon": "🛋", "text": "Single-item moves" },
-          { "icon": "📦", "text": "Marketplace pickups" },
-          { "icon": "🛠", "text": "DIY Movers" }
-        ],
-        "includes": [
-          "Moving van included",
-          "Professional driver",
-          "Transport insurance",
-          "Fuel within Maastricht"
-        ],
-        "cta_text": "Book via WhatsApp"
-      },
-      "package2": {
-        "name": "Van + 1 Mover",
+        "name": "Do It Yourself",
         "price": "€69.99",
         "unit": "/hr",
         "best_for": [
-          { "icon": "🏠", "text": "Studio moves" },
-          { "icon": "🎓", "text": "Student moves" },
-          { "icon": "📦", "text": "Small households" }
+          { "icon": "tag", "text": "VAN ONLY" },
+          { "icon": "description", "text": "You handle the lifting - we handle the drive." }
         ],
         "includes": [
-          "Everything in Van Only",
-          "1 Professional mover",
-          "Loading & unloading help",
-          "Blankets & straps included"
+          "✓ 1 Experienced driver",
+          "✓ Fully insured move",
+          "✓ Fuel within Maastricht",
+          "✓ Protective furniture blankets",
+          "X Loading & unloading",
+          "X Stair carrying (up to 3rd floor)",
+          "X Packing and labeling",
+          "X Furniture disassembly/reassembly",
+          "X Priority booking for weekends & end-of-month"
         ],
-        "cta_text": "Reserve My Date"
+        "cta_text": "Book DIY Move"
       },
-      "package3": {
-        "name": "Van + 2 Movers",
-        "price": "€89.99",
+      "package2": {
+        "name": "Student Move",
+        "price": "€79.99",
         "unit": "/hr",
         "best_for": [
-          { "icon": "🛏", "text": "1BD Apartments" },
-          { "icon": "💪", "text": "Heavy furniture" },
-          { "icon": "⚡", "text": "Faster moving days" }
+          { "icon": "tag", "text": "VAN + 1 MOVER" },
+          { "icon": "description", "text": "Perfect for dorm moves, studio hops and budgets with big plans." }
         ],
         "includes": [
-          "Everything in Van Only",
-          "2 Professional movers",
-          "Full physical labor",
-          "Stair navigation included"
+          "✓ 1 Professional mover",
+          "✓ Fully insured move",
+          "✓ Fuel within Maastricht",
+          "✓ Loading & unloading",
+          "✓ Protective furniture blankets & straps",
+          "✓ Stair carrying (up to 3rd floor)",
+          "✓ Student ID discount eligibility",
+          "X 2nd mover for parallel lifting",
+          "X Dedicated move coordinator",
+          "X Packing and labeling",
+          "X Furniture disassembly/reassembly",
+          "X Priority booking for weekends & end-of-month"
         ],
-        "cta_text": "Get Custom Quote"
+        "cta_text": "Book Student Move"
+      },
+      "package3": {
+        "name": "Stress-Free Move",
+        "price": "€94.99",
+        "unit": "/hr",
+        "best_for": [
+          { "icon": "tag", "text": "VAN + 2 MOVERS" },
+          { "icon": "description", "text": "We handle the furniture. You handle the new keys." }
+        ],
+        "includes": [
+          "✓ 2 Professional movers (Up to 30% faster)",
+          "✓ Fully insured move",
+          "✓ Fuel within Maastricht",
+          "✓ Loading & unloading",
+          "✓ Protective furniture blankets & straps",
+          "✓ Priority booking for weekends & end-of-month",
+          "✓ Dedicated move coordinator",
+          "X Packing and labelling",
+          "X Furniture disassembly/reassembly",
+          "X Speciality/fragile item handling"
+        ],
+        "cta_text": "Book Stress-Free Move"
       },
       "package4": {
-        "name": "Full Service",
-        "price": "Custom",
+        "name": "White-Glove Move",
+        "price": "Custom Quote",
         "unit": "",
         "best_for": [
-          { "icon": "🌍", "text": "International relocations" },
-          { "icon": "👨‍👩‍👧", "text": "Families" },
-          { "icon": "💼", "text": "Busy professionals" }
+          { "icon": "tag", "text": "Full Service" },
+          { "icon": "description", "text": "Concierge-level care for homes, art, antiques, and zero-compromise standards." }
         ],
         "includes": [
-          "Full packing service",
-          "Disassembly & assembly",
-          "Priority scheduling",
-          "Dedicated moving coordinator"
+          "✓ 2+ Professional movers",
+          "✓ Fully insured move",
+          "✓ Fuel & mileage coverage",
+          "✓ Loading & unloading",
+          "✓ Protective furniture blankets, straps & film roll",
+          "✓ Furniture disassembly/reassembly",
+          "✓ Priority booking for weekends & end-of-month",
+          "✓ Dedicated move coordinator",
+          "✓ Packing and labelling",
+          "✓ Speciality/fragile item handling"
         ],
         "cta_text": "Get Custom Quote"
       }
@@ -461,9 +481,11 @@
     "access_stairs_5": "Stairs - 5th Floor",
     "access_stairs_6plus": "Stairs - 6th Floor or Higher",
     "hear_google": "Google",
-    "hear_social": "Social Media",
-    "hear_referral": "Referral / Friend",
-    "hear_trustpilot": "Trustpilot",
+    "hear_social": "Social media",
+    "hear_referral": "Referral word of mouth",
+    "hear_returning": "Returning customer",
+    "hear_real_estate": "Real Estate Agent Referral",
+    "hear_student_center": "Student Service Center Referral",
     "hear_other": "Other",
     "success_title": "Quote Request Sent!",
     "success_desc": "Thank you! We will review your request and get back to you within 2 hours.",

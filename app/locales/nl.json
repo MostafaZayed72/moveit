@@ -197,73 +197,93 @@
         "Extra verhuizer (€15.99/u)"
       ],
       "package1": {
-        "name": "Alleen Bestelwagen",
-        "price": "€59.99",
-        "unit": "/uur",
-        "best_for": [
-          { "icon": "🎓", "text": "Studenten" },
-          { "icon": "🛋", "text": "Enkele meubelstukken" },
-          { "icon": "📦", "text": "Marktplaats ophaalservice" },
-          { "icon": "🛠", "text": "Doe-het-zelf verhuizers" }
-        ],
-        "includes": [
-          "Inclusief verhuiswagen",
-          "Professionele chauffeur",
-          "Transportverzekering",
-          "Brandstof binnen Maastricht"
-        ],
-        "cta_text": "Boek via WhatsApp"
-      },
-      "package2": {
-        "name": "Wagen + 1 Verhuizer",
+        "name": "Doe Het Zelf",
         "price": "€69.99",
         "unit": "/uur",
         "best_for": [
-          { "icon": "🏠", "text": "Studio verhuizingen" },
-          { "icon": "🎓", "text": "Studenten verhuizingen" },
-          { "icon": "📦", "text": "Kleine huishoudens" }
+          { "icon": "tag", "text": "ALLEEN BUS" },
+          { "icon": "description", "text": "U regelt het tillen - wij regelen de rit." }
         ],
         "includes": [
-          "Alles in Alleen Bestelwagen",
-          "1 Professionele verhuizer",
-          "Hulp bij laden & lossen",
-          "Inclusief dekens & spanbanden"
+          "✓ 1 Ervaren chauffeur",
+          "✓ Volledig verzekerde verhuizing",
+          "✓ Brandstof binnen Maastricht",
+          "✓ Beschermende verhuisdekens",
+          "X Laden & lossen",
+          "X Traplopen (tot 3e verdieping)",
+          "X Inpakken en labelen",
+          "X Meubels (de)monteren",
+          "X Prioriteit boeken in weekend & einde van de maand"
         ],
-        "cta_text": "Reserveer Mijn Datum"
+        "cta_text": "Boek Doe Het Zelf"
       },
-      "package3": {
-        "name": "Wagen + 2 Verhuizers",
-        "price": "€89.99",
+      "package2": {
+        "name": "Studenten Verhuizing",
+        "price": "€79.99",
         "unit": "/uur",
         "best_for": [
-          { "icon": "🛏", "text": "1-slaapkamer appartementen" },
-          { "icon": "💪", "text": "Zwaar meubilair" },
-          { "icon": "⚡", "text": "Snellere verhuisdagen" }
+          { "icon": "tag", "text": "BUS + 1 VERHUIZER" },
+          { "icon": "description", "text": "Perfect voor studentenkamers, studio's en krappe budgetten met grote plannen." }
         ],
         "includes": [
-          "Alles in Alleen Bestelwagen",
-          "2 Professionele verhuizers",
-          "Volledig fysieke arbeid",
-          "Inclusief traplopen"
+          "✓ 1 Professionele verhuizer",
+          "✓ Volledig verzekerde verhuizing",
+          "✓ Brandstof binnen Maastricht",
+          "✓ Laden & lossen",
+          "✓ Beschermende verhuisdekens & spanbanden",
+          "✓ Traplopen (tot 3e verdieping)",
+          "✓ Komt in aanmerking voor studentenkorting",
+          "X 2e verhuizer voor parallel tillen",
+          "X Toegewijde verhuiscoördinator",
+          "X Inpakken en labelen",
+          "X Meubels (de)monteren",
+          "X Prioriteit boeken in weekend & einde van de maand"
         ],
-        "cta_text": "Vraag een Offerte aan"
+        "cta_text": "Boek Studenten Move"
+      },
+      "package3": {
+        "name": "Stressvrije Verhuizing",
+        "price": "€94.99",
+        "unit": "/uur",
+        "best_for": [
+          { "icon": "tag", "text": "BUS + 2 VERHUIZERS" },
+          { "icon": "description", "text": "Wij regelen de meubels. U regelt de nieuwe sleutels." }
+        ],
+        "includes": [
+          "✓ 2 Professionele verhuizers (tot 30% sneller)",
+          "✓ Volledig verzekerde verhuizing",
+          "✓ Brandstof binnen Maastricht",
+          "✓ Laden & lossen",
+          "✓ Beschermende verhuisdekens & spanbanden",
+          "✓ Prioriteit boeken in weekend & einde van de maand",
+          "✓ Toegewijde verhuiscoördinator",
+          "X Inpakken en labelen",
+          "X Meubels (de)monteren",
+          "X Behandeling van speciale/breekbare items"
+        ],
+        "cta_text": "Boek Stressvrije Move"
       },
       "package4": {
-        "name": "Volledige Service",
-        "price": "Maatwerk",
+        "name": "White-Glove Verhuizing",
+        "price": "Offerte op maat",
         "unit": "",
         "best_for": [
-          { "icon": "🌍", "text": "Internationale verhuizingen" },
-          { "icon": "👨‍👩‍👧", "text": "Gezinnen" },
-          { "icon": "💼", "text": "Drukke professionals" }
+          { "icon": "tag", "text": "Volledige Service" },
+          { "icon": "description", "text": "Zorg op conciërgeniveau voor huizen, kunst, antiek en compromisloze normen." }
         ],
         "includes": [
-          "Volledige inpakservice",
-          "Demontage & montage",
-          "Prioriteitsplanning",
-          "Toegewijde verhuiscoördinator"
+          "✓ 2+ Professionele verhuizers",
+          "✓ Volledig verzekerde verhuizing",
+          "✓ Brandstof- & kilometerdekking",
+          "✓ Laden & lossen",
+          "✓ Beschermende verhuisdekens, spanbanden & folierol",
+          "✓ Meubels (de)monteren",
+          "✓ Prioriteit boeken in weekend & einde van de maand",
+          "✓ Toegewijde verhuiscoördinator",
+          "✓ Inpakken en labelen",
+          "✓ Behandeling van speciale/breekbare items"
         ],
-        "cta_text": "Vraag een Offerte aan"
+        "cta_text": "Offerte Aanvragen"
       }
     }
   },
@@ -447,9 +467,11 @@
     "access_stairs_5": "Trap - 5e verdieping",
     "access_stairs_6plus": "Trap - 6e verdieping of hoger",
     "hear_google": "Google",
-    "hear_social": "Social Media",
-    "hear_referral": "Aanbeveling / Vriend",
-    "hear_trustpilot": "Trustpilot",
+    "hear_social": "Sociale media",
+    "hear_referral": "Mond-tot-mond reclame",
+    "hear_returning": "Terugkerende klant",
+    "hear_real_estate": "Aanbeveling makelaar",
+    "hear_student_center": "Aanbeveling studentenservice",
     "hear_other": "Anders",
     "success_title": "Offerteaanvraag Verzonden!",
     "success_desc": "Bedankt! We bekijken uw aanvraag en nemen binnen 2 uur contact met u op.",
