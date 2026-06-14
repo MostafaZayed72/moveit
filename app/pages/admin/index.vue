@@ -781,19 +781,70 @@
           <div class="space-y-4">
             <h4 class="font-bold text-sm text-white">Existing Sections</h4>
             <div v-for="(sec, idx) in serviceSections" :key="sec.id" class="p-5 border border-slate-800/80 rounded-2xl bg-slate-900/60 relative space-y-3">
-              <div class="flex justify-between items-start gap-4">
-                <h5 class="font-bold text-slate-200 text-xs">Section #{{ idx + 1 }} — {{ sec.title_en }}</h5>
-                <button @click="deleteServiceSection(sec)" class="text-red-500 hover:bg-red-500/10 p-1.5 rounded-lg text-xs">
-                  🗑️ Delete
-                </button>
+              <div v-if="editingSectionId === sec.id" class="space-y-4">
+                <h5 class="font-bold text-slate-200 text-xs border-b border-slate-800 pb-2">✏️ Edit Section #{{ idx + 1 }}</h5>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div class="space-y-1">
+                    <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Section Title EN</label>
+                    <input type="text" v-model="editSectionForm.title_en" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 text-xs" />
+                  </div>
+                  <div class="space-y-1">
+                    <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Section Title NL</label>
+                    <input type="text" v-model="editSectionForm.title_nl" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 text-xs" />
+                  </div>
+                  <div class="space-y-1 md:col-span-2">
+                    <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Content EN</label>
+                    <textarea v-model="editSectionForm.content_en" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 h-24 text-xs"></textarea>
+                  </div>
+                  <div class="space-y-1 md:col-span-2">
+                    <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Content NL</label>
+                    <textarea v-model="editSectionForm.content_nl" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 h-24 text-xs"></textarea>
+                  </div>
+                  <div class="space-y-1">
+                    <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Sort Order</label>
+                    <input type="number" v-model.number="editSectionForm.sort_order" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 text-xs" />
+                  </div>
+                  <div class="space-y-2">
+                    <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Optional Section Image</label>
+                    <div class="flex items-center gap-4">
+                      <div class="w-10 h-10 rounded-lg overflow-hidden bg-slate-950 border border-slate-800 flex items-center justify-center shrink-0">
+                        <img v-if="editSectionForm.image" :src="editSectionForm.image" class="w-full h-full object-cover" />
+                        <span v-else class="text-[8px] text-slate-600">None</span>
+                      </div>
+                      <input type="file" @change="e => onFileChange(e, 'edit_section')" accept="image/*" class="text-[10px] text-slate-400 file:py-1 file:px-2 file:rounded-md file:border-0 file:text-[8px] file:font-bold file:bg-slate-800 file:text-slate-200 file:cursor-pointer hover:file:bg-slate-700" />
+                    </div>
+                    <div v-if="uploading" class="text-[10px] text-red-500 animate-pulse">Uploading image...</div>
+                  </div>
+                </div>
+                <div class="flex justify-end gap-2 pt-2 border-t border-slate-800/80">
+                  <button @click="cancelSectionEdit" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold rounded-lg text-xs border border-slate-700">
+                    Cancel
+                  </button>
+                  <button @click="updateServiceSection" :disabled="uploading" class="px-5 py-2 bg-red-600 hover:bg-red-700 text-white font-bold rounded-lg text-xs shadow-md">
+                    Save Changes
+                  </button>
+                </div>
               </div>
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                <div class="text-[11px] text-slate-400"><strong>Title NL:</strong> {{ sec.title_nl }}</div>
-                <div class="text-[11px] text-slate-400"><strong>Sort Order:</strong> {{ sec.sort_order }}</div>
-                <div class="text-[11px] text-slate-400 md:col-span-2"><strong>Content EN:</strong> {{ sec.content_en }}</div>
-                <div class="text-[11px] text-slate-400 md:col-span-2"><strong>Content NL:</strong> {{ sec.content_nl }}</div>
-                <div v-if="sec.image" class="w-16 h-16 rounded-lg overflow-hidden bg-slate-950 border border-slate-800 md:col-span-2 mt-2">
-                  <img :src="sec.image" class="w-full h-full object-cover" />
+              <div v-else class="space-y-3">
+                <div class="flex justify-between items-start gap-4">
+                  <h5 class="font-bold text-slate-200 text-xs">Section #{{ idx + 1 }} — {{ sec.title_en }}</h5>
+                  <div class="flex gap-2">
+                    <button @click="editSection(sec)" class="text-blue-500 hover:bg-blue-500/10 p-1.5 rounded-lg text-xs font-bold">
+                      ✏️ Edit
+                    </button>
+                    <button @click="deleteServiceSection(sec)" class="text-red-500 hover:bg-red-500/10 p-1.5 rounded-lg text-xs">
+                      🗑️ Delete
+                    </button>
+                  </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  <div class="text-[11px] text-slate-400"><strong>Title NL:</strong> {{ sec.title_nl }}</div>
+                  <div class="text-[11px] text-slate-400"><strong>Sort Order:</strong> {{ sec.sort_order }}</div>
+                  <div class="text-[11px] text-slate-400 md:col-span-2"><strong>Content EN:</strong> {{ sec.content_en }}</div>
+                  <div class="text-[11px] text-slate-400 md:col-span-2"><strong>Content NL:</strong> {{ sec.content_nl }}</div>
+                  <div v-if="sec.image" class="w-16 h-16 rounded-lg overflow-hidden bg-slate-950 border border-slate-800 md:col-span-2 mt-2">
+                    <img :src="sec.image" class="w-full h-full object-cover" />
+                  </div>
                 </div>
               </div>
             </div>
@@ -868,19 +919,70 @@
           <div class="space-y-4">
             <h4 class="font-bold text-sm text-white">Existing Sections</h4>
             <div v-for="(sec, idx) in blogSections" :key="sec.id" class="p-5 border border-slate-800/80 rounded-2xl bg-slate-900/60 relative space-y-3">
-              <div class="flex justify-between items-start gap-4">
-                <h5 class="font-bold text-slate-200 text-xs">Section #{{ idx + 1 }} — {{ sec.title_en }}</h5>
-                <button @click="deleteBlogSection(sec)" class="text-red-500 hover:bg-red-500/10 p-1.5 rounded-lg text-xs">
-                  🗑️ Delete
-                </button>
+              <div v-if="editingSectionId === sec.id" class="space-y-4">
+                <h5 class="font-bold text-slate-200 text-xs border-b border-slate-800 pb-2">✏️ Edit Section #{{ idx + 1 }}</h5>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div class="space-y-1">
+                    <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Section Title EN</label>
+                    <input type="text" v-model="editSectionForm.title_en" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 text-xs" />
+                  </div>
+                  <div class="space-y-1">
+                    <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Section Title NL</label>
+                    <input type="text" v-model="editSectionForm.title_nl" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 text-xs" />
+                  </div>
+                  <div class="space-y-1 md:col-span-2">
+                    <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Content EN</label>
+                    <textarea v-model="editSectionForm.content_en" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 h-24 text-xs"></textarea>
+                  </div>
+                  <div class="space-y-1 md:col-span-2">
+                    <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Content NL</label>
+                    <textarea v-model="editSectionForm.content_nl" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 h-24 text-xs"></textarea>
+                  </div>
+                  <div class="space-y-1">
+                    <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Sort Order</label>
+                    <input type="number" v-model.number="editSectionForm.sort_order" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 text-xs" />
+                  </div>
+                  <div class="space-y-2">
+                    <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Optional Section Image</label>
+                    <div class="flex items-center gap-4">
+                      <div class="w-10 h-10 rounded-lg overflow-hidden bg-slate-950 border border-slate-800 flex items-center justify-center shrink-0">
+                        <img v-if="editSectionForm.image" :src="editSectionForm.image" class="w-full h-full object-cover" />
+                        <span v-else class="text-[8px] text-slate-600">None</span>
+                      </div>
+                      <input type="file" @change="e => onFileChange(e, 'edit_section')" accept="image/*" class="text-[10px] text-slate-400 file:py-1 file:px-2 file:rounded-md file:border-0 file:text-[8px] file:font-bold file:bg-slate-800 file:text-slate-200 file:cursor-pointer hover:file:bg-slate-700" />
+                    </div>
+                    <div v-if="uploading" class="text-[10px] text-red-500 animate-pulse">Uploading image...</div>
+                  </div>
+                </div>
+                <div class="flex justify-end gap-2 pt-2 border-t border-slate-800/80">
+                  <button @click="cancelSectionEdit" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold rounded-lg text-xs border border-slate-700">
+                    Cancel
+                  </button>
+                  <button @click="updateBlogSection" :disabled="uploading" class="px-5 py-2 bg-red-600 hover:bg-red-700 text-white font-bold rounded-lg text-xs shadow-md">
+                    Save Changes
+                  </button>
+                </div>
               </div>
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                <div class="text-[11px] text-slate-400"><strong>Title NL:</strong> {{ sec.title_nl }}</div>
-                <div class="text-[11px] text-slate-400"><strong>Sort Order:</strong> {{ sec.sort_order }}</div>
-                <div class="text-[11px] text-slate-400 md:col-span-2"><strong>Content EN:</strong> {{ sec.content_en }}</div>
-                <div class="text-[11px] text-slate-400 md:col-span-2"><strong>Content NL:</strong> {{ sec.content_nl }}</div>
-                <div v-if="sec.image" class="w-16 h-16 rounded-lg overflow-hidden bg-slate-950 border border-slate-800 md:col-span-2 mt-2">
-                  <img :src="sec.image" class="w-full h-full object-cover" />
+              <div v-else class="space-y-3">
+                <div class="flex justify-between items-start gap-4">
+                  <h5 class="font-bold text-slate-200 text-xs">Section #{{ idx + 1 }} — {{ sec.title_en }}</h5>
+                  <div class="flex gap-2">
+                    <button @click="editSection(sec)" class="text-blue-500 hover:bg-blue-500/10 p-1.5 rounded-lg text-xs font-bold">
+                      ✏️ Edit
+                    </button>
+                    <button @click="deleteBlogSection(sec)" class="text-red-500 hover:bg-red-500/10 p-1.5 rounded-lg text-xs">
+                      🗑️ Delete
+                    </button>
+                  </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  <div class="text-[11px] text-slate-400"><strong>Title NL:</strong> {{ sec.title_nl }}</div>
+                  <div class="text-[11px] text-slate-400"><strong>Sort Order:</strong> {{ sec.sort_order }}</div>
+                  <div class="text-[11px] text-slate-400 md:col-span-2"><strong>Content EN:</strong> {{ sec.content_en }}</div>
+                  <div class="text-[11px] text-slate-400 md:col-span-2"><strong>Content NL:</strong> {{ sec.content_nl }}</div>
+                  <div v-if="sec.image" class="w-16 h-16 rounded-lg overflow-hidden bg-slate-950 border border-slate-800 md:col-span-2 mt-2">
+                    <img :src="sec.image" class="w-full h-full object-cover" />
+                  </div>
                 </div>
               </div>
             </div>
@@ -955,19 +1057,70 @@
           <div class="space-y-4">
             <h4 class="font-bold text-sm text-white">Existing Sections</h4>
             <div v-for="(sec, idx) in locationSections" :key="sec.id" class="p-5 border border-slate-800/80 rounded-2xl bg-slate-900/60 relative space-y-3">
-              <div class="flex justify-between items-start gap-4">
-                <h5 class="font-bold text-slate-200 text-xs">Section #{{ idx + 1 }} — {{ sec.title_en }}</h5>
-                <button @click="deleteLocationSection(sec)" class="text-red-500 hover:bg-red-500/10 p-1.5 rounded-lg text-xs">
-                  🗑️ Delete
-                </button>
+              <div v-if="editingSectionId === sec.id" class="space-y-4">
+                <h5 class="font-bold text-slate-200 text-xs border-b border-slate-800 pb-2">✏️ Edit Section #{{ idx + 1 }}</h5>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div class="space-y-1">
+                    <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Section Title EN</label>
+                    <input type="text" v-model="editSectionForm.title_en" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 text-xs" />
+                  </div>
+                  <div class="space-y-1">
+                    <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Section Title NL</label>
+                    <input type="text" v-model="editSectionForm.title_nl" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 text-xs" />
+                  </div>
+                  <div class="space-y-1 md:col-span-2">
+                    <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Content EN</label>
+                    <textarea v-model="editSectionForm.content_en" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 h-24 text-xs"></textarea>
+                  </div>
+                  <div class="space-y-1 md:col-span-2">
+                    <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Content NL</label>
+                    <textarea v-model="editSectionForm.content_nl" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 h-24 text-xs"></textarea>
+                  </div>
+                  <div class="space-y-1">
+                    <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Sort Order</label>
+                    <input type="number" v-model.number="editSectionForm.sort_order" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 text-xs" />
+                  </div>
+                  <div class="space-y-2">
+                    <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Optional Section Image</label>
+                    <div class="flex items-center gap-4">
+                      <div class="w-10 h-10 rounded-lg overflow-hidden bg-slate-950 border border-slate-800 flex items-center justify-center shrink-0">
+                        <img v-if="editSectionForm.image" :src="editSectionForm.image" class="w-full h-full object-cover" />
+                        <span v-else class="text-[8px] text-slate-600">None</span>
+                      </div>
+                      <input type="file" @change="e => onFileChange(e, 'edit_section')" accept="image/*" class="text-[10px] text-slate-400 file:py-1 file:px-2 file:rounded-md file:border-0 file:text-[8px] file:font-bold file:bg-slate-800 file:text-slate-200 file:cursor-pointer hover:file:bg-slate-700" />
+                    </div>
+                    <div v-if="uploading" class="text-[10px] text-red-500 animate-pulse">Uploading image...</div>
+                  </div>
+                </div>
+                <div class="flex justify-end gap-2 pt-2 border-t border-slate-800/80">
+                  <button @click="cancelSectionEdit" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold rounded-lg text-xs border border-slate-700">
+                    Cancel
+                  </button>
+                  <button @click="updateLocationSection" :disabled="uploading" class="px-5 py-2 bg-red-600 hover:bg-red-700 text-white font-bold rounded-lg text-xs shadow-md">
+                    Save Changes
+                  </button>
+                </div>
               </div>
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                <div class="text-[11px] text-slate-400"><strong>Title NL:</strong> {{ sec.title_nl }}</div>
-                <div class="text-[11px] text-slate-400"><strong>Sort Order:</strong> {{ sec.sort_order }}</div>
-                <div class="text-[11px] text-slate-400 md:col-span-2"><strong>Content EN:</strong> {{ sec.content_en }}</div>
-                <div class="text-[11px] text-slate-400 md:col-span-2"><strong>Content NL:</strong> {{ sec.content_nl }}</div>
-                <div v-if="sec.image" class="w-16 h-16 rounded-lg overflow-hidden bg-slate-950 border border-slate-800 md:col-span-2 mt-2">
-                  <img :src="sec.image" class="w-full h-full object-cover" />
+              <div v-else class="space-y-3">
+                <div class="flex justify-between items-start gap-4">
+                  <h5 class="font-bold text-slate-200 text-xs">Section #{{ idx + 1 }} — {{ sec.title_en }}</h5>
+                  <div class="flex gap-2">
+                    <button @click="editSection(sec)" class="text-blue-500 hover:bg-blue-500/10 p-1.5 rounded-lg text-xs font-bold">
+                      ✏️ Edit
+                    </button>
+                    <button @click="deleteLocationSection(sec)" class="text-red-500 hover:bg-red-500/10 p-1.5 rounded-lg text-xs">
+                      🗑️ Delete
+                    </button>
+                  </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  <div class="text-[11px] text-slate-400"><strong>Title NL:</strong> {{ sec.title_nl }}</div>
+                  <div class="text-[11px] text-slate-400"><strong>Sort Order:</strong> {{ sec.sort_order }}</div>
+                  <div class="text-[11px] text-slate-400 md:col-span-2"><strong>Content EN:</strong> {{ sec.content_en }}</div>
+                  <div class="text-[11px] text-slate-400 md:col-span-2"><strong>Content NL:</strong> {{ sec.content_nl }}</div>
+                  <div v-if="sec.image" class="w-16 h-16 rounded-lg overflow-hidden bg-slate-950 border border-slate-800 md:col-span-2 mt-2">
+                    <img :src="sec.image" class="w-full h-full object-cover" />
+                  </div>
                 </div>
               </div>
             </div>
@@ -1193,6 +1346,8 @@ const blogForm = ref({ slug: '', date: '', title_en: '', title_nl: '', desc_en: 
 const isEditing = ref(false)
 const selectedItem = ref(null)
 const uploading = ref(false)
+const editingSectionId = ref(null)
+const editSectionForm = ref({ title_en: '', title_nl: '', content_en: '', content_nl: '', image: '', sort_order: 0 })
 
 const onFileChange = async (e, type) => {
   const file = e.target.files[0]
@@ -1212,6 +1367,7 @@ const onFileChange = async (e, type) => {
       if (type === 'blog') blogForm.value.image = res.url
       else if (type === 'service') serviceForm.value.image = res.url
       else if (type === 'section') sectionForm.value.image = res.url
+      else if (type === 'edit_section') editSectionForm.value.image = res.url
       else if (type === 'location') locationForm.value.image = res.url
       else if (type === 'location_van') locationForm.value.images_van = res.url
       else if (type === 'location_boxes') locationForm.value.images_boxes = res.url
@@ -1327,10 +1483,28 @@ const deleteService = async (service) => {
 const selectedService = ref(null)
 const sectionForm = ref({ title_en: '', title_nl: '', content_en: '', content_nl: '', image: '', sort_order: 0 })
 
+const editSection = (sec) => {
+  editingSectionId.value = sec.id
+  editSectionForm.value = {
+    title_en: sec.title_en || '',
+    title_nl: sec.title_nl || '',
+    content_en: sec.content_en || '',
+    content_nl: sec.content_nl || '',
+    image: sec.image || '',
+    sort_order: sec.sort_order || 0
+  }
+}
+
+const cancelSectionEdit = () => {
+  editingSectionId.value = null
+  editSectionForm.value = { title_en: '', title_nl: '', content_en: '', content_nl: '', image: '', sort_order: 0 }
+}
+
 const manageServiceSections = async (service) => {
   if (!$supabase) return
   selectedService.value = service
   sectionForm.value = { title_en: '', title_nl: '', content_en: '', content_nl: '', image: '', sort_order: 0 }
+  cancelSectionEdit()
   
   // Load sections for this service
   const { data: secs } = await $supabase
@@ -1360,11 +1534,44 @@ const addServiceSection = async () => {
   }
 }
 
+const updateServiceSection = async () => {
+  if (!$supabase || !editingSectionId.value) return
+  
+  const { error } = await $supabase
+    .from('service_sections')
+    .update({
+      title_en: editSectionForm.value.title_en,
+      title_nl: editSectionForm.value.title_nl,
+      content_en: editSectionForm.value.content_en,
+      content_nl: editSectionForm.value.content_nl,
+      image: editSectionForm.value.image,
+      sort_order: editSectionForm.value.sort_order
+    })
+    .eq('id', editingSectionId.value)
+    
+  if (!error) {
+    const idx = serviceSections.value.findIndex(s => s.id === editingSectionId.value)
+    if (idx !== -1) {
+      serviceSections.value[idx] = { 
+        ...serviceSections.value[idx],
+        ...editSectionForm.value
+      }
+    }
+    serviceSections.value.sort((a, b) => a.sort_order - b.sort_order)
+    cancelSectionEdit()
+  } else {
+    alert('Error updating section: ' + error.message)
+  }
+}
+
 const deleteServiceSection = async (sec) => {
   if (!$supabase || !confirm(`Delete this section?`)) return
   const { error } = await $supabase.from('service_sections').delete().eq('id', sec.id)
   if (!error) {
     serviceSections.value = serviceSections.value.filter(s => s.id !== sec.id)
+    if (editingSectionId.value === sec.id) {
+      cancelSectionEdit()
+    }
   }
 }
 
@@ -1376,6 +1583,7 @@ const manageBlogSections = async (blog) => {
   if (!$supabase) return
   selectedBlog.value = blog
   sectionForm.value = { title_en: '', title_nl: '', content_en: '', content_nl: '', image: '', sort_order: 0 }
+  cancelSectionEdit()
   
   // Load sections for this blog post
   const { data: secs } = await $supabase
@@ -1405,11 +1613,44 @@ const addBlogSection = async () => {
   }
 }
 
+const updateBlogSection = async () => {
+  if (!$supabase || !editingSectionId.value) return
+  
+  const { error } = await $supabase
+    .from('blog_sections')
+    .update({
+      title_en: editSectionForm.value.title_en,
+      title_nl: editSectionForm.value.title_nl,
+      content_en: editSectionForm.value.content_en,
+      content_nl: editSectionForm.value.content_nl,
+      image: editSectionForm.value.image,
+      sort_order: editSectionForm.value.sort_order
+    })
+    .eq('id', editingSectionId.value)
+    
+  if (!error) {
+    const idx = blogSections.value.findIndex(s => s.id === editingSectionId.value)
+    if (idx !== -1) {
+      blogSections.value[idx] = { 
+        ...blogSections.value[idx],
+        ...editSectionForm.value
+      }
+    }
+    blogSections.value.sort((a, b) => a.sort_order - b.sort_order)
+    cancelSectionEdit()
+  } else {
+    alert('Error updating section: ' + error.message)
+  }
+}
+
 const deleteBlogSection = async (sec) => {
   if (!$supabase || !confirm(`Delete this section?`)) return
   const { error } = await $supabase.from('blog_sections').delete().eq('id', sec.id)
   if (!error) {
     blogSections.value = blogSections.value.filter(s => s.id !== sec.id)
+    if (editingSectionId.value === sec.id) {
+      cancelSectionEdit()
+    }
   }
 }
 
@@ -1421,6 +1662,7 @@ const manageLocationSections = async (loc) => {
   if (!$supabase) return
   selectedLocation.value = loc
   sectionForm.value = { title_en: '', title_nl: '', content_en: '', content_nl: '', image: '', sort_order: 0 }
+  cancelSectionEdit()
   
   // Load sections for this location
   const { data: secs } = await $supabase
@@ -1450,11 +1692,44 @@ const addLocationSection = async () => {
   }
 }
 
+const updateLocationSection = async () => {
+  if (!$supabase || !editingSectionId.value) return
+  
+  const { error } = await $supabase
+    .from('location_sections')
+    .update({
+      title_en: editSectionForm.value.title_en,
+      title_nl: editSectionForm.value.title_nl,
+      content_en: editSectionForm.value.content_en,
+      content_nl: editSectionForm.value.content_nl,
+      image: editSectionForm.value.image,
+      sort_order: editSectionForm.value.sort_order
+    })
+    .eq('id', editingSectionId.value)
+    
+  if (!error) {
+    const idx = locationSections.value.findIndex(s => s.id === editingSectionId.value)
+    if (idx !== -1) {
+      locationSections.value[idx] = { 
+        ...locationSections.value[idx],
+        ...editSectionForm.value
+      }
+    }
+    locationSections.value.sort((a, b) => a.sort_order - b.sort_order)
+    cancelSectionEdit()
+  } else {
+    alert('Error updating section: ' + error.message)
+  }
+}
+
 const deleteLocationSection = async (sec) => {
   if (!$supabase || !confirm(`Delete this section?`)) return
   const { error } = await $supabase.from('location_sections').delete().eq('id', sec.id)
   if (!error) {
     locationSections.value = locationSections.value.filter(s => s.id !== sec.id)
+    if (editingSectionId.value === sec.id) {
+      cancelSectionEdit()
+    }
   }
 }
 

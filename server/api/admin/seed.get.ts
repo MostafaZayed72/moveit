@@ -170,6 +170,13 @@ export default defineEventHandler(async (event) => {
     ]
 
     const offeringImages: Record<string, string[]> = {
+      student: [
+        'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&q=80&w=800',
+        'https://images.unsplash.com/photo-1585412727339-54e4bae3bbf9?auto=format&fit=crop&q=80&w=800',
+        'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&q=80&w=800',
+        'https://images.unsplash.com/photo-1485965120184-e220f721d03e?auto=format&fit=crop&q=80&w=800',
+        'https://images.unsplash.com/photo-1485955900006-10f4d324d411?auto=format&fit=crop&q=80&w=800'
+      ],
       local: [
         'https://images.unsplash.com/photo-1536376072261-38c75010e6c9?auto=format&fit=crop&q=80&w=800',
         'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&q=80&w=800',
@@ -184,6 +191,46 @@ export default defineEventHandler(async (event) => {
         'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=800',
         'https://images.unsplash.com/photo-1485081669829-bacb8c7bb1f3?auto=format&fit=crop&q=80&w=800',
         'https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&q=80&w=800'
+      ],
+      full_service: [
+        'https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&q=80&w=800',
+        'https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&q=80&w=800',
+        'https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?auto=format&fit=crop&q=80&w=800'
+      ],
+      furniture_assembly: [
+        'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&q=80&w=800',
+        'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&q=80&w=800',
+        'https://images.unsplash.com/photo-1527689368864-3a821dbccc34?auto=format&fit=crop&q=80&w=800'
+      ],
+      packing: [
+        'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&q=80&w=800',
+        'https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&q=80&w=800',
+        'https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&q=80&w=800'
+      ],
+      lift_rental: [
+        'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=800',
+        'https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&q=80&w=800',
+        'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&q=80&w=800'
+      ],
+      piano: [
+        'https://images.unsplash.com/photo-1550684848-fac1c5b4e853?auto=format&fit=crop&q=80&w=800',
+        'https://images.unsplash.com/photo-1520523839897-bd0b52f945a0?auto=format&fit=crop&q=80&w=800',
+        'https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&q=80&w=800'
+      ],
+      senior: [
+        'https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&q=80&w=800',
+        'https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?auto=format&fit=crop&q=80&w=800',
+        'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&q=80&w=800'
+      ],
+      storage: [
+        'https://images.unsplash.com/photo-1565610222536-ef125c59da2e?auto=format&fit=crop&q=80&w=800',
+        'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&q=80&w=800',
+        'https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&q=80&w=800'
+      ],
+      clearance: [
+        'https://images.unsplash.com/photo-1616401784845-180882ba9ba8?auto=format&fit=crop&q=80&w=800',
+        'https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&q=80&w=800',
+        'https://images.unsplash.com/photo-1590247813693-5541d1c609fd?auto=format&fit=crop&q=80&w=800'
       ]
     }
 
@@ -217,22 +264,66 @@ export default defineEventHandler(async (event) => {
         const pageNL = nl[pageKey]
 
         if (pageEN && pageEN.section2) {
-          const subs = ['sub1', 'sub2', 'sub3', 'sub4', 'sub5']
+          // Clear existing sections for this service first to avoid duplicate seeds
+          await supabase
+            .from('service_sections')
+            .delete()
+            .eq('service_id', insertedService.id)
+
+          // Dynamically read keys of section2 excluding 'title'
+          const subs = Object.keys(pageEN.section2).filter(k => k !== 'title')
           for (let idx = 0; idx < subs.length; idx++) {
             const subKey = subs[idx]
             const subEN = pageEN.section2[subKey]
             const subNL = pageNL?.section2?.[subKey] || subEN
 
             if (subEN && subEN.title) {
-              const bulletsEN = Array.isArray(subEN.bullets) ? `\n\nBullets:\n- ${subEN.bullets.join('\n- ')}` : ''
-              const bulletsNL = Array.isArray(subNL.bullets) ? `\n\nBullets:\n- ${subNL.bullets.join('\n- ')}` : ''
+              const listEN = Array.isArray(subEN.bullets)
+                ? subEN.bullets
+                : (Array.isArray(subEN.includes)
+                  ? subEN.includes
+                  : (Array.isArray(subEN.support_list)
+                    ? subEN.support_list
+                    : null))
+              const listNL = Array.isArray(subNL.bullets)
+                ? subNL.bullets
+                : (Array.isArray(subNL.includes)
+                  ? subNL.includes
+                  : (Array.isArray(subNL.support_list)
+                    ? subNL.support_list
+                    : null))
+              
+              const bulletsEN = listEN ? `\n\nBullets:\n- ${listEN.join('\n- ')}` : ''
+              const bulletsNL = listNL ? `\n\nBullets:\n- ${listNL.join('\n- ')}` : ''
+
+              const extraEN = []
+              if (subEN.price) extraEN.push(`Price: ${subEN.price}`)
+              if (subEN.cta) extraEN.push(`CTA: ${subEN.cta}`)
+              if (subEN.extra) extraEN.push(subEN.extra)
+              if (subEN.supported) extraEN.push(subEN.supported)
+              if (subEN.great_for) extraEN.push(subEN.great_for)
+              if (subEN.ideal) extraEN.push(subEN.ideal)
+              if (typeof subEN.includes === 'string') extraEN.push(subEN.includes)
+              if (subEN.support) extraEN.push(subEN.support)
+              const extraStrEN = extraEN.length > 0 ? `\n\n${extraEN.join('\n')}` : ''
+
+              const extraNL = []
+              if (subNL.price) extraNL.push(`Price: ${subNL.price}`)
+              if (subNL.cta) extraNL.push(`CTA: ${subNL.cta}`)
+              if (subNL.extra) extraNL.push(subNL.extra)
+              if (subNL.supported) extraNL.push(subNL.supported)
+              if (subNL.great_for) extraNL.push(subNL.great_for)
+              if (subNL.ideal) extraNL.push(subNL.ideal)
+              if (typeof subNL.includes === 'string') extraNL.push(subNL.includes)
+              if (subNL.support) extraNL.push(subNL.support)
+              const extraStrNL = extraNL.length > 0 ? `\n\n${extraNL.join('\n')}` : ''
 
               const sectionRow = {
                 service_id: insertedService.id,
                 title_en: subEN.title,
                 title_nl: subNL.title,
-                content_en: `${subEN.desc}${bulletsEN}${subEN.extra ? '\n\n' + subEN.extra : ''}`,
-                content_nl: `${subNL.desc}${bulletsNL}${subNL.extra ? '\n\n' + subNL.extra : ''}`,
+                content_en: `${subEN.desc}${bulletsEN}${extraStrEN}`,
+                content_nl: `${subNL.desc}${bulletsNL}${extraStrNL}`,
                 image: offeringImages[s.id]?.[idx] || '',
                 sort_order: idx
               }

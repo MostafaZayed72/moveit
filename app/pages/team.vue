@@ -54,7 +54,7 @@
             <!-- Info -->
             <div class="card-body">
               <div class="card-role-tag">{{ member.role }}</div>
-              <h2 class="card-name">{{ member.name }}</h2>
+              <h2 class="card-name">{{ member.name.split(' ')[0] }}</h2>
               <p class="card-desc">{{ member.desc }}</p>
 
               <!-- Responsibilities -->
@@ -348,7 +348,7 @@ const visionValues = [
 .card-photo {
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
   object-position: center;
   transition: transform .4s ease;
 }
