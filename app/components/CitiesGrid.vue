@@ -2,7 +2,7 @@
   <div>
     <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
       <NuxtLink
-        v-for="(city, i) in cities"
+        v-for="(city, i) in displayedCities"
         :key="city.name || i"
         :to="city.slug ? localePath('/locations/' + city.slug) : localePath('/contact')"
         class="group relative rounded-2xl overflow-hidden h-40 cursor-pointer block"
@@ -28,9 +28,38 @@
 </template>
 
 <script setup>
+import { ref, onMounted, computed } from 'vue'
+
+const { $supabase } = useNuxtApp()
 const localePath = useLocalePath()
 
-const cities = [
+const dbLocations = ref([])
+
+const fetchLocations = async () => {
+  if (!$supabase) return
+  try {
+    const { data, error } = await $supabase
+      .from('locations')
+      .select('*')
+      .order('name')
+    
+    if (error) {
+      console.warn('Failed to load locations from Supabase:', error.message)
+      return
+    }
+    if (data) {
+      dbLocations.value = data
+    }
+  } catch (err) {
+    console.error('Error fetching locations:', err)
+  }
+}
+
+onMounted(() => {
+  fetchLocations()
+})
+
+const staticCities = [
   { name: 'Maastricht', slug: 'maastricht', country: null, image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=400' },
   { name: 'Geleen', slug: 'geleen', country: null, image: 'https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?auto=format&fit=crop&q=80&w=400' },
   { name: 'Roermond', slug: 'roermond', country: null, image: 'https://images.unsplash.com/photo-1517705008128-361805f42e86?auto=format&fit=crop&q=80&w=400' },
@@ -47,4 +76,19 @@ const cities = [
   { name: 'Hasselt 🇧🇪', slug: 'hasselt', country: null, image: 'https://images.unsplash.com/photo-1559113202-c916b8e44373?auto=format&fit=crop&q=80&w=400' },
   { isMore: true, image: 'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&q=80&w=400' },
 ]
+
+const displayedCities = computed(() => {
+  if (dbLocations.value.length > 0) {
+    const list = dbLocations.value.map(loc => ({
+      name: loc.name,
+      slug: loc.slug,
+      country: loc.country || null,
+      image: loc.image || 'https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&q=80&w=400'
+    }))
+    list.push({ isMore: true, image: 'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&q=80&w=400' })
+    return list
+  }
+  return staticCities
+})
 </script>
+

@@ -1,5 +1,9 @@
 <template>
-  <div v-if="location" class="min-h-screen bg-slate-50 dark:bg-slate-950">
+  <div v-if="loadingDb" class="min-h-screen bg-slate-50 dark:bg-slate-950 flex flex-col items-center justify-center space-y-4">
+    <div class="w-12 h-12 border-4 border-red-600 border-t-transparent rounded-full animate-spin"></div>
+    <p class="text-slate-500 dark:text-slate-400 font-bold">Loading location...</p>
+  </div>
+  <div v-else-if="location" class="min-h-screen bg-slate-50 dark:bg-slate-950">
     <!-- Hero Section -->
     <section class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
       <div class="absolute inset-0 z-0">
@@ -136,9 +140,9 @@
             </div>
 
             <!-- Neighborhoods -->
-            <div v-if="locData.content.neighborhoods" class="p-8 mt-12 rounded-[2rem] bg-slate-100 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800">
+            <div v-if="locData.content.neighborhoods && locData.content.neighborhoods.length > 0" class="p-8 mt-12 rounded-[2rem] bg-slate-100 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800">
               <h3 class="text-2xl font-black text-slate-900 dark:text-white mb-6">
-                {{ locData.content.neighborhoodsTitle }}
+                {{ locData.content.neighborhoodsTitle || 'Neighborhoods Served' }}
               </h3>
               <div class="flex flex-wrap gap-3">
                 <span v-for="(hood, idx) in locData.content.neighborhoods" :key="idx" class="px-6 py-3 rounded-full bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-medium shadow-sm border border-slate-200 dark:border-slate-700">
@@ -163,34 +167,138 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
+import { useRoute } from 'vue-router'
 import { getLocationBySlug } from '~/data/locations'
 
+const { $supabase } = useNuxtApp()
 const route = useRoute()
 const localePath = useLocalePath()
 const { locale } = useI18n()
 
-// Fetch data based on dynamic slug
 const slug = route.params.slug
-const location = getLocationBySlug(slug)
 
-if (!location) {
-  throw createError({ statusCode: 404, statusMessage: 'Location Not Found' })
+// DB State
+const dbLocation = ref(null)
+const loadingDb = ref(true)
+
+const fetchDbLocation = async () => {
+  if (!$supabase) {
+    loadingDb.value = false
+    return
+  }
+  try {
+    const { data, error } = await $supabase
+      .from('locations')
+      .select('*')
+      .eq('slug', slug)
+      .maybeSingle()
+      
+    if (data) {
+      dbLocation.value = data
+    }
+  } catch (err) {
+    console.error('Error fetching location from DB:', err)
+  } finally {
+    loadingDb.value = false
+  }
 }
 
-// Compute the localized data (fallback to 'en' if the locale is missing)
+onMounted(() => {
+  fetchDbLocation()
+})
+
+const staticLocation = getLocationBySlug(slug)
+
+const location = computed(() => {
+  if (dbLocation.value) {
+    const d = dbLocation.value
+    return {
+      slug: d.slug,
+      name: d.name,
+      country: d.country,
+      image: d.image || 'https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&q=80&w=1000',
+      images: {
+        boxes: d.images_boxes || 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&q=80&w=800',
+        van: d.images_van || 'https://images.unsplash.com/photo-1553413077-190dd305871c?auto=format&fit=crop&q=80&w=800',
+        room: d.images_room || 'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&q=80&w=800'
+      }
+    }
+  }
+  return staticLocation
+})
+
 const locData = computed(() => {
-  return location[locale.value] || location.en
+  if (dbLocation.value) {
+    const d = dbLocation.value
+    const isNl = locale.value === 'nl'
+    
+    const parseText = (txt) => {
+      if (!txt) return []
+      return txt.split('\n').map(p => p.trim()).filter(p => p.length > 0)
+    }
+    
+    const parseList = (txt) => {
+      if (!txt) return []
+      return txt.split(',').map(item => item.trim()).filter(item => item.length > 0)
+    }
+
+    const localized = (enVal, nlVal) => {
+      return isNl ? (nlVal || enVal) : enVal
+    }
+
+    return {
+      hero: {
+        title: localized(d.hero_title_en, d.hero_title_nl) || `Moving to/from ${d.name}`,
+        subtitle: localized(d.hero_subtitle_en, d.hero_subtitle_nl) || `Expert relocation services in ${d.name}`
+      },
+      seo: {
+        title: localized(d.seo_title_en, d.seo_title_nl) || `${d.name} Relocations | MoveIt`,
+        description: localized(d.seo_desc_en, d.seo_desc_nl) || `Professional moving company in ${d.name}.`,
+        keywords: localized(d.seo_keywords_en, d.seo_keywords_nl) || `moving, ${d.name}`
+      },
+      content: {
+        introduction: {
+          title: localized(d.intro_title_en, d.intro_title_nl) || 'Introduction',
+          text: parseText(localized(d.intro_text_en, d.intro_text_nl))
+        },
+        residentialDetails: {
+          title: localized(d.residential_title_en, d.residential_title_nl) || 'Residential Relocations',
+          text: parseText(localized(d.residential_text_en, d.residential_text_nl))
+        },
+        commercialDetails: {
+          title: localized(d.commercial_title_en, d.commercial_title_nl) || 'Office Removals',
+          text: parseText(localized(d.commercial_text_en, d.commercial_text_nl))
+        },
+        packingTips: {
+          title: localized(d.packing_title_en, d.packing_title_nl) || 'Packing Guide',
+          text: parseText(localized(d.packing_text_en, d.packing_text_nl))
+        },
+        localInsights: {
+          title: localized(d.insights_title_en, d.insights_title_nl) || 'Local Moving Insights',
+          text: parseText(localized(d.insights_text_en, d.insights_text_nl))
+        },
+        costFactors: {
+          title: localized(d.costs_title_en, d.costs_title_nl) || 'Cost Factors',
+          text: parseText(localized(d.costs_text_en, d.costs_text_nl))
+        },
+        neighborhoodsTitle: localized(d.neighborhoods_title_en, d.neighborhoods_title_nl) || 'Neighborhoods Served',
+        neighborhoods: parseList(localized(d.neighborhoods_list_en, d.neighborhoods_list_nl))
+      }
+    }
+  }
+  
+  return staticLocation ? (staticLocation[locale.value] || staticLocation.en) : null
 })
 
 // SEO & Structured Data
 useSeoMeta({
-  title: () => locData.value.seo.title,
-  description: () => locData.value.seo.description,
-  keywords: () => locData.value.seo.keywords,
-  ogTitle: () => locData.value.seo.title,
-  ogDescription: () => locData.value.seo.description,
-  ogImage: location.image,
+  title: () => locData.value?.seo?.title || 'Location | MoveIt',
+  description: () => locData.value?.seo?.description || 'Location moving services',
+  keywords: () => locData.value?.seo?.keywords || 'moving',
+  ogTitle: () => locData.value?.seo?.title || 'Location | MoveIt',
+  ogDescription: () => locData.value?.seo?.description || 'Location moving services',
+  ogImage: () => location.value?.image || '',
   twitterCard: 'summary_large_image',
 })
 
@@ -199,20 +307,23 @@ useHead({
   script: [
     {
       type: 'application/ld+json',
-      children: computed(() => JSON.stringify({
-        "@context": "https://schema.org",
-        "@type": "MovingCompany",
-        "name": `MoveIt ${location.name}`,
-        "image": location.image,
-        "description": locData.value.seo.description,
-        "url": `https://moveit.com/locations/${location.slug}`,
-        "telephone": "+31682333113",
-        "priceRange": "$$",
-        "areaServed": {
-          "@type": "City",
-          "name": location.name
-        }
-      }))
+      children: computed(() => {
+        if (!location.value || !locData.value) return '{}'
+        return JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "MovingCompany",
+          "name": `MoveIt ${location.value.name}`,
+          "image": location.value.image,
+          "description": locData.value.seo.description,
+          "url": `https://moveit.com/locations/${location.value.slug}`,
+          "telephone": "+31682333113",
+          "priceRange": "$$",
+          "areaServed": {
+            "@type": "City",
+            "name": location.value.name
+          }
+        })
+      })
     }
   ]
 })

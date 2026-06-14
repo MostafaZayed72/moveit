@@ -2,15 +2,27 @@
   <div class="pt-32">
     <BaseSection :title="$t('blog.title')" :subtitle="$t('blog.subtitle')">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <article 
+        <NuxtLink 
           v-for="(post, index) in translatedPosts" 
           :key="index" 
-          class="premium-card !p-0 group cursor-pointer"
+          :to="post.slug ? localePath('/blog/' + post.slug) : '#'"
+          :class="[
+            'premium-card !p-0 group block border border-slate-100 dark:border-white/5 rounded-3xl overflow-hidden hover:shadow-2xl transition-all duration-300',
+            !post.slug && 'pointer-events-none'
+          ]"
           data-aos="fade-up"
           :data-aos-delay="index * 50"
         >
-          <div class="h-64 rounded-t-3xl overflow-hidden relative">
-            <img :src="post.image" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" :alt="post.title" />
+          <div class="h-64 overflow-hidden relative bg-slate-100 dark:bg-slate-900">
+            <img 
+              v-if="post.image" 
+              :src="post.image" 
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
+              :alt="post.title" 
+            />
+            <div v-else class="w-full h-full flex items-center justify-center text-slate-400">
+              🖼️ No Image
+            </div>
             <div class="absolute top-4 left-4 px-3 py-1 bg-red-600 text-white text-xs font-bold rounded-full">{{ post.category }}</div>
           </div>
           <div class="p-8">
@@ -19,19 +31,21 @@
             <p class="text-slate-600 dark:text-slate-400 mb-6 line-clamp-2">
               {{ post.desc }}
             </p>
-            <div class="flex items-center space-x-2 text-red-600 dark:text-red-500 font-bold group-hover:space-x-4 transition-all">
+            <div v-if="post.slug" class="flex items-center space-x-2 text-red-600 dark:text-red-500 font-bold group-hover:space-x-4 transition-all">
               <span>{{ $t('blog.read_more') }}</span>
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
             </div>
           </div>
-        </article>
+        </NuxtLink>
       </div>
     </BaseSection>
   </div>
 </template>
 
 <script setup>
-const { tm, rt } = useI18n()
+const { $supabase } = useNuxtApp()
+const localePath = useLocalePath()
+const { tm, rt, locale } = useI18n()
 
 const blogImages = [
   'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=800',
@@ -42,15 +56,66 @@ const blogImages = [
   'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=800'
 ]
 
+const dbPosts = ref([])
+
+const fetchPosts = async () => {
+  if (!$supabase) return
+  try {
+    const { data, error } = await $supabase
+      .from('blog_posts')
+      .select('*')
+      .order('created_at', { ascending: false })
+    
+    if (error) {
+      console.warn('Failed to load blog posts from Supabase:', error.message)
+      return
+    }
+    if (data) {
+      dbPosts.value = data
+    }
+  } catch (err) {
+    console.error('Error fetching blog posts:', err)
+  }
+}
+
+onMounted(() => {
+  fetchPosts()
+})
+
 const translatedPosts = computed(() => {
+  const isNl = locale.value === 'nl'
+  
+  if (dbPosts.value.length > 0) {
+    return dbPosts.value.map((post, index) => {
+      const title = isNl ? post.title_nl : post.title_en
+      const desc = isNl ? post.desc_nl : post.desc_en
+      const category = isNl ? post.category_nl : post.category_en
+      const readTime = isNl ? post.read_time_nl : post.read_time_en
+      
+      return {
+        slug: post.slug,
+        title,
+        desc,
+        category,
+        date: post.date || new Date(post.created_at).toLocaleDateString(isNl ? 'nl-NL' : 'en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
+        readTime: readTime || (isNl ? '5 min leestijd' : '5 min read'),
+        image: post.image || blogImages[index % blogImages.length]
+      }
+    })
+  }
+
+  // Fallback to static JSON translations
   const posts = tm('blog.posts')
+  if (!Array.isArray(posts)) return []
   return posts.map((post, index) => ({
+    slug: '',
     title: rt(post.title),
     desc: rt(post.desc),
     category: rt(post.category),
     date: rt(post.date),
     readTime: rt(post.readTime),
-    image: blogImages[index]
+    image: blogImages[index % blogImages.length]
   }))
 })
 </script>
+
