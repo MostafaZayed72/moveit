@@ -3,7 +3,7 @@
     <BaseSection :title="$t('blog.title')" :subtitle="$t('blog.subtitle')">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         <NuxtLink 
-          v-for="(post, index) in translatedPosts" 
+          v-for="(post, index) in paginatedPosts" 
           :key="index" 
           :to="post.slug ? localePath('/blog/' + post.slug) : '#'"
           :class="[
@@ -38,11 +38,32 @@
           </div>
         </NuxtLink>
       </div>
+
+      <!-- Pagination for Blog Posts on Frontend -->
+      <div v-if="totalPages > 1" class="flex justify-center items-center gap-4 mt-12">
+        <button 
+          @click="currentPage--" 
+          :disabled="currentPage === 1"
+          class="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 disabled:opacity-50 text-slate-800 dark:text-slate-200 rounded-xl text-sm font-bold border border-slate-200 dark:border-slate-700 transition-all cursor-pointer"
+        >
+          ◀ Previous
+        </button>
+        <span class="text-sm font-bold text-slate-600 dark:text-slate-400">Page {{ currentPage }} of {{ totalPages }}</span>
+        <button 
+          @click="currentPage++" 
+          :disabled="currentPage === totalPages"
+          class="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 disabled:opacity-50 text-slate-800 dark:text-slate-200 rounded-xl text-sm font-bold border border-slate-200 dark:border-slate-700 transition-all cursor-pointer"
+        >
+          Next ▶
+        </button>
+      </div>
     </BaseSection>
   </div>
 </template>
 
 <script setup>
+import { ref, onMounted, computed } from 'vue'
+
 const { $supabase } = useNuxtApp()
 const localePath = useLocalePath()
 const { tm, rt, locale } = useI18n()
@@ -57,6 +78,10 @@ const blogImages = [
 ]
 
 const dbPosts = ref([])
+
+// Pagination Setup
+const currentPage = ref(1)
+const postsPerPage = 10
 
 const fetchPosts = async () => {
   if (!$supabase) return
@@ -117,5 +142,13 @@ const translatedPosts = computed(() => {
     image: blogImages[index % blogImages.length]
   }))
 })
-</script>
 
+const paginatedPosts = computed(() => {
+  const start = (currentPage.value - 1) * postsPerPage
+  return translatedPosts.value.slice(start, start + postsPerPage)
+})
+
+const totalPages = computed(() => {
+  return Math.ceil(translatedPosts.value.length / postsPerPage) || 1
+})
+</script>

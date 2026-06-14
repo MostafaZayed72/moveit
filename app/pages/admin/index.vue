@@ -94,7 +94,7 @@
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div v-for="loc in locations" :key="loc.id" class="glass-panel border border-slate-800/80 rounded-2xl overflow-hidden flex flex-col bg-slate-950/40">
+            <div v-for="loc in paginatedLocations" :key="loc.id" class="glass-panel border border-slate-800/80 rounded-2xl overflow-hidden flex flex-col bg-slate-950/40">
               <div class="h-44 bg-slate-900 relative">
                 <img v-if="loc.image" :src="loc.image" class="w-full h-full object-cover" :alt="loc.name" />
                 <div v-else class="w-full h-full flex items-center justify-center text-slate-600">No Image</div>
@@ -119,6 +119,25 @@
               No locations found. Click "Add New Location" to create one.
             </div>
           </div>
+
+          <!-- Pagination for Locations -->
+          <div v-if="totalLocationsPages > 1" class="flex justify-center items-center gap-4 mt-8">
+            <button 
+              @click="locationsPage--" 
+              :disabled="locationsPage === 1"
+              class="px-4 py-2 bg-slate-800 hover:bg-slate-700 disabled:opacity-50 text-slate-200 rounded-xl text-sm font-bold border border-slate-700 transition-all cursor-pointer"
+            >
+              ◀ Previous
+            </button>
+            <span class="text-sm font-bold text-slate-400">Page {{ locationsPage }} of {{ totalLocationsPages }}</span>
+            <button 
+              @click="locationsPage++" 
+              :disabled="locationsPage === totalLocationsPages"
+              class="px-4 py-2 bg-slate-800 hover:bg-slate-700 disabled:opacity-50 text-slate-200 rounded-xl text-sm font-bold border border-slate-700 transition-all cursor-pointer"
+            >
+              Next ▶
+            </button>
+          </div>
         </div>
 
         <!-- TAB CONTENT: BLOG -->
@@ -131,7 +150,7 @@
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div v-for="post in blogPosts" :key="post.id" class="glass-panel border border-slate-800/80 rounded-2xl overflow-hidden flex flex-col bg-slate-950/40">
+            <div v-for="post in paginatedBlogPosts" :key="post.id" class="glass-panel border border-slate-800/80 rounded-2xl overflow-hidden flex flex-col bg-slate-950/40">
               <div class="h-44 bg-slate-900 relative">
                 <img v-if="post.image" :src="post.image" class="w-full h-full object-cover" :alt="post.title_en" />
                 <div v-else class="w-full h-full flex items-center justify-center text-slate-600">No Image</div>
@@ -159,6 +178,25 @@
               No blog posts found. Click "Add New Post" to write one.
             </div>
           </div>
+
+          <!-- Pagination for Blog Posts -->
+          <div v-if="totalBlogPages > 1" class="flex justify-center items-center gap-4 mt-8">
+            <button 
+              @click="blogPage--" 
+              :disabled="blogPage === 1"
+              class="px-4 py-2 bg-slate-800 hover:bg-slate-700 disabled:opacity-50 text-slate-200 rounded-xl text-sm font-bold border border-slate-700 transition-all cursor-pointer"
+            >
+              ◀ Previous
+            </button>
+            <span class="text-sm font-bold text-slate-400">Page {{ blogPage }} of {{ totalBlogPages }}</span>
+            <button 
+              @click="blogPage++" 
+              :disabled="blogPage === totalBlogPages"
+              class="px-4 py-2 bg-slate-800 hover:bg-slate-700 disabled:opacity-50 text-slate-200 rounded-xl text-sm font-bold border border-slate-700 transition-all cursor-pointer"
+            >
+              Next ▶
+            </button>
+          </div>
         </div>
 
         <!-- TAB CONTENT: SERVICES -->
@@ -171,7 +209,7 @@
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div v-for="service in services" :key="service.id" class="glass-panel border border-slate-800 rounded-2xl overflow-hidden p-6 bg-slate-950/40 flex gap-6">
+            <div v-for="service in paginatedServices" :key="service.id" class="glass-panel border border-slate-800 rounded-2xl overflow-hidden p-6 bg-slate-950/40 flex gap-6">
               <div class="w-24 h-24 rounded-xl overflow-hidden shrink-0 bg-slate-900">
                 <img v-if="service.image" :src="service.image" class="w-full h-full object-cover" :alt="service.title_en" />
                 <div v-else class="w-full h-full flex items-center justify-center text-xs text-slate-600">No Image</div>
@@ -200,6 +238,25 @@
             <div v-if="services.length === 0" class="col-span-full py-16 text-center text-slate-500 bg-slate-950/20 border border-slate-900 rounded-3xl">
               No services found. Click "Add New Service" to create one.
             </div>
+          </div>
+
+          <!-- Pagination for Services -->
+          <div v-if="totalServicesPages > 1" class="flex justify-center items-center gap-4 mt-8">
+            <button 
+              @click="servicesPage--" 
+              :disabled="servicesPage === 1"
+              class="px-4 py-2 bg-slate-800 hover:bg-slate-700 disabled:opacity-50 text-slate-200 rounded-xl text-sm font-bold border border-slate-700 transition-all cursor-pointer"
+            >
+              ◀ Previous
+            </button>
+            <span class="text-sm font-bold text-slate-400">Page {{ servicesPage }} of {{ totalServicesPages }}</span>
+            <button 
+              @click="servicesPage++" 
+              :disabled="servicesPage === totalServicesPages"
+              class="px-4 py-2 bg-slate-800 hover:bg-slate-700 disabled:opacity-50 text-slate-200 rounded-xl text-sm font-bold border border-slate-700 transition-all cursor-pointer"
+            >
+              Next ▶
+            </button>
           </div>
         </div>
 
@@ -787,6 +844,39 @@ const blogPosts = ref([])
 const services = ref([])
 const serviceSections = ref([])
 
+// Pagination Setup
+const itemsPerPage = 10
+const locationsPage = ref(1)
+const blogPage = ref(1)
+const servicesPage = ref(1)
+
+const paginatedLocations = computed(() => {
+  const start = (locationsPage.value - 1) * itemsPerPage
+  return locations.value.slice(start, start + itemsPerPage)
+})
+
+const totalLocationsPages = computed(() => {
+  return Math.ceil(locations.value.length / itemsPerPage) || 1
+})
+
+const paginatedBlogPosts = computed(() => {
+  const start = (blogPage.value - 1) * itemsPerPage
+  return blogPosts.value.slice(start, start + itemsPerPage)
+})
+
+const totalBlogPages = computed(() => {
+  return Math.ceil(blogPosts.value.length / itemsPerPage) || 1
+})
+
+const paginatedServices = computed(() => {
+  const start = (servicesPage.value - 1) * itemsPerPage
+  return services.value.slice(start, start + itemsPerPage)
+})
+
+const totalServicesPages = computed(() => {
+  return Math.ceil(services.value.length / itemsPerPage) || 1
+})
+
 // Load all data from Supabase
 const loadAllData = async () => {
   if (!$supabase) return
@@ -803,6 +893,7 @@ const loadAllData = async () => {
   const { data: servs } = await $supabase.from('services').select('*').order('id')
   if (servs) services.value = servs
 }
+
 
 // 1. Locations Logic
 const locationForm = ref({
@@ -873,8 +964,12 @@ const deleteLocation = async (loc) => {
   const { error } = await $supabase.from('locations').delete().eq('id', loc.id)
   if (!error) {
     locations.value = locations.value.filter(l => l.id !== loc.id)
+    if (locationsPage.value > totalLocationsPages.value) {
+      locationsPage.value = Math.max(1, totalLocationsPages.value)
+    }
   }
 }
+
 
 // 2. Blog Posts Logic
 const blogForm = ref({ slug: '', date: '', title_en: '', title_nl: '', desc_en: '', desc_nl: '', content_en: '', content_nl: '', category_en: '', category_nl: '', read_time_en: '', read_time_nl: '', image: '' })
@@ -953,8 +1048,12 @@ const deleteBlogPost = async (post) => {
   const { error } = await $supabase.from('blog_posts').delete().eq('id', post.id)
   if (!error) {
     blogPosts.value = blogPosts.value.filter(p => p.id !== post.id)
+    if (blogPage.value > totalBlogPages.value) {
+      blogPage.value = Math.max(1, totalBlogPages.value)
+    }
   }
 }
+
 
 // 3. Services Logic
 const serviceForm = ref({ slug: '', title_en: '', title_nl: '', description_en: '', description_nl: '', image: '' })
@@ -1000,8 +1099,12 @@ const deleteService = async (service) => {
   const { error } = await $supabase.from('services').delete().eq('id', service.id)
   if (!error) {
     services.value = services.value.filter(s => s.id !== service.id)
+    if (servicesPage.value > totalServicesPages.value) {
+      servicesPage.value = Math.max(1, totalServicesPages.value)
+    }
   }
 }
+
 
 // 4. Service Inner Sections Logic
 const selectedService = ref(null)
