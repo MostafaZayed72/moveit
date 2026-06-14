@@ -139,6 +139,35 @@
               </p>
             </div>
 
+            <!-- Dynamic Location Sub-sections -->
+            <div v-if="dbSections && dbSections.length > 0" class="space-y-16 pt-12 border-t border-slate-200 dark:border-white/5 not-prose">
+              <div 
+                v-for="(sec, index) in dbSections" 
+                :key="sec.id"
+                :class="[
+                  'flex flex-col lg:flex-row items-center gap-12',
+                  index % 2 === 1 ? 'lg:flex-row-reverse' : ''
+                ]"
+                data-aos="fade-up"
+              >
+                <!-- Section Image (Optional) -->
+                <div v-if="sec.image" class="w-full lg:w-1/2">
+                  <div class="h-80 md:h-[450px] rounded-[2.5rem] overflow-hidden shadow-2xl border border-slate-200 dark:border-white/5">
+                    <img :src="sec.image" class="w-full h-full object-cover" :alt="locale === 'nl' ? sec.title_nl : sec.title_en" />
+                  </div>
+                </div>
+                <!-- Section Content -->
+                <div :class="['w-full', sec.image ? 'lg:w-1/2' : 'max-w-3xl mx-auto text-center']">
+                  <h2 class="text-3xl md:text-4xl font-black text-slate-900 dark:text-white mb-6">
+                    {{ locale === 'nl' ? sec.title_nl : sec.title_en }}
+                  </h2>
+                  <div class="text-slate-650 dark:text-slate-350 leading-relaxed text-lg whitespace-pre-line">
+                    {{ locale === 'nl' ? sec.content_nl : sec.content_en }}
+                  </div>
+                </div>
+              </div>
+            </div>
+
             <!-- Neighborhoods -->
             <div v-if="locData.content.neighborhoods && locData.content.neighborhoods.length > 0" class="p-8 mt-12 rounded-[2rem] bg-slate-100 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800">
               <h3 class="text-2xl font-black text-slate-900 dark:text-white mb-6">
@@ -180,6 +209,7 @@ const slug = route.params.slug
 
 // DB State
 const dbLocation = ref(null)
+const dbSections = ref([])
 const loadingDb = ref(true)
 
 const fetchDbLocation = async () => {
@@ -196,6 +226,17 @@ const fetchDbLocation = async () => {
       
     if (data) {
       dbLocation.value = data
+      
+      // Load custom sub-sections for this location page
+      const { data: secs } = await $supabase
+        .from('location_sections')
+        .select('*')
+        .eq('location_id', data.id)
+        .order('sort_order')
+        
+      if (secs) {
+        dbSections.value = secs
+      }
     }
   } catch (err) {
     console.error('Error fetching location from DB:', err)

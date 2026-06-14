@@ -106,6 +106,9 @@
                   <p class="text-xs text-slate-400 line-clamp-2">slug: {{ loc.slug }}</p>
                 </div>
                 <div class="flex justify-end gap-2 border-t border-slate-900 pt-4 mt-auto">
+                  <button @click="manageLocationSections(loc)" class="px-3 py-1.5 bg-red-600/10 hover:bg-red-600/20 border border-red-500/20 text-red-500 text-xs font-bold rounded-lg transition-colors">
+                    Sections
+                  </button>
                   <button @click="openEditLocationModal(loc)" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold rounded-lg transition-colors border border-slate-700">
                     Edit
                   </button>
@@ -121,21 +124,33 @@
           </div>
 
           <!-- Pagination for Locations -->
-          <div v-if="totalLocationsPages > 1" class="flex justify-center items-center gap-4 mt-8">
+          <div v-if="totalLocationsPages > 1" class="flex justify-center items-center gap-2 mt-8">
             <button 
               @click="locationsPage--" 
               :disabled="locationsPage === 1"
-              class="px-4 py-2 bg-slate-800 hover:bg-slate-700 disabled:opacity-50 text-slate-200 rounded-xl text-sm font-bold border border-slate-700 transition-all cursor-pointer"
+              class="w-10 h-10 bg-slate-800 border border-slate-700 hover:bg-slate-700 disabled:opacity-50 disabled:cursor-not-allowed text-slate-200 rounded-xl text-sm font-bold transition-all cursor-pointer flex items-center justify-center"
             >
-              ◀ Previous
+              ◀
             </button>
-            <span class="text-sm font-bold text-slate-400">Page {{ locationsPage }} of {{ totalLocationsPages }}</span>
+            <button 
+              v-for="p in totalLocationsPages" 
+              :key="p"
+              @click="locationsPage = p"
+              :class="[
+                'w-10 h-10 rounded-xl text-sm font-bold border transition-all cursor-pointer flex items-center justify-center',
+                locationsPage === p 
+                  ? 'bg-red-600 border-red-600 text-white shadow-lg shadow-red-600/20' 
+                  : 'bg-slate-800 border-slate-700 text-slate-300 hover:bg-slate-750 hover:text-white'
+              ]"
+            >
+              {{ p }}
+            </button>
             <button 
               @click="locationsPage++" 
               :disabled="locationsPage === totalLocationsPages"
-              class="px-4 py-2 bg-slate-800 hover:bg-slate-700 disabled:opacity-50 text-slate-200 rounded-xl text-sm font-bold border border-slate-700 transition-all cursor-pointer"
+              class="w-10 h-10 bg-slate-800 border border-slate-700 hover:bg-slate-700 disabled:opacity-50 disabled:cursor-not-allowed text-slate-200 rounded-xl text-sm font-bold transition-all cursor-pointer flex items-center justify-center"
             >
-              Next ▶
+              ▶
             </button>
           </div>
         </div>
@@ -164,6 +179,9 @@
                 <div class="flex justify-between items-center border-t border-slate-900 pt-4 mt-auto">
                   <span class="text-[10px] text-slate-500 font-mono">{{ post.date || 'No Date' }}</span>
                   <div class="flex gap-2">
+                    <button @click="manageBlogSections(post)" class="px-3 py-1.5 bg-red-600/10 hover:bg-red-600/20 border border-red-500/20 text-red-500 text-xs font-bold rounded-lg transition-colors">
+                      Sections
+                    </button>
                     <button @click="openEditBlogModal(post)" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold rounded-lg transition-colors border border-slate-700">
                       Edit
                     </button>
@@ -180,21 +198,33 @@
           </div>
 
           <!-- Pagination for Blog Posts -->
-          <div v-if="totalBlogPages > 1" class="flex justify-center items-center gap-4 mt-8">
+          <div v-if="totalBlogPages > 1" class="flex justify-center items-center gap-2 mt-8">
             <button 
               @click="blogPage--" 
               :disabled="blogPage === 1"
-              class="px-4 py-2 bg-slate-800 hover:bg-slate-700 disabled:opacity-50 text-slate-200 rounded-xl text-sm font-bold border border-slate-700 transition-all cursor-pointer"
+              class="w-10 h-10 bg-slate-800 border border-slate-700 hover:bg-slate-700 disabled:opacity-50 disabled:cursor-not-allowed text-slate-200 rounded-xl text-sm font-bold transition-all cursor-pointer flex items-center justify-center"
             >
-              ◀ Previous
+              ◀
             </button>
-            <span class="text-sm font-bold text-slate-400">Page {{ blogPage }} of {{ totalBlogPages }}</span>
+            <button 
+              v-for="p in totalBlogPages" 
+              :key="p"
+              @click="blogPage = p"
+              :class="[
+                'w-10 h-10 rounded-xl text-sm font-bold border transition-all cursor-pointer flex items-center justify-center',
+                blogPage === p 
+                  ? 'bg-red-600 border-red-600 text-white shadow-lg shadow-red-600/20' 
+                  : 'bg-slate-800 border-slate-700 text-slate-300 hover:bg-slate-750 hover:text-white'
+              ]"
+            >
+              {{ p }}
+            </button>
             <button 
               @click="blogPage++" 
               :disabled="blogPage === totalBlogPages"
-              class="px-4 py-2 bg-slate-800 hover:bg-slate-700 disabled:opacity-50 text-slate-200 rounded-xl text-sm font-bold border border-slate-700 transition-all cursor-pointer"
+              class="w-10 h-10 bg-slate-800 border border-slate-700 hover:bg-slate-700 disabled:opacity-50 disabled:cursor-not-allowed text-slate-200 rounded-xl text-sm font-bold transition-all cursor-pointer flex items-center justify-center"
             >
-              Next ▶
+              ▶
             </button>
           </div>
         </div>
@@ -223,7 +253,7 @@
                   <span class="text-[10px] text-slate-500 font-mono truncate">slug: {{ service.slug }}</span>
                   <div class="flex gap-2">
                     <button @click="manageServiceSections(service)" class="px-3 py-1.5 bg-red-600/10 hover:bg-red-600/20 border border-red-500/20 text-red-500 text-xs font-bold rounded-lg transition-colors">
-                      Manage Sections
+                      Sections
                     </button>
                     <button @click="openEditServiceModal(service)" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold rounded-lg transition-colors border border-slate-700">
                       Edit
@@ -241,21 +271,33 @@
           </div>
 
           <!-- Pagination for Services -->
-          <div v-if="totalServicesPages > 1" class="flex justify-center items-center gap-4 mt-8">
+          <div v-if="totalServicesPages > 1" class="flex justify-center items-center gap-2 mt-8">
             <button 
               @click="servicesPage--" 
               :disabled="servicesPage === 1"
-              class="px-4 py-2 bg-slate-800 hover:bg-slate-700 disabled:opacity-50 text-slate-200 rounded-xl text-sm font-bold border border-slate-700 transition-all cursor-pointer"
+              class="w-10 h-10 bg-slate-800 border border-slate-700 hover:bg-slate-700 disabled:opacity-50 disabled:cursor-not-allowed text-slate-200 rounded-xl text-sm font-bold transition-all cursor-pointer flex items-center justify-center"
             >
-              ◀ Previous
+              ◀
             </button>
-            <span class="text-sm font-bold text-slate-400">Page {{ servicesPage }} of {{ totalServicesPages }}</span>
+            <button 
+              v-for="p in totalServicesPages" 
+              :key="p"
+              @click="servicesPage = p"
+              :class="[
+                'w-10 h-10 rounded-xl text-sm font-bold border transition-all cursor-pointer flex items-center justify-center',
+                servicesPage === p 
+                  ? 'bg-red-600 border-red-600 text-white shadow-lg shadow-red-600/20' 
+                  : 'bg-slate-800 border-slate-700 text-slate-300 hover:bg-slate-750 hover:text-white'
+              ]"
+            >
+              {{ p }}
+            </button>
             <button 
               @click="servicesPage++" 
               :disabled="servicesPage === totalServicesPages"
-              class="px-4 py-2 bg-slate-800 hover:bg-slate-700 disabled:opacity-50 text-slate-200 rounded-xl text-sm font-bold border border-slate-700 transition-all cursor-pointer"
+              class="w-10 h-10 bg-slate-800 border border-slate-700 hover:bg-slate-700 disabled:opacity-50 disabled:cursor-not-allowed text-slate-200 rounded-xl text-sm font-bold transition-all cursor-pointer flex items-center justify-center"
             >
-              Next ▶
+              ▶
             </button>
           </div>
         </div>
@@ -767,6 +809,181 @@
       </div>
     </div>
 
+    <!-- MODAL: MANAGE BLOG SECTIONS -->
+    <div v-if="modals.blogSections" class="fixed inset-0 z-50 flex items-center justify-center p-6 bg-slate-950/80 backdrop-blur-sm overflow-y-auto">
+      <div class="glass-panel w-full max-w-3xl rounded-3xl border border-slate-800 bg-slate-900 p-8 shadow-2xl my-8 space-y-6 flex flex-col max-h-[90vh]">
+        <div class="flex justify-between items-center border-b border-slate-800 pb-4 shrink-0">
+          <div>
+            <h3 class="text-xl font-black text-white">Customize Sections</h3>
+            <p class="text-xs text-slate-400 mt-1">Manage sub-sections inside the "{{ selectedBlog ? selectedBlog.title_en : '' }}" post.</p>
+          </div>
+          <button @click="modals.blogSections = false" class="text-slate-400 hover:text-white">✕</button>
+        </div>
+
+        <div class="flex-grow overflow-y-auto space-y-6 pr-2">
+          <!-- Add new section form -->
+          <div class="p-6 bg-slate-950/60 border border-slate-800 rounded-2xl space-y-4">
+            <h4 class="font-bold text-sm text-white border-b border-slate-800/80 pb-2">➕ Add New Section</h4>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="space-y-1">
+                <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Section Title EN</label>
+                <input type="text" v-model="sectionForm.title_en" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 text-xs" />
+              </div>
+              <div class="space-y-1">
+                <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Section Title NL</label>
+                <input type="text" v-model="sectionForm.title_nl" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 text-xs" />
+              </div>
+              <div class="space-y-1 md:col-span-2">
+                <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Content EN</label>
+                <textarea v-model="sectionForm.content_en" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 h-16 text-xs"></textarea>
+              </div>
+              <div class="space-y-1 md:col-span-2">
+                <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Content NL</label>
+                <textarea v-model="sectionForm.content_nl" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 h-16 text-xs"></textarea>
+              </div>
+              <div class="space-y-1">
+                <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Sort Order</label>
+                <input type="number" v-model.number="sectionForm.sort_order" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 text-xs" />
+              </div>
+              <div class="space-y-2">
+                <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Optional Section Image</label>
+                <div class="flex items-center gap-4">
+                  <div class="w-10 h-10 rounded-lg overflow-hidden bg-slate-900 border border-slate-800 flex items-center justify-center shrink-0">
+                    <img v-if="sectionForm.image" :src="sectionForm.image" class="w-full h-full object-cover" />
+                    <span v-else class="text-[8px] text-slate-600">None</span>
+                  </div>
+                  <input type="file" @change="e => onFileChange(e, 'section')" accept="image/*" class="text-[10px] text-slate-400 file:py-1 file:px-2 file:rounded-md file:border-0 file:text-[8px] file:font-bold file:bg-slate-800 file:text-slate-200 file:cursor-pointer hover:file:bg-slate-700" />
+                </div>
+                <div v-if="uploading" class="text-[10px] text-red-500 animate-pulse">Uploading image...</div>
+              </div>
+            </div>
+            <div class="flex justify-end pt-2">
+              <button @click="addBlogSection" :disabled="uploading" class="px-5 py-2 bg-red-600 hover:bg-red-700 text-white font-bold rounded-lg text-xs shadow-md">
+                Add Section
+              </button>
+            </div>
+          </div>
+
+          <!-- Existing Sections List -->
+          <div class="space-y-4">
+            <h4 class="font-bold text-sm text-white">Existing Sections</h4>
+            <div v-for="(sec, idx) in blogSections" :key="sec.id" class="p-5 border border-slate-800/80 rounded-2xl bg-slate-900/60 relative space-y-3">
+              <div class="flex justify-between items-start gap-4">
+                <h5 class="font-bold text-slate-200 text-xs">Section #{{ idx + 1 }} — {{ sec.title_en }}</h5>
+                <button @click="deleteBlogSection(sec)" class="text-red-500 hover:bg-red-500/10 p-1.5 rounded-lg text-xs">
+                  🗑️ Delete
+                </button>
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div class="text-[11px] text-slate-400"><strong>Title NL:</strong> {{ sec.title_nl }}</div>
+                <div class="text-[11px] text-slate-400"><strong>Sort Order:</strong> {{ sec.sort_order }}</div>
+                <div class="text-[11px] text-slate-400 md:col-span-2"><strong>Content EN:</strong> {{ sec.content_en }}</div>
+                <div class="text-[11px] text-slate-400 md:col-span-2"><strong>Content NL:</strong> {{ sec.content_nl }}</div>
+                <div v-if="sec.image" class="w-16 h-16 rounded-lg overflow-hidden bg-slate-950 border border-slate-800 md:col-span-2 mt-2">
+                  <img :src="sec.image" class="w-full h-full object-cover" />
+                </div>
+              </div>
+            </div>
+            <div v-if="blogSections.length === 0" class="text-center py-8 text-xs text-slate-500 bg-slate-950/20 rounded-2xl border border-slate-900">
+              No custom sub-sections added yet for this post.
+            </div>
+          </div>
+        </div>
+
+        <div class="flex justify-end pt-4 border-t border-slate-800 shrink-0">
+          <button @click="modals.blogSections = false" class="px-6 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold rounded-xl text-xs border border-slate-700">Done</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL: MANAGE LOCATION SECTIONS -->
+    <div v-if="modals.locationSections" class="fixed inset-0 z-50 flex items-center justify-center p-6 bg-slate-950/80 backdrop-blur-sm overflow-y-auto">
+      <div class="glass-panel w-full max-w-3xl rounded-3xl border border-slate-800 bg-slate-900 p-8 shadow-2xl my-8 space-y-6 flex flex-col max-h-[90vh]">
+        <div class="flex justify-between items-center border-b border-slate-800 pb-4 shrink-0">
+          <div>
+            <h3 class="text-xl font-black text-white">Customize Sections</h3>
+            <p class="text-xs text-slate-400 mt-1">Manage sub-sections inside the "{{ selectedLocation ? selectedLocation.name : '' }}" location page.</p>
+          </div>
+          <button @click="modals.locationSections = false" class="text-slate-400 hover:text-white">✕</button>
+        </div>
+
+        <div class="flex-grow overflow-y-auto space-y-6 pr-2">
+          <!-- Add new section form -->
+          <div class="p-6 bg-slate-950/60 border border-slate-800 rounded-2xl space-y-4">
+            <h4 class="font-bold text-sm text-white border-b border-slate-800/80 pb-2">➕ Add New Section</h4>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="space-y-1">
+                <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Section Title EN</label>
+                <input type="text" v-model="sectionForm.title_en" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 text-xs" />
+              </div>
+              <div class="space-y-1">
+                <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Section Title NL</label>
+                <input type="text" v-model="sectionForm.title_nl" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 text-xs" />
+              </div>
+              <div class="space-y-1 md:col-span-2">
+                <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Content EN</label>
+                <textarea v-model="sectionForm.content_en" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 h-16 text-xs"></textarea>
+              </div>
+              <div class="space-y-1 md:col-span-2">
+                <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Content NL</label>
+                <textarea v-model="sectionForm.content_nl" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 h-16 text-xs"></textarea>
+              </div>
+              <div class="space-y-1">
+                <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Sort Order</label>
+                <input type="number" v-model.number="sectionForm.sort_order" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 text-xs" />
+              </div>
+              <div class="space-y-2">
+                <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Optional Section Image</label>
+                <div class="flex items-center gap-4">
+                  <div class="w-10 h-10 rounded-lg overflow-hidden bg-slate-900 border border-slate-800 flex items-center justify-center shrink-0">
+                    <img v-if="sectionForm.image" :src="sectionForm.image" class="w-full h-full object-cover" />
+                    <span v-else class="text-[8px] text-slate-600">None</span>
+                  </div>
+                  <input type="file" @change="e => onFileChange(e, 'section')" accept="image/*" class="text-[10px] text-slate-400 file:py-1 file:px-2 file:rounded-md file:border-0 file:text-[8px] file:font-bold file:bg-slate-800 file:text-slate-200 file:cursor-pointer hover:file:bg-slate-700" />
+                </div>
+                <div v-if="uploading" class="text-[10px] text-red-500 animate-pulse">Uploading image...</div>
+              </div>
+            </div>
+            <div class="flex justify-end pt-2">
+              <button @click="addLocationSection" :disabled="uploading" class="px-5 py-2 bg-red-600 hover:bg-red-700 text-white font-bold rounded-lg text-xs shadow-md">
+                Add Section
+              </button>
+            </div>
+          </div>
+
+          <!-- Existing Sections List -->
+          <div class="space-y-4">
+            <h4 class="font-bold text-sm text-white">Existing Sections</h4>
+            <div v-for="(sec, idx) in locationSections" :key="sec.id" class="p-5 border border-slate-800/80 rounded-2xl bg-slate-900/60 relative space-y-3">
+              <div class="flex justify-between items-start gap-4">
+                <h5 class="font-bold text-slate-200 text-xs">Section #{{ idx + 1 }} — {{ sec.title_en }}</h5>
+                <button @click="deleteLocationSection(sec)" class="text-red-500 hover:bg-red-500/10 p-1.5 rounded-lg text-xs">
+                  🗑️ Delete
+                </button>
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div class="text-[11px] text-slate-400"><strong>Title NL:</strong> {{ sec.title_nl }}</div>
+                <div class="text-[11px] text-slate-400"><strong>Sort Order:</strong> {{ sec.sort_order }}</div>
+                <div class="text-[11px] text-slate-400 md:col-span-2"><strong>Content EN:</strong> {{ sec.content_en }}</div>
+                <div class="text-[11px] text-slate-400 md:col-span-2"><strong>Content NL:</strong> {{ sec.content_nl }}</div>
+                <div v-if="sec.image" class="w-16 h-16 rounded-lg overflow-hidden bg-slate-950 border border-slate-800 md:col-span-2 mt-2">
+                  <img :src="sec.image" class="w-full h-full object-cover" />
+                </div>
+              </div>
+            </div>
+            <div v-if="locationSections.length === 0" class="text-center py-8 text-xs text-slate-500 bg-slate-950/20 rounded-2xl border border-slate-900">
+              No custom sub-sections added yet for this location page.
+            </div>
+          </div>
+        </div>
+
+        <div class="flex justify-end pt-4 border-t border-slate-800 shrink-0">
+          <button @click="modals.locationSections = false" class="px-6 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold rounded-xl text-xs border border-slate-700">Done</button>
+        </div>
+      </div>
+    </div>
+
+
   </div>
 </template>
 
@@ -1151,13 +1368,106 @@ const deleteServiceSection = async (sec) => {
   }
 }
 
+// 5. Blog Posts Inner Sections Logic
+const selectedBlog = ref(null)
+const blogSections = ref([])
+
+const manageBlogSections = async (blog) => {
+  if (!$supabase) return
+  selectedBlog.value = blog
+  sectionForm.value = { title_en: '', title_nl: '', content_en: '', content_nl: '', image: '', sort_order: 0 }
+  
+  // Load sections for this blog post
+  const { data: secs } = await $supabase
+    .from('blog_sections')
+    .select('*')
+    .eq('blog_id', blog.id)
+    .order('sort_order')
+    
+  if (secs) blogSections.value = secs
+  modals.value.blogSections = true
+}
+
+const addBlogSection = async () => {
+  if (!$supabase || !selectedBlog.value) return
+  
+  const { data, error } = await $supabase.from('blog_sections').insert([{
+    blog_id: selectedBlog.value.id,
+    ...sectionForm.value
+  }]).select()
+  
+  if (!error && data) {
+    blogSections.value.push(data[0])
+    blogSections.value.sort((a, b) => a.sort_order - b.sort_order)
+    sectionForm.value = { title_en: '', title_nl: '', content_en: '', content_nl: '', image: '', sort_order: 0 }
+  } else {
+    alert('Error adding section: ' + (error ? error.message : 'Unknown error'))
+  }
+}
+
+const deleteBlogSection = async (sec) => {
+  if (!$supabase || !confirm(`Delete this section?`)) return
+  const { error } = await $supabase.from('blog_sections').delete().eq('id', sec.id)
+  if (!error) {
+    blogSections.value = blogSections.value.filter(s => s.id !== sec.id)
+  }
+}
+
+// 6. Locations Inner Sections Logic
+const selectedLocation = ref(null)
+const locationSections = ref([])
+
+const manageLocationSections = async (loc) => {
+  if (!$supabase) return
+  selectedLocation.value = loc
+  sectionForm.value = { title_en: '', title_nl: '', content_en: '', content_nl: '', image: '', sort_order: 0 }
+  
+  // Load sections for this location
+  const { data: secs } = await $supabase
+    .from('location_sections')
+    .select('*')
+    .eq('location_id', loc.id)
+    .order('sort_order')
+    
+  if (secs) locationSections.value = secs
+  modals.value.locationSections = true
+}
+
+const addLocationSection = async () => {
+  if (!$supabase || !selectedLocation.value) return
+  
+  const { data, error } = await $supabase.from('location_sections').insert([{
+    location_id: selectedLocation.value.id,
+    ...sectionForm.value
+  }]).select()
+  
+  if (!error && data) {
+    locationSections.value.push(data[0])
+    locationSections.value.sort((a, b) => a.sort_order - b.sort_order)
+    sectionForm.value = { title_en: '', title_nl: '', content_en: '', content_nl: '', image: '', sort_order: 0 }
+  } else {
+    alert('Error adding section: ' + (error ? error.message : 'Unknown error'))
+  }
+}
+
+const deleteLocationSection = async (sec) => {
+  if (!$supabase || !confirm(`Delete this section?`)) return
+  const { error } = await $supabase.from('location_sections').delete().eq('id', sec.id)
+  if (!error) {
+    locationSections.value = locationSections.value.filter(s => s.id !== sec.id)
+  }
+}
+
 // Modals display control
 const modals = ref({
   location: false,
   blog: false,
   service: false,
-  sections: false
+  sections: false,
+  blogSections: false,
+  locationSections: false
 })
+
 </script>
 
 <style scoped>

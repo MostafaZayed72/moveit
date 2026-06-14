@@ -77,6 +77,35 @@
             class="space-y-6 text-slate-700 dark:text-slate-300 leading-relaxed text-lg"
           ></div>
         </div>
+
+        <!-- Dynamic Blog Sub-sections -->
+        <div v-if="dbSections && dbSections.length > 0" class="space-y-16 pt-12 border-t border-slate-200 dark:border-white/5">
+          <div 
+            v-for="(sec, index) in dbSections" 
+            :key="sec.id"
+            :class="[
+              'flex flex-col lg:flex-row items-center gap-12',
+              index % 2 === 1 ? 'lg:flex-row-reverse' : ''
+            ]"
+            data-aos="fade-up"
+          >
+            <!-- Section Image (Optional) -->
+            <div v-if="sec.image" class="w-full lg:w-1/2">
+              <div class="h-80 md:h-[450px] rounded-[2.5rem] overflow-hidden shadow-2xl border border-slate-200 dark:border-white/5">
+                <img :src="sec.image" class="w-full h-full object-cover" :alt="isNl ? sec.title_nl : sec.title_en" />
+              </div>
+            </div>
+            <!-- Section Content -->
+            <div :class="['w-full', sec.image ? 'lg:w-1/2' : 'max-w-3xl mx-auto text-center']">
+              <h2 class="text-3xl md:text-4xl font-black text-slate-900 dark:text-white mb-6">
+                {{ isNl ? sec.title_nl : sec.title_en }}
+              </h2>
+              <div class="text-slate-650 dark:text-slate-300 leading-relaxed text-lg whitespace-pre-line">
+                {{ isNl ? sec.content_nl : sec.content_en }}
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -93,6 +122,7 @@ const { locale } = useI18n()
 
 const loading = ref(true)
 const post = ref(null)
+const dbSections = ref([])
 const errorMsg = ref('')
 
 const isNl = computed(() => locale.value === 'nl')
@@ -168,6 +198,17 @@ const fetchPostDetails = async () => {
       errorMsg.value = 'Article not found.'
     } else {
       post.value = data
+      
+      // Load custom sections for this blog post
+      const { data: secs } = await $supabase
+        .from('blog_sections')
+        .select('*')
+        .eq('blog_id', data.id)
+        .order('sort_order')
+        
+      if (secs) {
+        dbSections.value = secs
+      }
     }
   } catch (err) {
     console.error('Error fetching blog post details:', err)
