@@ -413,7 +413,7 @@ onMounted(() => {
     van_only: 'studio',
     van_1:    '1bed',
     van_2:    '2bed',
-    custom:   ''
+    full_service: '3bed'
   }
   if (route.query.type && typeMap[String(route.query.type)]) {
     moveSize.value = typeMap[String(route.query.type)]

@@ -91,6 +91,12 @@
     "move_type": "Type of move",
     "choose_option": "Choose an option",
     "custom_move": "Custom / Other",
+    "quote_move_types": {
+      "van_only": "Van Only (€69.99/hr)",
+      "van_1": "Van + 1 Mover (€79.99/hr)",
+      "van_2": "Van + 2 Movers (€94.99/hr)",
+      "full_service": "Full Service (€149/hr)"
+    },
     "moving_from": "Moving from address",
     "moving_to": "Moving to address",
     "or_get_call": "Or get a call from us",
@@ -211,7 +217,7 @@
         "Extra mover (€15.99/hr)"
       ],
       "package1": {
-        "name": "Do It Yourself",
+        "name": "Van Only",
         "price": "€69.99",
         "unit": "/hr",
         "best_for": [
@@ -232,7 +238,7 @@
         "cta_text": "Book DIY Move"
       },
       "package2": {
-        "name": "Student Move",
+        "name": "Van + 1 Mover",
         "price": "€79.99",
         "unit": "/hr",
         "best_for": [
@@ -256,7 +262,7 @@
         "cta_text": "Book Student Move"
       },
       "package3": {
-        "name": "Stress-Free Move",
+        "name": "Van + 2 Movers",
         "price": "€94.99",
         "unit": "/hr",
         "best_for": [
@@ -278,9 +284,9 @@
         "cta_text": "Book Stress-Free Move"
       },
       "package4": {
-        "name": "White-Glove Move",
-        "price": "Custom Quote",
-        "unit": "",
+        "name": "Full Service",
+        "price": "€149",
+        "unit": "/hr",
         "best_for": [
           { "icon": "tag", "text": "Full Service" },
           { "icon": "description", "text": "Concierge-level care for homes, art, antiques, and zero-compromise standards." }
@@ -297,7 +303,7 @@
           "✓ Packing and labelling",
           "✓ Speciality/fragile item handling"
         ],
-        "cta_text": "Get Custom Quote"
+        "cta_text": "Book Full Service"
       }
     }
   },
@@ -451,6 +457,8 @@
     "direct_desc": "Prefer to call or email? Our customer service team is available 24/7 to assist with your relocation needs.",
     "phone": "Phone",
     "email": "Email",
+    "whatsapp": "WhatsApp",
+    "phone_call": "Phone Call",
     "response_time_title": "Response Time",
     "response_time_desc_pre": "We typically respond to all inquiries within ",
     "response_time_hours": "2 hours",
@@ -511,7 +519,7 @@
     "packing_needed": "Packing service needed?",
     "furniture_assembly": "Furniture assembly / disassembly?",
     "fragile_special": "Any fragile or specialty items?",
-    "anything_else": "Anything else we should know? (optional)",
+    "anything_else": "Which large items/furniture do you need to move? Any additional comments?",
     "how_contact": "How would you prefer we contact you?",
     "studio_single": "Studio / Single Room",
     "1bed_apt": "1-Bedroom Apartment",

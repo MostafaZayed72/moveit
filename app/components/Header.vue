@@ -466,33 +466,12 @@ const toggleDark = useToggle(isDark)
 const navItems = [
   { key: 'home', path: '/' },
   { key: 'services', path: '/services' },
-  { 
-    key: 'locations', 
-    path: '#',
-    subItems: [
-      { key: 'maastricht', path: '/locations/maastricht' },
-      { key: 'geleen', path: '/locations/geleen' },
-      { key: 'roermond', path: '/locations/roermond' },
-      { key: 'sittard', path: '/locations/sittard' },
-      { key: 'venlo', path: '/locations/venlo' },
-      { key: 'weert', path: '/locations/weert' },
-      { key: 'eijsden', path: '/locations/eijsden' },
-      { key: 'meerssen', path: '/locations/meerssen' },
-      { key: 'vaals', path: '/locations/vaals' },
-      { key: 'aachen', path: '/locations/aachen' },
-      { key: 'genk', path: '/locations/genk' },
-      { key: 'brunssum', path: '/locations/brunssum' },
-      { key: 'valkenburg', path: '/locations/valkenburg' },
-      { key: 'hasselt', path: '/locations/hasselt' },
-      { key: 'all_locations', path: '/locations' }
-    ]
-  },
+  { key: 'pricing', path: '/pricing' },
   { 
     key: 'resources', 
     path: '#',
     subItems: [
       { key: 'faq', path: '/faq' },
-      { key: 'pricing', path: '/pricing' },
       { key: 'blog', path: '/blog' },
       { key: 'referral', path: '/referral-program' }
     ]
@@ -503,6 +482,7 @@ const navItems = [
     subItems: [
       { key: 'about', path: '/about' },
       { key: 'team', path: '/team' },
+      { key: 'locations', path: '/locations' },
       { key: 'contact', path: '/contact' }
     ]
   }

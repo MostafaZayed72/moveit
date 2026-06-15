@@ -94,161 +94,242 @@
 
         <div class="space-y-12">
           
-          <!-- Sub-Service 1 (Large Card - Image Left) -->
-          <div class="flex flex-col lg:flex-row bg-white dark:bg-slate-900 rounded-[2.5rem] overflow-hidden shadow-xl border border-slate-100 dark:border-white/5 group" data-aos="fade-up">
-            <div class="lg:w-2/5 relative min-h-[300px] overflow-hidden">
-              <img :src="getImage(serviceId, 'sub1')" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" :alt="title" />
-              <div class="absolute top-4 left-4 bg-red-600 text-white font-black px-4 py-1 rounded-full text-sm shadow-md">
-                {{ $t(serviceId + '_page.section2.sub1.tag') }}
+          <template v-if="parsedSections && parsedSections.length > 0">
+            <!-- Loop through first 3 sections as large cards -->
+            <div 
+              v-for="(sec, index) in parsedSections.slice(0, 3)" 
+              :key="sec.id"
+              :class="[
+                'flex flex-col lg:flex-row bg-white dark:bg-slate-900 rounded-[2.5rem] overflow-hidden shadow-xl border border-slate-100 dark:border-white/5 group',
+                index % 2 === 1 ? 'lg:flex-row-reverse' : ''
+              ]"
+              data-aos="fade-up"
+            >
+              <div class="lg:w-2/5 relative min-h-[300px] overflow-hidden">
+                <img :src="sec.image || 'https://images.unsplash.com/photo-1536376072261-38c75010e6c9?auto=format&fit=crop&q=80&w=800'" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" :alt="sec.title" />
               </div>
-            </div>
-            <div class="lg:w-3/5 p-8 md:p-12 flex flex-col justify-center">
-              <h3 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white mb-4">
-                {{ $t(serviceId + '_page.section2.sub1.title') }}
-              </h3>
-              <p class="text-slate-600 dark:text-slate-400 text-base sm:text-lg mb-6 sm:mb-8 leading-relaxed">
-                {{ $t(serviceId + '_page.section2.sub1.desc') }}
-              </p>
-              
-              <ul class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-6 sm:mb-8">
-                <li v-for="(bullet, i) in getBullets('sub1')" :key="i" class="flex items-center gap-3 text-slate-700 dark:text-slate-300 font-medium text-sm sm:text-base">
-                  <div class="w-6 h-6 rounded-full bg-green-100 dark:bg-green-500/20 text-green-600 flex items-center justify-center shrink-0">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
-                  </div>
-                  {{ bullet }}
-                </li>
-              </ul>
-              
-              <div class="flex flex-wrap items-center gap-6 mt-auto pt-6 border-t border-slate-100 dark:border-white/5">
-                <div class="text-xl sm:text-2xl font-black text-red-500">
-                  {{ $t(serviceId + '_page.section2.sub1.price') }}
-                </div>
-                <a :href="whatsappLink" target="_blank" class="ml-auto px-6 py-3 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-xl font-bold hover:bg-red-600 dark:hover:bg-red-500 dark:hover:text-white transition-colors text-center w-full sm:w-auto text-sm sm:text-base">
-                  {{ $t(serviceId + '_page.section2.sub1.cta') }}
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <!-- Sub-Service 2 (Large Card - Image Right) -->
-          <div class="flex flex-col lg:flex-row-reverse bg-white dark:bg-slate-900 rounded-[2.5rem] overflow-hidden shadow-xl border border-slate-100 dark:border-white/5 group" data-aos="fade-up">
-            <div class="lg:w-2/5 relative min-h-[300px] overflow-hidden">
-              <img :src="getImage(serviceId, 'sub2')" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" :alt="title" />
-              <div class="absolute top-4 left-4 bg-slate-900 text-white font-black px-4 py-1 rounded-full text-sm shadow-md">
-                {{ $t(serviceId + '_page.section2.sub2.tag') }}
-              </div>
-            </div>
-            <div class="lg:w-3/5 p-8 md:p-12 flex flex-col justify-center">
-              <h3 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white mb-4">
-                {{ $t(serviceId + '_page.section2.sub2.title') }}
-              </h3>
-              <p class="text-slate-600 dark:text-slate-400 text-base sm:text-lg mb-4 sm:mb-6 leading-relaxed">
-                {{ $t(serviceId + '_page.section2.sub2.desc') }}
-              </p>
-              
-              <div class="bg-slate-50 dark:bg-slate-800/50 p-4 rounded-xl border border-slate-100 dark:border-white/5 text-slate-700 dark:text-slate-300 font-medium mb-6 sm:mb-8 text-sm sm:text-base">
-                {{ $t(serviceId + '_page.section2.sub2.extra') }}
-              </div>
-              
-              <div class="flex flex-wrap items-center gap-6 mt-auto pt-6 border-t border-slate-100 dark:border-white/5">
-                <div class="text-xl sm:text-2xl font-black text-red-500">
-                  {{ $t(serviceId + '_page.section2.sub2.price') }}
-                </div>
-                <a :href="whatsappLink" target="_blank" class="ml-auto px-6 py-3 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-xl font-bold hover:bg-red-600 dark:hover:bg-red-500 dark:hover:text-white transition-colors text-center w-full sm:w-auto text-sm sm:text-base">
-                  {{ $t(serviceId + '_page.section2.sub2.cta') }}
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <!-- Sub-Service 3 (Large Card - Image Left) -->
-          <div class="flex flex-col lg:flex-row bg-white dark:bg-slate-900 rounded-[2.5rem] overflow-hidden shadow-xl border border-slate-100 dark:border-white/5 group" data-aos="fade-up">
-            <div class="lg:w-2/5 relative min-h-[300px] overflow-hidden">
-              <img :src="getImage(serviceId, 'sub3')" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" :alt="title" />
-              <div class="absolute top-4 left-4 bg-orange-500 text-white font-black px-4 py-1 rounded-full text-sm shadow-md">
-                {{ $t(serviceId + '_page.section2.sub3.tag') }}
-              </div>
-            </div>
-            <div class="lg:w-3/5 p-8 md:p-12 flex flex-col justify-center">
-              <h3 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white mb-4">
-                {{ $t(serviceId + '_page.section2.sub3.title') }}
-              </h3>
-              <p class="text-slate-600 dark:text-slate-400 text-base sm:text-lg mb-4 sm:mb-6 leading-relaxed">
-                {{ $t(serviceId + '_page.section2.sub3.desc') }}
-              </p>
-              
-              <div class="mb-4 sm:mb-6">
-                <span class="font-bold text-slate-900 dark:text-white block mb-2 sm:mb-3 text-sm sm:text-base">
-                  {{ $t(serviceId + '_page.section2.sub3.extra') }}
-                </span>
-                <ul class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                  <li v-for="(bullet, i) in getBullets('sub3')" :key="i" class="flex items-center gap-2 text-slate-600 dark:text-slate-400 text-xs sm:text-sm">
-                    <span class="text-red-500 font-bold">✓</span> {{ bullet }}
+              <div class="lg:w-3/5 p-8 md:p-12 flex flex-col justify-center">
+                <h3 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white mb-4">
+                  {{ sec.title }}
+                </h3>
+                <p class="text-slate-600 dark:text-slate-400 text-base sm:text-lg mb-6 sm:mb-8 leading-relaxed">
+                  {{ sec.desc }}
+                </p>
+                
+                <ul v-if="sec.bullets && sec.bullets.length > 0" class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-6 sm:mb-8">
+                  <li v-for="(bullet, i) in sec.bullets" :key="i" class="flex items-center gap-3 text-slate-700 dark:text-slate-300 font-medium text-sm sm:text-base">
+                    <div class="w-6 h-6 rounded-full bg-green-100 dark:bg-green-500/20 text-green-600 flex items-center justify-center shrink-0">
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+                    </div>
+                    {{ bullet }}
                   </li>
                 </ul>
-              </div>
-              
-              <div class="flex flex-wrap items-center gap-6 mt-auto pt-6 border-t border-slate-100 dark:border-white/5">
-                <div class="text-xl sm:text-2xl font-black text-red-500">
-                  {{ $t(serviceId + '_page.section2.sub3.price') }}
+                
+                <div v-if="sec.extra" class="bg-slate-50 dark:bg-slate-800/50 p-4 rounded-xl border border-slate-100 dark:border-white/5 text-slate-700 dark:text-slate-300 font-medium mb-6 sm:mb-8 text-sm sm:text-base">
+                  {{ sec.extra }}
                 </div>
-                <a :href="whatsappLink" target="_blank" class="ml-auto px-6 py-3 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-xl font-bold hover:bg-red-600 dark:hover:bg-red-500 dark:hover:text-white transition-colors text-center w-full sm:w-auto text-sm sm:text-base">
-                  {{ $t(serviceId + '_page.section2.sub3.cta') }}
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <!-- Sub-Service 4 & 5 (Small Grid) -->
-          <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <!-- Sub-Service 4 -->
-            <div class="bg-white dark:bg-slate-900 rounded-[2.5rem] p-8 md:p-10 shadow-xl border border-slate-100 dark:border-white/5 flex flex-col hover:-translate-y-2 transition-transform duration-300" data-aos="fade-up">
-              <div class="text-4xl mb-6">
-                {{ getSmallIcon('sub4') }}
-              </div>
-              <h3 class="text-2xl font-black text-slate-900 dark:text-white mb-4">
-                {{ $t(serviceId + '_page.section2.sub4.title') }}
-              </h3>
-              <p class="text-slate-600 dark:text-slate-400 mb-6 flex-grow">
-                {{ $t(serviceId + '_page.section2.sub4.desc') }}
-              </p>
-              <div class="bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 p-4 rounded-xl text-sm font-medium mb-6">
-                {{ $t(serviceId + '_page.section2.sub4.extra') }}
-              </div>
-              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-t border-slate-100 dark:border-white/5 pt-6">
-                <span class="font-black text-red-500 text-lg sm:text-xl leading-tight">
-                  {{ $t(serviceId + '_page.section2.sub4.price') }}
-                </span>
-                <a :href="whatsappLink" target="_blank" class="inline-flex items-center justify-center px-5 py-2.5 bg-slate-900 dark:bg-white text-white dark:text-slate-900 hover:bg-red-600 dark:hover:bg-red-500 dark:hover:text-white rounded-xl font-bold transition-colors text-sm shrink-0">
-                  {{ $t(serviceId + '_page.section2.sub4.cta') }} &rarr;
-                </a>
+                
+                <div class="flex flex-wrap items-center gap-6 mt-auto pt-6 border-t border-slate-100 dark:border-white/5">
+                  <div v-if="sec.price && !sec.price.toLowerCase().includes('quote')" class="text-xl sm:text-2xl font-black text-red-500">
+                    {{ sec.price }}
+                  </div>
+                  <a :href="whatsappLink" target="_blank" class="ml-auto px-6 py-3 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-xl font-bold hover:bg-red-600 dark:hover:bg-red-500 dark:hover:text-white transition-colors text-center w-full sm:w-auto text-sm sm:text-base">
+                    {{ sec.cta || (isNl ? 'Vraag offerte aan' : 'Arrange Pickup') }}
+                  </a>
+                </div>
               </div>
             </div>
 
-            <!-- Sub-Service 5 -->
-            <div class="bg-white dark:bg-slate-900 rounded-[2.5rem] p-8 md:p-10 shadow-xl border border-slate-100 dark:border-white/5 flex flex-col hover:-translate-y-2 transition-transform duration-300" data-aos="fade-up" data-aos-delay="100">
-              <div class="text-4xl mb-6">
-                {{ getSmallIcon('sub5') }}
-              </div>
-              <h3 class="text-2xl font-black text-slate-900 dark:text-white mb-4">
-                {{ $t(serviceId + '_page.section2.sub5.title') }}
-              </h3>
-              <p class="text-slate-600 dark:text-slate-400 mb-6 flex-grow">
-                {{ $t(serviceId + '_page.section2.sub5.desc') }}
-              </p>
-              <div class="bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-300 p-4 rounded-xl text-sm font-medium mb-6">
-                {{ $t(serviceId + '_page.section2.sub5.extra') }}
-              </div>
-              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-t border-slate-100 dark:border-white/5 pt-6">
-                <span class="font-black text-red-500 text-lg sm:text-xl leading-tight">
-                  {{ $t(serviceId + '_page.section2.sub5.price') }}
-                </span>
-                <a :href="whatsappLink" target="_blank" class="inline-flex items-center justify-center px-5 py-2.5 bg-slate-900 dark:bg-white text-white dark:text-slate-900 hover:bg-red-600 dark:hover:bg-red-500 dark:hover:text-white rounded-xl font-bold transition-colors text-sm shrink-0">
-                  {{ $t(serviceId + '_page.section2.sub5.cta') }} &rarr;
-                </a>
+            <!-- Remaining sections (index >= 3) as a 2-column grid -->
+            <div v-if="parsedSections.length > 3" class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              <div 
+                v-for="(sec, idx) in parsedSections.slice(3)" 
+                :key="sec.id"
+                class="bg-white dark:bg-slate-900 rounded-[2.5rem] p-8 md:p-10 shadow-xl border border-slate-100 dark:border-white/5 flex flex-col hover:-translate-y-2 transition-transform duration-300"
+                data-aos="fade-up"
+                :data-aos-delay="idx * 100"
+              >
+                <div class="text-4xl mb-6">
+                  {{ getSmallIcon('sub' + (idx + 4)) }}
+                </div>
+                <h3 class="text-2xl font-black text-slate-900 dark:text-white mb-4">
+                  {{ sec.title }}
+                </h3>
+                <p class="text-slate-600 dark:text-slate-400 mb-6 flex-grow">
+                  {{ sec.desc }}
+                </p>
+                <div v-if="sec.extra" class="bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 p-4 rounded-xl text-sm font-medium mb-6">
+                  {{ sec.extra }}
+                </div>
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-t border-slate-100 dark:border-white/5 pt-6">
+                  <span v-if="sec.price && !sec.price.toLowerCase().includes('quote')" class="font-black text-red-500 text-lg sm:text-xl leading-tight">
+                    {{ sec.price }}
+                  </span>
+                  <a :href="whatsappLink" target="_blank" class="inline-flex items-center justify-center px-5 py-2.5 bg-slate-900 dark:bg-white text-white dark:text-slate-900 hover:bg-red-600 dark:hover:bg-red-500 dark:hover:text-white rounded-xl font-bold transition-colors text-sm shrink-0">
+                    {{ sec.cta || (isNl ? 'Vraag offerte' : 'Book Service') }} &rarr;
+                  </a>
+                </div>
               </div>
             </div>
-          </div>
+          </template>
+
+          <template v-else>
+            <!-- Sub-Service 1 (Large Card - Image Left) -->
+            <div class="flex flex-col lg:flex-row bg-white dark:bg-slate-900 rounded-[2.5rem] overflow-hidden shadow-xl border border-slate-100 dark:border-white/5 group" data-aos="fade-up">
+              <div class="lg:w-2/5 relative min-h-[300px] overflow-hidden">
+                <img :src="getImage(serviceId, 'sub1')" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" :alt="title" />
+                <div class="absolute top-4 left-4 bg-red-600 text-white font-black px-4 py-1 rounded-full text-sm shadow-md">
+                  {{ $t(serviceId + '_page.section2.sub1.tag') }}
+                </div>
+              </div>
+              <div class="lg:w-3/5 p-8 md:p-12 flex flex-col justify-center">
+                <h3 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white mb-4">
+                  {{ $t(serviceId + '_page.section2.sub1.title') }}
+                </h3>
+                <p class="text-slate-600 dark:text-slate-400 text-base sm:text-lg mb-6 sm:mb-8 leading-relaxed">
+                  {{ $t(serviceId + '_page.section2.sub1.desc') }}
+                </p>
+                
+                <ul class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-6 sm:mb-8">
+                  <li v-for="(bullet, i) in getBullets('sub1')" :key="i" class="flex items-center gap-3 text-slate-700 dark:text-slate-300 font-medium text-sm sm:text-base">
+                    <div class="w-6 h-6 rounded-full bg-green-100 dark:bg-green-500/20 text-green-600 flex items-center justify-center shrink-0">
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+                    </div>
+                    {{ bullet }}
+                  </li>
+                </ul>
+                
+                <div class="flex flex-wrap items-center gap-6 mt-auto pt-6 border-t border-slate-100 dark:border-white/5">
+                  <div v-if="!$t(serviceId + '_page.section2.sub1.price').toLowerCase().includes('quote')" class="text-xl sm:text-2xl font-black text-red-500">
+                    {{ $t(serviceId + '_page.section2.sub1.price') }}
+                  </div>
+                  <a :href="whatsappLink" target="_blank" class="ml-auto px-6 py-3 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-xl font-bold hover:bg-red-600 dark:hover:bg-red-500 dark:hover:text-white transition-colors text-center w-full sm:w-auto text-sm sm:text-base">
+                    {{ $t(serviceId + '_page.section2.sub1.cta') }}
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Sub-Service 2 (Large Card - Image Right) -->
+            <div class="flex flex-col lg:flex-row-reverse bg-white dark:bg-slate-900 rounded-[2.5rem] overflow-hidden shadow-xl border border-slate-100 dark:border-white/5 group" data-aos="fade-up">
+              <div class="lg:w-2/5 relative min-h-[300px] overflow-hidden">
+                <img :src="getImage(serviceId, 'sub2')" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" :alt="title" />
+                <div class="absolute top-4 left-4 bg-slate-900 text-white font-black px-4 py-1 rounded-full text-sm shadow-md">
+                  {{ $t(serviceId + '_page.section2.sub2.tag') }}
+                </div>
+              </div>
+              <div class="lg:w-3/5 p-8 md:p-12 flex flex-col justify-center">
+                <h3 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white mb-4">
+                  {{ $t(serviceId + '_page.section2.sub2.title') }}
+                </h3>
+                <p class="text-slate-600 dark:text-slate-400 text-base sm:text-lg mb-4 sm:mb-6 leading-relaxed">
+                  {{ $t(serviceId + '_page.section2.sub2.desc') }}
+                </p>
+                
+                <div class="bg-slate-50 dark:bg-slate-800/50 p-4 rounded-xl border border-slate-100 dark:border-white/5 text-slate-700 dark:text-slate-300 font-medium mb-6 sm:mb-8 text-sm sm:text-base">
+                  {{ $t(serviceId + '_page.section2.sub2.extra') }}
+                </div>
+                
+                <div class="flex flex-wrap items-center gap-6 mt-auto pt-6 border-t border-slate-100 dark:border-white/5">
+                  <div v-if="!$t(serviceId + '_page.section2.sub2.price').toLowerCase().includes('quote')" class="text-xl sm:text-2xl font-black text-red-500">
+                    {{ $t(serviceId + '_page.section2.sub2.price') }}
+                  </div>
+                  <a :href="whatsappLink" target="_blank" class="ml-auto px-6 py-3 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-xl font-bold hover:bg-red-600 dark:hover:bg-red-500 dark:hover:text-white transition-colors text-center w-full sm:w-auto text-sm sm:text-base">
+                    {{ $t(serviceId + '_page.section2.sub2.cta') }}
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Sub-Service 3 (Large Card - Image Left) -->
+            <div class="flex flex-col lg:flex-row bg-white dark:bg-slate-900 rounded-[2.5rem] overflow-hidden shadow-xl border border-slate-100 dark:border-white/5 group" data-aos="fade-up">
+              <div class="lg:w-2/5 relative min-h-[300px] overflow-hidden">
+                <img :src="getImage(serviceId, 'sub3')" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" :alt="title" />
+                <div class="absolute top-4 left-4 bg-orange-500 text-white font-black px-4 py-1 rounded-full text-sm shadow-md">
+                  {{ $t(serviceId + '_page.section2.sub3.tag') }}
+                </div>
+              </div>
+              <div class="lg:w-3/5 p-8 md:p-12 flex flex-col justify-center">
+                <h3 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white mb-4">
+                  {{ $t(serviceId + '_page.section2.sub3.title') }}
+                </h3>
+                <p class="text-slate-600 dark:text-slate-400 text-base sm:text-lg mb-4 sm:mb-6 leading-relaxed">
+                  {{ $t(serviceId + '_page.section2.sub3.desc') }}
+                </p>
+                
+                <div class="mb-4 sm:mb-6">
+                  <span class="font-bold text-slate-900 dark:text-white block mb-2 sm:mb-3 text-sm sm:text-base">
+                    {{ $t(serviceId + '_page.section2.sub3.extra') }}
+                  </span>
+                  <ul class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    <li v-for="(bullet, i) in getBullets('sub3')" :key="i" class="flex items-center gap-2 text-slate-600 dark:text-slate-400 text-xs sm:text-sm">
+                      <span class="text-red-500 font-bold">✓</span> {{ bullet }}
+                    </li>
+                  </ul>
+                </div>
+                
+                <div class="flex flex-wrap items-center gap-6 mt-auto pt-6 border-t border-slate-100 dark:border-white/5">
+                  <div v-if="!$t(serviceId + '_page.section2.sub3.price').toLowerCase().includes('quote')" class="text-xl sm:text-2xl font-black text-red-500">
+                    {{ $t(serviceId + '_page.section2.sub3.price') }}
+                  </div>
+                  <a :href="whatsappLink" target="_blank" class="ml-auto px-6 py-3 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-xl font-bold hover:bg-red-600 dark:hover:bg-red-500 dark:hover:text-white transition-colors text-center w-full sm:w-auto text-sm sm:text-base">
+                    {{ $t(serviceId + '_page.section2.sub3.cta') }}
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Sub-Service 4 & 5 (Small Grid) -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              <!-- Sub-Service 4 -->
+              <div class="bg-white dark:bg-slate-900 rounded-[2.5rem] p-8 md:p-10 shadow-xl border border-slate-100 dark:border-white/5 flex flex-col hover:-translate-y-2 transition-transform duration-300" data-aos="fade-up">
+                <div class="text-4xl mb-6">
+                  {{ getSmallIcon('sub4') }}
+                </div>
+                <h3 class="text-2xl font-black text-slate-900 dark:text-white mb-4">
+                  {{ $t(serviceId + '_page.section2.sub4.title') }}
+                </h3>
+                <p class="text-slate-600 dark:text-slate-400 mb-6 flex-grow">
+                  {{ $t(serviceId + '_page.section2.sub4.desc') }}
+                </p>
+                <div class="bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 p-4 rounded-xl text-sm font-medium mb-6">
+                  {{ $t(serviceId + '_page.section2.sub4.extra') }}
+                </div>
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-t border-slate-100 dark:border-white/5 pt-6">
+                  <span v-if="!$t(serviceId + '_page.section2.sub4.price').toLowerCase().includes('quote')" class="font-black text-red-500 text-lg sm:text-xl leading-tight">
+                    {{ $t(serviceId + '_page.section2.sub4.price') }}
+                  </span>
+                  <a :href="whatsappLink" target="_blank" class="inline-flex items-center justify-center px-5 py-2.5 bg-slate-900 dark:bg-white text-white dark:text-slate-900 hover:bg-red-600 dark:hover:bg-red-500 dark:hover:text-white rounded-xl font-bold transition-colors text-sm shrink-0">
+                    {{ $t(serviceId + '_page.section2.sub4.cta') }} &rarr;
+                  </a>
+                </div>
+              </div>
+
+              <!-- Sub-Service 5 -->
+              <div class="bg-white dark:bg-slate-900 rounded-[2.5rem] p-8 md:p-10 shadow-xl border border-slate-100 dark:border-white/5 flex flex-col hover:-translate-y-2 transition-transform duration-300" data-aos="fade-up" data-aos-delay="100">
+                <div class="text-4xl mb-6">
+                  {{ getSmallIcon('sub5') }}
+                </div>
+                <h3 class="text-2xl font-black text-slate-900 dark:text-white mb-4">
+                  {{ $t(serviceId + '_page.section2.sub5.title') }}
+                </h3>
+                <p class="text-slate-600 dark:text-slate-400 mb-6 flex-grow">
+                  {{ $t(serviceId + '_page.section2.sub5.desc') }}
+                </p>
+                <div class="bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-300 p-4 rounded-xl text-sm font-medium mb-6">
+                  {{ $t(serviceId + '_page.section2.sub5.extra') }}
+                </div>
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-t border-slate-100 dark:border-white/5 pt-6">
+                  <span v-if="!$t(serviceId + '_page.section2.sub5.price').toLowerCase().includes('quote')" class="font-black text-red-500 text-lg sm:text-xl leading-tight">
+                    {{ $t(serviceId + '_page.section2.sub5.price') }}
+                  </span>
+                  <a :href="whatsappLink" target="_blank" class="inline-flex items-center justify-center px-5 py-2.5 bg-slate-900 dark:bg-white text-white dark:text-slate-900 hover:bg-red-600 dark:hover:bg-red-500 dark:hover:text-white rounded-xl font-bold transition-colors text-sm shrink-0">
+                    {{ $t(serviceId + '_page.section2.sub5.cta') }} &rarr;
+                  </a>
+                </div>
+              </div>
+            </div>
+          </template>
 
         </div>
       </div>
@@ -405,16 +486,135 @@ const props = defineProps({
   serviceId: {
     type: String,
     required: true
+  },
+  dbService: {
+    type: Object,
+    default: null
+  },
+  dbSections: {
+    type: Array,
+    default: () => []
   }
 })
 
 const localePath = useLocalePath()
-const { t, tm, rt } = useI18n()
+const { t, tm, rt, locale } = useI18n()
 
-const title = computed(() => t(`${props.serviceId}_page.hero.title`, 'Moving Service'))
+const isNl = computed(() => locale.value === 'nl')
+
+const title = computed(() => {
+  if (props.dbService) {
+    return isNl.value ? props.dbService.title_nl : props.dbService.title_en
+  }
+  return t(`${props.serviceId}_page.hero.title`, 'Moving Service')
+})
+
+const subtitle = computed(() => {
+  if (props.dbService) {
+    return isNl.value ? props.dbService.description_nl : props.dbService.description_en
+  }
+  return t(`${props.serviceId}_page.hero.subtitle`, '')
+})
+
+function parseSectionContent(content) {
+  if (!content) return { desc: '', bullets: [], price: '', cta: '', extra: '' }
+  
+  const lines = content.split('\n')
+  
+  let descLines = []
+  let bullets = []
+  let price = ''
+  let cta = ''
+  let extra = ''
+  
+  let inBullets = false
+  
+  for (const line of lines) {
+    const trimmed = line.trim()
+    if (!trimmed) continue
+    
+    if (trimmed.toLowerCase().startsWith('bullets:')) {
+      inBullets = true
+      continue
+    }
+    
+    if (inBullets && (trimmed.startsWith('-') || trimmed.startsWith('✓') || trimmed.startsWith('*'))) {
+      bullets.push(trimmed.replace(/^[-✓*]\s*/, ''))
+      continue
+    }
+    
+    if (inBullets && !trimmed.startsWith('-') && !trimmed.startsWith('✓') && !trimmed.startsWith('*')) {
+      inBullets = false
+    }
+    
+    if (trimmed.toLowerCase().startsWith('price:')) {
+      price = trimmed.substring(6).trim()
+      continue
+    }
+    
+    if (trimmed.toLowerCase().startsWith('cta:')) {
+      cta = trimmed.substring(4).trim()
+      continue
+    }
+    
+    const metaPrefixes = ['extra:', 'supported:', 'great_for:', 'ideal:', 'includes:', 'support:']
+    let matchedPrefix = false
+    for (const prefix of metaPrefixes) {
+      if (trimmed.toLowerCase().startsWith(prefix)) {
+        extra = trimmed.substring(prefix.length).trim()
+        matchedPrefix = true
+        break
+      }
+    }
+    if (matchedPrefix) continue
+    
+    if (!inBullets) {
+      descLines.push(trimmed)
+    }
+  }
+  
+  return {
+    desc: descLines.join('\n\n'),
+    bullets,
+    price,
+    cta,
+    extra
+  }
+}
+
+const parsedSections = computed(() => {
+  if (!props.dbSections || props.dbSections.length === 0) return []
+  return props.dbSections.map(sec => {
+    const content = isNl.value ? sec.content_nl : sec.content_en
+    const secTitle = isNl.value ? sec.title_nl : sec.title_en
+    const parsed = parseSectionContent(content)
+    return {
+      id: sec.id,
+      title: secTitle,
+      image: sec.image,
+      ...parsed
+    }
+  })
+})
 
 // Service-specific static configurations
 const configs = {
+  student: {
+    heroImage: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=2000',
+    heroBadge: '🎓 Student Relocation Helper',
+    gradientClass: 'from-red-600 to-orange-500',
+    brandImage: 'https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&q=80&w=2000',
+    sub4Icon: '🚲',
+    sub5Icon: '🌿',
+    features: [
+      { icon: '🎓', key: 'pricing' },
+      { icon: '💬', key: 'whatsapp' },
+      { icon: '📦', key: 'flexible' },
+      { icon: '🌍', key: 'international' },
+      { icon: '⚡', key: 'last_minute' },
+      { icon: '🛠', key: 'assembly' }
+    ]
+  },
   local: {
     heroImage: 'https://images.unsplash.com/photo-1558522195-e1201b090344?auto=format&fit=crop&q=80&w=2000',
     heroBadge: '🏠 Local Relocation Helper',
@@ -595,6 +795,11 @@ const configs = {
 
 // Sub service offering images mapping
 const offeringImages = {
+  student: {
+    sub1: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&q=80&w=800',
+    sub2: 'https://images.unsplash.com/photo-1585412727339-54e4bae3bbf9?auto=format&fit=crop&q=80&w=800',
+    sub3: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&q=80&w=800'
+  },
   local: {
     sub1: 'https://images.unsplash.com/photo-1536376072261-38c75010e6c9?auto=format&fit=crop&q=80&w=800',
     sub2: 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&q=80&w=800',
@@ -654,7 +859,12 @@ const offeringImages = {
 
 const currentConfig = computed(() => configs[props.serviceId] || configs.local)
 
-const heroImage = computed(() => currentConfig.value.heroImage)
+const heroImage = computed(() => {
+  if (props.dbService && props.dbService.image) {
+    return props.dbService.image
+  }
+  return currentConfig.value.heroImage
+})
 const heroBadge = computed(() => currentConfig.value.heroBadge)
 const gradientClass = computed(() => currentConfig.value.gradientClass)
 const brandImage = computed(() => currentConfig.value.brandImage)

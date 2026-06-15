@@ -91,6 +91,12 @@
     "move_type": "Type verhuizing",
     "choose_option": "Kies een optie",
     "custom_move": "Anders / Maatwerk",
+    "quote_move_types": {
+      "van_only": "Alleen Bus (€69.99/u)",
+      "van_1": "Bus + 1 Verhuizer (€79.99/u)",
+      "van_2": "Bus + 2 Verhuizers (€94.99/u)",
+      "full_service": "Volledige Service (€149/u)"
+    },
     "moving_from": "Vertrekadres (van)",
     "moving_to": "Aankomstadres (naar)",
     "or_get_call": "Of word gebeld",
@@ -197,7 +203,7 @@
         "Extra verhuizer (€15.99/u)"
       ],
       "package1": {
-        "name": "Doe Het Zelf",
+        "name": "Alleen Bus",
         "price": "€69.99",
         "unit": "/uur",
         "best_for": [
@@ -218,7 +224,7 @@
         "cta_text": "Boek Doe Het Zelf"
       },
       "package2": {
-        "name": "Studenten Verhuizing",
+        "name": "Bus + 1 Verhuizer",
         "price": "€79.99",
         "unit": "/uur",
         "best_for": [
@@ -242,7 +248,7 @@
         "cta_text": "Boek Studenten Move"
       },
       "package3": {
-        "name": "Stressvrije Verhuizing",
+        "name": "Bus + 2 Verhuizers",
         "price": "€94.99",
         "unit": "/uur",
         "best_for": [
@@ -264,9 +270,9 @@
         "cta_text": "Boek Stressvrije Move"
       },
       "package4": {
-        "name": "White-Glove Verhuizing",
-        "price": "Offerte op maat",
-        "unit": "",
+        "name": "Volledige Service",
+        "price": "€149",
+        "unit": "/uur",
         "best_for": [
           { "icon": "tag", "text": "Volledige Service" },
           { "icon": "description", "text": "Zorg op conciërgeniveau voor huizen, kunst, antiek en compromisloze normen." }
@@ -283,7 +289,7 @@
           "✓ Inpakken en labelen",
           "✓ Behandeling van speciale/breekbare items"
         ],
-        "cta_text": "Offerte Aanvragen"
+        "cta_text": "Boek Volledige Service"
       }
     }
   },
@@ -437,6 +443,8 @@
     "direct_desc": "Belt of mailt u liever? Onze klantenservice is 24/7 bereikbaar om u te helpen met uw verhuizing.",
     "phone": "Telefoon",
     "email": "E-mail",
+    "whatsapp": "WhatsApp",
+    "phone_call": "Bellen",
     "response_time_title": "Reactietijd",
     "response_time_desc_pre": "We reageren meestal binnen ",
     "response_time_hours": "2 uur",
@@ -497,7 +505,7 @@
     "packing_needed": "Inpakservice nodig?",
     "furniture_assembly": "Meubels (de)monteren?",
     "fragile_special": "Breekbare of speciale spullen?",
-    "anything_else": "Nog iets dat we moeten weten? (optioneel)",
+    "anything_else": "Welke grote spullen/meubels moet u verhuizen? Eventuele aanvullende opmerkingen?",
     "how_contact": "Hoe neemt u het liefst contact met ons op?",
     "studio_single": "Studio / Eén kamer",
     "1bed_apt": "1-Slaapkamer Huis",

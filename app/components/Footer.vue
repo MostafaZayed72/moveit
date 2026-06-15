@@ -132,6 +132,7 @@ const isDark = useDark({
 const navItems = [
   { key: 'home', path: '/' },
   { key: 'about', path: '/about' },
+  { key: 'pricing', path: '/pricing' },
   { key: 'faq', path: '/faq' },
   { key: 'contact', path: '/contact' },
   { key: 'blog', path: '/blog' },

@@ -1,16 +1,16 @@
 <template>
-  <div class="p-6 md:p-10 bg-slate-950/60 border border-white/10 rounded-[2.5rem] backdrop-blur-xl shadow-2xl space-y-6">
+  <div class="p-6 md:p-10 bg-slate-950/60 border border-white/10 rounded-[2.5rem] backdrop-blur-xl shadow-2xl space-y-6 w-full max-w-full box-border">
     <div>
       <h3 class="text-3xl font-black text-white tracking-tight">{{ $t('home.get_quote') }}</h3>
       <p class="text-sm text-slate-400 mt-2">{{ $t('home.quote_form_desc') }}</p>
     </div>
-    <form @submit.prevent="handleQuoteSubmit" class="space-y-4">
+    <form @submit.prevent="handleQuoteSubmit" class="space-y-4 w-full max-w-full box-border">
       
       <!-- Date and Type Fields -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div class="space-y-1">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-full box-border">
+        <div class="space-y-1 w-full max-w-full box-border">
           <label class="text-xs font-bold uppercase tracking-widest text-slate-400 pl-2">{{ $t('home.move_date') }} *</label>
-          <div class="relative">
+          <div class="relative w-full max-w-full box-border">
             <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400 z-10">
               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
             </div>
@@ -19,7 +19,7 @@
               v-model="moveDate" 
               type="date"
               required
-              class="date-input-custom w-full pl-12 pr-6 py-4 bg-white/5 border border-white/10 rounded-2xl focus:bg-white/10 focus:border-red-500 outline-none transition-all shadow-inner [color-scheme:dark] cursor-pointer"
+              class="date-input-custom w-full max-w-full pl-12 pr-6 py-4 bg-white/5 border border-white/10 rounded-2xl focus:bg-white/10 focus:border-red-500 outline-none transition-all shadow-inner [color-scheme:dark] cursor-pointer box-border"
               :class="moveDate ? 'text-white' : 'text-transparent'"
             />
             
@@ -29,14 +29,14 @@
           </div>
         </div>
         
-        <div class="space-y-1">
+        <div class="space-y-1 w-full max-w-full box-border">
           <label class="text-xs font-bold uppercase tracking-widest text-slate-400 pl-2">{{ $t('home.move_type') }} *</label>
-          <div class="relative">
+          <div class="relative w-full max-w-full box-border">
             <button 
               type="button"
               @click="isDropdownOpen = !isDropdownOpen"
               @blur="closeDropdown"
-              class="w-full px-6 py-4 bg-white/5 border border-white/10 rounded-2xl text-white text-left focus:bg-white/10 focus:border-red-500 outline-none transition-all shadow-inner flex justify-between items-center cursor-pointer"
+              class="w-full max-w-full px-6 py-4 bg-white/5 border border-white/10 rounded-2xl text-white text-left focus:bg-white/10 focus:border-red-500 outline-none transition-all shadow-inner flex justify-between items-center cursor-pointer box-border"
             >
               <span :class="{'text-slate-400': !moveType}" class="truncate whitespace-nowrap overflow-hidden block w-full pr-4">
                 {{ moveType ? $t(moveOptions.find(o => o.value === moveType).key) : $t('home.choose_option') }}
@@ -75,7 +75,7 @@
       <AddressAutocomplete 
         v-model="movingFrom"
         :placeholder="$t('home.moving_from')"
-        input-class="w-full pr-6 py-4 bg-white/5 border border-white/10 rounded-2xl text-white placeholder-slate-400 focus:bg-white/10 focus:border-red-500 outline-none transition-all shadow-inner"
+        input-class="w-full max-w-full pr-6 py-4 bg-white/5 border border-white/10 rounded-2xl text-white placeholder-slate-400 focus:bg-white/10 focus:border-red-500 outline-none transition-all shadow-inner box-border"
         required
       >
         <template #icon>
@@ -86,7 +86,7 @@
       <AddressAutocomplete 
         v-model="movingTo"
         :placeholder="$t('home.moving_to')"
-        input-class="w-full pr-6 py-4 bg-white/5 border border-white/10 rounded-2xl text-white placeholder-slate-400 focus:bg-white/10 focus:border-red-500 outline-none transition-all shadow-inner"
+        input-class="w-full max-w-full pr-6 py-4 bg-white/5 border border-white/10 rounded-2xl text-white placeholder-slate-400 focus:bg-white/10 focus:border-red-500 outline-none transition-all shadow-inner box-border"
         required
       >
         <template #icon>
@@ -94,7 +94,7 @@
         </template>
       </AddressAutocomplete>
       
-      <div class="pt-4 space-y-4">
+      <div class="pt-4 space-y-4 w-full max-w-full box-border">
         <button type="submit" class="w-full btn-primary text-lg py-4 flex items-center justify-center gap-2 group transform hover:scale-[1.02] active:scale-95 transition-all">
           <span>{{ $t('home.get_quote') }}</span>
           <svg class="w-5 h-5 transform group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
@@ -122,11 +122,10 @@ const isDateFocused = ref(false)
 const isDropdownOpen = ref(false)
 
 const moveOptions = [
-  { value: 'van_only', key: 'home.packages.package1.name' },
-  { value: 'van_1', key: 'home.packages.package2.name' },
-  { value: 'van_2', key: 'home.packages.package3.name' },
-  { value: 'full_service', key: 'home.packages.package4.name' },
-  { value: 'custom', key: 'home.custom_move' }
+  { value: 'van_only', key: 'home.quote_move_types.van_only' },
+  { value: 'van_1', key: 'home.quote_move_types.van_1' },
+  { value: 'van_2', key: 'home.quote_move_types.van_2' },
+  { value: 'full_service', key: 'home.quote_move_types.full_service' }
 ]
 
 const selectOption = (val) => {
