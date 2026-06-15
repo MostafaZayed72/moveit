@@ -130,9 +130,6 @@
                 </div>
                 
                 <div class="flex flex-wrap items-center gap-6 mt-auto pt-6 border-t border-slate-100 dark:border-white/5">
-                  <div v-if="sec.price && !sec.price.toLowerCase().includes('quote')" class="text-xl sm:text-2xl font-black text-red-500">
-                    {{ sec.price }}
-                  </div>
                   <a :href="whatsappLink" target="_blank" class="ml-auto px-6 py-3 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-xl font-bold hover:bg-red-600 dark:hover:bg-red-500 dark:hover:text-white transition-colors text-center w-full sm:w-auto text-sm sm:text-base">
                     {{ sec.cta || (isNl ? 'Vraag offerte aan' : 'Arrange Pickup') }}
                   </a>
@@ -161,11 +158,8 @@
                 <div v-if="sec.extra" class="bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 p-4 rounded-xl text-sm font-medium mb-6">
                   {{ sec.extra }}
                 </div>
-                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-t border-slate-100 dark:border-white/5 pt-6">
-                  <span v-if="sec.price && !sec.price.toLowerCase().includes('quote')" class="font-black text-red-500 text-lg sm:text-xl leading-tight">
-                    {{ sec.price }}
-                  </span>
-                  <a :href="whatsappLink" target="_blank" class="inline-flex items-center justify-center px-5 py-2.5 bg-slate-900 dark:bg-white text-white dark:text-slate-900 hover:bg-red-600 dark:hover:bg-red-500 dark:hover:text-white rounded-xl font-bold transition-colors text-sm shrink-0">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-t border-slate-100 dark:border-white/5 pt-6 flex-wrap">
+                  <a :href="whatsappLink" target="_blank" class="ml-auto inline-flex items-center justify-center px-5 py-2.5 bg-slate-900 dark:bg-white text-white dark:text-slate-900 hover:bg-red-600 dark:hover:bg-red-500 dark:hover:text-white rounded-xl font-bold transition-colors text-sm shrink-0">
                     {{ sec.cta || (isNl ? 'Vraag offerte' : 'Book Service') }} &rarr;
                   </a>
                 </div>
@@ -200,9 +194,6 @@
                 </ul>
                 
                 <div class="flex flex-wrap items-center gap-6 mt-auto pt-6 border-t border-slate-100 dark:border-white/5">
-                  <div v-if="!$t(serviceId + '_page.section2.sub1.price').toLowerCase().includes('quote')" class="text-xl sm:text-2xl font-black text-red-500">
-                    {{ $t(serviceId + '_page.section2.sub1.price') }}
-                  </div>
                   <a :href="whatsappLink" target="_blank" class="ml-auto px-6 py-3 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-xl font-bold hover:bg-red-600 dark:hover:bg-red-500 dark:hover:text-white transition-colors text-center w-full sm:w-auto text-sm sm:text-base">
                     {{ $t(serviceId + '_page.section2.sub1.cta') }}
                   </a>
@@ -231,9 +222,6 @@
                 </div>
                 
                 <div class="flex flex-wrap items-center gap-6 mt-auto pt-6 border-t border-slate-100 dark:border-white/5">
-                  <div v-if="!$t(serviceId + '_page.section2.sub2.price').toLowerCase().includes('quote')" class="text-xl sm:text-2xl font-black text-red-500">
-                    {{ $t(serviceId + '_page.section2.sub2.price') }}
-                  </div>
                   <a :href="whatsappLink" target="_blank" class="ml-auto px-6 py-3 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-xl font-bold hover:bg-red-600 dark:hover:bg-red-500 dark:hover:text-white transition-colors text-center w-full sm:w-auto text-sm sm:text-base">
                     {{ $t(serviceId + '_page.section2.sub2.cta') }}
                   </a>
@@ -269,9 +257,6 @@
                 </div>
                 
                 <div class="flex flex-wrap items-center gap-6 mt-auto pt-6 border-t border-slate-100 dark:border-white/5">
-                  <div v-if="!$t(serviceId + '_page.section2.sub3.price').toLowerCase().includes('quote')" class="text-xl sm:text-2xl font-black text-red-500">
-                    {{ $t(serviceId + '_page.section2.sub3.price') }}
-                  </div>
                   <a :href="whatsappLink" target="_blank" class="ml-auto px-6 py-3 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-xl font-bold hover:bg-red-600 dark:hover:bg-red-500 dark:hover:text-white transition-colors text-center w-full sm:w-auto text-sm sm:text-base">
                     {{ $t(serviceId + '_page.section2.sub3.cta') }}
                   </a>
@@ -296,10 +281,7 @@
                   {{ $t(serviceId + '_page.section2.sub4.extra') }}
                 </div>
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-t border-slate-100 dark:border-white/5 pt-6">
-                  <span v-if="!$t(serviceId + '_page.section2.sub4.price').toLowerCase().includes('quote')" class="font-black text-red-500 text-lg sm:text-xl leading-tight">
-                    {{ $t(serviceId + '_page.section2.sub4.price') }}
-                  </span>
-                  <a :href="whatsappLink" target="_blank" class="inline-flex items-center justify-center px-5 py-2.5 bg-slate-900 dark:bg-white text-white dark:text-slate-900 hover:bg-red-600 dark:hover:bg-red-500 dark:hover:text-white rounded-xl font-bold transition-colors text-sm shrink-0">
+                  <a :href="whatsappLink" target="_blank" class="ml-auto inline-flex items-center justify-center px-5 py-2.5 bg-slate-900 dark:bg-white text-white dark:text-slate-900 hover:bg-red-600 dark:hover:bg-red-500 dark:hover:text-white rounded-xl font-bold transition-colors text-sm shrink-0">
                     {{ $t(serviceId + '_page.section2.sub4.cta') }} &rarr;
                   </a>
                 </div>
@@ -320,17 +302,13 @@
                   {{ $t(serviceId + '_page.section2.sub5.extra') }}
                 </div>
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-t border-slate-100 dark:border-white/5 pt-6">
-                  <span v-if="!$t(serviceId + '_page.section2.sub5.price').toLowerCase().includes('quote')" class="font-black text-red-500 text-lg sm:text-xl leading-tight">
-                    {{ $t(serviceId + '_page.section2.sub5.price') }}
-                  </span>
-                  <a :href="whatsappLink" target="_blank" class="inline-flex items-center justify-center px-5 py-2.5 bg-slate-900 dark:bg-white text-white dark:text-slate-900 hover:bg-red-600 dark:hover:bg-red-500 dark:hover:text-white rounded-xl font-bold transition-colors text-sm shrink-0">
+                  <a :href="whatsappLink" target="_blank" class="ml-auto inline-flex items-center justify-center px-5 py-2.5 bg-slate-900 dark:bg-white text-white dark:text-slate-900 hover:bg-red-600 dark:hover:bg-red-500 dark:hover:text-white rounded-xl font-bold transition-colors text-sm shrink-0">
                     {{ $t(serviceId + '_page.section2.sub5.cta') }} &rarr;
                   </a>
                 </div>
               </div>
             </div>
           </template>
-
         </div>
       </div>
     </section>
