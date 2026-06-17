@@ -527,7 +527,14 @@
     "step_heading_3": "Extra diensten",
     "step_sub_3": "Laat ons weten welke hulp u nodig heeft buiten transport.",
     "step_heading_4": "Bijna klaar",
-    "step_sub_4": "We sturen uw offerte naar deze contactgegevens — meestal binnen enkele uren."
+    "step_sub_4": "We sturen uw offerte naar deze contactgegevens — meestal binnen enkele uren.",
+    "moving_package": "Verhuispakket",
+    "optional": "Optioneel",
+    "media_upload_label": "Foto's of Video's Toevoegen",
+    "media_upload_hint": "Help ons uw verhuizing beter te begrijpen — deel foto's van grote items, moeilijke toegang of andere relevante situaties.",
+    "media_upload_cta": "Klik om te uploaden of sleep bestanden hierheen",
+    "media_add_more": "Meer bestanden toevoegen",
+    "media_upload_types": "Foto's & video's • Max 5 bestanden • 20 MB per bestand"
   },
   "blog": {
     "title": "Verhuis Inzichten",

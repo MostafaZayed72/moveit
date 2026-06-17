@@ -54,6 +54,24 @@
                 <p class="text-xs text-slate-500 dark:text-slate-400">{{ $t('contact.step_sub_1') }}</p>
               </div>
 
+              <!-- Moving Package Selection -->
+              <div class="space-y-3">
+                <label class="form-label">{{ $t('contact.moving_package') }}</label>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <label v-for="pkg in movingPackages" :key="pkg.value"
+                         class="flex flex-col p-4 rounded-xl border-2 transition-all cursor-pointer bg-slate-50/50 dark:bg-slate-900/30 group"
+                         :class="movingPackage === pkg.value ? 'border-red-500 bg-red-500/5 dark:bg-red-500/5' : 'border-slate-100 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'">
+                    <input type="radio" v-model="movingPackage" :value="pkg.value" class="sr-only" />
+                    <div class="flex items-center justify-between mb-1">
+                      <span class="text-sm font-bold" :class="movingPackage === pkg.value ? 'text-red-600' : 'text-slate-800 dark:text-slate-200'">{{ pkg.label }}</span>
+                      <span class="text-xs font-bold px-2 py-0.5 rounded-full"
+                            :class="movingPackage === pkg.value ? 'bg-red-100 text-red-600 dark:bg-red-500/20' : 'bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400'">{{ pkg.price }}</span>
+                    </div>
+                    <span class="text-[11px] text-slate-500 dark:text-slate-400 leading-snug">{{ pkg.desc }}</span>
+                  </label>
+                </div>
+              </div>
+
               <div class="space-y-2">
                 <label class="form-label" for="moving_size">{{ $t('contact.what_are_you_moving') }}</label>
                 <select id="moving_size" v-model="moveSize" class="form-input cursor-pointer" required>
@@ -297,6 +315,69 @@
                   <option value="other">{{ $t('contact.hear_other') }}</option>
                 </select>
               </div>
+
+              <!-- Optional Media Upload -->
+              <div class="space-y-3">
+                <div class="flex items-center gap-2">
+                  <label class="form-label mb-0">{{ $t('contact.media_upload_label') }}</label>
+                  <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">{{ $t('contact.optional') }}</span>
+                </div>
+                <p class="text-[11px] text-slate-500 dark:text-slate-400 italic -mt-1">{{ $t('contact.media_upload_hint') }}</p>
+
+                <div class="relative">
+                  <input
+                    ref="mediaInput"
+                    type="file"
+                    id="media_upload"
+                    multiple
+                    accept="image/*,video/*"
+                    @change="handleMediaChange"
+                    class="sr-only"
+                  />
+                  <label for="media_upload"
+                         class="flex flex-col items-center justify-center gap-3 p-6 rounded-xl border-2 border-dashed transition-all cursor-pointer"
+                         :class="mediaFiles.length > 0 ? 'border-red-400 bg-red-500/5 dark:bg-red-500/5' : 'border-slate-200 dark:border-slate-700 hover:border-red-400 dark:hover:border-red-500 bg-slate-50/50 dark:bg-slate-900/30 hover:bg-red-500/5 dark:hover:bg-red-500/5'"
+                         @dragover.prevent
+                         @drop.prevent="handleMediaDrop">
+                    <div class="w-10 h-10 rounded-xl flex items-center justify-center"
+                         :class="mediaFiles.length > 0 ? 'bg-red-100 dark:bg-red-500/20' : 'bg-slate-100 dark:bg-slate-800'">
+                      <svg class="w-5 h-5" :class="mediaFiles.length > 0 ? 'text-red-500' : 'text-slate-400'" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                      </svg>
+                    </div>
+                    <div class="text-center">
+                      <p class="text-sm font-bold" :class="mediaFiles.length > 0 ? 'text-red-600' : 'text-slate-600 dark:text-slate-300'">
+                        {{ mediaFiles.length > 0 ? $t('contact.media_add_more') : $t('contact.media_upload_cta') }}
+                      </p>
+                      <p class="text-[11px] text-slate-400 mt-0.5">{{ $t('contact.media_upload_types') }}</p>
+                    </div>
+                  </label>
+                </div>
+
+                <!-- File Preview List -->
+                <div v-if="mediaFiles.length > 0" class="space-y-2">
+                  <div v-for="(file, idx) in mediaFiles" :key="idx"
+                       class="flex items-center gap-3 p-3 rounded-xl bg-slate-50 dark:bg-slate-900/50 border border-slate-100 dark:border-slate-800">
+                    <!-- Thumbnail -->
+                    <div class="w-10 h-10 rounded-lg overflow-hidden flex-shrink-0 bg-slate-200 dark:bg-slate-800 flex items-center justify-center">
+                      <img v-if="file.preview && file.type.startsWith('image/')" :src="file.preview" class="w-full h-full object-cover" alt="" />
+                      <svg v-else class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.069A1 1 0 0121 8.87v6.26a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                      </svg>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                      <p class="text-xs font-bold text-slate-700 dark:text-slate-300 truncate">{{ file.name }}</p>
+                      <p class="text-[10px] text-slate-400">{{ formatFileSize(file.size) }}</p>
+                    </div>
+                    <button type="button" @click="removeMedia(idx)"
+                            class="p-1.5 rounded-lg hover:bg-red-50 dark:hover:bg-red-500/10 text-slate-400 hover:text-red-500 transition-colors">
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
 
             <!-- Validation Error message -->
@@ -368,7 +449,16 @@
 const route = useRoute()
 const { t } = useI18n()
 
+// Moving packages definition
+const movingPackages = [
+  { value: 'van_only',      label: 'Van Only',        price: '€69.99/hr', desc: 'You handle the lifting — we handle the drive.' },
+  { value: 'van_1_mover',   label: 'Van + 1 Mover',   price: '€79.99/hr', desc: 'Perfect for studio hops and budgets with big plans.' },
+  { value: 'van_2_movers',  label: 'Van + 2 Movers',  price: '€94.99/hr', desc: 'We handle the furniture. You handle the new keys.' },
+  { value: 'full_service',  label: 'Full Service',     price: '€149/hr',   desc: 'Concierge-level care, packing & assembly included.' },
+]
+
 // Form state
+const movingPackage = ref('')
 const fullName     = ref('')
 const email        = ref('')
 const phone        = ref('')
@@ -377,6 +467,43 @@ const movingTo     = ref('')
 const moveDate     = ref('')
 const alternativeDate = ref('')
 const moveSize     = ref('')
+
+// Media upload
+const mediaInput = ref(null)
+const mediaFiles = ref([])
+
+const handleMediaChange = (e) => {
+  const files = Array.from(e.target.files || [])
+  addMediaFiles(files)
+  if (mediaInput.value) mediaInput.value.value = ''
+}
+
+const handleMediaDrop = (e) => {
+  const files = Array.from(e.dataTransfer.files || [])
+  addMediaFiles(files)
+}
+
+const addMediaFiles = (files) => {
+  const allowed = files.filter(f => f.size <= 20 * 1024 * 1024)
+  const newEntries = allowed.map(f => ({
+    name: f.name,
+    size: f.size,
+    type: f.type,
+    preview: f.type.startsWith('image/') ? URL.createObjectURL(f) : null,
+    raw: f
+  }))
+  mediaFiles.value = [...mediaFiles.value, ...newEntries].slice(0, 5)
+}
+
+const removeMedia = (idx) => {
+  if (mediaFiles.value[idx]?.preview) URL.revokeObjectURL(mediaFiles.value[idx].preview)
+  mediaFiles.value.splice(idx, 1)
+}
+
+const formatFileSize = (bytes) => {
+  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(0)} KB`
+  return `${(bytes / (1024 * 1024)).toFixed(1)} MB`
+}
 
 // Step 2 Property Access
 const pickupFloor  = ref('')
@@ -468,8 +595,8 @@ const prevStep = () => {
 const nextStep = () => {
   validationError.value = ''
   if (currentStep.value === 1) {
-    if (!moveSize.value || !moveDate.value || !movingFrom.value || !movingTo.value) {
-      validationError.value = t('contact.validation_step_1') !== 'contact.validation_step_1' ? t('contact.validation_step_1') : 'Please fill in all fields (size, date, and addresses)'
+    if (!movingPackage.value || !moveSize.value || !moveDate.value || !movingFrom.value || !movingTo.value) {
+      validationError.value = t('contact.validation_step_1') !== 'contact.validation_step_1' ? t('contact.validation_step_1') : 'Please fill in all fields (package, size, date, and addresses)'
       return
     }
   } else if (currentStep.value === 2) {
@@ -518,32 +645,46 @@ const handleSubmit = async () => {
 
   const subject = `Quote Request from ${fullName.value} — ${moveDate.value}`
 
+  const packageLabels = {
+    van_only: 'Van Only (€69.99/hr)',
+    van_1_mover: 'Van + 1 Mover (€79.99/hr)',
+    van_2_movers: 'Van + 2 Movers (€94.99/hr)',
+    full_service: 'Full Service (€149/hr)'
+  }
+
   try {
+    // Use FormData to support file attachments
+    const formData = new FormData()
+    formData.append('_subject', subject)
+    formData.append('_replyto', email.value)
+    formData.append('_template', 'table')
+    formData.append('Name', fullName.value)
+    formData.append('Email', email.value)
+    formData.append('Phone', phone.value)
+    formData.append('Moving Package', packageLabels[movingPackage.value] || movingPackage.value || 'Not specified')
+    formData.append('Moving From', movingFrom.value)
+    formData.append('Moving To', movingTo.value)
+    formData.append('Preferred Date', moveDate.value)
+    formData.append('Alternative Date', alternativeDate.value || 'None')
+    formData.append('Move Size', sizeLabels[moveSize.value] || moveSize.value || 'Not specified')
+    formData.append('Pickup Floor', pickupFloor.value || 'Not specified')
+    formData.append('Delivery Floor', deliveryFloor.value || 'Not specified')
+    formData.append('Elevator Available', elevatorLabels[elevatorAvailable.value] || elevatorAvailable.value || 'Not specified')
+    formData.append('Moving Lift Needed', liftLabels[movingLiftNeeded.value] || movingLiftNeeded.value || 'Not specified')
+    formData.append('Packing Service', packingService.value === 'yes' ? 'Yes, pack for me' : 'No, I\'ll pack myself')
+    formData.append('Furniture Assembly', furnitureAssembly.value === 'yes' ? 'Yes, please' : 'No thanks')
+    formData.append('Fragile/Specialty Items', fragileItems.value === 'yes' ? specialItemsDescription.value : 'No')
+    formData.append('Contact Preference', contactPrefLabels[contactPreference.value] || contactPreference.value || 'Not specified')
+    formData.append('How Did You Hear', hearLabels[hearAbout.value] || hearAbout.value || 'Not specified')
+    formData.append('Additional Notes', notes.value || 'None')
+    // Attach media files if any
+    mediaFiles.value.forEach((f, i) => {
+      formData.append(`attachment_${i + 1}`, f.raw, f.name)
+    })
+
     await $fetch('https://formsubmit.co/ajax/info@moveitmaastricht.nl', {
       method: 'POST',
-      body: {
-        _subject: subject,
-        _replyto: email.value,
-        _template: 'table',
-        Name: fullName.value,
-        Email: email.value,
-        Phone: phone.value,
-        'Moving From': movingFrom.value,
-        'Moving To': movingTo.value,
-        'Preferred Date': moveDate.value,
-        'Alternative Date': alternativeDate.value || 'None',
-        'Move Size': sizeLabels[moveSize.value] || moveSize.value || 'Not specified',
-        'Pickup Floor': pickupFloor.value || 'Not specified',
-        'Delivery Floor': deliveryFloor.value || 'Not specified',
-        'Elevator Available': elevatorLabels[elevatorAvailable.value] || elevatorAvailable.value || 'Not specified',
-        'Moving Lift Needed': liftLabels[movingLiftNeeded.value] || movingLiftNeeded.value || 'Not specified',
-        'Packing Service': packingService.value === 'yes' ? 'Yes, pack for me' : 'No, I\'ll pack myself',
-        'Furniture Assembly': furnitureAssembly.value === 'yes' ? 'Yes, please' : 'No thanks',
-        'Fragile/Specialty Items': fragileItems.value === 'yes' ? specialItemsDescription.value : 'No',
-        'Contact Preference': contactPrefLabels[contactPreference.value] || contactPreference.value || 'Not specified',
-        'How Did You Hear': hearLabels[hearAbout.value] || hearAbout.value || 'Not specified',
-        'Additional Notes': notes.value || 'None'
-      }
+      body: formData
     })
     submitted.value = true
   } catch (error) {

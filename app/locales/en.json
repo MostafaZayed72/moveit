@@ -541,7 +541,14 @@
     "step_heading_3": "Additional services",
     "step_sub_3": "Let us know what help you need beyond transport.",
     "step_heading_4": "Almost done",
-    "step_sub_4": "We'll send your quote to this contact info — usually within a few hours."
+    "step_sub_4": "We'll send your quote to this contact info — usually within a few hours.",
+    "moving_package": "Moving Package",
+    "optional": "Optional",
+    "media_upload_label": "Attach Photos or Videos",
+    "media_upload_hint": "Help us understand your move better — share photos of large items, tricky access, or anything else relevant.",
+    "media_upload_cta": "Click to upload or drag & drop",
+    "media_add_more": "Add more files",
+    "media_upload_types": "Photos & videos • Max 5 files • 20 MB each"
   },
   "blog": {
     "title": "Relocation Insights",
