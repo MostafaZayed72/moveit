@@ -84,14 +84,14 @@
                 </select>
               </div>
 
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="space-y-2">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full min-w-0">
+                <div class="space-y-2 min-w-0">
                   <label class="form-label">{{ $t('contact.preferred_date') }}</label>
-                  <input type="date" v-model="moveDate" class="form-input cursor-pointer" :min="todayDate" required />
+                  <input type="date" v-model="moveDate" class="form-input cursor-pointer w-full min-w-0 max-w-full box-border" :min="todayDate" required />
                 </div>
-                <div class="space-y-2">
+                <div class="space-y-2 min-w-0">
                   <label class="form-label">{{ $t('contact.alternative_date') }}</label>
-                  <input type="date" v-model="alternativeDate" class="form-input cursor-pointer" :min="todayDate" />
+                  <input type="date" v-model="alternativeDate" class="form-input cursor-pointer w-full min-w-0 max-w-full box-border" :min="todayDate" />
                 </div>
               </div>
 
@@ -316,11 +316,10 @@
                 </select>
               </div>
 
-              <!-- Optional Media Upload -->
+              <!-- Media Upload -->
               <div class="space-y-3">
                 <div class="flex items-center gap-2">
                   <label class="form-label mb-0">{{ $t('contact.media_upload_label') }}</label>
-                  <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">{{ $t('contact.optional') }}</span>
                 </div>
                 <p class="text-[11px] text-slate-500 dark:text-slate-400 italic -mt-1">{{ $t('contact.media_upload_hint') }}</p>
 
@@ -702,5 +701,15 @@ const handleSubmit = async () => {
 }
 .form-input {
   @apply w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-5 py-4 text-slate-900 dark:text-white focus:border-red-500 outline-none transition-all shadow-sm dark:shadow-none;
+  box-sizing: border-box;
+  min-width: 0;
+  max-width: 100%;
+}
+/* Prevent date inputs from overflowing on mobile */
+input[type="date"].form-input {
+  overflow: hidden;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
 }
 </style>
