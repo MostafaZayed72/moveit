@@ -467,6 +467,7 @@ const navItems = [
   { key: 'home', path: '/' },
   { key: 'services', path: '/services' },
   { key: 'pricing', path: '/pricing' },
+  { key: 'products', path: '/products' },
   { 
     key: 'resources', 
     path: '#',

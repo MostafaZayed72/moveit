@@ -7,6 +7,7 @@
     "locations": "Locaties",
     "faq": "Veelgestelde Vragen",
     "pricing": "Tarieven",
+    "products": "Producten",
     "contact": "Contact",
     "blog": "Blog",
     "referral": "Verwijs een Vriend",
@@ -2148,5 +2149,21 @@
       "promo_text": "Zelfs als ze geen verwijzing ontgrendelen, bieden we onze klanten nog steeds gulle kortingen en promotiecodes aan.",
       "promo_subtext": "Tevreden Klanten, Tevreden Leven."
     }
+  },
+  "products": {
+    "title": "Onze Producten",
+    "subtitle": "Hoogwaardige verpakkings- en verhuismaterialen om uw spullen te beschermen tijdens het transport.",
+    "price": "Prijs",
+    "order_now": "Nu bestellen",
+    "whatsapp_message": "Hallo, ik wil graag bestellen: {title} (Prijs: €{price}). Product Link: {link}",
+    "suggestions_title": "Misschien heb je dit ook nodig",
+    "back_to_products": "Terug naar Producten",
+    "currency_symbol": "€",
+    "description": "Beschrijving",
+    "no_products": "Er zijn momenteel geen producten beschikbaar.",
+    "buy_now": "Nu kopen",
+    "tax_included": "Inclusief belastingen.",
+    "pickup_available": "Ophalen mogelijk bij MoveIt Maastricht",
+    "usually_ready": "Meestal klaar in 1 uur"
   }
 }

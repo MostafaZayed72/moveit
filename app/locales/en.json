@@ -7,6 +7,7 @@
     "locations": "Locations",
     "faq": "FAQs",
     "pricing": "Pricing",
+    "products": "Products",
     "contact": "Contact",
     "blog": "Blog",
     "referral": "Refer a Friend",
@@ -2162,5 +2163,21 @@
       "promo_text": "Even if they don't unlock a referral, we still offer generous discounts and promo codes to our customers.",
       "promo_subtext": "Happy Customers, Happy Life."
     }
+  },
+  "products": {
+    "title": "Our Products",
+    "subtitle": "High-quality packaging and moving materials to protect your belongings during transport.",
+    "price": "Price",
+    "order_now": "Order Now",
+    "whatsapp_message": "Hello, I would like to order: {title} (Price: €{price}). Product Link: {link}",
+    "suggestions_title": "You may also need this",
+    "back_to_products": "Back to Products",
+    "currency_symbol": "€",
+    "description": "Description",
+    "no_products": "No products available at the moment.",
+    "buy_now": "Buy it now",
+    "tax_included": "Taxes included.",
+    "pickup_available": "Pickup available at MoveIt Maastricht",
+    "usually_ready": "Usually ready in 1 hour"
   }
 }

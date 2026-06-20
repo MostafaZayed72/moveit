@@ -72,7 +72,7 @@
         <!-- Navigation Tabs -->
         <div class="flex border-b border-slate-800 mb-8 overflow-x-auto overflow-y-hidden gap-2 scrollbar-none">
           <button 
-            v-for="tab in ['locations', 'blog', 'services', 'pricing']" 
+            v-for="tab in ['locations', 'blog', 'services', 'pricing', 'products']" 
             :key="tab"
             @click="activeTab = tab"
             :class="[
@@ -347,8 +347,77 @@
               </div>
             </div>
           </div>
+        </div>
 
+        <!-- TAB CONTENT: PRODUCTS -->
+        <div v-if="activeTab === 'products'" class="space-y-6" data-aos="fade-up">
+          <div class="flex justify-between items-center">
+            <h2 class="text-2xl font-black text-white">Manage Products</h2>
+            <button @click="openAddProductModal" class="px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl flex items-center gap-2 shadow-lg shadow-red-600/10">
+              ➕ Add New Product
+            </button>
+          </div>
 
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div v-for="prod in paginatedProducts" :key="prod.id" class="glass-panel border border-slate-800/80 rounded-2xl overflow-hidden flex flex-col bg-slate-950/40">
+              <div class="h-44 bg-slate-900 relative">
+                <img v-if="prod.image" :src="prod.image" class="w-full h-full object-cover" :alt="prod.title_en" />
+                <div v-else class="w-full h-full flex items-center justify-center text-slate-600">No Image</div>
+                <div class="absolute top-3 left-3 px-2.5 py-0.5 bg-red-600 text-white text-[10px] font-bold rounded-full uppercase">€{{ prod.price }}</div>
+              </div>
+              <div class="p-6 flex-grow flex flex-col justify-between space-y-4">
+                <div>
+                  <h3 class="text-lg font-bold text-white mb-2 line-clamp-1">{{ prod.title_en }}</h3>
+                  <p class="text-xs text-slate-400 line-clamp-2">{{ prod.description_en }}</p>
+                </div>
+                <div class="flex justify-between items-center border-t border-slate-900 pt-4 mt-auto">
+                  <span class="text-[10px] text-slate-500 font-mono">slug: {{ prod.slug }}</span>
+                  <div class="flex gap-2">
+                    <button @click="openEditProductModal(prod)" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold rounded-lg transition-colors border border-slate-700">
+                      Edit
+                    </button>
+                    <button @click="deleteProduct(prod)" class="p-2 bg-red-500/10 hover:bg-red-500/20 text-red-500 rounded-lg transition-colors">
+                      🗑️
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div v-if="products.length === 0" class="col-span-full py-16 text-center text-slate-500 bg-slate-950/20 border border-slate-900 rounded-3xl">
+              No products found. Click "Add New Product" to create one.
+            </div>
+          </div>
+
+          <!-- Pagination for Products -->
+          <div v-if="totalProductsPages > 1" class="flex justify-center items-center gap-2 mt-8">
+            <button 
+              @click="productsPage--" 
+              :disabled="productsPage === 1"
+              class="w-10 h-10 bg-slate-800 border border-slate-700 hover:bg-slate-700 disabled:opacity-50 disabled:cursor-not-allowed text-slate-200 rounded-xl text-sm font-bold transition-all cursor-pointer flex items-center justify-center"
+            >
+              ◀
+            </button>
+            <button 
+              v-for="p in totalProductsPages" 
+              :key="p"
+              @click="productsPage = p"
+              :class="[
+                'w-10 h-10 rounded-xl text-sm font-bold border transition-all cursor-pointer flex items-center justify-center',
+                productsPage === p 
+                  ? 'bg-red-600 border-red-600 text-white shadow-lg shadow-red-600/20' 
+                  : 'bg-slate-800 border-slate-700 text-slate-300 hover:bg-slate-750 hover:text-white'
+              ]"
+            >
+              {{ p }}
+            </button>
+            <button 
+              @click="productsPage++" 
+              :disabled="productsPage === totalProductsPages"
+              class="w-10 h-10 bg-slate-800 border border-slate-700 hover:bg-slate-700 disabled:opacity-50 disabled:cursor-not-allowed text-slate-200 rounded-xl text-sm font-bold transition-all cursor-pointer flex items-center justify-center"
+            >
+              ▶
+            </button>
+          </div>
         </div>
 
       </div>
@@ -1288,7 +1357,70 @@
       </div>
     </div>
 
+    <!-- MODAL: ADD/EDIT PRODUCT -->
+    <div v-if="modals.product" class="fixed inset-0 z-50 flex items-center justify-center p-6 bg-slate-950/80 backdrop-blur-sm overflow-y-auto">
+      <div class="glass-panel w-full max-w-2xl rounded-3xl border border-slate-800 bg-slate-900 p-8 shadow-2xl my-8 space-y-6 flex flex-col max-h-[90vh]">
+        <div class="flex justify-between items-center border-b border-slate-800 pb-4 shrink-0">
+          <h3 class="text-xl font-black text-white">{{ isEditing ? 'Edit Product' : 'Add New Product' }}</h3>
+          <button @click="modals.product = false" class="text-slate-400 hover:text-white">✕</button>
+        </div>
 
+        <div class="flex-grow overflow-y-auto space-y-6 pr-2">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="space-y-1">
+              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Product Title EN</label>
+              <input type="text" v-model="productForm.title_en" placeholder="e.g. Roll of Tape" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white outline-none focus:border-red-500 text-sm" />
+            </div>
+            <div class="space-y-1">
+              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Product Title NL</label>
+              <input type="text" v-model="productForm.title_nl" placeholder="e.g. Rol Tape" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white outline-none focus:border-red-500 text-sm" />
+            </div>
+            <div class="space-y-1">
+              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Slug</label>
+              <input type="text" v-model="productForm.slug" placeholder="e.g. roll-of-tape" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white outline-none focus:border-red-500 text-sm" />
+            </div>
+            <div class="space-y-1">
+              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Price (€)</label>
+              <input type="number" step="0.01" v-model.number="productForm.price" placeholder="e.g. 3.95" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white outline-none focus:border-red-500 text-sm" />
+            </div>
+            <div class="space-y-1">
+              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">WhatsApp Number override (optional)</label>
+              <input type="text" v-model="productForm.whatsapp_number" placeholder="e.g. 31684094271" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white outline-none focus:border-red-500 text-sm" />
+            </div>
+            <div class="space-y-1">
+              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Sort Order</label>
+              <input type="number" v-model.number="productForm.sort_order" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white outline-none focus:border-red-500 text-sm" />
+            </div>
+            <div class="space-y-2 md:col-span-2">
+              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Product Image</label>
+              <div class="flex items-center gap-4">
+                <div class="w-16 h-16 rounded-xl overflow-hidden bg-slate-950 border border-slate-800 flex items-center justify-center shrink-0">
+                  <img v-if="productForm.image" :src="productForm.image" class="w-full h-full object-cover" />
+                  <span v-else class="text-[8px] text-slate-600">None</span>
+                </div>
+                <input type="file" @change="e => onFileChange(e, 'product')" accept="image/*" class="text-xs text-slate-400 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-[10px] file:font-bold file:bg-slate-800 file:text-slate-200 file:cursor-pointer hover:file:bg-slate-700" />
+              </div>
+              <div v-if="uploading" class="text-xs text-red-500 animate-pulse mt-1">Uploading to Cloudinary...</div>
+            </div>
+            <div class="space-y-1 md:col-span-2">
+              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Description EN</label>
+              <textarea v-model="productForm.description_en" placeholder="Strong adhesive tape..." class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 h-20 text-xs"></textarea>
+            </div>
+            <div class="space-y-1 md:col-span-2">
+              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Description NL</label>
+              <textarea v-model="productForm.description_nl" placeholder="Sterke verpakkingstape..." class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 h-20 text-xs"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex justify-end gap-3 pt-4 border-t border-slate-800 shrink-0">
+          <button @click="modals.product = false" class="px-5 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold rounded-xl text-sm transition-all border border-slate-700">Cancel</button>
+          <button @click="saveProduct" :disabled="uploading" class="px-6 py-2.5 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl text-sm transition-all shadow-md">
+            {{ isEditing ? 'Save Changes' : 'Create Product' }}
+          </button>
+        </div>
+      </div>
+    </div>
 
   </div>
 </template>
@@ -1366,6 +1498,7 @@ const locations = ref([])
 const blogPosts = ref([])
 const services = ref([])
 const serviceSections = ref([])
+const products = ref([])
 
 // Pricing state
 const dbPackages = ref([])
@@ -1427,6 +1560,17 @@ const totalServicesPages = computed(() => {
   return Math.ceil(services.value.length / itemsPerPage) || 1
 })
 
+const productsPage = ref(1)
+
+const paginatedProducts = computed(() => {
+  const start = (productsPage.value - 1) * itemsPerPage
+  return products.value.slice(start, start + itemsPerPage)
+})
+
+const totalProductsPages = computed(() => {
+  return Math.ceil(products.value.length / itemsPerPage) || 1
+})
+
 // Load all data from Supabase
 const loadAllData = async () => {
   if (!$supabase) return
@@ -1446,10 +1590,11 @@ const loadAllData = async () => {
   // Load Pricing Packages
   const { data: pkgs } = await $supabase.from('pricing_packages').select('*').order('sort_order')
   if (pkgs) dbPackages.value = pkgs
-}
 
-
-// 1. Locations Logic
+  // Load Products
+  const { data: prods } = await $supabase.from('products').select('*').order('sort_order')
+  if (prods) products.value = prods
+}// 1. Locations Logic
 const locationForm = ref({
   slug: '', name: '', country: '', image: '',
   images_boxes: '', images_van: '', images_room: '',
@@ -1549,6 +1694,7 @@ const onFileChange = async (e, type) => {
     
     if (res && res.url) {
       if (type === 'blog') blogForm.value.image = res.url
+      else if (type === 'product') productForm.value.image = res.url
       else if (type === 'service') serviceForm.value.image = res.url
       else if (type === 'section') sectionForm.value.image = res.url
       else if (type === 'edit_section') editSectionForm.value.image = res.url
@@ -2101,8 +2247,96 @@ const modals = ref({
   sections: false,
   blogSections: false,
   locationSections: false,
-  pricingPackage: false
+  pricingPackage: false,
+  product: false
 })
+
+const productForm = ref({
+  slug: '',
+  title_en: '',
+  title_nl: '',
+  description_en: '',
+  description_nl: '',
+  price: 0,
+  image: '',
+  whatsapp_number: '',
+  sort_order: 0
+})
+
+const openAddProductModal = () => {
+  isEditing.value = false
+  selectedItem.value = null
+  productForm.value = {
+    slug: '',
+    title_en: '',
+    title_nl: '',
+    description_en: '',
+    description_nl: '',
+    price: 0,
+    image: '',
+    whatsapp_number: '',
+    sort_order: products.value.length + 1
+  }
+  modals.value.product = true
+}
+
+const openEditProductModal = (prod) => {
+  isEditing.value = true
+  selectedItem.value = prod
+  productForm.value = { ...prod }
+  modals.value.product = true
+}
+
+const saveProduct = async () => {
+  if (!$supabase || !productForm.value.slug) return
+
+  const payload = { ...productForm.value }
+
+  if (isEditing.value && selectedItem.value) {
+    const { error } = await $supabase
+      .from('products')
+      .update(payload)
+      .eq('id', selectedItem.value.id)
+
+    if (!error) {
+      const idx = products.value.findIndex(p => p.id === selectedItem.value.id)
+      if (idx !== -1) products.value[idx] = { ...selectedItem.value, ...payload }
+      modals.value.product = false
+    } else {
+      alert('Error updating product: ' + error.message)
+    }
+  } else {
+    const { data, error } = await $supabase
+      .from('products')
+      .insert([payload])
+      .select()
+
+    if (!error && data) {
+      products.value.push(data[0])
+      products.value.sort((a, b) => a.sort_order - b.sort_order)
+      modals.value.product = false
+    } else {
+      alert('Error creating product: ' + error.message)
+    }
+  }
+}
+
+const deleteProduct = async (prod) => {
+  if (!$supabase || !confirm(`Delete product "${prod.title_en}"?`)) return
+  const { error } = await $supabase
+    .from('products')
+    .delete()
+    .eq('id', prod.id)
+
+  if (!error) {
+    products.value = products.value.filter(p => p.id !== prod.id)
+    if (productsPage.value > totalProductsPages.value) {
+      productsPage.value = Math.max(1, totalProductsPages.value)
+    }
+  } else {
+    alert('Error deleting product: ' + error.message)
+  }
+}
 
 </script>
 
