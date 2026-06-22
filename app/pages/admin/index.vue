@@ -1,5 +1,5 @@
 <template>
-  <div class="pt-32 pb-24 min-h-screen bg-slate-900 text-slate-100 font-sans relative">
+  <div class="pt-32 pb-24 min-h-screen bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-slate-100 font-sans relative">
     <!-- Background Decor -->
     <div class="absolute inset-0 z-0 pointer-events-none overflow-hidden">
       <div class="absolute -top-40 left-1/4 w-96 h-96 rounded-full bg-red-600/10 blur-3xl"></div>
@@ -9,42 +9,42 @@
     <div class="container mx-auto px-6 max-w-6xl relative z-10">
       <!-- 1. Password Protection Gate -->
       <div v-if="!isAuthorized" class="max-w-md mx-auto my-12" data-aos="zoom-in">
-        <div class="glass-panel p-10 rounded-3xl border border-slate-800 bg-slate-950/60 shadow-2xl text-center space-y-6">
+        <div class="glass-panel p-10 rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-white dark:bg-slate-950/60 shadow-2xl text-center space-y-6">
           <div class="w-16 h-16 bg-red-500/10 rounded-full flex items-center justify-center mx-auto text-red-500 text-3xl">
             🔒
           </div>
           <div>
-            <h2 class="text-3xl font-black text-white mb-2">Admin Portal</h2>
-            <p class="text-sm text-slate-400">Please enter the administrator credentials to proceed.</p>
+            <h2 class="text-3xl font-black text-slate-900 dark:text-white mb-2">Admin Portal</h2>
+            <p class="text-sm text-slate-500 dark:text-slate-400">Please enter the administrator credentials to proceed.</p>
           </div>
           <form @submit.prevent="handleLogin" class="space-y-4 text-left">
             <div class="space-y-1">
-              <label class="text-xs font-bold uppercase tracking-wider text-slate-400">Email Address</label>
+              <label class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Email Address</label>
               <input 
                 type="email" 
                 v-model="emailInput" 
                 placeholder="info@moveitmaastricht.nl"
-                class="w-full bg-slate-900 border border-slate-800 rounded-xl px-5 py-4 text-white focus:border-red-500 focus:ring-1 focus:ring-red-500 outline-none text-base"
+                class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-5 py-4 text-slate-900 dark:text-white focus:border-red-500 focus:ring-1 focus:ring-red-500 outline-none text-base"
                 required
               />
             </div>
             <div class="space-y-1">
-              <label class="text-xs font-bold uppercase tracking-wider text-slate-400">Password</label>
+              <label class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Password</label>
               <input 
                 type="password" 
                 v-model="passwordInput" 
                 placeholder="••••••••"
-                class="w-full bg-slate-900 border border-slate-800 rounded-xl px-5 py-4 text-white focus:border-red-500 focus:ring-1 focus:ring-red-500 outline-none text-base"
+                class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-5 py-4 text-slate-900 dark:text-white focus:border-red-500 focus:ring-1 focus:ring-red-500 outline-none text-base"
                 required
               />
             </div>
             <p v-if="authError" class="text-xs font-bold text-red-500 bg-red-500/10 rounded-xl py-2 px-4 text-center">{{ authError }}</p>
             <button 
               type="submit" 
-              class="w-full py-4 bg-red-600 hover:bg-red-700 text-white rounded-xl font-bold shadow-lg transition-all active:scale-95 flex items-center justify-center gap-2 mt-2"
+              class="w-full py-4 bg-red-600 hover:bg-red-700 text-slate-900 dark:text-white rounded-xl font-bold shadow-lg transition-all active:scale-95 flex items-center justify-center gap-2 mt-2"
               :disabled="authLoading"
             >
-              <svg v-if="authLoading" class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <svg v-if="authLoading" class="animate-spin h-5 w-5 text-slate-900 dark:text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                 <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
               </svg>
@@ -59,25 +59,25 @@
         <!-- Header -->
         <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-12">
           <div>
-            <h1 class="text-4xl md:text-5xl font-black text-white tracking-tight">
+            <h1 class="text-4xl md:text-5xl font-black text-slate-900 dark:text-white tracking-tight">
               Move<span class="text-red-500">It</span> Dashboard
             </h1>
-            <p class="text-slate-400 mt-1">Manage locations, blog posts, and service pages.</p>
+            <p class="text-slate-500 dark:text-slate-400 mt-1">Manage locations, blog posts, and service pages.</p>
           </div>
-          <button @click="logout" class="px-5 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold rounded-xl text-sm transition-all border border-slate-700 flex items-center gap-2">
+          <button @click="logout" class="px-5 py-2.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold rounded-xl text-sm transition-all border border-slate-700 flex items-center gap-2">
             Logout <span>🚪</span>
           </button>
         </div>
 
         <!-- Navigation Tabs -->
-        <div class="flex border-b border-slate-800 mb-8 overflow-x-auto overflow-y-hidden gap-2 scrollbar-none">
+        <div class="flex border-b border-slate-200 dark:border-slate-800 mb-8 overflow-x-auto overflow-y-hidden gap-2 scrollbar-none">
           <button 
             v-for="tab in ['locations', 'blog', 'services', 'pricing', 'products']" 
             :key="tab"
             @click="activeTab = tab"
             :class="[
               'px-6 py-4 font-bold text-sm tracking-wider uppercase transition-all whitespace-nowrap border-b-2 -mb-[2px]',
-              activeTab === tab ? 'border-red-600 text-red-500' : 'border-transparent text-slate-400 hover:text-white'
+              activeTab === tab ? 'border-red-600 text-red-500' : 'border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white'
             ]"
           >
             {{ tab }}
@@ -87,29 +87,29 @@
         <!-- TAB CONTENT: LOCATIONS -->
         <div v-if="activeTab === 'locations'" class="space-y-6" data-aos="fade-up">
           <div class="flex justify-between items-center">
-            <h2 class="text-2xl font-black text-white">Manage Locations</h2>
-            <button @click="openAddLocationModal" class="px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl flex items-center gap-2 shadow-lg shadow-red-600/10">
+            <h2 class="text-2xl font-black text-slate-900 dark:text-white">Manage Locations</h2>
+            <button @click="openAddLocationModal" class="px-6 py-3 bg-red-600 hover:bg-red-700 text-slate-900 dark:text-white font-bold rounded-xl flex items-center gap-2 shadow-lg shadow-red-600/10 dark:shadow-red-600/20">
               ➕ Add New Location
             </button>
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div v-for="loc in paginatedLocations" :key="loc.id" class="glass-panel border border-slate-800/80 rounded-2xl overflow-hidden flex flex-col bg-slate-950/40">
-              <div class="h-44 bg-slate-900 relative">
+            <div v-for="loc in paginatedLocations" :key="loc.id" class="glass-panel border border-slate-200 dark:border-slate-200 dark:border-slate-800/80 rounded-2xl overflow-hidden flex flex-col bg-white dark:bg-white dark:bg-slate-950/40">
+              <div class="h-44 bg-slate-50 dark:bg-slate-900 relative">
                 <img v-if="loc.image" :src="loc.image" class="w-full h-full object-cover" :alt="loc.name" />
                 <div v-else class="w-full h-full flex items-center justify-center text-slate-600">No Image</div>
-                <div class="absolute top-3 left-3 px-2 py-0.5 bg-red-600 text-white text-[10px] font-bold rounded-full uppercase">{{ loc.country || 'Netherlands' }}</div>
+                <div class="absolute top-3 left-3 px-2 py-0.5 bg-red-600 text-slate-900 dark:text-white text-[10px] font-bold rounded-full uppercase">{{ loc.country || 'Netherlands' }}</div>
               </div>
               <div class="p-6 flex-grow flex flex-col justify-between space-y-4">
                 <div>
-                  <h3 class="text-lg font-bold text-white mb-2 line-clamp-1">{{ loc.name }}</h3>
-                  <p class="text-xs text-slate-400 line-clamp-2">slug: {{ loc.slug }}</p>
+                  <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2 line-clamp-1">{{ loc.name }}</h3>
+                  <p class="text-xs text-slate-500 dark:text-slate-400 line-clamp-2">slug: {{ loc.slug }}</p>
                 </div>
-                <div class="flex justify-end gap-2 border-t border-slate-900 pt-4 mt-auto">
+                <div class="flex justify-end gap-2 border-t border-slate-200 dark:border-slate-900 pt-4 mt-auto">
                   <button @click="manageLocationSections(loc)" class="px-3 py-1.5 bg-red-600/10 hover:bg-red-600/20 border border-red-500/20 text-red-500 text-xs font-bold rounded-lg transition-colors">
                     Sections
                   </button>
-                  <button @click="openEditLocationModal(loc)" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold rounded-lg transition-colors border border-slate-700">
+                  <button @click="openEditLocationModal(loc)" class="px-3 py-1.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 text-xs font-bold rounded-lg transition-colors border border-slate-700">
                     Edit
                   </button>
                   <button @click="deleteLocation(loc)" class="p-2 bg-red-500/10 hover:bg-red-500/20 text-red-500 rounded-lg transition-colors">
@@ -118,7 +118,7 @@
                 </div>
               </div>
             </div>
-            <div v-if="locations.length === 0" class="col-span-full py-16 text-center text-slate-500 bg-slate-950/20 border border-slate-900 rounded-3xl">
+            <div v-if="locations.length === 0" class="col-span-full py-16 text-center text-slate-500 bg-slate-100 dark:bg-white dark:bg-slate-950/20 border border-slate-200 dark:border-slate-900 rounded-3xl">
               No locations found. Click "Add New Location" to create one.
             </div>
           </div>
@@ -128,7 +128,7 @@
             <button 
               @click="locationsPage--" 
               :disabled="locationsPage === 1"
-              class="w-10 h-10 bg-slate-800 border border-slate-700 hover:bg-slate-700 disabled:opacity-50 disabled:cursor-not-allowed text-slate-200 rounded-xl text-sm font-bold transition-all cursor-pointer flex items-center justify-center"
+              class="w-10 h-10 bg-slate-100 dark:bg-slate-800 border border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700 disabled:opacity-50 disabled:cursor-not-allowed text-slate-800 dark:text-slate-200 rounded-xl text-sm font-bold transition-all cursor-pointer flex items-center justify-center"
             >
               ◀
             </button>
@@ -139,8 +139,8 @@
               :class="[
                 'w-10 h-10 rounded-xl text-sm font-bold border transition-all cursor-pointer flex items-center justify-center',
                 locationsPage === p 
-                  ? 'bg-red-600 border-red-600 text-white shadow-lg shadow-red-600/20' 
-                  : 'bg-slate-800 border-slate-700 text-slate-300 hover:bg-slate-750 hover:text-white'
+                  ? 'bg-red-600 border-red-600 text-slate-900 dark:text-white shadow-lg shadow-red-600/20' 
+                  : 'bg-slate-100 dark:bg-slate-800 border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-750 hover:text-slate-900 dark:text-white'
               ]"
             >
               {{ p }}
@@ -148,7 +148,7 @@
             <button 
               @click="locationsPage++" 
               :disabled="locationsPage === totalLocationsPages"
-              class="w-10 h-10 bg-slate-800 border border-slate-700 hover:bg-slate-700 disabled:opacity-50 disabled:cursor-not-allowed text-slate-200 rounded-xl text-sm font-bold transition-all cursor-pointer flex items-center justify-center"
+              class="w-10 h-10 bg-slate-100 dark:bg-slate-800 border border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700 disabled:opacity-50 disabled:cursor-not-allowed text-slate-800 dark:text-slate-200 rounded-xl text-sm font-bold transition-all cursor-pointer flex items-center justify-center"
             >
               ▶
             </button>
@@ -158,31 +158,31 @@
         <!-- TAB CONTENT: BLOG -->
         <div v-if="activeTab === 'blog'" class="space-y-6" data-aos="fade-up">
           <div class="flex justify-between items-center">
-            <h2 class="text-2xl font-black text-white">Manage Blog Posts</h2>
-            <button @click="openAddBlogModal" class="px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl flex items-center gap-2 shadow-lg shadow-red-600/10">
+            <h2 class="text-2xl font-black text-slate-900 dark:text-white">Manage Blog Posts</h2>
+            <button @click="openAddBlogModal" class="px-6 py-3 bg-red-600 hover:bg-red-700 text-slate-900 dark:text-white font-bold rounded-xl flex items-center gap-2 shadow-lg shadow-red-600/10 dark:shadow-red-600/20">
               ➕ Add New Post
             </button>
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div v-for="post in paginatedBlogPosts" :key="post.id" class="glass-panel border border-slate-800/80 rounded-2xl overflow-hidden flex flex-col bg-slate-950/40">
-              <div class="h-44 bg-slate-900 relative">
+            <div v-for="post in paginatedBlogPosts" :key="post.id" class="glass-panel border border-slate-200 dark:border-slate-200 dark:border-slate-800/80 rounded-2xl overflow-hidden flex flex-col bg-white dark:bg-white dark:bg-slate-950/40">
+              <div class="h-44 bg-slate-50 dark:bg-slate-900 relative">
                 <img v-if="post.image" :src="post.image" class="w-full h-full object-cover" :alt="post.title_en" />
                 <div v-else class="w-full h-full flex items-center justify-center text-slate-600">No Image</div>
-                <div class="absolute top-3 left-3 px-2 py-0.5 bg-red-600 text-white text-[10px] font-bold rounded-full uppercase">{{ post.category_en }}</div>
+                <div class="absolute top-3 left-3 px-2 py-0.5 bg-red-600 text-slate-900 dark:text-white text-[10px] font-bold rounded-full uppercase">{{ post.category_en }}</div>
               </div>
               <div class="p-6 flex-grow flex flex-col justify-between space-y-4">
                 <div>
-                  <h3 class="text-lg font-bold text-white mb-2 line-clamp-1">{{ post.title_en }}</h3>
-                  <p class="text-xs text-slate-400 line-clamp-2">{{ post.desc_en }}</p>
+                  <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2 line-clamp-1">{{ post.title_en }}</h3>
+                  <p class="text-xs text-slate-500 dark:text-slate-400 line-clamp-2">{{ post.desc_en }}</p>
                 </div>
-                <div class="flex justify-between items-center border-t border-slate-900 pt-4 mt-auto">
+                <div class="flex justify-between items-center border-t border-slate-200 dark:border-slate-900 pt-4 mt-auto">
                   <span class="text-[10px] text-slate-500 font-mono">{{ post.date || 'No Date' }}</span>
                   <div class="flex gap-2">
                     <button @click="manageBlogSections(post)" class="px-3 py-1.5 bg-red-600/10 hover:bg-red-600/20 border border-red-500/20 text-red-500 text-xs font-bold rounded-lg transition-colors">
                       Sections
                     </button>
-                    <button @click="openEditBlogModal(post)" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold rounded-lg transition-colors border border-slate-700">
+                    <button @click="openEditBlogModal(post)" class="px-3 py-1.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 text-xs font-bold rounded-lg transition-colors border border-slate-700">
                       Edit
                     </button>
                     <button @click="deleteBlogPost(post)" class="p-2 bg-red-500/10 hover:bg-red-500/20 text-red-500 rounded-lg transition-colors">
@@ -192,7 +192,7 @@
                 </div>
               </div>
             </div>
-            <div v-if="blogPosts.length === 0" class="col-span-full py-16 text-center text-slate-500 bg-slate-950/20 border border-slate-900 rounded-3xl">
+            <div v-if="blogPosts.length === 0" class="col-span-full py-16 text-center text-slate-500 bg-slate-100 dark:bg-white dark:bg-slate-950/20 border border-slate-200 dark:border-slate-900 rounded-3xl">
               No blog posts found. Click "Add New Post" to write one.
             </div>
           </div>
@@ -202,7 +202,7 @@
             <button 
               @click="blogPage--" 
               :disabled="blogPage === 1"
-              class="w-10 h-10 bg-slate-800 border border-slate-700 hover:bg-slate-700 disabled:opacity-50 disabled:cursor-not-allowed text-slate-200 rounded-xl text-sm font-bold transition-all cursor-pointer flex items-center justify-center"
+              class="w-10 h-10 bg-slate-100 dark:bg-slate-800 border border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700 disabled:opacity-50 disabled:cursor-not-allowed text-slate-800 dark:text-slate-200 rounded-xl text-sm font-bold transition-all cursor-pointer flex items-center justify-center"
             >
               ◀
             </button>
@@ -213,8 +213,8 @@
               :class="[
                 'w-10 h-10 rounded-xl text-sm font-bold border transition-all cursor-pointer flex items-center justify-center',
                 blogPage === p 
-                  ? 'bg-red-600 border-red-600 text-white shadow-lg shadow-red-600/20' 
-                  : 'bg-slate-800 border-slate-700 text-slate-300 hover:bg-slate-750 hover:text-white'
+                  ? 'bg-red-600 border-red-600 text-slate-900 dark:text-white shadow-lg shadow-red-600/20' 
+                  : 'bg-slate-100 dark:bg-slate-800 border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-750 hover:text-slate-900 dark:text-white'
               ]"
             >
               {{ p }}
@@ -222,7 +222,7 @@
             <button 
               @click="blogPage++" 
               :disabled="blogPage === totalBlogPages"
-              class="w-10 h-10 bg-slate-800 border border-slate-700 hover:bg-slate-700 disabled:opacity-50 disabled:cursor-not-allowed text-slate-200 rounded-xl text-sm font-bold transition-all cursor-pointer flex items-center justify-center"
+              class="w-10 h-10 bg-slate-100 dark:bg-slate-800 border border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700 disabled:opacity-50 disabled:cursor-not-allowed text-slate-800 dark:text-slate-200 rounded-xl text-sm font-bold transition-all cursor-pointer flex items-center justify-center"
             >
               ▶
             </button>
@@ -232,30 +232,30 @@
         <!-- TAB CONTENT: SERVICES -->
         <div v-if="activeTab === 'services'" class="space-y-6" data-aos="fade-up">
           <div class="flex justify-between items-center">
-            <h2 class="text-2xl font-black text-white">Manage Services</h2>
-            <button @click="openAddServiceModal" class="px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl flex items-center gap-2 shadow-lg shadow-red-600/10">
+            <h2 class="text-2xl font-black text-slate-900 dark:text-white">Manage Services</h2>
+            <button @click="openAddServiceModal" class="px-6 py-3 bg-red-600 hover:bg-red-700 text-slate-900 dark:text-white font-bold rounded-xl flex items-center gap-2 shadow-lg shadow-red-600/10 dark:shadow-red-600/20">
               ➕ Add New Service
             </button>
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div v-for="service in paginatedServices" :key="service.id" class="glass-panel border border-slate-800 rounded-2xl overflow-hidden p-6 bg-slate-950/40 flex gap-6">
-              <div class="w-24 h-24 rounded-xl overflow-hidden shrink-0 bg-slate-900">
+            <div v-for="service in paginatedServices" :key="service.id" class="glass-panel border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden p-6 bg-white dark:bg-white dark:bg-slate-950/40 flex gap-6">
+              <div class="w-24 h-24 rounded-xl overflow-hidden shrink-0 bg-slate-50 dark:bg-slate-900">
                 <img v-if="service.image" :src="service.image" class="w-full h-full object-cover" :alt="service.title_en" />
                 <div v-else class="w-full h-full flex items-center justify-center text-xs text-slate-600">No Image</div>
               </div>
               <div class="flex-grow flex flex-col justify-between min-w-0">
                 <div>
-                  <h3 class="text-lg font-bold text-white truncate">{{ service.title_en }}</h3>
-                  <p class="text-xs text-slate-400 line-clamp-2 mt-1">{{ service.description_en }}</p>
+                  <h3 class="text-lg font-bold text-slate-900 dark:text-white truncate">{{ service.title_en }}</h3>
+                  <p class="text-xs text-slate-500 dark:text-slate-400 line-clamp-2 mt-1">{{ service.description_en }}</p>
                 </div>
-                <div class="flex justify-between items-center mt-4 border-t border-slate-900/60 pt-3">
+                <div class="flex justify-between items-center mt-4 border-t border-slate-200 dark:border-slate-200 dark:border-slate-900/60 pt-3">
                   <span class="text-[10px] text-slate-500 font-mono truncate">slug: {{ service.slug }}</span>
                   <div class="flex gap-2">
                     <button @click="manageServiceSections(service)" class="px-3 py-1.5 bg-red-600/10 hover:bg-red-600/20 border border-red-500/20 text-red-500 text-xs font-bold rounded-lg transition-colors">
                       Sections
                     </button>
-                    <button @click="openEditServiceModal(service)" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold rounded-lg transition-colors border border-slate-700">
+                    <button @click="openEditServiceModal(service)" class="px-3 py-1.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 text-xs font-bold rounded-lg transition-colors border border-slate-700">
                       Edit
                     </button>
                     <button @click="deleteService(service)" class="p-2 bg-red-500/10 hover:bg-red-500/20 text-red-500 rounded-lg transition-colors">
@@ -265,7 +265,7 @@
                 </div>
               </div>
             </div>
-            <div v-if="services.length === 0" class="col-span-full py-16 text-center text-slate-500 bg-slate-950/20 border border-slate-900 rounded-3xl">
+            <div v-if="services.length === 0" class="col-span-full py-16 text-center text-slate-500 bg-slate-100 dark:bg-white dark:bg-slate-950/20 border border-slate-200 dark:border-slate-900 rounded-3xl">
               No services found. Click "Add New Service" to create one.
             </div>
           </div>
@@ -275,7 +275,7 @@
             <button 
               @click="servicesPage--" 
               :disabled="servicesPage === 1"
-              class="w-10 h-10 bg-slate-800 border border-slate-700 hover:bg-slate-700 disabled:opacity-50 disabled:cursor-not-allowed text-slate-200 rounded-xl text-sm font-bold transition-all cursor-pointer flex items-center justify-center"
+              class="w-10 h-10 bg-slate-100 dark:bg-slate-800 border border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700 disabled:opacity-50 disabled:cursor-not-allowed text-slate-800 dark:text-slate-200 rounded-xl text-sm font-bold transition-all cursor-pointer flex items-center justify-center"
             >
               ◀
             </button>
@@ -286,8 +286,8 @@
               :class="[
                 'w-10 h-10 rounded-xl text-sm font-bold border transition-all cursor-pointer flex items-center justify-center',
                 servicesPage === p 
-                  ? 'bg-red-600 border-red-600 text-white shadow-lg shadow-red-600/20' 
-                  : 'bg-slate-800 border-slate-700 text-slate-300 hover:bg-slate-750 hover:text-white'
+                  ? 'bg-red-600 border-red-600 text-slate-900 dark:text-white shadow-lg shadow-red-600/20' 
+                  : 'bg-slate-100 dark:bg-slate-800 border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-750 hover:text-slate-900 dark:text-white'
               ]"
             >
               {{ p }}
@@ -295,7 +295,7 @@
             <button 
               @click="servicesPage++" 
               :disabled="servicesPage === totalServicesPages"
-              class="w-10 h-10 bg-slate-800 border border-slate-700 hover:bg-slate-700 disabled:opacity-50 disabled:cursor-not-allowed text-slate-200 rounded-xl text-sm font-bold transition-all cursor-pointer flex items-center justify-center"
+              class="w-10 h-10 bg-slate-100 dark:bg-slate-800 border border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700 disabled:opacity-50 disabled:cursor-not-allowed text-slate-800 dark:text-slate-200 rounded-xl text-sm font-bold transition-all cursor-pointer flex items-center justify-center"
             >
               ▶
             </button>
@@ -308,31 +308,31 @@
           <!-- 1. PRICING PACKAGES -->
           <div class="space-y-6">
             <div class="flex justify-between items-center">
-              <h2 class="text-2xl font-black text-white">Manage Pricing Packages</h2>
-              <button @click="openAddPackageModal" class="px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl flex items-center gap-2 shadow-lg shadow-red-600/10">
+              <h2 class="text-2xl font-black text-slate-900 dark:text-white">Manage Pricing Packages</h2>
+              <button @click="openAddPackageModal" class="px-6 py-3 bg-red-600 hover:bg-red-700 text-slate-900 dark:text-white font-bold rounded-xl flex items-center gap-2 shadow-lg shadow-red-600/10 dark:shadow-red-600/20">
                 ➕ Add New Package
               </button>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div v-for="pkg in dbPackages" :key="pkg.id" class="glass-panel border border-slate-800 rounded-2xl p-6 bg-slate-950/40 flex gap-6">
-                <div class="w-16 h-16 rounded-xl shrink-0 bg-slate-900 border border-slate-800 flex items-center justify-center text-3xl">
+              <div v-for="pkg in dbPackages" :key="pkg.id" class="glass-panel border border-slate-200 dark:border-slate-800 rounded-2xl p-6 bg-white dark:bg-white dark:bg-slate-950/40 flex gap-6">
+                <div class="w-16 h-16 rounded-xl shrink-0 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-center text-3xl">
                   {{ pkg.icon }}
                 </div>
                 <div class="flex-grow flex flex-col justify-between min-w-0">
                   <div>
                     <div class="flex justify-between items-start">
-                      <h3 class="text-lg font-bold text-white truncate">{{ pkg.name_en }}</h3>
+                      <h3 class="text-lg font-bold text-slate-900 dark:text-white truncate">{{ pkg.name_en }}</h3>
                       <span v-if="pkg.popular" class="px-2 py-0.5 bg-red-600/20 text-red-500 border border-red-500/30 rounded-full text-[9px] font-black uppercase tracking-wider">Popular</span>
                     </div>
-                    <p class="text-xs text-slate-400 mt-1">
+                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">
                       Price: {{ pkg.price_en }} {{ pkg.unit_en }} | Price (NL): {{ pkg.price_nl }} {{ pkg.unit_nl }}
                     </p>
                   </div>
-                  <div class="flex justify-between items-center mt-4 border-t border-slate-900/65 pt-3">
+                  <div class="flex justify-between items-center mt-4 border-t border-slate-200 dark:border-slate-200 dark:border-slate-900/65 pt-3">
                     <span class="text-[10px] text-slate-500 font-mono truncate">key: {{ pkg.key_name }}</span>
                     <div class="flex gap-2">
-                      <button @click="openEditPackageModal(pkg)" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold rounded-lg transition-colors border border-slate-700">
+                      <button @click="openEditPackageModal(pkg)" class="px-3 py-1.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 text-xs font-bold rounded-lg transition-colors border border-slate-700">
                         Edit
                       </button>
                       <button @click="deletePackage(pkg)" class="p-2 bg-red-500/10 hover:bg-red-500/20 text-red-500 rounded-lg transition-colors">
@@ -342,7 +342,7 @@
                   </div>
                 </div>
               </div>
-              <div v-if="dbPackages.length === 0" class="col-span-full py-16 text-center text-slate-500 bg-slate-950/20 border border-slate-900 rounded-3xl">
+              <div v-if="dbPackages.length === 0" class="col-span-full py-16 text-center text-slate-500 bg-slate-100 dark:bg-white dark:bg-slate-950/20 border border-slate-200 dark:border-slate-900 rounded-3xl">
                 No pricing packages found. Run seeding to import default values or add a new one.
               </div>
             </div>
@@ -352,28 +352,28 @@
         <!-- TAB CONTENT: PRODUCTS -->
         <div v-if="activeTab === 'products'" class="space-y-6" data-aos="fade-up">
           <div class="flex justify-between items-center">
-            <h2 class="text-2xl font-black text-white">Manage Products</h2>
-            <button @click="openAddProductModal" class="px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl flex items-center gap-2 shadow-lg shadow-red-600/10">
+            <h2 class="text-2xl font-black text-slate-900 dark:text-white">Manage Products</h2>
+            <button @click="openAddProductModal" class="px-6 py-3 bg-red-600 hover:bg-red-700 text-slate-900 dark:text-white font-bold rounded-xl flex items-center gap-2 shadow-lg shadow-red-600/10 dark:shadow-red-600/20">
               ➕ Add New Product
             </button>
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div v-for="prod in paginatedProducts" :key="prod.id" class="glass-panel border border-slate-800/80 rounded-2xl overflow-hidden flex flex-col bg-slate-950/40">
-              <div class="h-44 bg-slate-900 relative">
+            <div v-for="prod in paginatedProducts" :key="prod.id" class="glass-panel border border-slate-200 dark:border-slate-200 dark:border-slate-800/80 rounded-2xl overflow-hidden flex flex-col bg-white dark:bg-white dark:bg-slate-950/40">
+              <div class="h-44 bg-slate-50 dark:bg-slate-900 relative">
                 <img v-if="prod.image" :src="prod.image" class="w-full h-full object-cover" :alt="prod.title_en" />
                 <div v-else class="w-full h-full flex items-center justify-center text-slate-600">No Image</div>
-                <div class="absolute top-3 left-3 px-2.5 py-0.5 bg-red-600 text-white text-[10px] font-bold rounded-full uppercase">€{{ prod.price }}</div>
+                <div class="absolute top-3 left-3 px-2.5 py-0.5 bg-red-600 text-slate-900 dark:text-white text-[10px] font-bold rounded-full uppercase">€{{ prod.price }}</div>
               </div>
               <div class="p-6 flex-grow flex flex-col justify-between space-y-4">
                 <div>
-                  <h3 class="text-lg font-bold text-white mb-2 line-clamp-1">{{ prod.title_en }}</h3>
-                  <p class="text-xs text-slate-400 line-clamp-2">{{ prod.description_en }}</p>
+                  <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2 line-clamp-1">{{ prod.title_en }}</h3>
+                  <p class="text-xs text-slate-500 dark:text-slate-400 line-clamp-2">{{ prod.description_en }}</p>
                 </div>
-                <div class="flex justify-between items-center border-t border-slate-900 pt-4 mt-auto">
+                <div class="flex justify-between items-center border-t border-slate-200 dark:border-slate-900 pt-4 mt-auto">
                   <span class="text-[10px] text-slate-500 font-mono">slug: {{ prod.slug }}</span>
                   <div class="flex gap-2">
-                    <button @click="openEditProductModal(prod)" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold rounded-lg transition-colors border border-slate-700">
+                    <button @click="openEditProductModal(prod)" class="px-3 py-1.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 text-xs font-bold rounded-lg transition-colors border border-slate-700">
                       Edit
                     </button>
                     <button @click="deleteProduct(prod)" class="p-2 bg-red-500/10 hover:bg-red-500/20 text-red-500 rounded-lg transition-colors">
@@ -383,7 +383,7 @@
                 </div>
               </div>
             </div>
-            <div v-if="products.length === 0" class="col-span-full py-16 text-center text-slate-500 bg-slate-950/20 border border-slate-900 rounded-3xl">
+            <div v-if="products.length === 0" class="col-span-full py-16 text-center text-slate-500 bg-slate-100 dark:bg-white dark:bg-slate-950/20 border border-slate-200 dark:border-slate-900 rounded-3xl">
               No products found. Click "Add New Product" to create one.
             </div>
           </div>
@@ -393,7 +393,7 @@
             <button 
               @click="productsPage--" 
               :disabled="productsPage === 1"
-              class="w-10 h-10 bg-slate-800 border border-slate-700 hover:bg-slate-700 disabled:opacity-50 disabled:cursor-not-allowed text-slate-200 rounded-xl text-sm font-bold transition-all cursor-pointer flex items-center justify-center"
+              class="w-10 h-10 bg-slate-100 dark:bg-slate-800 border border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700 disabled:opacity-50 disabled:cursor-not-allowed text-slate-800 dark:text-slate-200 rounded-xl text-sm font-bold transition-all cursor-pointer flex items-center justify-center"
             >
               ◀
             </button>
@@ -404,8 +404,8 @@
               :class="[
                 'w-10 h-10 rounded-xl text-sm font-bold border transition-all cursor-pointer flex items-center justify-center',
                 productsPage === p 
-                  ? 'bg-red-600 border-red-600 text-white shadow-lg shadow-red-600/20' 
-                  : 'bg-slate-800 border-slate-700 text-slate-300 hover:bg-slate-750 hover:text-white'
+                  ? 'bg-red-600 border-red-600 text-slate-900 dark:text-white shadow-lg shadow-red-600/20' 
+                  : 'bg-slate-100 dark:bg-slate-800 border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-750 hover:text-slate-900 dark:text-white'
               ]"
             >
               {{ p }}
@@ -413,7 +413,7 @@
             <button 
               @click="productsPage++" 
               :disabled="productsPage === totalProductsPages"
-              class="w-10 h-10 bg-slate-800 border border-slate-700 hover:bg-slate-700 disabled:opacity-50 disabled:cursor-not-allowed text-slate-200 rounded-xl text-sm font-bold transition-all cursor-pointer flex items-center justify-center"
+              class="w-10 h-10 bg-slate-100 dark:bg-slate-800 border border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700 disabled:opacity-50 disabled:cursor-not-allowed text-slate-800 dark:text-slate-200 rounded-xl text-sm font-bold transition-all cursor-pointer flex items-center justify-center"
             >
               ▶
             </button>
@@ -424,82 +424,82 @@
     </div>
 
     <!-- MODAL: ADD/EDIT LOCATION -->
-    <div v-if="modals.location" class="fixed inset-0 z-50 flex items-center justify-center p-6 bg-slate-950/80 backdrop-blur-sm overflow-y-auto">
-      <div class="glass-panel w-full max-w-4xl rounded-3xl border border-slate-800 bg-slate-900 p-8 shadow-2xl my-8 space-y-6 flex flex-col max-h-[90vh]">
-        <div class="flex justify-between items-center border-b border-slate-800 pb-4 shrink-0">
-          <h3 class="text-xl font-black text-white">{{ isEditing ? 'Edit Location' : 'Add New Location' }}</h3>
-          <button @click="modals.location = false" class="text-slate-400 hover:text-white">✕</button>
+    <div v-if="modals.location" class="fixed inset-0 z-50 flex items-center justify-center p-6 bg-white dark:bg-slate-950/80 backdrop-blur-sm overflow-y-auto">
+      <div class="glass-panel w-full max-w-4xl rounded-3xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 p-8 shadow-2xl my-8 space-y-6 flex flex-col max-h-[90vh]">
+        <div class="flex justify-between items-center border-b border-slate-200 dark:border-slate-800 pb-4 shrink-0">
+          <h3 class="text-xl font-black text-slate-900 dark:text-white">{{ isEditing ? 'Edit Location' : 'Add New Location' }}</h3>
+          <button @click="modals.location = false" class="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white">✕</button>
         </div>
 
         <div class="flex-grow overflow-y-auto space-y-6 pr-2">
           <!-- Section 1: Basic Information -->
-          <div class="bg-slate-950/50 p-6 rounded-2xl border border-slate-800/80 space-y-4">
+          <div class="bg-white dark:bg-white dark:bg-slate-950/50 p-6 rounded-2xl border border-slate-200 dark:border-slate-200 dark:border-slate-800/80 space-y-4">
             <h4 class="font-black text-sm text-red-500 uppercase tracking-wider">1. Basic Information</h4>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div class="space-y-1">
-                <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Location Name</label>
-                <input type="text" v-model="locationForm.name" placeholder="e.g. Maastricht" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-white outline-none focus:border-red-500 text-sm" />
+                <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Location Name</label>
+                <input type="text" v-model="locationForm.name" placeholder="e.g. Maastricht" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white outline-none focus:border-red-500 text-sm" />
               </div>
               <div class="space-y-1">
-                <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Slug</label>
-                <input type="text" v-model="locationForm.slug" placeholder="e.g. maastricht" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-white outline-none focus:border-red-500 text-sm" />
+                <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Slug</label>
+                <input type="text" v-model="locationForm.slug" placeholder="e.g. maastricht" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white outline-none focus:border-red-500 text-sm" />
               </div>
               <div class="space-y-1">
-                <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Country (optional)</label>
-                <input type="text" v-model="locationForm.country" placeholder="e.g. Germany 🇩🇪" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-white outline-none focus:border-red-500 text-sm" />
+                <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Country (optional)</label>
+                <input type="text" v-model="locationForm.country" placeholder="e.g. Germany 🇩🇪" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white outline-none focus:border-red-500 text-sm" />
               </div>
             </div>
           </div>
 
           <!-- Section 2: Media Assets -->
-          <div class="bg-slate-950/50 p-6 rounded-2xl border border-slate-800/80 space-y-4">
+          <div class="bg-white dark:bg-white dark:bg-slate-950/50 p-6 rounded-2xl border border-slate-200 dark:border-slate-200 dark:border-slate-800/80 space-y-4">
             <h4 class="font-black text-sm text-red-500 uppercase tracking-wider">2. Media Assets</h4>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
               <!-- Main Cover Image -->
               <div class="space-y-2">
-                <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Main Cover Image</label>
+                <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Main Cover Image</label>
                 <div class="flex items-center gap-4">
-                  <div class="w-16 h-16 rounded-xl overflow-hidden bg-slate-900 border border-slate-800 flex items-center justify-center shrink-0">
+                  <div class="w-16 h-16 rounded-xl overflow-hidden bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-center shrink-0">
                     <img v-if="locationForm.image" :src="locationForm.image" class="w-full h-full object-cover" />
                     <span v-else class="text-[8px] text-slate-600">None</span>
                   </div>
-                  <input type="file" @change="e => onFileChange(e, 'location')" accept="image/*" class="text-xs text-slate-400 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-[10px] file:font-bold file:bg-slate-800 file:text-slate-200 file:cursor-pointer hover:file:bg-slate-700" />
+                  <input type="file" @change="e => onFileChange(e, 'location')" accept="image/*" class="text-xs text-slate-500 dark:text-slate-400 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-[10px] file:font-bold file:bg-slate-100 dark:bg-slate-800 file:text-slate-800 dark:text-slate-200 file:cursor-pointer hover:file:bg-slate-700" />
                 </div>
               </div>
 
               <!-- Sub-image: Van -->
               <div class="space-y-2">
-                <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Moving Van Image</label>
+                <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Moving Van Image</label>
                 <div class="flex items-center gap-4">
-                  <div class="w-16 h-16 rounded-xl overflow-hidden bg-slate-900 border border-slate-800 flex items-center justify-center shrink-0">
+                  <div class="w-16 h-16 rounded-xl overflow-hidden bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-center shrink-0">
                     <img v-if="locationForm.images_van" :src="locationForm.images_van" class="w-full h-full object-cover" />
                     <span v-else class="text-[8px] text-slate-600">None</span>
                   </div>
-                  <input type="file" @change="e => onFileChange(e, 'location_van')" accept="image/*" class="text-xs text-slate-400 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-[10px] file:font-bold file:bg-slate-800 file:text-slate-200 file:cursor-pointer hover:file:bg-slate-700" />
+                  <input type="file" @change="e => onFileChange(e, 'location_van')" accept="image/*" class="text-xs text-slate-500 dark:text-slate-400 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-[10px] file:font-bold file:bg-slate-100 dark:bg-slate-800 file:text-slate-800 dark:text-slate-200 file:cursor-pointer hover:file:bg-slate-700" />
                 </div>
               </div>
 
               <!-- Sub-image: Boxes -->
               <div class="space-y-2">
-                <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Boxes Image</label>
+                <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Boxes Image</label>
                 <div class="flex items-center gap-4">
-                  <div class="w-16 h-16 rounded-xl overflow-hidden bg-slate-900 border border-slate-800 flex items-center justify-center shrink-0">
+                  <div class="w-16 h-16 rounded-xl overflow-hidden bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-center shrink-0">
                     <img v-if="locationForm.images_boxes" :src="locationForm.images_boxes" class="w-full h-full object-cover" />
                     <span v-else class="text-[8px] text-slate-600">None</span>
                   </div>
-                  <input type="file" @change="e => onFileChange(e, 'location_boxes')" accept="image/*" class="text-xs text-slate-400 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-[10px] file:font-bold file:bg-slate-800 file:text-slate-200 file:cursor-pointer hover:file:bg-slate-700" />
+                  <input type="file" @change="e => onFileChange(e, 'location_boxes')" accept="image/*" class="text-xs text-slate-500 dark:text-slate-400 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-[10px] file:font-bold file:bg-slate-100 dark:bg-slate-800 file:text-slate-800 dark:text-slate-200 file:cursor-pointer hover:file:bg-slate-700" />
                 </div>
               </div>
 
               <!-- Sub-image: Room -->
               <div class="space-y-2">
-                <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Room/Furniture Image</label>
+                <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Room/Furniture Image</label>
                 <div class="flex items-center gap-4">
-                  <div class="w-16 h-16 rounded-xl overflow-hidden bg-slate-900 border border-slate-800 flex items-center justify-center shrink-0">
+                  <div class="w-16 h-16 rounded-xl overflow-hidden bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-center shrink-0">
                     <img v-if="locationForm.images_room" :src="locationForm.images_room" class="w-full h-full object-cover" />
                     <span v-else class="text-[8px] text-slate-600">None</span>
                   </div>
-                  <input type="file" @change="e => onFileChange(e, 'location_room')" accept="image/*" class="text-xs text-slate-400 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-[10px] file:font-bold file:bg-slate-800 file:text-slate-200 file:cursor-pointer hover:file:bg-slate-700" />
+                  <input type="file" @change="e => onFileChange(e, 'location_room')" accept="image/*" class="text-xs text-slate-500 dark:text-slate-400 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-[10px] file:font-bold file:bg-slate-100 dark:bg-slate-800 file:text-slate-800 dark:text-slate-200 file:cursor-pointer hover:file:bg-slate-700" />
                 </div>
               </div>
             </div>
@@ -507,202 +507,202 @@
           </div>
 
           <!-- Section 3: Hero & SEO Metadata -->
-          <div class="bg-slate-950/50 p-6 rounded-2xl border border-slate-800/80 space-y-4">
+          <div class="bg-white dark:bg-white dark:bg-slate-950/50 p-6 rounded-2xl border border-slate-200 dark:border-slate-200 dark:border-slate-800/80 space-y-4">
             <h4 class="font-black text-sm text-red-500 uppercase tracking-wider">3. Hero & SEO Details</h4>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div class="space-y-1">
-                <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Hero Title EN</label>
-                <input type="text" v-model="locationForm.hero_title_en" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-white outline-none focus:border-red-500 text-sm" />
+                <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Hero Title EN</label>
+                <input type="text" v-model="locationForm.hero_title_en" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white outline-none focus:border-red-500 text-sm" />
               </div>
               <div class="space-y-1">
-                <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Hero Title NL</label>
-                <input type="text" v-model="locationForm.hero_title_nl" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-white outline-none focus:border-red-500 text-sm" />
+                <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Hero Title NL</label>
+                <input type="text" v-model="locationForm.hero_title_nl" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white outline-none focus:border-red-500 text-sm" />
               </div>
               <div class="space-y-1">
-                <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Hero Subtitle EN</label>
-                <input type="text" v-model="locationForm.hero_subtitle_en" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-white outline-none focus:border-red-500 text-sm" />
+                <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Hero Subtitle EN</label>
+                <input type="text" v-model="locationForm.hero_subtitle_en" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white outline-none focus:border-red-500 text-sm" />
               </div>
               <div class="space-y-1">
-                <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Hero Subtitle NL</label>
-                <input type="text" v-model="locationForm.hero_subtitle_nl" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-white outline-none focus:border-red-500 text-sm" />
+                <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Hero Subtitle NL</label>
+                <input type="text" v-model="locationForm.hero_subtitle_nl" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white outline-none focus:border-red-500 text-sm" />
               </div>
               <div class="space-y-1">
-                <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">SEO Title EN</label>
-                <input type="text" v-model="locationForm.seo_title_en" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-white outline-none focus:border-red-500 text-sm" />
+                <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">SEO Title EN</label>
+                <input type="text" v-model="locationForm.seo_title_en" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white outline-none focus:border-red-500 text-sm" />
               </div>
               <div class="space-y-1">
-                <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">SEO Title NL</label>
-                <input type="text" v-model="locationForm.seo_title_nl" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-white outline-none focus:border-red-500 text-sm" />
+                <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">SEO Title NL</label>
+                <input type="text" v-model="locationForm.seo_title_nl" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white outline-none focus:border-red-500 text-sm" />
               </div>
               <div class="space-y-1 md:col-span-2">
-                <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">SEO Description EN</label>
-                <textarea v-model="locationForm.seo_desc_en" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 h-16 text-sm"></textarea>
+                <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">SEO Description EN</label>
+                <textarea v-model="locationForm.seo_desc_en" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-slate-900 dark:text-white outline-none focus:border-red-500 h-16 text-sm"></textarea>
               </div>
               <div class="space-y-1 md:col-span-2">
-                <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">SEO Description NL</label>
-                <textarea v-model="locationForm.seo_desc_nl" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 h-16 text-sm"></textarea>
+                <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">SEO Description NL</label>
+                <textarea v-model="locationForm.seo_desc_nl" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-slate-900 dark:text-white outline-none focus:border-red-500 h-16 text-sm"></textarea>
               </div>
               <div class="space-y-1">
-                <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">SEO Keywords EN</label>
-                <input type="text" v-model="locationForm.seo_keywords_en" placeholder="moving, maastricht, removals" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-white outline-none focus:border-red-500 text-sm" />
+                <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">SEO Keywords EN</label>
+                <input type="text" v-model="locationForm.seo_keywords_en" placeholder="moving, maastricht, removals" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white outline-none focus:border-red-500 text-sm" />
               </div>
               <div class="space-y-1">
-                <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">SEO Keywords NL</label>
-                <input type="text" v-model="locationForm.seo_keywords_nl" placeholder="verhuizen, maastricht, verhuisbedrijf" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-white outline-none focus:border-red-500 text-sm" />
+                <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">SEO Keywords NL</label>
+                <input type="text" v-model="locationForm.seo_keywords_nl" placeholder="verhuizen, maastricht, verhuisbedrijf" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white outline-none focus:border-red-500 text-sm" />
               </div>
             </div>
           </div>
 
           <!-- Section 4: Content Section Textareas -->
-          <div class="bg-slate-950/50 p-6 rounded-2xl border border-slate-800/80 space-y-4">
+          <div class="bg-white dark:bg-white dark:bg-slate-950/50 p-6 rounded-2xl border border-slate-200 dark:border-slate-200 dark:border-slate-800/80 space-y-4">
             <h4 class="font-black text-sm text-red-500 uppercase tracking-wider">4. Section Contents (Divide paragraphs with newlines)</h4>
             <div class="space-y-6">
               <!-- Introduction Section -->
-              <div class="border-b border-slate-900 pb-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="border-b border-slate-200 dark:border-slate-900 pb-4 grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div class="space-y-1">
-                  <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Introduction Title EN</label>
-                  <input type="text" v-model="locationForm.intro_title_en" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 text-xs" />
+                  <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Introduction Title EN</label>
+                  <input type="text" v-model="locationForm.intro_title_en" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-slate-900 dark:text-white outline-none focus:border-red-500 text-xs" />
                 </div>
                 <div class="space-y-1">
-                  <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Introduction Title NL</label>
-                  <input type="text" v-model="locationForm.intro_title_nl" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 text-xs" />
+                  <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Introduction Title NL</label>
+                  <input type="text" v-model="locationForm.intro_title_nl" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-slate-900 dark:text-white outline-none focus:border-red-500 text-xs" />
                 </div>
                 <div class="space-y-1">
-                  <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Intro Text EN</label>
-                  <textarea v-model="locationForm.intro_text_en" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 h-24 text-xs"></textarea>
+                  <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Intro Text EN</label>
+                  <textarea v-model="locationForm.intro_text_en" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-slate-900 dark:text-white outline-none focus:border-red-500 h-24 text-xs"></textarea>
                 </div>
                 <div class="space-y-1">
-                  <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Intro Text NL</label>
-                  <textarea v-model="locationForm.intro_text_nl" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 h-24 text-xs"></textarea>
+                  <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Intro Text NL</label>
+                  <textarea v-model="locationForm.intro_text_nl" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-slate-900 dark:text-white outline-none focus:border-red-500 h-24 text-xs"></textarea>
                 </div>
               </div>
 
               <!-- Residential Section -->
-              <div class="border-b border-slate-900 pb-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="border-b border-slate-200 dark:border-slate-900 pb-4 grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div class="space-y-1">
-                  <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Residential Title EN</label>
-                  <input type="text" v-model="locationForm.residential_title_en" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 text-xs" />
+                  <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Residential Title EN</label>
+                  <input type="text" v-model="locationForm.residential_title_en" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-slate-900 dark:text-white outline-none focus:border-red-500 text-xs" />
                 </div>
                 <div class="space-y-1">
-                  <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Residential Title NL</label>
-                  <input type="text" v-model="locationForm.residential_title_nl" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 text-xs" />
+                  <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Residential Title NL</label>
+                  <input type="text" v-model="locationForm.residential_title_nl" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-slate-900 dark:text-white outline-none focus:border-red-500 text-xs" />
                 </div>
                 <div class="space-y-1">
-                  <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Residential Text EN</label>
-                  <textarea v-model="locationForm.residential_text_en" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 h-24 text-xs"></textarea>
+                  <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Residential Text EN</label>
+                  <textarea v-model="locationForm.residential_text_en" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-slate-900 dark:text-white outline-none focus:border-red-500 h-24 text-xs"></textarea>
                 </div>
                 <div class="space-y-1">
-                  <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Residential Text NL</label>
-                  <textarea v-model="locationForm.residential_text_nl" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 h-24 text-xs"></textarea>
+                  <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Residential Text NL</label>
+                  <textarea v-model="locationForm.residential_text_nl" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-slate-900 dark:text-white outline-none focus:border-red-500 h-24 text-xs"></textarea>
                 </div>
               </div>
 
               <!-- Commercial Section -->
-              <div class="border-b border-slate-900 pb-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="border-b border-slate-200 dark:border-slate-900 pb-4 grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div class="space-y-1">
-                  <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Commercial Title EN</label>
-                  <input type="text" v-model="locationForm.commercial_title_en" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 text-xs" />
+                  <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Commercial Title EN</label>
+                  <input type="text" v-model="locationForm.commercial_title_en" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-slate-900 dark:text-white outline-none focus:border-red-500 text-xs" />
                 </div>
                 <div class="space-y-1">
-                  <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Commercial Title NL</label>
-                  <input type="text" v-model="locationForm.commercial_title_nl" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 text-xs" />
+                  <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Commercial Title NL</label>
+                  <input type="text" v-model="locationForm.commercial_title_nl" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-slate-900 dark:text-white outline-none focus:border-red-500 text-xs" />
                 </div>
                 <div class="space-y-1">
-                  <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Commercial Text EN</label>
-                  <textarea v-model="locationForm.commercial_text_en" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 h-24 text-xs"></textarea>
+                  <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Commercial Text EN</label>
+                  <textarea v-model="locationForm.commercial_text_en" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-slate-900 dark:text-white outline-none focus:border-red-500 h-24 text-xs"></textarea>
                 </div>
                 <div class="space-y-1">
-                  <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Commercial Text NL</label>
-                  <textarea v-model="locationForm.commercial_text_nl" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 h-24 text-xs"></textarea>
+                  <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Commercial Text NL</label>
+                  <textarea v-model="locationForm.commercial_text_nl" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-slate-900 dark:text-white outline-none focus:border-red-500 h-24 text-xs"></textarea>
                 </div>
               </div>
 
               <!-- Packing Section -->
-              <div class="border-b border-slate-900 pb-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="border-b border-slate-200 dark:border-slate-900 pb-4 grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div class="space-y-1">
-                  <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Packing Title EN</label>
-                  <input type="text" v-model="locationForm.packing_title_en" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 text-xs" />
+                  <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Packing Title EN</label>
+                  <input type="text" v-model="locationForm.packing_title_en" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-slate-900 dark:text-white outline-none focus:border-red-500 text-xs" />
                 </div>
                 <div class="space-y-1">
-                  <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Packing Title NL</label>
-                  <input type="text" v-model="locationForm.packing_title_nl" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 text-xs" />
+                  <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Packing Title NL</label>
+                  <input type="text" v-model="locationForm.packing_title_nl" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-slate-900 dark:text-white outline-none focus:border-red-500 text-xs" />
                 </div>
                 <div class="space-y-1">
-                  <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Packing Text EN</label>
-                  <textarea v-model="locationForm.packing_text_en" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 h-24 text-xs"></textarea>
+                  <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Packing Text EN</label>
+                  <textarea v-model="locationForm.packing_text_en" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-slate-900 dark:text-white outline-none focus:border-red-500 h-24 text-xs"></textarea>
                 </div>
                 <div class="space-y-1">
-                  <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Packing Text NL</label>
-                  <textarea v-model="locationForm.packing_text_nl" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 h-24 text-xs"></textarea>
+                  <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Packing Text NL</label>
+                  <textarea v-model="locationForm.packing_text_nl" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-slate-900 dark:text-white outline-none focus:border-red-500 h-24 text-xs"></textarea>
                 </div>
               </div>
 
               <!-- Insights Section -->
-              <div class="border-b border-slate-900 pb-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="border-b border-slate-200 dark:border-slate-900 pb-4 grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div class="space-y-1">
-                  <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Insights Title EN</label>
-                  <input type="text" v-model="locationForm.insights_title_en" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 text-xs" />
+                  <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Insights Title EN</label>
+                  <input type="text" v-model="locationForm.insights_title_en" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-slate-900 dark:text-white outline-none focus:border-red-500 text-xs" />
                 </div>
                 <div class="space-y-1">
-                  <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Insights Title NL</label>
-                  <input type="text" v-model="locationForm.insights_title_nl" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 text-xs" />
+                  <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Insights Title NL</label>
+                  <input type="text" v-model="locationForm.insights_title_nl" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-slate-900 dark:text-white outline-none focus:border-red-500 text-xs" />
                 </div>
                 <div class="space-y-1">
-                  <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Insights Text EN</label>
-                  <textarea v-model="locationForm.insights_text_en" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 h-24 text-xs"></textarea>
+                  <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Insights Text EN</label>
+                  <textarea v-model="locationForm.insights_text_en" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-slate-900 dark:text-white outline-none focus:border-red-500 h-24 text-xs"></textarea>
                 </div>
                 <div class="space-y-1">
-                  <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Insights Text NL</label>
-                  <textarea v-model="locationForm.insights_text_nl" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 h-24 text-xs"></textarea>
+                  <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Insights Text NL</label>
+                  <textarea v-model="locationForm.insights_text_nl" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-slate-900 dark:text-white outline-none focus:border-red-500 h-24 text-xs"></textarea>
                 </div>
               </div>
 
               <!-- Cost Factors Section -->
-              <div class="border-b border-slate-900 pb-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="border-b border-slate-200 dark:border-slate-900 pb-4 grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div class="space-y-1">
-                  <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Cost Factors Title EN</label>
-                  <input type="text" v-model="locationForm.costs_title_en" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 text-xs" />
+                  <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Cost Factors Title EN</label>
+                  <input type="text" v-model="locationForm.costs_title_en" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-slate-900 dark:text-white outline-none focus:border-red-500 text-xs" />
                 </div>
                 <div class="space-y-1">
-                  <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Cost Factors Title NL</label>
-                  <input type="text" v-model="locationForm.costs_title_nl" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 text-xs" />
+                  <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Cost Factors Title NL</label>
+                  <input type="text" v-model="locationForm.costs_title_nl" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-slate-900 dark:text-white outline-none focus:border-red-500 text-xs" />
                 </div>
                 <div class="space-y-1">
-                  <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Cost Factors Text EN</label>
-                  <textarea v-model="locationForm.costs_text_en" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 h-24 text-xs"></textarea>
+                  <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Cost Factors Text EN</label>
+                  <textarea v-model="locationForm.costs_text_en" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-slate-900 dark:text-white outline-none focus:border-red-500 h-24 text-xs"></textarea>
                 </div>
                 <div class="space-y-1">
-                  <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Cost Factors Text NL</label>
-                  <textarea v-model="locationForm.costs_text_nl" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 h-24 text-xs"></textarea>
+                  <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Cost Factors Text NL</label>
+                  <textarea v-model="locationForm.costs_text_nl" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-slate-900 dark:text-white outline-none focus:border-red-500 h-24 text-xs"></textarea>
                 </div>
               </div>
 
               <!-- Neighborhoods Section -->
               <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div class="space-y-1">
-                  <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Neighborhoods Title EN</label>
-                  <input type="text" v-model="locationForm.neighborhoods_title_en" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 text-xs" />
+                  <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Neighborhoods Title EN</label>
+                  <input type="text" v-model="locationForm.neighborhoods_title_en" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-slate-900 dark:text-white outline-none focus:border-red-500 text-xs" />
                 </div>
                 <div class="space-y-1">
-                  <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Neighborhoods Title NL</label>
-                  <input type="text" v-model="locationForm.neighborhoods_title_nl" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 text-xs" />
+                  <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Neighborhoods Title NL</label>
+                  <input type="text" v-model="locationForm.neighborhoods_title_nl" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-slate-900 dark:text-white outline-none focus:border-red-500 text-xs" />
                 </div>
                 <div class="space-y-1">
-                  <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Neighborhoods EN (Comma-separated)</label>
-                  <input type="text" v-model="locationForm.neighborhoods_list_en" placeholder="Centrum, Wyck, Céramique" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 text-xs" />
+                  <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Neighborhoods EN (Comma-separated)</label>
+                  <input type="text" v-model="locationForm.neighborhoods_list_en" placeholder="Centrum, Wyck, Céramique" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-slate-900 dark:text-white outline-none focus:border-red-500 text-xs" />
                 </div>
                 <div class="space-y-1">
-                  <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Neighborhoods NL (Comma-separated)</label>
-                  <input type="text" v-model="locationForm.neighborhoods_list_nl" placeholder="Centrum, Wyck, Céramique" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 text-xs" />
+                  <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Neighborhoods NL (Comma-separated)</label>
+                  <input type="text" v-model="locationForm.neighborhoods_list_nl" placeholder="Centrum, Wyck, Céramique" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-slate-900 dark:text-white outline-none focus:border-red-500 text-xs" />
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="flex justify-end gap-3 pt-4 border-t border-slate-800 shrink-0">
-          <button @click="modals.location = false" class="px-5 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold rounded-xl text-sm transition-all border border-slate-700">Cancel</button>
-          <button @click="saveLocation" :disabled="uploading" class="px-6 py-2.5 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl text-sm transition-all shadow-md">
+        <div class="flex justify-end gap-3 pt-4 border-t border-slate-200 dark:border-slate-800 shrink-0">
+          <button @click="modals.location = false" class="px-5 py-2.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold rounded-xl text-sm transition-all border border-slate-700">Cancel</button>
+          <button @click="saveLocation" :disabled="uploading" class="px-6 py-2.5 bg-red-600 hover:bg-red-700 text-slate-900 dark:text-white font-bold rounded-xl text-sm transition-all shadow-md">
             {{ isEditing ? 'Save Changes' : 'Create Location' }}
           </button>
         </div>
@@ -710,78 +710,78 @@
     </div>
 
     <!-- MODAL: ADD/EDIT BLOG POST -->
-    <div v-if="modals.blog" class="fixed inset-0 z-50 flex items-center justify-center p-6 bg-slate-950/80 backdrop-blur-sm overflow-y-auto">
-      <div class="glass-panel w-full max-w-2xl rounded-3xl border border-slate-800 bg-slate-900 p-8 shadow-2xl my-8 space-y-6">
-        <div class="flex justify-between items-center border-b border-slate-800 pb-4">
-          <h3 class="text-xl font-black text-white">{{ isEditing ? 'Edit Blog Post' : 'Add New Blog Post' }}</h3>
-          <button @click="modals.blog = false" class="text-slate-400 hover:text-white">✕</button>
+    <div v-if="modals.blog" class="fixed inset-0 z-50 flex items-center justify-center p-6 bg-white dark:bg-slate-950/80 backdrop-blur-sm overflow-y-auto">
+      <div class="glass-panel w-full max-w-2xl rounded-3xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 p-8 shadow-2xl my-8 space-y-6">
+        <div class="flex justify-between items-center border-b border-slate-200 dark:border-slate-800 pb-4">
+          <h3 class="text-xl font-black text-slate-900 dark:text-white">{{ isEditing ? 'Edit Blog Post' : 'Add New Blog Post' }}</h3>
+          <button @click="modals.blog = false" class="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white">✕</button>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-h-[450px] overflow-y-auto pr-2">
           <div class="space-y-1">
-            <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Slug (e.g. 10-tips-stress-free)</label>
-            <input type="text" v-model="blogForm.slug" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white outline-none focus:border-red-500 text-sm" />
+            <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Slug (e.g. 10-tips-stress-free)</label>
+            <input type="text" v-model="blogForm.slug" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white outline-none focus:border-red-500 text-sm" />
           </div>
           <div class="space-y-1">
-            <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Preferred Date</label>
-            <input type="text" v-model="blogForm.date" placeholder="e.g. May 10, 2026" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white outline-none focus:border-red-500 text-sm" />
+            <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Preferred Date</label>
+            <input type="text" v-model="blogForm.date" placeholder="e.g. May 10, 2026" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white outline-none focus:border-red-500 text-sm" />
           </div>
           <div class="space-y-1">
-            <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Title EN</label>
-            <input type="text" v-model="blogForm.title_en" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white outline-none focus:border-red-500 text-sm" />
+            <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Title EN</label>
+            <input type="text" v-model="blogForm.title_en" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white outline-none focus:border-red-500 text-sm" />
           </div>
           <div class="space-y-1">
-            <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Title NL</label>
-            <input type="text" v-model="blogForm.title_nl" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white outline-none focus:border-red-500 text-sm" />
+            <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Title NL</label>
+            <input type="text" v-model="blogForm.title_nl" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white outline-none focus:border-red-500 text-sm" />
           </div>
           <div class="space-y-1">
-            <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Category EN</label>
-            <input type="text" v-model="blogForm.category_en" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white outline-none focus:border-red-500 text-sm" />
+            <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Category EN</label>
+            <input type="text" v-model="blogForm.category_en" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white outline-none focus:border-red-500 text-sm" />
           </div>
           <div class="space-y-1">
-            <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Category NL</label>
-            <input type="text" v-model="blogForm.category_nl" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white outline-none focus:border-red-500 text-sm" />
+            <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Category NL</label>
+            <input type="text" v-model="blogForm.category_nl" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white outline-none focus:border-red-500 text-sm" />
           </div>
           <div class="space-y-1">
-            <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Read Time EN</label>
-            <input type="text" v-model="blogForm.read_time_en" placeholder="e.g. 5 min read" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white outline-none focus:border-red-500 text-sm" />
+            <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Read Time EN</label>
+            <input type="text" v-model="blogForm.read_time_en" placeholder="e.g. 5 min read" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white outline-none focus:border-red-500 text-sm" />
           </div>
           <div class="space-y-1">
-            <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Read Time NL</label>
-            <input type="text" v-model="blogForm.read_time_nl" placeholder="e.g. 5 min leestijd" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white outline-none focus:border-red-500 text-sm" />
+            <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Read Time NL</label>
+            <input type="text" v-model="blogForm.read_time_nl" placeholder="e.g. 5 min leestijd" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white outline-none focus:border-red-500 text-sm" />
           </div>
           <div class="space-y-1 md:col-span-2">
-            <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Description EN</label>
-            <textarea v-model="blogForm.desc_en" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white outline-none focus:border-red-500 h-16 resize-none text-sm"></textarea>
+            <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Description EN</label>
+            <textarea v-model="blogForm.desc_en" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white outline-none focus:border-red-500 h-16 resize-none text-sm"></textarea>
           </div>
           <div class="space-y-1 md:col-span-2">
-            <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Description NL</label>
-            <textarea v-model="blogForm.desc_nl" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white outline-none focus:border-red-500 h-16 resize-none text-sm"></textarea>
+            <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Description NL</label>
+            <textarea v-model="blogForm.desc_nl" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white outline-none focus:border-red-500 h-16 resize-none text-sm"></textarea>
           </div>
           <div class="space-y-1 md:col-span-2">
-            <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Full Content EN (Markdown/HTML)</label>
-            <textarea v-model="blogForm.content_en" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white outline-none focus:border-red-500 h-32 text-sm"></textarea>
+            <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Full Content EN (Markdown/HTML)</label>
+            <textarea v-model="blogForm.content_en" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white outline-none focus:border-red-500 h-32 text-sm"></textarea>
           </div>
           <div class="space-y-1 md:col-span-2">
-            <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Full Content NL (Markdown/HTML)</label>
-            <textarea v-model="blogForm.content_nl" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white outline-none focus:border-red-500 h-32 text-sm"></textarea>
+            <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Full Content NL (Markdown/HTML)</label>
+            <textarea v-model="blogForm.content_nl" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white outline-none focus:border-red-500 h-32 text-sm"></textarea>
           </div>
           <div class="space-y-3 md:col-span-2">
-            <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Cover Image</label>
+            <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Cover Image</label>
             <div class="flex items-center gap-6">
-              <div class="w-20 h-20 rounded-xl overflow-hidden bg-slate-950 border border-slate-850 flex items-center justify-center shrink-0">
+              <div class="w-20 h-20 rounded-xl overflow-hidden bg-white dark:bg-slate-950 border border-slate-850 flex items-center justify-center shrink-0">
                 <img v-if="blogForm.image" :src="blogForm.image" class="w-full h-full object-cover" />
                 <span v-else class="text-xs text-slate-600">No Image</span>
               </div>
               <div class="flex-grow">
-                <input type="file" @change="e => onFileChange(e, 'blog')" accept="image/*" class="text-sm text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-slate-800 file:text-slate-200 file:cursor-pointer hover:file:bg-slate-700" />
+                <input type="file" @change="e => onFileChange(e, 'blog')" accept="image/*" class="text-sm text-slate-500 dark:text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-slate-100 dark:bg-slate-800 file:text-slate-800 dark:text-slate-200 file:cursor-pointer hover:file:bg-slate-700" />
                 <div v-if="uploading" class="text-xs text-red-500 mt-2 animate-pulse">Uploading to Cloudinary...</div>
               </div>
             </div>
           </div>
         </div>
-        <div class="flex justify-end gap-3 pt-4 border-t border-slate-800">
-          <button @click="modals.blog = false" class="px-5 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold rounded-xl text-sm transition-all border border-slate-700">Cancel</button>
-          <button @click="saveBlogPost" :disabled="uploading" class="px-6 py-2.5 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl text-sm transition-all shadow-md">
+        <div class="flex justify-end gap-3 pt-4 border-t border-slate-200 dark:border-slate-800">
+          <button @click="modals.blog = false" class="px-5 py-2.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold rounded-xl text-sm transition-all border border-slate-700">Cancel</button>
+          <button @click="saveBlogPost" :disabled="uploading" class="px-6 py-2.5 bg-red-600 hover:bg-red-700 text-slate-900 dark:text-white font-bold rounded-xl text-sm transition-all shadow-md">
             {{ isEditing ? 'Save Changes' : 'Create Post' }}
           </button>
         </div>
@@ -789,50 +789,50 @@
     </div>
 
     <!-- MODAL: ADD/EDIT SERVICE -->
-    <div v-if="modals.service" class="fixed inset-0 z-50 flex items-center justify-center p-6 bg-slate-950/80 backdrop-blur-sm">
-      <div class="glass-panel w-full max-w-lg rounded-3xl border border-slate-800 bg-slate-900 p-8 shadow-2xl space-y-6">
-        <div class="flex justify-between items-center border-b border-slate-800 pb-4">
-          <h3 class="text-xl font-black text-white">{{ isEditing ? 'Edit Service' : 'Add New Service' }}</h3>
-          <button @click="modals.service = false" class="text-slate-400 hover:text-white">✕</button>
+    <div v-if="modals.service" class="fixed inset-0 z-50 flex items-center justify-center p-6 bg-white dark:bg-slate-950/80 backdrop-blur-sm">
+      <div class="glass-panel w-full max-w-lg rounded-3xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 p-8 shadow-2xl space-y-6">
+        <div class="flex justify-between items-center border-b border-slate-200 dark:border-slate-800 pb-4">
+          <h3 class="text-xl font-black text-slate-900 dark:text-white">{{ isEditing ? 'Edit Service' : 'Add New Service' }}</h3>
+          <button @click="modals.service = false" class="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white">✕</button>
         </div>
         <div class="space-y-4 max-h-[400px] overflow-y-auto pr-2">
           <div class="space-y-1">
-            <label class="text-xs font-bold uppercase tracking-wider text-slate-400">Service Slug (e.g. lift-rental)</label>
-            <input type="text" v-model="serviceForm.slug" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white outline-none focus:border-red-500 text-sm" />
+            <label class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Service Slug (e.g. lift-rental)</label>
+            <input type="text" v-model="serviceForm.slug" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white outline-none focus:border-red-500 text-sm" />
           </div>
           <div class="space-y-1">
-            <label class="text-xs font-bold uppercase tracking-wider text-slate-400">Title EN</label>
-            <input type="text" v-model="serviceForm.title_en" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white outline-none focus:border-red-500 text-sm" />
+            <label class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Title EN</label>
+            <input type="text" v-model="serviceForm.title_en" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white outline-none focus:border-red-500 text-sm" />
           </div>
           <div class="space-y-1">
-            <label class="text-xs font-bold uppercase tracking-wider text-slate-400">Title NL</label>
-            <input type="text" v-model="serviceForm.title_nl" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white outline-none focus:border-red-500 text-sm" />
+            <label class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Title NL</label>
+            <input type="text" v-model="serviceForm.title_nl" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white outline-none focus:border-red-500 text-sm" />
           </div>
           <div class="space-y-1">
-            <label class="text-xs font-bold uppercase tracking-wider text-slate-400">Short Description EN</label>
-            <textarea v-model="serviceForm.description_en" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white outline-none focus:border-red-500 h-16 resize-none text-sm"></textarea>
+            <label class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Short Description EN</label>
+            <textarea v-model="serviceForm.description_en" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white outline-none focus:border-red-500 h-16 resize-none text-sm"></textarea>
           </div>
           <div class="space-y-1">
-            <label class="text-xs font-bold uppercase tracking-wider text-slate-400">Short Description NL</label>
-            <textarea v-model="serviceForm.description_nl" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white outline-none focus:border-red-500 h-16 resize-none text-sm"></textarea>
+            <label class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Short Description NL</label>
+            <textarea v-model="serviceForm.description_nl" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white outline-none focus:border-red-500 h-16 resize-none text-sm"></textarea>
           </div>
           <div class="space-y-3">
-            <label class="text-xs font-bold uppercase tracking-wider text-slate-400">Cover Image</label>
+            <label class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Cover Image</label>
             <div class="flex items-center gap-6">
-              <div class="w-16 h-16 rounded-xl overflow-hidden bg-slate-950 border border-slate-850 flex items-center justify-center shrink-0">
+              <div class="w-16 h-16 rounded-xl overflow-hidden bg-white dark:bg-slate-950 border border-slate-850 flex items-center justify-center shrink-0">
                 <img v-if="serviceForm.image" :src="serviceForm.image" class="w-full h-full object-cover" />
                 <span v-else class="text-[10px] text-slate-600">No Image</span>
               </div>
               <div class="flex-grow">
-                <input type="file" @change="e => onFileChange(e, 'service')" accept="image/*" class="text-xs text-slate-400 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-[10px] file:font-bold file:bg-slate-800 file:text-slate-200 file:cursor-pointer hover:file:bg-slate-700" />
+                <input type="file" @change="e => onFileChange(e, 'service')" accept="image/*" class="text-xs text-slate-500 dark:text-slate-400 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-[10px] file:font-bold file:bg-slate-100 dark:bg-slate-800 file:text-slate-800 dark:text-slate-200 file:cursor-pointer hover:file:bg-slate-700" />
                 <div v-if="uploading" class="text-xs text-red-500 mt-1 animate-pulse">Uploading to Cloudinary...</div>
               </div>
             </div>
           </div>
         </div>
-        <div class="flex justify-end gap-3 pt-4 border-t border-slate-800">
-          <button @click="modals.service = false" class="px-5 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold rounded-xl text-sm transition-all border border-slate-700">Cancel</button>
-          <button @click="saveService" :disabled="uploading" class="px-6 py-2.5 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl text-sm transition-all shadow-md">
+        <div class="flex justify-end gap-3 pt-4 border-t border-slate-200 dark:border-slate-800">
+          <button @click="modals.service = false" class="px-5 py-2.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold rounded-xl text-sm transition-all border border-slate-700">Cancel</button>
+          <button @click="saveService" :disabled="uploading" class="px-6 py-2.5 bg-red-600 hover:bg-red-700 text-slate-900 dark:text-white font-bold rounded-xl text-sm transition-all shadow-md">
             {{ isEditing ? 'Save Changes' : 'Create Service' }}
           </button>
         </div>
@@ -840,56 +840,56 @@
     </div>
 
     <!-- MODAL: MANAGE SERVICE SECTIONS -->
-    <div v-if="modals.sections" class="fixed inset-0 z-50 flex items-center justify-center p-6 bg-slate-950/80 backdrop-blur-sm overflow-y-auto">
-      <div class="glass-panel w-full max-w-3xl rounded-3xl border border-slate-800 bg-slate-900 p-8 shadow-2xl my-8 space-y-6 flex flex-col max-h-[90vh]">
-        <div class="flex justify-between items-center border-b border-slate-800 pb-4 shrink-0">
+    <div v-if="modals.sections" class="fixed inset-0 z-50 flex items-center justify-center p-6 bg-white dark:bg-slate-950/80 backdrop-blur-sm overflow-y-auto">
+      <div class="glass-panel w-full max-w-3xl rounded-3xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 p-8 shadow-2xl my-8 space-y-6 flex flex-col max-h-[90vh]">
+        <div class="flex justify-between items-center border-b border-slate-200 dark:border-slate-800 pb-4 shrink-0">
           <div>
-            <h3 class="text-xl font-black text-white">Customize Sections</h3>
-            <p class="text-xs text-slate-400 mt-1">Manage sub-sections inside the "{{ selectedService.title_en }}" page.</p>
+            <h3 class="text-xl font-black text-slate-900 dark:text-white">Customize Sections</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Manage sub-sections inside the "{{ selectedService.title_en }}" page.</p>
           </div>
-          <button @click="modals.sections = false" class="text-slate-400 hover:text-white">✕</button>
+          <button @click="modals.sections = false" class="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white">✕</button>
         </div>
 
         <!-- Section list and editor -->
         <div class="flex-grow overflow-y-auto space-y-6 pr-2">
           <!-- Add new section form -->
-          <div class="p-6 bg-slate-950/60 border border-slate-800 rounded-2xl space-y-4">
-            <h4 class="font-bold text-sm text-white border-b border-slate-800/80 pb-2">➕ Add New Section</h4>
+          <div class="p-6 bg-white dark:bg-white dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 rounded-2xl space-y-4">
+            <h4 class="font-bold text-sm text-slate-900 dark:text-white border-b border-slate-200 dark:border-slate-200 dark:border-slate-800/80 pb-2">➕ Add New Section</h4>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div class="space-y-1">
-                <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Section Title EN</label>
-                <input type="text" v-model="sectionForm.title_en" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 text-xs" />
+                <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Section Title EN</label>
+                <input type="text" v-model="sectionForm.title_en" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-slate-900 dark:text-white outline-none focus:border-red-500 text-xs" />
               </div>
               <div class="space-y-1">
-                <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Section Title NL</label>
-                <input type="text" v-model="sectionForm.title_nl" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 text-xs" />
+                <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Section Title NL</label>
+                <input type="text" v-model="sectionForm.title_nl" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-slate-900 dark:text-white outline-none focus:border-red-500 text-xs" />
               </div>
               <div class="space-y-1 md:col-span-2">
-                <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Content EN</label>
-                <textarea v-model="sectionForm.content_en" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 h-16 text-xs"></textarea>
+                <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Content EN</label>
+                <textarea v-model="sectionForm.content_en" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-slate-900 dark:text-white outline-none focus:border-red-500 h-16 text-xs"></textarea>
               </div>
               <div class="space-y-1 md:col-span-2">
-                <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Content NL</label>
-                <textarea v-model="sectionForm.content_nl" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 h-16 text-xs"></textarea>
+                <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Content NL</label>
+                <textarea v-model="sectionForm.content_nl" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-slate-900 dark:text-white outline-none focus:border-red-500 h-16 text-xs"></textarea>
               </div>
               <div class="space-y-1">
-                <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Sort Order</label>
-                <input type="number" v-model.number="sectionForm.sort_order" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 text-xs" />
+                <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Sort Order</label>
+                <input type="number" v-model.number="sectionForm.sort_order" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-slate-900 dark:text-white outline-none focus:border-red-500 text-xs" />
               </div>
               <div class="space-y-2">
-                <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Optional Section Image</label>
+                <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Optional Section Image</label>
                 <div class="flex items-center gap-4">
-                  <div class="w-10 h-10 rounded-lg overflow-hidden bg-slate-900 border border-slate-800 flex items-center justify-center shrink-0">
+                  <div class="w-10 h-10 rounded-lg overflow-hidden bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-center shrink-0">
                     <img v-if="sectionForm.image" :src="sectionForm.image" class="w-full h-full object-cover" />
                     <span v-else class="text-[8px] text-slate-600">None</span>
                   </div>
-                  <input type="file" @change="e => onFileChange(e, 'section')" accept="image/*" class="text-[10px] text-slate-400 file:py-1 file:px-2 file:rounded-md file:border-0 file:text-[8px] file:font-bold file:bg-slate-800 file:text-slate-200 file:cursor-pointer hover:file:bg-slate-700" />
+                  <input type="file" @change="e => onFileChange(e, 'section')" accept="image/*" class="text-[10px] text-slate-500 dark:text-slate-400 file:py-1 file:px-2 file:rounded-md file:border-0 file:text-[8px] file:font-bold file:bg-slate-100 dark:bg-slate-800 file:text-slate-800 dark:text-slate-200 file:cursor-pointer hover:file:bg-slate-700" />
                 </div>
                 <div v-if="uploading" class="text-[10px] text-red-500 animate-pulse">Uploading image...</div>
               </div>
             </div>
             <div class="flex justify-end pt-2">
-              <button @click="addServiceSection" :disabled="uploading" class="px-5 py-2 bg-red-600 hover:bg-red-700 text-white font-bold rounded-lg text-xs shadow-md">
+              <button @click="addServiceSection" :disabled="uploading" class="px-5 py-2 bg-red-600 hover:bg-red-700 text-slate-900 dark:text-white font-bold rounded-lg text-xs shadow-md">
                 Add Section
               </button>
             </div>
@@ -897,55 +897,55 @@
 
           <!-- Existing Sections List -->
           <div class="space-y-4">
-            <h4 class="font-bold text-sm text-white">Existing Sections</h4>
-            <div v-for="(sec, idx) in serviceSections" :key="sec.id" class="p-5 border border-slate-800/80 rounded-2xl bg-slate-900/60 relative space-y-3">
+            <h4 class="font-bold text-sm text-slate-900 dark:text-white">Existing Sections</h4>
+            <div v-for="(sec, idx) in serviceSections" :key="sec.id" class="p-5 border border-slate-200 dark:border-slate-200 dark:border-slate-800/80 rounded-2xl bg-slate-50 dark:bg-slate-900/60 relative space-y-3">
               <div v-if="editingSectionId === sec.id" class="space-y-4">
-                <h5 class="font-bold text-slate-200 text-xs border-b border-slate-800 pb-2">✏️ Edit Section #{{ idx + 1 }}</h5>
+                <h5 class="font-bold text-slate-800 dark:text-slate-200 text-xs border-b border-slate-200 dark:border-slate-800 pb-2">✏️ Edit Section #{{ idx + 1 }}</h5>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div class="space-y-1">
-                    <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Section Title EN</label>
-                    <input type="text" v-model="editSectionForm.title_en" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 text-xs" />
+                    <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Section Title EN</label>
+                    <input type="text" v-model="editSectionForm.title_en" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-slate-900 dark:text-white outline-none focus:border-red-500 text-xs" />
                   </div>
                   <div class="space-y-1">
-                    <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Section Title NL</label>
-                    <input type="text" v-model="editSectionForm.title_nl" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 text-xs" />
+                    <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Section Title NL</label>
+                    <input type="text" v-model="editSectionForm.title_nl" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-slate-900 dark:text-white outline-none focus:border-red-500 text-xs" />
                   </div>
                   <div class="space-y-1 md:col-span-2">
-                    <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Content EN</label>
-                    <textarea v-model="editSectionForm.content_en" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 h-24 text-xs"></textarea>
+                    <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Content EN</label>
+                    <textarea v-model="editSectionForm.content_en" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-slate-900 dark:text-white outline-none focus:border-red-500 h-24 text-xs"></textarea>
                   </div>
                   <div class="space-y-1 md:col-span-2">
-                    <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Content NL</label>
-                    <textarea v-model="editSectionForm.content_nl" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 h-24 text-xs"></textarea>
+                    <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Content NL</label>
+                    <textarea v-model="editSectionForm.content_nl" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-slate-900 dark:text-white outline-none focus:border-red-500 h-24 text-xs"></textarea>
                   </div>
                   <div class="space-y-1">
-                    <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Sort Order</label>
-                    <input type="number" v-model.number="editSectionForm.sort_order" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 text-xs" />
+                    <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Sort Order</label>
+                    <input type="number" v-model.number="editSectionForm.sort_order" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-slate-900 dark:text-white outline-none focus:border-red-500 text-xs" />
                   </div>
                   <div class="space-y-2">
-                    <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Optional Section Image</label>
+                    <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Optional Section Image</label>
                     <div class="flex items-center gap-4">
-                      <div class="w-10 h-10 rounded-lg overflow-hidden bg-slate-950 border border-slate-800 flex items-center justify-center shrink-0">
+                      <div class="w-10 h-10 rounded-lg overflow-hidden bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 flex items-center justify-center shrink-0">
                         <img v-if="editSectionForm.image" :src="editSectionForm.image" class="w-full h-full object-cover" />
                         <span v-else class="text-[8px] text-slate-600">None</span>
                       </div>
-                      <input type="file" @change="e => onFileChange(e, 'edit_section')" accept="image/*" class="text-[10px] text-slate-400 file:py-1 file:px-2 file:rounded-md file:border-0 file:text-[8px] file:font-bold file:bg-slate-800 file:text-slate-200 file:cursor-pointer hover:file:bg-slate-700" />
+                      <input type="file" @change="e => onFileChange(e, 'edit_section')" accept="image/*" class="text-[10px] text-slate-500 dark:text-slate-400 file:py-1 file:px-2 file:rounded-md file:border-0 file:text-[8px] file:font-bold file:bg-slate-100 dark:bg-slate-800 file:text-slate-800 dark:text-slate-200 file:cursor-pointer hover:file:bg-slate-700" />
                     </div>
                     <div v-if="uploading" class="text-[10px] text-red-500 animate-pulse">Uploading image...</div>
                   </div>
                 </div>
-                <div class="flex justify-end gap-2 pt-2 border-t border-slate-800/80">
-                  <button @click="cancelSectionEdit" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold rounded-lg text-xs border border-slate-700">
+                <div class="flex justify-end gap-2 pt-2 border-t border-slate-200 dark:border-slate-200 dark:border-slate-800/80">
+                  <button @click="cancelSectionEdit" class="px-4 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold rounded-lg text-xs border border-slate-700">
                     Cancel
                   </button>
-                  <button @click="updateServiceSection" :disabled="uploading" class="px-5 py-2 bg-red-600 hover:bg-red-700 text-white font-bold rounded-lg text-xs shadow-md">
+                  <button @click="updateServiceSection" :disabled="uploading" class="px-5 py-2 bg-red-600 hover:bg-red-700 text-slate-900 dark:text-white font-bold rounded-lg text-xs shadow-md">
                     Save Changes
                   </button>
                 </div>
               </div>
               <div v-else class="space-y-3">
                 <div class="flex justify-between items-start gap-4">
-                  <h5 class="font-bold text-slate-200 text-xs">Section #{{ idx + 1 }} — {{ sec.title_en }}</h5>
+                  <h5 class="font-bold text-slate-800 dark:text-slate-200 text-xs">Section #{{ idx + 1 }} — {{ sec.title_en }}</h5>
                   <div class="flex gap-2">
                     <button @click="editSection(sec)" class="text-blue-500 hover:bg-blue-500/10 p-1.5 rounded-lg text-xs font-bold">
                       ✏️ Edit
@@ -956,78 +956,78 @@
                   </div>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                  <div class="text-[11px] text-slate-400"><strong>Title NL:</strong> {{ sec.title_nl }}</div>
-                  <div class="text-[11px] text-slate-400"><strong>Sort Order:</strong> {{ sec.sort_order }}</div>
-                  <div class="text-[11px] text-slate-400 md:col-span-2"><strong>Content EN:</strong> {{ sec.content_en }}</div>
-                  <div class="text-[11px] text-slate-400 md:col-span-2"><strong>Content NL:</strong> {{ sec.content_nl }}</div>
-                  <div v-if="sec.image" class="w-16 h-16 rounded-lg overflow-hidden bg-slate-950 border border-slate-800 md:col-span-2 mt-2">
+                  <div class="text-[11px] text-slate-500 dark:text-slate-400"><strong>Title NL:</strong> {{ sec.title_nl }}</div>
+                  <div class="text-[11px] text-slate-500 dark:text-slate-400"><strong>Sort Order:</strong> {{ sec.sort_order }}</div>
+                  <div class="text-[11px] text-slate-500 dark:text-slate-400 md:col-span-2"><strong>Content EN:</strong> {{ sec.content_en }}</div>
+                  <div class="text-[11px] text-slate-500 dark:text-slate-400 md:col-span-2"><strong>Content NL:</strong> {{ sec.content_nl }}</div>
+                  <div v-if="sec.image" class="w-16 h-16 rounded-lg overflow-hidden bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 md:col-span-2 mt-2">
                     <img :src="sec.image" class="w-full h-full object-cover" />
                   </div>
                 </div>
               </div>
             </div>
-            <div v-if="serviceSections.length === 0" class="text-center py-8 text-xs text-slate-500 bg-slate-950/20 rounded-2xl border border-slate-900">
+            <div v-if="serviceSections.length === 0" class="text-center py-8 text-xs text-slate-500 bg-slate-100 dark:bg-white dark:bg-slate-950/20 rounded-2xl border border-slate-200 dark:border-slate-900">
               No custom sub-sections added yet for this service.
             </div>
           </div>
         </div>
 
-        <div class="flex justify-end pt-4 border-t border-slate-800 shrink-0">
-          <button @click="modals.sections = false" class="px-6 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold rounded-xl text-xs border border-slate-700">Done</button>
+        <div class="flex justify-end pt-4 border-t border-slate-200 dark:border-slate-800 shrink-0">
+          <button @click="modals.sections = false" class="px-6 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold rounded-xl text-xs border border-slate-700">Done</button>
         </div>
       </div>
     </div>
 
     <!-- MODAL: MANAGE BLOG SECTIONS -->
-    <div v-if="modals.blogSections" class="fixed inset-0 z-50 flex items-center justify-center p-6 bg-slate-950/80 backdrop-blur-sm overflow-y-auto">
-      <div class="glass-panel w-full max-w-3xl rounded-3xl border border-slate-800 bg-slate-900 p-8 shadow-2xl my-8 space-y-6 flex flex-col max-h-[90vh]">
-        <div class="flex justify-between items-center border-b border-slate-800 pb-4 shrink-0">
+    <div v-if="modals.blogSections" class="fixed inset-0 z-50 flex items-center justify-center p-6 bg-white dark:bg-slate-950/80 backdrop-blur-sm overflow-y-auto">
+      <div class="glass-panel w-full max-w-3xl rounded-3xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 p-8 shadow-2xl my-8 space-y-6 flex flex-col max-h-[90vh]">
+        <div class="flex justify-between items-center border-b border-slate-200 dark:border-slate-800 pb-4 shrink-0">
           <div>
-            <h3 class="text-xl font-black text-white">Customize Sections</h3>
-            <p class="text-xs text-slate-400 mt-1">Manage sub-sections inside the "{{ selectedBlog ? selectedBlog.title_en : '' }}" post.</p>
+            <h3 class="text-xl font-black text-slate-900 dark:text-white">Customize Sections</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Manage sub-sections inside the "{{ selectedBlog ? selectedBlog.title_en : '' }}" post.</p>
           </div>
-          <button @click="modals.blogSections = false" class="text-slate-400 hover:text-white">✕</button>
+          <button @click="modals.blogSections = false" class="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white">✕</button>
         </div>
 
         <div class="flex-grow overflow-y-auto space-y-6 pr-2">
           <!-- Add new section form -->
-          <div class="p-6 bg-slate-950/60 border border-slate-800 rounded-2xl space-y-4">
-            <h4 class="font-bold text-sm text-white border-b border-slate-800/80 pb-2">➕ Add New Section</h4>
+          <div class="p-6 bg-white dark:bg-white dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 rounded-2xl space-y-4">
+            <h4 class="font-bold text-sm text-slate-900 dark:text-white border-b border-slate-200 dark:border-slate-200 dark:border-slate-800/80 pb-2">➕ Add New Section</h4>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div class="space-y-1">
-                <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Section Title EN</label>
-                <input type="text" v-model="sectionForm.title_en" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 text-xs" />
+                <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Section Title EN</label>
+                <input type="text" v-model="sectionForm.title_en" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-slate-900 dark:text-white outline-none focus:border-red-500 text-xs" />
               </div>
               <div class="space-y-1">
-                <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Section Title NL</label>
-                <input type="text" v-model="sectionForm.title_nl" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 text-xs" />
+                <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Section Title NL</label>
+                <input type="text" v-model="sectionForm.title_nl" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-slate-900 dark:text-white outline-none focus:border-red-500 text-xs" />
               </div>
               <div class="space-y-1 md:col-span-2">
-                <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Content EN</label>
-                <textarea v-model="sectionForm.content_en" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 h-16 text-xs"></textarea>
+                <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Content EN</label>
+                <textarea v-model="sectionForm.content_en" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-slate-900 dark:text-white outline-none focus:border-red-500 h-16 text-xs"></textarea>
               </div>
               <div class="space-y-1 md:col-span-2">
-                <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Content NL</label>
-                <textarea v-model="sectionForm.content_nl" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 h-16 text-xs"></textarea>
+                <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Content NL</label>
+                <textarea v-model="sectionForm.content_nl" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-slate-900 dark:text-white outline-none focus:border-red-500 h-16 text-xs"></textarea>
               </div>
               <div class="space-y-1">
-                <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Sort Order</label>
-                <input type="number" v-model.number="sectionForm.sort_order" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 text-xs" />
+                <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Sort Order</label>
+                <input type="number" v-model.number="sectionForm.sort_order" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-slate-900 dark:text-white outline-none focus:border-red-500 text-xs" />
               </div>
               <div class="space-y-2">
-                <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Optional Section Image</label>
+                <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Optional Section Image</label>
                 <div class="flex items-center gap-4">
-                  <div class="w-10 h-10 rounded-lg overflow-hidden bg-slate-900 border border-slate-800 flex items-center justify-center shrink-0">
+                  <div class="w-10 h-10 rounded-lg overflow-hidden bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-center shrink-0">
                     <img v-if="sectionForm.image" :src="sectionForm.image" class="w-full h-full object-cover" />
                     <span v-else class="text-[8px] text-slate-600">None</span>
                   </div>
-                  <input type="file" @change="e => onFileChange(e, 'section')" accept="image/*" class="text-[10px] text-slate-400 file:py-1 file:px-2 file:rounded-md file:border-0 file:text-[8px] file:font-bold file:bg-slate-800 file:text-slate-200 file:cursor-pointer hover:file:bg-slate-700" />
+                  <input type="file" @change="e => onFileChange(e, 'section')" accept="image/*" class="text-[10px] text-slate-500 dark:text-slate-400 file:py-1 file:px-2 file:rounded-md file:border-0 file:text-[8px] file:font-bold file:bg-slate-100 dark:bg-slate-800 file:text-slate-800 dark:text-slate-200 file:cursor-pointer hover:file:bg-slate-700" />
                 </div>
                 <div v-if="uploading" class="text-[10px] text-red-500 animate-pulse">Uploading image...</div>
               </div>
             </div>
             <div class="flex justify-end pt-2">
-              <button @click="addBlogSection" :disabled="uploading" class="px-5 py-2 bg-red-600 hover:bg-red-700 text-white font-bold rounded-lg text-xs shadow-md">
+              <button @click="addBlogSection" :disabled="uploading" class="px-5 py-2 bg-red-600 hover:bg-red-700 text-slate-900 dark:text-white font-bold rounded-lg text-xs shadow-md">
                 Add Section
               </button>
             </div>
@@ -1035,55 +1035,55 @@
 
           <!-- Existing Sections List -->
           <div class="space-y-4">
-            <h4 class="font-bold text-sm text-white">Existing Sections</h4>
-            <div v-for="(sec, idx) in blogSections" :key="sec.id" class="p-5 border border-slate-800/80 rounded-2xl bg-slate-900/60 relative space-y-3">
+            <h4 class="font-bold text-sm text-slate-900 dark:text-white">Existing Sections</h4>
+            <div v-for="(sec, idx) in blogSections" :key="sec.id" class="p-5 border border-slate-200 dark:border-slate-200 dark:border-slate-800/80 rounded-2xl bg-slate-50 dark:bg-slate-900/60 relative space-y-3">
               <div v-if="editingSectionId === sec.id" class="space-y-4">
-                <h5 class="font-bold text-slate-200 text-xs border-b border-slate-800 pb-2">✏️ Edit Section #{{ idx + 1 }}</h5>
+                <h5 class="font-bold text-slate-800 dark:text-slate-200 text-xs border-b border-slate-200 dark:border-slate-800 pb-2">✏️ Edit Section #{{ idx + 1 }}</h5>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div class="space-y-1">
-                    <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Section Title EN</label>
-                    <input type="text" v-model="editSectionForm.title_en" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 text-xs" />
+                    <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Section Title EN</label>
+                    <input type="text" v-model="editSectionForm.title_en" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-slate-900 dark:text-white outline-none focus:border-red-500 text-xs" />
                   </div>
                   <div class="space-y-1">
-                    <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Section Title NL</label>
-                    <input type="text" v-model="editSectionForm.title_nl" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 text-xs" />
+                    <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Section Title NL</label>
+                    <input type="text" v-model="editSectionForm.title_nl" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-slate-900 dark:text-white outline-none focus:border-red-500 text-xs" />
                   </div>
                   <div class="space-y-1 md:col-span-2">
-                    <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Content EN</label>
-                    <textarea v-model="editSectionForm.content_en" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 h-24 text-xs"></textarea>
+                    <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Content EN</label>
+                    <textarea v-model="editSectionForm.content_en" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-slate-900 dark:text-white outline-none focus:border-red-500 h-24 text-xs"></textarea>
                   </div>
                   <div class="space-y-1 md:col-span-2">
-                    <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Content NL</label>
-                    <textarea v-model="editSectionForm.content_nl" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 h-24 text-xs"></textarea>
+                    <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Content NL</label>
+                    <textarea v-model="editSectionForm.content_nl" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-slate-900 dark:text-white outline-none focus:border-red-500 h-24 text-xs"></textarea>
                   </div>
                   <div class="space-y-1">
-                    <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Sort Order</label>
-                    <input type="number" v-model.number="editSectionForm.sort_order" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 text-xs" />
+                    <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Sort Order</label>
+                    <input type="number" v-model.number="editSectionForm.sort_order" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-slate-900 dark:text-white outline-none focus:border-red-500 text-xs" />
                   </div>
                   <div class="space-y-2">
-                    <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Optional Section Image</label>
+                    <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Optional Section Image</label>
                     <div class="flex items-center gap-4">
-                      <div class="w-10 h-10 rounded-lg overflow-hidden bg-slate-950 border border-slate-800 flex items-center justify-center shrink-0">
+                      <div class="w-10 h-10 rounded-lg overflow-hidden bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 flex items-center justify-center shrink-0">
                         <img v-if="editSectionForm.image" :src="editSectionForm.image" class="w-full h-full object-cover" />
                         <span v-else class="text-[8px] text-slate-600">None</span>
                       </div>
-                      <input type="file" @change="e => onFileChange(e, 'edit_section')" accept="image/*" class="text-[10px] text-slate-400 file:py-1 file:px-2 file:rounded-md file:border-0 file:text-[8px] file:font-bold file:bg-slate-800 file:text-slate-200 file:cursor-pointer hover:file:bg-slate-700" />
+                      <input type="file" @change="e => onFileChange(e, 'edit_section')" accept="image/*" class="text-[10px] text-slate-500 dark:text-slate-400 file:py-1 file:px-2 file:rounded-md file:border-0 file:text-[8px] file:font-bold file:bg-slate-100 dark:bg-slate-800 file:text-slate-800 dark:text-slate-200 file:cursor-pointer hover:file:bg-slate-700" />
                     </div>
                     <div v-if="uploading" class="text-[10px] text-red-500 animate-pulse">Uploading image...</div>
                   </div>
                 </div>
-                <div class="flex justify-end gap-2 pt-2 border-t border-slate-800/80">
-                  <button @click="cancelSectionEdit" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold rounded-lg text-xs border border-slate-700">
+                <div class="flex justify-end gap-2 pt-2 border-t border-slate-200 dark:border-slate-200 dark:border-slate-800/80">
+                  <button @click="cancelSectionEdit" class="px-4 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold rounded-lg text-xs border border-slate-700">
                     Cancel
                   </button>
-                  <button @click="updateBlogSection" :disabled="uploading" class="px-5 py-2 bg-red-600 hover:bg-red-700 text-white font-bold rounded-lg text-xs shadow-md">
+                  <button @click="updateBlogSection" :disabled="uploading" class="px-5 py-2 bg-red-600 hover:bg-red-700 text-slate-900 dark:text-white font-bold rounded-lg text-xs shadow-md">
                     Save Changes
                   </button>
                 </div>
               </div>
               <div v-else class="space-y-3">
                 <div class="flex justify-between items-start gap-4">
-                  <h5 class="font-bold text-slate-200 text-xs">Section #{{ idx + 1 }} — {{ sec.title_en }}</h5>
+                  <h5 class="font-bold text-slate-800 dark:text-slate-200 text-xs">Section #{{ idx + 1 }} — {{ sec.title_en }}</h5>
                   <div class="flex gap-2">
                     <button @click="editSection(sec)" class="text-blue-500 hover:bg-blue-500/10 p-1.5 rounded-lg text-xs font-bold">
                       ✏️ Edit
@@ -1094,78 +1094,78 @@
                   </div>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                  <div class="text-[11px] text-slate-400"><strong>Title NL:</strong> {{ sec.title_nl }}</div>
-                  <div class="text-[11px] text-slate-400"><strong>Sort Order:</strong> {{ sec.sort_order }}</div>
-                  <div class="text-[11px] text-slate-400 md:col-span-2"><strong>Content EN:</strong> {{ sec.content_en }}</div>
-                  <div class="text-[11px] text-slate-400 md:col-span-2"><strong>Content NL:</strong> {{ sec.content_nl }}</div>
-                  <div v-if="sec.image" class="w-16 h-16 rounded-lg overflow-hidden bg-slate-950 border border-slate-800 md:col-span-2 mt-2">
+                  <div class="text-[11px] text-slate-500 dark:text-slate-400"><strong>Title NL:</strong> {{ sec.title_nl }}</div>
+                  <div class="text-[11px] text-slate-500 dark:text-slate-400"><strong>Sort Order:</strong> {{ sec.sort_order }}</div>
+                  <div class="text-[11px] text-slate-500 dark:text-slate-400 md:col-span-2"><strong>Content EN:</strong> {{ sec.content_en }}</div>
+                  <div class="text-[11px] text-slate-500 dark:text-slate-400 md:col-span-2"><strong>Content NL:</strong> {{ sec.content_nl }}</div>
+                  <div v-if="sec.image" class="w-16 h-16 rounded-lg overflow-hidden bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 md:col-span-2 mt-2">
                     <img :src="sec.image" class="w-full h-full object-cover" />
                   </div>
                 </div>
               </div>
             </div>
-            <div v-if="blogSections.length === 0" class="text-center py-8 text-xs text-slate-500 bg-slate-950/20 rounded-2xl border border-slate-900">
+            <div v-if="blogSections.length === 0" class="text-center py-8 text-xs text-slate-500 bg-slate-100 dark:bg-white dark:bg-slate-950/20 rounded-2xl border border-slate-200 dark:border-slate-900">
               No custom sub-sections added yet for this post.
             </div>
           </div>
         </div>
 
-        <div class="flex justify-end pt-4 border-t border-slate-800 shrink-0">
-          <button @click="modals.blogSections = false" class="px-6 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold rounded-xl text-xs border border-slate-700">Done</button>
+        <div class="flex justify-end pt-4 border-t border-slate-200 dark:border-slate-800 shrink-0">
+          <button @click="modals.blogSections = false" class="px-6 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold rounded-xl text-xs border border-slate-700">Done</button>
         </div>
       </div>
     </div>
 
     <!-- MODAL: MANAGE LOCATION SECTIONS -->
-    <div v-if="modals.locationSections" class="fixed inset-0 z-50 flex items-center justify-center p-6 bg-slate-950/80 backdrop-blur-sm overflow-y-auto">
-      <div class="glass-panel w-full max-w-3xl rounded-3xl border border-slate-800 bg-slate-900 p-8 shadow-2xl my-8 space-y-6 flex flex-col max-h-[90vh]">
-        <div class="flex justify-between items-center border-b border-slate-800 pb-4 shrink-0">
+    <div v-if="modals.locationSections" class="fixed inset-0 z-50 flex items-center justify-center p-6 bg-white dark:bg-slate-950/80 backdrop-blur-sm overflow-y-auto">
+      <div class="glass-panel w-full max-w-3xl rounded-3xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 p-8 shadow-2xl my-8 space-y-6 flex flex-col max-h-[90vh]">
+        <div class="flex justify-between items-center border-b border-slate-200 dark:border-slate-800 pb-4 shrink-0">
           <div>
-            <h3 class="text-xl font-black text-white">Customize Sections</h3>
-            <p class="text-xs text-slate-400 mt-1">Manage sub-sections inside the "{{ selectedLocation ? selectedLocation.name : '' }}" location page.</p>
+            <h3 class="text-xl font-black text-slate-900 dark:text-white">Customize Sections</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Manage sub-sections inside the "{{ selectedLocation ? selectedLocation.name : '' }}" location page.</p>
           </div>
-          <button @click="modals.locationSections = false" class="text-slate-400 hover:text-white">✕</button>
+          <button @click="modals.locationSections = false" class="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white">✕</button>
         </div>
 
         <div class="flex-grow overflow-y-auto space-y-6 pr-2">
           <!-- Add new section form -->
-          <div class="p-6 bg-slate-950/60 border border-slate-800 rounded-2xl space-y-4">
-            <h4 class="font-bold text-sm text-white border-b border-slate-800/80 pb-2">➕ Add New Section</h4>
+          <div class="p-6 bg-white dark:bg-white dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 rounded-2xl space-y-4">
+            <h4 class="font-bold text-sm text-slate-900 dark:text-white border-b border-slate-200 dark:border-slate-200 dark:border-slate-800/80 pb-2">➕ Add New Section</h4>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div class="space-y-1">
-                <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Section Title EN</label>
-                <input type="text" v-model="sectionForm.title_en" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 text-xs" />
+                <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Section Title EN</label>
+                <input type="text" v-model="sectionForm.title_en" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-slate-900 dark:text-white outline-none focus:border-red-500 text-xs" />
               </div>
               <div class="space-y-1">
-                <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Section Title NL</label>
-                <input type="text" v-model="sectionForm.title_nl" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 text-xs" />
+                <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Section Title NL</label>
+                <input type="text" v-model="sectionForm.title_nl" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-slate-900 dark:text-white outline-none focus:border-red-500 text-xs" />
               </div>
               <div class="space-y-1 md:col-span-2">
-                <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Content EN</label>
-                <textarea v-model="sectionForm.content_en" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 h-16 text-xs"></textarea>
+                <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Content EN</label>
+                <textarea v-model="sectionForm.content_en" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-slate-900 dark:text-white outline-none focus:border-red-500 h-16 text-xs"></textarea>
               </div>
               <div class="space-y-1 md:col-span-2">
-                <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Content NL</label>
-                <textarea v-model="sectionForm.content_nl" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 h-16 text-xs"></textarea>
+                <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Content NL</label>
+                <textarea v-model="sectionForm.content_nl" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-slate-900 dark:text-white outline-none focus:border-red-500 h-16 text-xs"></textarea>
               </div>
               <div class="space-y-1">
-                <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Sort Order</label>
-                <input type="number" v-model.number="sectionForm.sort_order" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 text-xs" />
+                <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Sort Order</label>
+                <input type="number" v-model.number="sectionForm.sort_order" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-slate-900 dark:text-white outline-none focus:border-red-500 text-xs" />
               </div>
               <div class="space-y-2">
-                <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Optional Section Image</label>
+                <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Optional Section Image</label>
                 <div class="flex items-center gap-4">
-                  <div class="w-10 h-10 rounded-lg overflow-hidden bg-slate-900 border border-slate-800 flex items-center justify-center shrink-0">
+                  <div class="w-10 h-10 rounded-lg overflow-hidden bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-center shrink-0">
                     <img v-if="sectionForm.image" :src="sectionForm.image" class="w-full h-full object-cover" />
                     <span v-else class="text-[8px] text-slate-600">None</span>
                   </div>
-                  <input type="file" @change="e => onFileChange(e, 'section')" accept="image/*" class="text-[10px] text-slate-400 file:py-1 file:px-2 file:rounded-md file:border-0 file:text-[8px] file:font-bold file:bg-slate-800 file:text-slate-200 file:cursor-pointer hover:file:bg-slate-700" />
+                  <input type="file" @change="e => onFileChange(e, 'section')" accept="image/*" class="text-[10px] text-slate-500 dark:text-slate-400 file:py-1 file:px-2 file:rounded-md file:border-0 file:text-[8px] file:font-bold file:bg-slate-100 dark:bg-slate-800 file:text-slate-800 dark:text-slate-200 file:cursor-pointer hover:file:bg-slate-700" />
                 </div>
                 <div v-if="uploading" class="text-[10px] text-red-500 animate-pulse">Uploading image...</div>
               </div>
             </div>
             <div class="flex justify-end pt-2">
-              <button @click="addLocationSection" :disabled="uploading" class="px-5 py-2 bg-red-600 hover:bg-red-700 text-white font-bold rounded-lg text-xs shadow-md">
+              <button @click="addLocationSection" :disabled="uploading" class="px-5 py-2 bg-red-600 hover:bg-red-700 text-slate-900 dark:text-white font-bold rounded-lg text-xs shadow-md">
                 Add Section
               </button>
             </div>
@@ -1173,55 +1173,55 @@
 
           <!-- Existing Sections List -->
           <div class="space-y-4">
-            <h4 class="font-bold text-sm text-white">Existing Sections</h4>
-            <div v-for="(sec, idx) in locationSections" :key="sec.id" class="p-5 border border-slate-800/80 rounded-2xl bg-slate-900/60 relative space-y-3">
+            <h4 class="font-bold text-sm text-slate-900 dark:text-white">Existing Sections</h4>
+            <div v-for="(sec, idx) in locationSections" :key="sec.id" class="p-5 border border-slate-200 dark:border-slate-200 dark:border-slate-800/80 rounded-2xl bg-slate-50 dark:bg-slate-900/60 relative space-y-3">
               <div v-if="editingSectionId === sec.id" class="space-y-4">
-                <h5 class="font-bold text-slate-200 text-xs border-b border-slate-800 pb-2">✏️ Edit Section #{{ idx + 1 }}</h5>
+                <h5 class="font-bold text-slate-800 dark:text-slate-200 text-xs border-b border-slate-200 dark:border-slate-800 pb-2">✏️ Edit Section #{{ idx + 1 }}</h5>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div class="space-y-1">
-                    <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Section Title EN</label>
-                    <input type="text" v-model="editSectionForm.title_en" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 text-xs" />
+                    <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Section Title EN</label>
+                    <input type="text" v-model="editSectionForm.title_en" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-slate-900 dark:text-white outline-none focus:border-red-500 text-xs" />
                   </div>
                   <div class="space-y-1">
-                    <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Section Title NL</label>
-                    <input type="text" v-model="editSectionForm.title_nl" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 text-xs" />
+                    <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Section Title NL</label>
+                    <input type="text" v-model="editSectionForm.title_nl" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-slate-900 dark:text-white outline-none focus:border-red-500 text-xs" />
                   </div>
                   <div class="space-y-1 md:col-span-2">
-                    <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Content EN</label>
-                    <textarea v-model="editSectionForm.content_en" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 h-24 text-xs"></textarea>
+                    <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Content EN</label>
+                    <textarea v-model="editSectionForm.content_en" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-slate-900 dark:text-white outline-none focus:border-red-500 h-24 text-xs"></textarea>
                   </div>
                   <div class="space-y-1 md:col-span-2">
-                    <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Content NL</label>
-                    <textarea v-model="editSectionForm.content_nl" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 h-24 text-xs"></textarea>
+                    <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Content NL</label>
+                    <textarea v-model="editSectionForm.content_nl" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-slate-900 dark:text-white outline-none focus:border-red-500 h-24 text-xs"></textarea>
                   </div>
                   <div class="space-y-1">
-                    <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Sort Order</label>
-                    <input type="number" v-model.number="editSectionForm.sort_order" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 text-xs" />
+                    <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Sort Order</label>
+                    <input type="number" v-model.number="editSectionForm.sort_order" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-slate-900 dark:text-white outline-none focus:border-red-500 text-xs" />
                   </div>
                   <div class="space-y-2">
-                    <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Optional Section Image</label>
+                    <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Optional Section Image</label>
                     <div class="flex items-center gap-4">
-                      <div class="w-10 h-10 rounded-lg overflow-hidden bg-slate-950 border border-slate-800 flex items-center justify-center shrink-0">
+                      <div class="w-10 h-10 rounded-lg overflow-hidden bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 flex items-center justify-center shrink-0">
                         <img v-if="editSectionForm.image" :src="editSectionForm.image" class="w-full h-full object-cover" />
                         <span v-else class="text-[8px] text-slate-600">None</span>
                       </div>
-                      <input type="file" @change="e => onFileChange(e, 'edit_section')" accept="image/*" class="text-[10px] text-slate-400 file:py-1 file:px-2 file:rounded-md file:border-0 file:text-[8px] file:font-bold file:bg-slate-800 file:text-slate-200 file:cursor-pointer hover:file:bg-slate-700" />
+                      <input type="file" @change="e => onFileChange(e, 'edit_section')" accept="image/*" class="text-[10px] text-slate-500 dark:text-slate-400 file:py-1 file:px-2 file:rounded-md file:border-0 file:text-[8px] file:font-bold file:bg-slate-100 dark:bg-slate-800 file:text-slate-800 dark:text-slate-200 file:cursor-pointer hover:file:bg-slate-700" />
                     </div>
                     <div v-if="uploading" class="text-[10px] text-red-500 animate-pulse">Uploading image...</div>
                   </div>
                 </div>
-                <div class="flex justify-end gap-2 pt-2 border-t border-slate-800/80">
-                  <button @click="cancelSectionEdit" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold rounded-lg text-xs border border-slate-700">
+                <div class="flex justify-end gap-2 pt-2 border-t border-slate-200 dark:border-slate-200 dark:border-slate-800/80">
+                  <button @click="cancelSectionEdit" class="px-4 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold rounded-lg text-xs border border-slate-700">
                     Cancel
                   </button>
-                  <button @click="updateLocationSection" :disabled="uploading" class="px-5 py-2 bg-red-600 hover:bg-red-700 text-white font-bold rounded-lg text-xs shadow-md">
+                  <button @click="updateLocationSection" :disabled="uploading" class="px-5 py-2 bg-red-600 hover:bg-red-700 text-slate-900 dark:text-white font-bold rounded-lg text-xs shadow-md">
                     Save Changes
                   </button>
                 </div>
               </div>
               <div v-else class="space-y-3">
                 <div class="flex justify-between items-start gap-4">
-                  <h5 class="font-bold text-slate-200 text-xs">Section #{{ idx + 1 }} — {{ sec.title_en }}</h5>
+                  <h5 class="font-bold text-slate-800 dark:text-slate-200 text-xs">Section #{{ idx + 1 }} — {{ sec.title_en }}</h5>
                   <div class="flex gap-2">
                     <button @click="editSection(sec)" class="text-blue-500 hover:bg-blue-500/10 p-1.5 rounded-lg text-xs font-bold">
                       ✏️ Edit
@@ -1232,125 +1232,125 @@
                   </div>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                  <div class="text-[11px] text-slate-400"><strong>Title NL:</strong> {{ sec.title_nl }}</div>
-                  <div class="text-[11px] text-slate-400"><strong>Sort Order:</strong> {{ sec.sort_order }}</div>
-                  <div class="text-[11px] text-slate-400 md:col-span-2"><strong>Content EN:</strong> {{ sec.content_en }}</div>
-                  <div class="text-[11px] text-slate-400 md:col-span-2"><strong>Content NL:</strong> {{ sec.content_nl }}</div>
-                  <div v-if="sec.image" class="w-16 h-16 rounded-lg overflow-hidden bg-slate-950 border border-slate-800 md:col-span-2 mt-2">
+                  <div class="text-[11px] text-slate-500 dark:text-slate-400"><strong>Title NL:</strong> {{ sec.title_nl }}</div>
+                  <div class="text-[11px] text-slate-500 dark:text-slate-400"><strong>Sort Order:</strong> {{ sec.sort_order }}</div>
+                  <div class="text-[11px] text-slate-500 dark:text-slate-400 md:col-span-2"><strong>Content EN:</strong> {{ sec.content_en }}</div>
+                  <div class="text-[11px] text-slate-500 dark:text-slate-400 md:col-span-2"><strong>Content NL:</strong> {{ sec.content_nl }}</div>
+                  <div v-if="sec.image" class="w-16 h-16 rounded-lg overflow-hidden bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 md:col-span-2 mt-2">
                     <img :src="sec.image" class="w-full h-full object-cover" />
                   </div>
                 </div>
               </div>
             </div>
-            <div v-if="locationSections.length === 0" class="text-center py-8 text-xs text-slate-500 bg-slate-950/20 rounded-2xl border border-slate-900">
+            <div v-if="locationSections.length === 0" class="text-center py-8 text-xs text-slate-500 bg-slate-100 dark:bg-white dark:bg-slate-950/20 rounded-2xl border border-slate-200 dark:border-slate-900">
               No custom sub-sections added yet for this location page.
             </div>
           </div>
         </div>
 
-        <div class="flex justify-end pt-4 border-t border-slate-800 shrink-0">
-          <button @click="modals.locationSections = false" class="px-6 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold rounded-xl text-xs border border-slate-700">Done</button>
+        <div class="flex justify-end pt-4 border-t border-slate-200 dark:border-slate-800 shrink-0">
+          <button @click="modals.locationSections = false" class="px-6 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold rounded-xl text-xs border border-slate-700">Done</button>
         </div>
       </div>
     </div>
 
 
     <!-- MODAL: ADD/EDIT PRICING PACKAGE -->
-    <div v-if="modals.pricingPackage" class="fixed inset-0 z-50 flex items-center justify-center p-6 bg-slate-950/80 backdrop-blur-sm overflow-y-auto">
-      <div class="glass-panel w-full max-w-2xl rounded-3xl border border-slate-800 bg-slate-900 p-8 shadow-2xl my-8 space-y-6 flex flex-col max-h-[90vh]">
-        <div class="flex justify-between items-center border-b border-slate-800 pb-4 shrink-0">
-          <h3 class="text-xl font-black text-white">{{ isEditing ? 'Edit Pricing Package' : 'Add New Pricing Package' }}</h3>
-          <button @click="modals.pricingPackage = false" class="text-slate-400 hover:text-white">✕</button>
+    <div v-if="modals.pricingPackage" class="fixed inset-0 z-50 flex items-center justify-center p-6 bg-white dark:bg-slate-950/80 backdrop-blur-sm overflow-y-auto">
+      <div class="glass-panel w-full max-w-2xl rounded-3xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 p-8 shadow-2xl my-8 space-y-6 flex flex-col max-h-[90vh]">
+        <div class="flex justify-between items-center border-b border-slate-200 dark:border-slate-800 pb-4 shrink-0">
+          <h3 class="text-xl font-black text-slate-900 dark:text-white">{{ isEditing ? 'Edit Pricing Package' : 'Add New Pricing Package' }}</h3>
+          <button @click="modals.pricingPackage = false" class="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white">✕</button>
         </div>
 
         <div class="flex-grow overflow-y-auto space-y-6 pr-2">
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div class="space-y-1">
-              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Package Identifier Key (e.g., package1)</label>
-              <input type="text" v-model="packageForm.key_name" placeholder="e.g. package1" :disabled="isEditing" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white outline-none focus:border-red-500 text-sm" />
+              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Package Identifier Key (e.g., package1)</label>
+              <input type="text" v-model="packageForm.key_name" placeholder="e.g. package1" :disabled="isEditing" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white outline-none focus:border-red-500 text-sm" />
             </div>
             <div class="space-y-1">
-              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Icon Emoji</label>
-              <input type="text" v-model="packageForm.icon" placeholder="e.g. 🚐" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white outline-none focus:border-red-500 text-sm" />
+              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Icon Emoji</label>
+              <input type="text" v-model="packageForm.icon" placeholder="e.g. 🚐" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white outline-none focus:border-red-500 text-sm" />
             </div>
             <div class="space-y-1">
-              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Name EN</label>
-              <input type="text" v-model="packageForm.name_en" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white outline-none focus:border-red-500 text-sm" />
+              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Name EN</label>
+              <input type="text" v-model="packageForm.name_en" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white outline-none focus:border-red-500 text-sm" />
             </div>
             <div class="space-y-1">
-              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Name NL</label>
-              <input type="text" v-model="packageForm.name_nl" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white outline-none focus:border-red-500 text-sm" />
+              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Name NL</label>
+              <input type="text" v-model="packageForm.name_nl" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white outline-none focus:border-red-500 text-sm" />
             </div>
             <div class="space-y-1">
-              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Price EN</label>
-              <input type="text" v-model="packageForm.price_en" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white outline-none focus:border-red-500 text-sm" />
+              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Price EN</label>
+              <input type="text" v-model="packageForm.price_en" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white outline-none focus:border-red-500 text-sm" />
             </div>
             <div class="space-y-1">
-              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Price NL</label>
-              <input type="text" v-model="packageForm.price_nl" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white outline-none focus:border-red-500 text-sm" />
+              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Price NL</label>
+              <input type="text" v-model="packageForm.price_nl" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white outline-none focus:border-red-500 text-sm" />
             </div>
             <div class="space-y-1">
-              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Unit EN (optional)</label>
-              <input type="text" v-model="packageForm.unit_en" placeholder="e.g. /hr" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white outline-none focus:border-red-500 text-sm" />
+              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Unit EN (optional)</label>
+              <input type="text" v-model="packageForm.unit_en" placeholder="e.g. /hr" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white outline-none focus:border-red-500 text-sm" />
             </div>
             <div class="space-y-1">
-              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Unit NL (optional)</label>
-              <input type="text" v-model="packageForm.unit_nl" placeholder="e.g. /uur" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white outline-none focus:border-red-500 text-sm" />
+              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Unit NL (optional)</label>
+              <input type="text" v-model="packageForm.unit_nl" placeholder="e.g. /uur" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white outline-none focus:border-red-500 text-sm" />
             </div>
             <div class="space-y-1">
-              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">CTA Button Text EN</label>
-              <input type="text" v-model="packageForm.cta_text_en" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white outline-none focus:border-red-500 text-sm" />
+              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">CTA Button Text EN</label>
+              <input type="text" v-model="packageForm.cta_text_en" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white outline-none focus:border-red-500 text-sm" />
             </div>
             <div class="space-y-1">
-              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">CTA Button Text NL</label>
-              <input type="text" v-model="packageForm.cta_text_nl" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white outline-none focus:border-red-500 text-sm" />
+              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">CTA Button Text NL</label>
+              <input type="text" v-model="packageForm.cta_text_nl" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white outline-none focus:border-red-500 text-sm" />
             </div>
             <div class="space-y-1">
-              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">CTA Link (URL or Page Path)</label>
-              <input type="text" v-model="packageForm.cta_link" placeholder="e.g. /contact" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white outline-none focus:border-red-500 text-sm" />
+              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">CTA Link (URL or Page Path)</label>
+              <input type="text" v-model="packageForm.cta_link" placeholder="e.g. /contact" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white outline-none focus:border-red-500 text-sm" />
             </div>
             <div class="flex items-center space-x-3 pt-6">
-              <input type="checkbox" id="pkgPopular" v-model="packageForm.popular" class="w-4 h-4 bg-slate-950 border-slate-800 rounded text-red-600 focus:ring-red-500" />
-              <label for="pkgPopular" class="text-sm font-bold text-slate-300">Mark as Most Popular</label>
+              <input type="checkbox" id="pkgPopular" v-model="packageForm.popular" class="w-4 h-4 bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 rounded text-red-600 focus:ring-red-500" />
+              <label for="pkgPopular" class="text-sm font-bold text-slate-700 dark:text-slate-300">Mark as Most Popular</label>
             </div>
             <div class="space-y-1">
-              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Tag EN</label>
-              <input type="text" v-model="packageForm.tag_en" placeholder="e.g. VAN ONLY" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white outline-none focus:border-red-500 text-sm" />
+              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Tag EN</label>
+              <input type="text" v-model="packageForm.tag_en" placeholder="e.g. VAN ONLY" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white outline-none focus:border-red-500 text-sm" />
             </div>
             <div class="space-y-1">
-              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Tag NL</label>
-              <input type="text" v-model="packageForm.tag_nl" placeholder="e.g. ALLEEN BUS" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white outline-none focus:border-red-500 text-sm" />
+              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Tag NL</label>
+              <input type="text" v-model="packageForm.tag_nl" placeholder="e.g. ALLEEN BUS" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white outline-none focus:border-red-500 text-sm" />
             </div>
             <div class="space-y-1 md:col-span-2">
-              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Description EN</label>
-              <textarea v-model="packageForm.description_en" placeholder="You handle the lifting - we handle the drive." class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 h-16 text-xs"></textarea>
+              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Description EN</label>
+              <textarea v-model="packageForm.description_en" placeholder="You handle the lifting - we handle the drive." class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-slate-900 dark:text-white outline-none focus:border-red-500 h-16 text-xs"></textarea>
             </div>
             <div class="space-y-1 md:col-span-2">
-              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Description NL</label>
-              <textarea v-model="packageForm.description_nl" placeholder="U regelt het tillen - wij regelen de rit." class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 h-16 text-xs"></textarea>
+              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Description NL</label>
+              <textarea v-model="packageForm.description_nl" placeholder="U regelt het tillen - wij regelen de rit." class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-slate-900 dark:text-white outline-none focus:border-red-500 h-16 text-xs"></textarea>
             </div>
             <div class="space-y-1 md:col-span-2">
-              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Best For EN (Format: Icon|Text - one per line)</label>
-              <textarea v-model="packageForm.best_for_raw_en" placeholder="e.g.&#10;🎓|Students&#10;🛋|Single-item moves" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 h-24 text-xs"></textarea>
+              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Best For EN (Format: Icon|Text - one per line)</label>
+              <textarea v-model="packageForm.best_for_raw_en" placeholder="e.g.&#10;🎓|Students&#10;🛋|Single-item moves" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-slate-900 dark:text-white outline-none focus:border-red-500 h-24 text-xs"></textarea>
             </div>
             <div class="space-y-1 md:col-span-2">
-              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Best For NL (Format: Icon|Text - one per line)</label>
-              <textarea v-model="packageForm.best_for_raw_nl" placeholder="e.g.&#10;🎓|Studenten&#10;🛋|Enkele meubelstukken" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 h-24 text-xs"></textarea>
+              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Best For NL (Format: Icon|Text - one per line)</label>
+              <textarea v-model="packageForm.best_for_raw_nl" placeholder="e.g.&#10;🎓|Studenten&#10;🛋|Enkele meubelstukken" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-slate-900 dark:text-white outline-none focus:border-red-500 h-24 text-xs"></textarea>
             </div>
             <div class="space-y-1 md:col-span-2">
-              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Inclusions EN (one per line)</label>
-              <textarea v-model="packageForm.includes_raw_en" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 h-24 text-xs"></textarea>
+              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Inclusions EN (one per line)</label>
+              <textarea v-model="packageForm.includes_raw_en" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-slate-900 dark:text-white outline-none focus:border-red-500 h-24 text-xs"></textarea>
             </div>
             <div class="space-y-1 md:col-span-2">
-              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Inclusions NL (one per line)</label>
-              <textarea v-model="packageForm.includes_raw_nl" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 h-24 text-xs"></textarea>
+              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Inclusions NL (one per line)</label>
+              <textarea v-model="packageForm.includes_raw_nl" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-slate-900 dark:text-white outline-none focus:border-red-500 h-24 text-xs"></textarea>
             </div>
           </div>
         </div>
 
-        <div class="flex justify-end gap-3 pt-4 border-t border-slate-800 shrink-0">
-          <button @click="modals.pricingPackage = false" class="px-5 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold rounded-xl text-sm transition-all border border-slate-700">Cancel</button>
-          <button @click="savePackage" class="px-6 py-2.5 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl text-sm transition-all shadow-md">
+        <div class="flex justify-end gap-3 pt-4 border-t border-slate-200 dark:border-slate-800 shrink-0">
+          <button @click="modals.pricingPackage = false" class="px-5 py-2.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold rounded-xl text-sm transition-all border border-slate-700">Cancel</button>
+          <button @click="savePackage" class="px-6 py-2.5 bg-red-600 hover:bg-red-700 text-slate-900 dark:text-white font-bold rounded-xl text-sm transition-all shadow-md">
             {{ isEditing ? 'Save Changes' : 'Create Package' }}
           </button>
         </div>
@@ -1358,64 +1358,64 @@
     </div>
 
     <!-- MODAL: ADD/EDIT PRODUCT -->
-    <div v-if="modals.product" class="fixed inset-0 z-50 flex items-center justify-center p-6 bg-slate-950/80 backdrop-blur-sm overflow-y-auto">
-      <div class="glass-panel w-full max-w-2xl rounded-3xl border border-slate-800 bg-slate-900 p-8 shadow-2xl my-8 space-y-6 flex flex-col max-h-[90vh]">
-        <div class="flex justify-between items-center border-b border-slate-800 pb-4 shrink-0">
-          <h3 class="text-xl font-black text-white">{{ isEditing ? 'Edit Product' : 'Add New Product' }}</h3>
-          <button @click="modals.product = false" class="text-slate-400 hover:text-white">✕</button>
+    <div v-if="modals.product" class="fixed inset-0 z-50 flex items-center justify-center p-6 bg-white dark:bg-slate-950/80 backdrop-blur-sm overflow-y-auto">
+      <div class="glass-panel w-full max-w-2xl rounded-3xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 p-8 shadow-2xl my-8 space-y-6 flex flex-col max-h-[90vh]">
+        <div class="flex justify-between items-center border-b border-slate-200 dark:border-slate-800 pb-4 shrink-0">
+          <h3 class="text-xl font-black text-slate-900 dark:text-white">{{ isEditing ? 'Edit Product' : 'Add New Product' }}</h3>
+          <button @click="modals.product = false" class="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white">✕</button>
         </div>
 
         <div class="flex-grow overflow-y-auto space-y-6 pr-2">
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div class="space-y-1">
-              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Product Title EN</label>
-              <input type="text" v-model="productForm.title_en" placeholder="e.g. Roll of Tape" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white outline-none focus:border-red-500 text-sm" />
+              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Product Title EN</label>
+              <input type="text" v-model="productForm.title_en" placeholder="e.g. Roll of Tape" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white outline-none focus:border-red-500 text-sm" />
             </div>
             <div class="space-y-1">
-              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Product Title NL</label>
-              <input type="text" v-model="productForm.title_nl" placeholder="e.g. Rol Tape" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white outline-none focus:border-red-500 text-sm" />
+              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Product Title NL</label>
+              <input type="text" v-model="productForm.title_nl" placeholder="e.g. Rol Tape" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white outline-none focus:border-red-500 text-sm" />
             </div>
             <div class="space-y-1">
-              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Slug</label>
-              <input type="text" v-model="productForm.slug" placeholder="e.g. roll-of-tape" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white outline-none focus:border-red-500 text-sm" />
+              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Slug</label>
+              <input type="text" v-model="productForm.slug" placeholder="e.g. roll-of-tape" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white outline-none focus:border-red-500 text-sm" />
             </div>
             <div class="space-y-1">
-              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Price (€)</label>
-              <input type="number" step="0.01" v-model.number="productForm.price" placeholder="e.g. 3.95" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white outline-none focus:border-red-500 text-sm" />
+              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Price (€)</label>
+              <input type="number" step="0.01" v-model.number="productForm.price" placeholder="e.g. 3.95" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white outline-none focus:border-red-500 text-sm" />
             </div>
             <div class="space-y-1">
-              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">WhatsApp Number override (optional)</label>
-              <input type="text" v-model="productForm.whatsapp_number" placeholder="e.g. 31684094271" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white outline-none focus:border-red-500 text-sm" />
+              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">WhatsApp Number override (optional)</label>
+              <input type="text" v-model="productForm.whatsapp_number" placeholder="e.g. 31684094271" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white outline-none focus:border-red-500 text-sm" />
             </div>
             <div class="space-y-1">
-              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Sort Order</label>
-              <input type="number" v-model.number="productForm.sort_order" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-white outline-none focus:border-red-500 text-sm" />
+              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Sort Order</label>
+              <input type="number" v-model.number="productForm.sort_order" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white outline-none focus:border-red-500 text-sm" />
             </div>
             <div class="space-y-2 md:col-span-2">
-              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Product Image</label>
+              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Product Image</label>
               <div class="flex items-center gap-4">
-                <div class="w-16 h-16 rounded-xl overflow-hidden bg-slate-950 border border-slate-800 flex items-center justify-center shrink-0">
+                <div class="w-16 h-16 rounded-xl overflow-hidden bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 flex items-center justify-center shrink-0">
                   <img v-if="productForm.image" :src="productForm.image" class="w-full h-full object-cover" />
                   <span v-else class="text-[8px] text-slate-600">None</span>
                 </div>
-                <input type="file" @change="e => onFileChange(e, 'product')" accept="image/*" class="text-xs text-slate-400 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-[10px] file:font-bold file:bg-slate-800 file:text-slate-200 file:cursor-pointer hover:file:bg-slate-700" />
+                <input type="file" @change="e => onFileChange(e, 'product')" accept="image/*" class="text-xs text-slate-500 dark:text-slate-400 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-[10px] file:font-bold file:bg-slate-100 dark:bg-slate-800 file:text-slate-800 dark:text-slate-200 file:cursor-pointer hover:file:bg-slate-700" />
               </div>
               <div v-if="uploading" class="text-xs text-red-500 animate-pulse mt-1">Uploading to Cloudinary...</div>
             </div>
             <div class="space-y-1 md:col-span-2">
-              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Description EN</label>
-              <textarea v-model="productForm.description_en" placeholder="Strong adhesive tape..." class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 h-20 text-xs"></textarea>
+              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Description EN</label>
+              <textarea v-model="productForm.description_en" placeholder="Strong adhesive tape..." class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-slate-900 dark:text-white outline-none focus:border-red-500 h-20 text-xs"></textarea>
             </div>
             <div class="space-y-1 md:col-span-2">
-              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Description NL</label>
-              <textarea v-model="productForm.description_nl" placeholder="Sterke verpakkingstape..." class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2 text-white outline-none focus:border-red-500 h-20 text-xs"></textarea>
+              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Description NL</label>
+              <textarea v-model="productForm.description_nl" placeholder="Sterke verpakkingstape..." class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-slate-900 dark:text-white outline-none focus:border-red-500 h-20 text-xs"></textarea>
             </div>
           </div>
         </div>
 
-        <div class="flex justify-end gap-3 pt-4 border-t border-slate-800 shrink-0">
-          <button @click="modals.product = false" class="px-5 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold rounded-xl text-sm transition-all border border-slate-700">Cancel</button>
-          <button @click="saveProduct" :disabled="uploading" class="px-6 py-2.5 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl text-sm transition-all shadow-md">
+        <div class="flex justify-end gap-3 pt-4 border-t border-slate-200 dark:border-slate-800 shrink-0">
+          <button @click="modals.product = false" class="px-5 py-2.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold rounded-xl text-sm transition-all border border-slate-700">Cancel</button>
+          <button @click="saveProduct" :disabled="uploading" class="px-6 py-2.5 bg-red-600 hover:bg-red-700 text-slate-900 dark:text-white font-bold rounded-xl text-sm transition-all shadow-md">
             {{ isEditing ? 'Save Changes' : 'Create Product' }}
           </button>
         </div>
@@ -2342,7 +2342,7 @@ const deleteProduct = async (prod) => {
 
 <style scoped>
 .glass-panel {
-  @apply bg-slate-950/70 border border-slate-800 rounded-3xl backdrop-blur-xl shadow-2xl;
+  @apply bg-white dark:bg-slate-950/70 border border-slate-200 dark:border-slate-800 rounded-3xl backdrop-blur-xl shadow-2xl;
 }
 /* Hide scrollbar for Chrome, Safari and Opera */
 .scrollbar-none::-webkit-scrollbar {
