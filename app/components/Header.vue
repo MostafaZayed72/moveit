@@ -464,7 +464,6 @@ const isDark = useDark({
 const toggleDark = useToggle(isDark)
 
 const navItems = [
-  { key: 'home', path: '/' },
   { key: 'services', path: '/services' },
   { key: 'pricing', path: '/pricing' },
   { key: 'products', path: '/products' },
