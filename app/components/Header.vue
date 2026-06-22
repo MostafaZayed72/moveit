@@ -11,9 +11,9 @@
       <!-- Logo -->
       <NuxtLink to="/" class="flex items-center group">
         <img 
-          :src="'/images/logo.png'" 
+          :src="'/images/logo.svg'" 
           alt="MoveIt Logo" 
-          class="h-12 w-auto object-contain transition-transform group-hover:scale-105"
+          class="h-10 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
           @error="(e) => e.target.style.display = 'none'"
         />
       </NuxtLink>

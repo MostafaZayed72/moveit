@@ -6,9 +6,9 @@
         <div class="space-y-8 lg:col-span-3">
           <NuxtLink to="/" class="block">
             <img 
-              :src="'/images/logo.png'" 
+              :src="'/images/logo.svg'" 
               alt="MoveIt Logo" 
-              class="h-12 w-auto object-contain"
+              class="h-10 w-auto object-contain"
               @error="(e) => e.target.style.display = 'none'"
             />
           </NuxtLink>
