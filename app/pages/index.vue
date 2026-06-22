@@ -341,10 +341,10 @@ const goodComparisonItems = [
 ]
 
 const whyUsItems = [
-  { key: 'fast', icon: '⚡', image: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&q=80&w=600' },
-  { key: 'student', icon: '🎓', image: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&q=80&w=600' },
-  { key: 'transparent', icon: '💰', image: 'https://images.unsplash.com/photo-1519003722824-194d4455a60c?auto=format&fit=crop&q=80&w=600' },
-  { key: 'insured', icon: '🛡️', image: 'https://images.unsplash.com/photo-1508962914676-134849a727f0?auto=format&fit=crop&q=80&w=600' }
+  { key: 'fast', icon: '⚡', image: 'https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&q=80&w=600' },
+  { key: 'student', icon: '🎓', image: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&q=80&w=600' },
+  { key: 'transparent', icon: '💰', image: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&q=80&w=600' },
+  { key: 'insured', icon: '🛡️', image: 'https://images.unsplash.com/photo-1560448205-4d9b3e6bb6db?auto=format&fit=crop&q=80&w=600' }
 ]
 
 const bentoServices = [
