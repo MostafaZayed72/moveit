@@ -432,6 +432,12 @@
     "form_time_of_day": "Tijdstip",
     "form_move_size": "Grootte van de verhuizing",
     "what_are_you_moving": "Wat gaat u verhuizen?",
+    "preferred_time": "Voorkeurstijd verhuizing",
+    "choose_time_option": "Kies een tijdslot",
+    "time_slot_morning": "Ochtend (9:00 - 12:00)",
+    "time_slot_afternoon": "Middag (12:00 - 17:00)",
+    "time_slot_evening": "Avond (17:00 - 21:00)",
+    "late_shifts_note": "Late diensten zijn onderworpen aan extra kosten.",
     "form_storage": "Opslagruimte nodig?",
     "form_pickup_access": "Toegang ophaaladres (Verdieping / Lift)",
     "form_dropoff_access": "Toegang afleveradres (Verdieping / Lift)",
@@ -535,7 +541,8 @@
     "media_upload_hint": "Help ons uw verhuizing beter te begrijpen — deel foto's van grote items, moeilijke toegang of andere relevante situaties.",
     "media_upload_cta": "Klik om te uploaden of sleep bestanden hierheen",
     "media_add_more": "Meer bestanden toevoegen",
-    "media_upload_types": "Foto's & video's • Max 5 bestanden • 20 MB per bestand"
+    "media_upload_types": "Foto's & video's • Max 5 bestanden • 20 MB per bestand",
+    "validation_step_1": "Vul alstublieft alle velden in (pakket, grootte, datum en adressen)"
   },
   "blog": {
     "title": "Verhuis Inzichten",

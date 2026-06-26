@@ -446,6 +446,12 @@
     "form_time_of_day": "Time of Day",
     "form_move_size": "Move Size",
     "what_are_you_moving": "What are you moving?",
+    "preferred_time": "Preferred moving time",
+    "choose_time_option": "Choose a time slot",
+    "time_slot_morning": "Morning (9:00 - 12:00)",
+    "time_slot_afternoon": "Afternoon (12:00 - 17:00)",
+    "time_slot_evening": "Evening (17:00 - 21:00)",
+    "late_shifts_note": "Late shifts are subject to extra charges.",
     "form_storage": "Storage Services Required?",
     "form_pickup_access": "Pickup Access (Floors / Elevator)",
     "form_dropoff_access": "Dropoff Access (Floors / Elevator)",
@@ -549,7 +555,8 @@
     "media_upload_hint": "Help us understand your move better — share photos of large items, tricky access, or anything else relevant.",
     "media_upload_cta": "Click to upload or drag & drop",
     "media_add_more": "Add more files",
-    "media_upload_types": "Photos & videos • Max 5 files • 20 MB each"
+    "media_upload_types": "Photos & videos • Max 5 files • 20 MB each",
+    "validation_step_1": "Please fill in all fields (package, size, date, and addresses)"
   },
   "blog": {
     "title": "Relocation Insights",

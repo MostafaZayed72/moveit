@@ -72,16 +72,97 @@
                 </div>
               </div>
 
-              <div class="space-y-2">
-                <label class="form-label" for="moving_size">{{ $t('contact.what_are_you_moving') }}</label>
-                <select id="moving_size" v-model="moveSize" class="form-input cursor-pointer" required>
-                  <option value="" disabled>{{ $t('contact.select_size') }}</option>
-                  <option value="studio">{{ $t('contact.studio_single') }}</option>
-                  <option value="1bed">{{ $t('contact.1bed_apt') }}</option>
-                  <option value="2bed">{{ $t('contact.2bed_apt') }}</option>
-                  <option value="3bed">{{ $t('contact.3bed_house') }}</option>
-                  <option value="items">{{ $t('contact.few_items') }}</option>
-                </select>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full min-w-0">
+                <div class="space-y-2 min-w-0 relative">
+                  <label class="form-label" for="moving_size">{{ $t('contact.what_are_you_moving') }}</label>
+                  <div class="relative w-full">
+                    <button 
+                      type="button"
+                      @click="isSizeDropdownOpen = !isSizeDropdownOpen"
+                      @blur="closeSizeDropdown"
+                      class="form-input text-left flex justify-between items-center cursor-pointer w-full text-sm h-[58px]"
+                    >
+                      <span :class="{'text-slate-400 dark:text-slate-500': !moveSize, 'text-slate-900 dark:text-white': moveSize}" class="truncate block">
+                        {{ moveSize ? $t(sizeOptions.find(o => o.value === moveSize).key) : $t('contact.select_size') }}
+                      </span>
+                      <svg class="h-4 w-4 transition-transform duration-200 shrink-0 text-slate-400" :class="{'rotate-180': isSizeDropdownOpen}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    </button>
+                    
+                    <transition
+                      enter-active-class="transition duration-200 ease-out"
+                      enter-from-class="transform scale-95 opacity-0"
+                      enter-to-class="transform scale-100 opacity-100"
+                      leave-active-class="transition duration-75 ease-in"
+                      leave-from-class="transform scale-100 opacity-100"
+                      leave-to-class="transform scale-95 opacity-0"
+                    >
+                      <div 
+                        v-if="isSizeDropdownOpen" 
+                        class="absolute z-50 w-full mt-2 bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl shadow-2xl py-2"
+                      >
+                        <div 
+                          v-for="option in sizeOptions" 
+                          :key="option.value"
+                          @mousedown.prevent="selectSizeOption(option.value)"
+                          class="px-5 py-3 hover:bg-blue-600 hover:text-white dark:hover:bg-blue-600 dark:hover:text-white cursor-pointer transition-colors flex items-center justify-between group text-sm"
+                          :class="{'bg-blue-500/10 text-blue-600 dark:bg-blue-500/20 dark:text-blue-400 font-bold': moveSize === option.value, 'text-slate-700 dark:text-slate-300': moveSize !== option.value}"
+                        >
+                          <span class="flex-1">{{ $t(option.key) }}</span>
+                        </div>
+                      </div>
+                    </transition>
+                  </div>
+                </div>
+                <div class="space-y-2 min-w-0 relative">
+                  <label class="form-label">{{ $t('contact.preferred_time') }}</label>
+                  <div class="relative w-full">
+                    <button 
+                      type="button"
+                      @click="isTimeDropdownOpen = !isTimeDropdownOpen"
+                      @blur="closeTimeDropdown"
+                      class="form-input text-left flex justify-between items-center cursor-pointer w-full text-sm h-[58px]"
+                    >
+                      <span :class="{'text-slate-400 dark:text-slate-500': !preferredTime, 'text-slate-900 dark:text-white': preferredTime}" class="truncate block">
+                        {{ preferredTime ? $t(timeOptions.find(o => o.value === preferredTime).key) : $t('contact.choose_time_option') }}
+                      </span>
+                      <svg class="h-4 w-4 transition-transform duration-200 shrink-0 text-slate-400" :class="{'rotate-180': isTimeDropdownOpen}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    </button>
+                    
+                    <transition
+                      enter-active-class="transition duration-200 ease-out"
+                      enter-from-class="transform scale-95 opacity-0"
+                      enter-to-class="transform scale-100 opacity-100"
+                      leave-active-class="transition duration-75 ease-in"
+                      leave-from-class="transform scale-100 opacity-100"
+                      leave-to-class="transform scale-95 opacity-0"
+                    >
+                      <div 
+                        v-if="isTimeDropdownOpen" 
+                        class="absolute z-50 w-full mt-2 bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl shadow-2xl py-2"
+                      >
+                        <div 
+                          v-for="option in timeOptions" 
+                          :key="option.value"
+                          @mousedown.prevent="selectTimeOption(option.value)"
+                          class="px-5 py-3 hover:bg-blue-600 hover:text-white dark:hover:bg-blue-600 dark:hover:text-white cursor-pointer transition-colors flex items-center justify-between group text-sm"
+                          :class="{'bg-blue-500/10 text-blue-600 dark:bg-blue-500/20 dark:text-blue-400 font-bold': preferredTime === option.value, 'text-slate-700 dark:text-slate-300': preferredTime !== option.value}"
+                        >
+                          <span class="flex-1">{{ $t(option.key) }}</span>
+                          <!-- If it's the last option (evening), show the info icon with a tooltip -->
+                          <div v-if="option.value === 'evening'" class="relative flex items-center group/tooltip ml-2" @mousedown.stop>
+                            <svg class="w-4 h-4 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors cursor-help" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                            <!-- Tooltip container -->
+                            <div class="absolute right-0 bottom-full mb-2 w-48 p-2.5 bg-slate-950 text-white text-[11px] rounded-lg shadow-lg opacity-0 pointer-events-none group-hover/tooltip:opacity-100 transition-opacity duration-200 z-[100] text-center font-normal leading-normal whitespace-normal">
+                              {{ $t('contact.late_shifts_note') }}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </transition>
+                  </div>
+                </div>
               </div>
 
               <div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full min-w-0">
@@ -467,6 +548,43 @@ const moveDate     = ref('')
 const alternativeDate = ref('')
 const moveSize     = ref('')
 
+const isSizeDropdownOpen = ref(false)
+
+const sizeOptions = [
+  { value: 'studio', key: 'contact.studio_single' },
+  { value: '1bed', key: 'contact.1bed_apt' },
+  { value: '2bed', key: 'contact.2bed_apt' },
+  { value: '3bed', key: 'contact.3bed_house' },
+  { value: 'items', key: 'contact.few_items' }
+]
+
+const selectSizeOption = (val) => {
+  moveSize.value = val
+  isSizeDropdownOpen.value = false
+}
+
+const closeSizeDropdown = () => {
+  isSizeDropdownOpen.value = false
+}
+
+const preferredTime = ref('')
+const isTimeDropdownOpen = ref(false)
+
+const timeOptions = [
+  { value: 'morning', key: 'contact.time_slot_morning' },
+  { value: 'afternoon', key: 'contact.time_slot_afternoon' },
+  { value: 'evening', key: 'contact.time_slot_evening' }
+]
+
+const selectTimeOption = (val) => {
+  preferredTime.value = val
+  isTimeDropdownOpen.value = false
+}
+
+const closeTimeDropdown = () => {
+  isTimeDropdownOpen.value = false
+}
+
 // Media upload
 const mediaInput = ref(null)
 const mediaFiles = ref([])
@@ -639,6 +757,7 @@ const handleSubmit = async () => {
       from: movingFrom.value,
       to: movingTo.value,
       date: moveDate.value,
+      preferred_time: preferredTime.value,
     })
   }
 
@@ -664,6 +783,12 @@ const handleSubmit = async () => {
     formData.append('Moving From', movingFrom.value)
     formData.append('Moving To', movingTo.value)
     formData.append('Preferred Date', moveDate.value)
+    const timeLabels = {
+      morning: 'Morning (9:00 - 12:00)',
+      afternoon: 'Afternoon (12:00 - 17:00)',
+      evening: 'Evening (17:00 - 21:00)'
+    }
+    formData.append('Preferred Time', timeLabels[preferredTime.value] || preferredTime.value || 'Not specified')
     formData.append('Alternative Date', alternativeDate.value || 'None')
     formData.append('Move Size', sizeLabels[moveSize.value] || moveSize.value || 'Not specified')
     formData.append('Pickup Floor', pickupFloor.value || 'Not specified')
