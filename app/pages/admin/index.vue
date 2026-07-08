@@ -1450,7 +1450,7 @@ const handleLogin = async () => {
     
     isAuthorized.value = true
     loadAllData()
-  } catch (err: any) {
+  } catch (err) {
     authError.value = err.message || 'Incorrect email or password. Access denied.'
   } finally {
     authLoading.value = false
