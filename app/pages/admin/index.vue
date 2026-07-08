@@ -1442,50 +1442,35 @@ const handleLogin = async () => {
   authLoading.value = true
   authError.value = ''
   try {
-    const res = await $fetch('/api/admin/auth', {
-      method: 'POST',
-      body: { 
-        email: emailInput.value,
-        password: passwordInput.value 
-      }
+    const { error } = await $supabase.auth.signInWithPassword({
+      email: emailInput.value,
+      password: passwordInput.value
     })
-    if (res.success) {
-      isAuthorized.value = true
-      if (process.client) {
-        localStorage.setItem('moveit_admin_authorized', 'true')
-        localStorage.setItem('moveit_admin_email', emailInput.value)
-        localStorage.setItem('moveit_admin_password', passwordInput.value)
-      }
-      loadAllData()
-    }
-  } catch (err) {
-    authError.value = 'Incorrect email or password. Access denied.'
+    if (error) throw error
+    
+    isAuthorized.value = true
+    loadAllData()
+  } catch (err: any) {
+    authError.value = err.message || 'Incorrect email or password. Access denied.'
   } finally {
     authLoading.value = false
   }
 }
 
-const logout = () => {
+const logout = async () => {
+  await $supabase.auth.signOut()
   isAuthorized.value = false
   emailInput.value = ''
   passwordInput.value = ''
-  if (process.client) {
-    localStorage.removeItem('moveit_admin_authorized')
-    localStorage.removeItem('moveit_admin_email')
-    localStorage.removeItem('moveit_admin_password')
-  }
 }
 
 // Check auth on mount
-onMounted(() => {
+onMounted(async () => {
   if (process.client) {
-    const savedAuth = localStorage.getItem('moveit_admin_authorized')
-    const savedEmail = localStorage.getItem('moveit_admin_email')
-    const savedPassword = localStorage.getItem('moveit_admin_password')
-    if (savedAuth === 'true' && savedEmail && savedPassword) {
-      emailInput.value = savedEmail
-      passwordInput.value = savedPassword
-      handleLogin()
+    const { data: { session } } = await $supabase.auth.getSession()
+    if (session) {
+      isAuthorized.value = true
+      loadAllData()
     }
   }
 })

@@ -15,8 +15,21 @@ CREATE TABLE IF NOT EXISTS public.products (
   sort_order INT DEFAULT 0
 );
 
--- Disable Row Level Security (RLS) to allow direct anonymous client queries (reads and updates)
-ALTER TABLE public.products DISABLE ROW LEVEL SECURITY;
+-- Enable Row Level Security (RLS)
+ALTER TABLE public.products ENABLE ROW LEVEL SECURITY;
+
+-- Policies for public.products
+CREATE POLICY "Allow public read access for products" 
+  ON public.products FOR SELECT 
+  TO anon, authenticated 
+  USING (true);
+
+CREATE POLICY "Allow authenticated write access for products" 
+  ON public.products FOR ALL 
+  TO authenticated 
+  USING (true)
+  WITH CHECK (true);
+
 
 -- ==========================================
 -- SEED INITIAL PRODUCTS
