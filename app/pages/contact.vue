@@ -806,7 +806,7 @@ const handleSubmit = async () => {
       formData.append(`attachment_${i + 1}`, f.raw, f.name)
     })
 
-    await $fetch('https://formsubmit.co/ajax/info@moveitmaastricht.nl', {
+    await $fetch('/api/send-email', {
       method: 'POST',
       body: formData
     })

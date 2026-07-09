@@ -45,6 +45,8 @@ export default defineNuxtConfig({
     cloudinaryApiSecret: process.env.CLOUDINARY_API_SECRET || 'q9oam_IpL_B8BsGYDr-f1xEgLxs',
     adminEmail: process.env.ADMIN_EMAIL || 'info@moveitmaastricht.nl',
     adminPassword: process.env.ADMIN_PASSWORD || 'PYramidbricks@20',
+    gmailUser: process.env.GMAIL_USER || 'moveitmaastricht@gmail.com',
+    gmailPass: process.env.GMAIL_PASS || 'xfphkyhxkoxpjbhw',
     public: {
       supabaseUrl: process.env.SUPABASE_URL || 'https://cpdtzlbsfpiiunylqxnj.supabase.co',
       supabaseKey: process.env.SUPABASE_KEY || 'sb_publishable_4WYYC_HyWBwrVd3JvKb-RQ_SilWg49m',

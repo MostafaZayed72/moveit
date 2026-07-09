@@ -191,7 +191,7 @@ const handleSubmit = async () => {
   loading.value = true
   
   try {
-    await $fetch('https://formsubmit.co/ajax/info@moveitmaastricht.nl', {
+    await $fetch('/api/send-email', {
       method: 'POST',
       body: {
         _subject: `New Referral Program Submission from ${form.name}`,
