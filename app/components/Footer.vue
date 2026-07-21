@@ -146,7 +146,7 @@ const footerServices = [
   { id: 'international' },
   { id: 'furniture_assembly' },
   { id: 'packing' },
-  { id: 'storage' }
+  { id: 'last_minute_moving' }
 ]
 
 const footerLocations = [

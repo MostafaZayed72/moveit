@@ -360,9 +360,9 @@
         "title": "Seniorenverhuizing",
         "desc": "Respectvolle en stressvrije verhuisdiensten op maat gemaakt voor senioren."
       },
-      "storage": {
-        "title": "Opslag Huren",
-        "desc": "Veilige, klimaatgecontroleerde opslagoplossingen voor korte of lange termijn."
+      "last_minute_moving": {
+        "title": "Spoedverhuizing",
+        "desc": "Snelle reactie, verhuisservice op dezelfde of de volgende dag wanneer u dringend moet verhuizen."
       },
       "clearance": {
         "title": "Woningontruiming",
@@ -1864,129 +1864,129 @@
       "btn_whatsapp": "WhatsApp Ons"
     }
   },
-  "storage_page": {
+  "last_minute_moving_page": {
     "seo": {
-      "title": "Beveiligde Opslagruimte Huren Maastricht | MoveIt",
-      "desc": "Huur een veilige, droge and klimaatgecontroleerde opslagruimte in Maastricht. Korte of lange termijn. Inclusief transport and inpakken."
+      "title": "Spoedverhuizing Maastricht | Last-Minute Verhuizen | MoveIt",
+      "desc": "Snel verhuizen? Professionele spoed- en last-minute verhuisdiensten in Maastricht. Volledig verzekerd, betrouwbaar, snelle reactie, studentvriendelijk."
     },
     "hero": {
-      "title": "Beveiligde Opslagruimte Huren",
-      "subtitle": "Droge, schone and klimaatgecontroleerde opslagruimtes for korte of lange periodes.",
-      "desc": "Wij halen uw meubels op, slaan ze veilig op in onze beveiligde loods and bezorgen ze zodra u de sleutels heeft.",
-      "btn_quote": "Bekijk Opslagtarieven",
+      "title": "Last-Minute Verhuisdiensten",
+      "subtitle": "Snelle, betrouwbare en spoedverhuisdiensten wanneer u dringend moet verhuizen.",
+      "desc": "Het leven is onvoorspelbaar. Als u in de steek bent gelaten door een andere verhuizer of op korte termijn moet verhuizen, staat ons team voor u klaar.",
+      "btn_quote": "Spoedofferte Aanvragen",
       "btn_whatsapp": "WhatsApp Ons"
     },
     "section1": {
-      "title": "Waarom Kiezen voor Onze Opslagruimtes",
-      "intro": "Of u nu tijdelijk wilt huren tussen twee huurcontracten, gaat verbouwen of in het buitenland studeert: onze opslagloods biedt 24/7 camerabewaking, klimaatbeheersing and transport.",
+      "title": "Waarom Kiezen Voor Onze Spoedverhuizers",
+      "intro": "Wij zijn gespecialiseerd in spoedverhuizingen. Of u nu dezelfde dag service, noodinpakken of last-minute busverhuur nodig heeft, wij zorgen voor rust en efficiëntie.",
       "features": {
-        "secure_facility": "24/7 Camerabewaking",
-        "climate_control": "Klimaatbeheersing (Vocht & Temp)",
-        "flexible_contracts": "Flexibele Maandcontracten",
-        "loading_help": "Inclusief Ophalen & Laden",
-        "easy_access": "Snelle Toegang & Retrieval",
-        "insured_storage": "Volledig Verzekerde Opslag"
+        "urgent_response": "Snelle Reactie Hulp",
+        "same_day": "Zelfde Dag Beschikbaar",
+        "rapid_packing": "Snel Inpakken Zorg",
+        "fleet_availability": "Gereed Wagenpark",
+        "dedicated_coordinator": "Noodcoördinator",
+        "insured_transit": "Volledig Verzekerd"
       }
     },
     "section2": {
-      "title": "Onze Opslagmogelijkheden",
+      "title": "Onze Spoedverhuisopties",
       "sub1": {
-        "title": "Tijdelijke Opslag (Korte Termijn)",
-        "desc": "Ideaal om uw inboedel een paar weken of maanden op te slaan tijdens een verbouwing of verhuisvertraging. Wekelijks opzegbaar.",
+        "title": "Zelfde Dag Noodverhuizing",
+        "desc": "Voor situaties die directe actie vereisen. We sturen direct een wagen en professionele crew om uw spullen te laden en te verhuizen.",
         "bullets": [
-          "Wekelijks opzegbare contracten",
-          "Ophaalservice voor de deur",
-          "Schone en droge opslagboxen",
-          "Snelle toegang tot uw spullen"
+          "Vertrek binnen 2-4 uur",
+          "Volledige laad- en transporthulp",
+          "Maastricht en regionale dekking",
+          "Snelle boekingsbevestiging"
         ],
-        "price": "Vanaf €19/week Excl. BTW",
-        "cta": "Boek Tijdelijke Opslag",
-        "tag": "🔒 Korte Termijn"
+        "price": "Vanaf €149 Excl. BTW",
+        "cta": "Noodverhuizing Boeken",
+        "tag": "⚡ Noodgeval"
       },
       "sub2": {
-        "title": "Studenten Zomeropslag",
-        "desc": "Verlaat u Maastricht in de zomervakantie of gaat u een semester in het buitenland studeren? Sla uw spullen goedkoop op in onze beveiligde lockers.",
-        "extra": "Special student deal: Combineer met medestudenten om transportkosten te delen.",
-        "price": "Vanaf €9/week Excl. BTW",
-        "cta": "Boek Studentenopslag",
-        "tag": "🎓 Studenten Deal"
+        "title": "Volgende Dag Geplande Verhuizing",
+        "desc": "Morgen verhuizen? Beveilig nu uw boeking. Wij regelen de wagen, inpakmaterialen en crew voor een stressvrije overgang.",
+        "extra": "Flexibele uurtarieven zonder reserveringskosten.",
+        "price": "Vanaf €129 Excl. BTW",
+        "cta": "Volgende Dag Boeken",
+        "tag": "📅 Volgende Dag"
       },
       "sub3": {
-        "title": "Lange Termijn Inboedelopslag",
-        "desc": "Verhuizen naar het buitenland of tijdelijk kleiner wonen? Wij slaan uw complete inboedel op in verzegelde, geconditioneerde containers.",
-        "extra": "Inclusief maandelijkse temperatuurrapportages and verzegeling:",
+        "title": "Verhuizer In De Steek Gelaten Redding",
+        "desc": "Heeft uw geplande verhuizer afgezegd? Geen paniek. Neem direct contact met ons op en we doen ons best om uw verhuisdag te redden.",
         "bullets": [
-          "Grote container opslagboxen",
-          "Klimaatbeheersing tegen vocht",
-          "Verzegelde sloten voor veiligheid",
-          "Gedetailleerde inventarislijst"
+          "Prioriteit noodverzending",
+          "Turnkey inpakken en laden",
+          "Vriendelijke, behulpzame crew",
+          "Geen verborgen toeslagen"
         ],
-        "price": "Vraag Opslagtarief Aan",
-        "cta": "Vraag Langdurige Opslag Aan",
-        "tag": "🏡 Inboedelopslag"
+        "extra": "Prioritaire verzending voor spoedherstel:",
+        "price": "Vraag Spoedofferte",
+        "cta": "Red Mijn Verhuizing",
+        "tag": "🆘 Redding"
       },
       "sub4": {
-        "title": "Archief- & Documentenopslag",
-        "desc": "Bespaar kantoorruimte. Sla uw belastingarchieven, dossiers and overtollige kantoormeubels veilig op.",
-        "extra": "Great for: Law firms, medical clinics, tax document archives.",
-        "price": "Vanaf €29/maand Excl. BTW",
-        "cta": "Info over Archiefopslag"
+        "title": "Enkel Item Sneltransport",
+        "desc": "Net een bank of apparaat gekocht en vandaag geleverd nodig? Wij verzorgen sneltransport voor losse items.",
+        "extra": "Ideaal voor winkelaankopen, online marktplaatsen of een enkel zwaar item.",
+        "price": "Vanaf €59 Excl. BTW",
+        "cta": "Enkel Item Boeken"
       },
       "sub5": {
-        "title": "Combinatiedeal: Verhuizen + Opslag",
-        "desc": "Wij laden uw inboedel in, slaan het op in onze loods and bezorgen/monteren alles zodra uw nieuwe woning gereed is.",
-        "extra": "Includes: packing, transport, storage, and final delivery.",
-        "price": "Vraag Combinatieprijs Aan",
-        "cta": "Plan Combinatiedeal"
+        "title": "Snel Inpakken + Verhuizen",
+        "desc": "Niet alleen snel verhuizen, maar ook nog niet ingepakt? Onze crew komt met dozen en folie om u in één keer in te pakken en te verhuizen.",
+        "extra": "Inclusief dozen, inpakmaterialen en inpakteam.",
+        "price": "Vraag Combiprijs",
+        "cta": "Inpakken + Verhuizen Boeken"
       }
     },
     "section3": {
-      "badge": "🔒 KLIMAATGECONTROLEERD",
-      "title": "Veilige, Droge & Verwarmde Opslag",
-      "desc": "Vocht and kou kunnen houten meubels, matrassen and documenten beschadigen. Onze opslagloods behoudt een constante temperatuur for maximale bescherming. Zo werkt het:",
+      "badge": "⚡ SNEL VERZENDSYSTEEM",
+      "title": "Hoe Onze Spoedprocedure Werkt",
+      "desc": "We hebben ons boekings- en laadproces gestroomlijnd om spoedverhuizingen soepel te laten verlopen. Onze methode:",
       "steps": [
-        "Kies uw gewenste opslaggrootte and duur",
-        "Wij halen uw spullen op and pakken ze in",
-        "Uw inboedel wordt veilig opgeslagen in een box"
+        "Stuur ons een lijst met spullen en locaties via WhatsApp",
+        "Ontvang een vaste prijs en bevestig uw boeking",
+        "Onze crew komt langs en regelt alles direct"
       ],
-      "logistics": "Wij houden een nauwkeurige inventaris bij van al uw opgeslagen goederen.",
+      "logistics": "We communiceren rechtstreeks met onze chauffeurs om de express-aankomst te coördineren.",
       "benefits": [
-        "Constante temperatuur & vochtigheid",
-        "24/7 camerabewaking & alarm",
-        "Verzekering tijdens transport and opslag"
+        "Geen last-minute prijsverhogingen",
+        "Ervaren spoedteams",
+        "Real-time locatie updates"
       ],
-      "cta": "Controleer Beschikbaarheid"
+      "cta": "Controleer Spoedbeschikbaarheid"
     },
     "section4": {
-      "title": "Beveiligde Opslagfaciliteit Maastricht",
-      "desc1": "De veiligheid van uw inboedel is onze hoogste prioriteit. Onze opslag beschikt over:",
+      "title": "Dekking Spoedverhuizingen Maastricht",
+      "desc1": "We begrijpen hoe stressvol spoedverhuizingen zijn en bieden met trots hulp op dezelfde of de volgende dag in Zuid-Limburg. We focussen op:",
       "points": [
-        "brandbeveiliging",
-        "alarmsystemen",
-        "klimaatcontrole",
-        "stofvrije boxen",
-        "persoonlijke toegang",
-        "inventaris controle"
+        "snelle reactietijden",
+        "gescreende vriendelijke verhuizers",
+        "zorgvuldige omgang met spullen",
+        "geen verborgen kosten",
+        "GPS-aankomsttracking",
+        "transportverzekering"
       ],
-      "desc2": "Bij moveit staan uw spullen schoon, droog and veilig opgeslagen tot u ze weer nodig heeft."
+      "desc2": "Op korte termijn verhuizen hoeft geen ramp te zijn. Laat MoveIt uw verhuisdag in stijl redden."
     },
     "section5": {
-      "title": "FAQ",
-      "q1": "Komen jullie mijn meubels ook ophalen voor opslag?",
-      "a1": "Ja — ons professionele verhuisteam kan het inpakken, laden and het transport van uw woning direct naar onze opslagloods verzorgen.",
-      "q2": "Wat is de minimale huurperiode van een opslagbox?",
-      "a2": "Onze korte-termijn boxen hebben een minimale huurperiode van 1 week. Lange-termijn containers worden per maand gefactureerd.",
-      "q3": "Zijn mijn spullen verzekerd tijdens de opslag?",
-      "a3": "Ja — we bieden opslagverzekeringen die dekking bieden tegen brand, water and diefstal tijdens de opslagperiode.",
-      "q4": "Hoe snel kan ik bij mijn spullen?",
-      "a4": "We vragen u om minimaal 48 uur van tevoren contact op te nemen, zodat we uw box gereed kunnen maken voor toegang of levering.",
-      "q5": "Can I access my storage unit anytime?",
-      "a5": "Toegang kan worden gepland tijdens onze openingstijden. Uit veiligheidsoverwegingen gebeurt dit altijd onder begeleiding van onze beheerder."
+      "title": "Veelgestelde Vragen",
+      "q1": "Hoe snel kunt u aanwezig zijn voor een spoedverhuizing?",
+      "a1": "Afhankelijk van onze beschikbaarheid kunnen we in de regio Maastricht vaak binnen 2 tot 4 uur een team en verhuiswagen sturen.",
+      "q2": "Vraagt u extra kosten voor last-minute boekingen?",
+      "a2": "Nee. Wij geloven in eerlijke, transparante prijzen. Onze tarieven voor spoedverhuizingen zijn gebaseerd op onze standaardtarieven, zonder verborgen toeslagen.",
+      "q3": "Kunt u mij helpen inpakken als ik nog niet klaar ben?",
+      "a3": "Absoluut. Wij bieden een inpakservice. Onze verhuizers komen met dozen, noppenfolie en tape om uw hele inboedel veilig in te pakken.",
+      "q4": "Welke regio's dekt u voor spoedverhuizingen?",
+      "a4": "Wij bieden spoedverhuizingen in heel Maastricht, Zuid-Limburg en nabijgelegen grensgebieden zoals Aken en Genk.",
+      "q5": "Hoe boek ik een spoedverhuizing?",
+      "a5": "Voor de snelste reactie klikt u op de WhatsApp-knop om rechtstreeks met onze planner te chatten, of vult u het online offerteformulier in."
     },
     "cta": {
-      "title": "Opslagruimte Nodig in Maastricht?",
-      "desc": "Neem contact op om de beschikbaarheid te controleren and ontvang direct een prijs voor transport and opslag.",
-      "btn_quote": "Bekijk Tarieven",
+      "title": "Dringend Verhuizen?",
+      "desc": "Stuur ons een bericht via WhatsApp of vraag online een offerte aan voor de snelste beschikbaarheid.",
+      "btn_quote": "Spoedofferte Aanvragen",
       "btn_whatsapp": "WhatsApp Ons"
     }
   },

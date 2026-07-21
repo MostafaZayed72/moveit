@@ -430,7 +430,7 @@ const servicesList = [
   'lift_rental',
   'piano',
   'senior',
-  'storage',
+  'last_minute_moving',
   'clearance'
 ]
 
@@ -446,7 +446,7 @@ const getServiceIcon = (id) => {
     lift_rental: '🏗️',
     piano: '🎹',
     senior: '❤️',
-    storage: '🔒',
+    last_minute_moving: '⚡',
     clearance: '🧹'
   }
   return icons[id] || '📦'

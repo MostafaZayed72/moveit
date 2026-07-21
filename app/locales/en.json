@@ -374,9 +374,9 @@
         "title": "Senior Moving",
         "desc": "Compassionate and stress-free relocation services tailored for seniors."
       },
-      "storage": {
-        "title": "Storage Rental",
-        "desc": "Secure, climate-controlled storage solutions for short or long-term needs."
+      "last_minute_moving": {
+        "title": "Last Minute Moving",
+        "desc": "Fast response, same-day or next-day relocation services when you need to move urgently."
       },
       "clearance": {
         "title": "Home Clearance",
@@ -1878,129 +1878,129 @@
       "btn_whatsapp": "WhatsApp Us"
     }
   },
-  "storage_page": {
+  "last_minute_moving_page": {
     "seo": {
-      "title": "Secure Storage Rental Maastricht | Climate Controlled | MoveIt",
-      "desc": "Secure, dry, and climate-controlled storage units in Maastricht. Short or long term. Transport & loading assistance, fully insured."
+      "title": "Urgent Last-Minute Moving Maastricht | Same-Day Relocation | MoveIt",
+      "desc": "Need to move quickly? Professional same-day and last-minute moving services in Maastricht. Fully insured, reliable, fast response, student friendly."
     },
     "hero": {
-      "title": "Secure Storage Rental Services",
-      "subtitle": "Secure, dry, and climate-controlled storage solutions for short or long-term needs.",
-      "desc": "We collect your furniture, store it in our monitored facilities, and deliver it whenever you are ready.",
-      "btn_quote": "Inquire Storage Rates",
+      "title": "Last Minute Moving Services",
+      "subtitle": "Fast, reliable, and same-day moving services when you need to relocate urgently.",
+      "desc": "Life is unpredictable. If you have been let down by another mover or need to relocate on short notice, our fast-response team is ready to help.",
+      "btn_quote": "Request Urgent Quote",
       "btn_whatsapp": "WhatsApp Us"
     },
     "section1": {
-      "title": "Why Choose Our Storage Units",
-      "intro": "Whether you are between apartments, remodeling your home, or studying abroad, our storage facility offers 24/7 security, climate-controls, and full loading and transport support.",
+      "title": "Why Choose Our Last-Minute Movers",
+      "intro": "We specialize in handling urgent relocations. Whether you need same-day service, emergency packing, or last-minute van rental, we bring efficiency and peace of mind to stressful situations.",
       "features": {
-        "secure_facility": "24/7 Monitored Storage",
-        "climate_control": "Climate-Controlled Units",
-        "flexible_contracts": "Flexible Rolling Contracts",
-        "loading_help": "Transport & Loading Help",
-        "easy_access": "Easy Unit Retrieval",
-        "insured_storage": "Fully Insured Units"
+        "urgent_response": "Rapid Response Help",
+        "same_day": "Same-Day Availability",
+        "rapid_packing": "Express Packing Care",
+        "fleet_availability": "Ready Van Fleet",
+        "dedicated_coordinator": "Emergency Coordinator",
+        "insured_transit": "Fully Insured Transit"
       }
     },
     "section2": {
-      "title": "Our Storage Options",
+      "title": "Our Urgent Moving Options",
       "sub1": {
-        "title": "Short-Term Storage Solutions",
-        "desc": "Perfect for storing household goods for a few weeks or months during renovations or moving delays. Includes rolling weekly contracts.",
+        "title": "Same-Day Emergency Move",
+        "desc": "For situations that require immediate action. We dispatch a vehicle and professional crew to load and move your items immediately.",
         "bullets": [
-          "Weekly rolling contracts",
-          "Van pickup from your address",
-          "Clean, dry, and secure units",
-          "Quick retrieval options"
+          "Dispatch within 2-4 hours",
+          "Full loading and transit support",
+          "Maastricht and regional coverage",
+          "Express booking confirmation"
         ],
-        "price": "From €19/week Excl. VAT",
-        "cta": "Book Short-Term Storage",
-        "tag": "🔒 Short-Term"
+        "price": "From €149 Excl. VAT",
+        "cta": "Book Emergency Move",
+        "tag": "⚡ Emergency"
       },
       "sub2": {
-        "title": "Student Summer Storage",
-        "desc": "Leaving Maastricht for the summer or studying abroad for a semester? Store your boxes and room furniture cheaply in our secure student lockers.",
-        "extra": "Special student package: Includes shared pickup options to split transport costs.",
-        "price": "From €9/week Excl. VAT",
-        "cta": "Book Student Storage",
-        "tag": "🎓 Student Special"
+        "title": "Next-Day Scheduled Move",
+        "desc": "Need to move tomorrow? Secure your booking now. We organize the vehicle, packing materials, and crew for a stress-free next-day transition.",
+        "extra": "Flexible hourly rates with zero booking fees.",
+        "price": "From €129 Excl. VAT",
+        "cta": "Book Next-Day Move",
+        "tag": "📅 Next-Day"
       },
       "sub3": {
-        "title": "Complete House Long-Term Storage",
-        "desc": "Moving abroad for work or downsizing? We pack your entire household, store it in sealed climate-controlled container units, and preserve it safely.",
-        "extra": "Includes monthly temperature logs and sealed unit security stamps:",
+        "title": "Mover Let-Down Rescue",
+        "desc": "Did your scheduled mover fail to show up? Don't panic. Contact us immediately and we will do our best to rescue your moving day.",
         "bullets": [
-          "Large capacity containers",
-          "Insulated temperature control",
-          "High security lock systems",
-          "Complete item inventory list"
+          "Priority emergency dispatch",
+          "Turnkey packing and loading",
+          "Helpful, friendly crew",
+          "Zero hidden premium fees"
         ],
-        "price": "Get Storage Quote",
-        "cta": "Request House Storage",
-        "tag": "🏡 House Container"
+        "extra": "Priority dispatch for urgent recovery:",
+        "price": "Get Urgent Quote",
+        "cta": "Rescue My Move",
+        "tag": "🆘 Rescue Help"
       },
       "sub4": {
-        "title": "Business & Archive Storage",
-        "desc": "Clear valuable space in your main office. Store archives, files, extra desks, and seasonal exhibition materials securely.",
-        "extra": "Great for: Law firms, medical clinics, corporate archive tax storage.",
-        "price": "From €29/month Excl. VAT",
-        "cta": "Inquire Business Storage"
+        "title": "Single Item Express Transport",
+        "desc": "Just bought a large sofa or appliance and need it delivered today? We provide quick single-item transport services.",
+        "extra": "Ideal for store purchases, online marketplaces, or single heavy items.",
+        "price": "From €59 Excl. VAT",
+        "cta": "Book Single-Item Express"
       },
       "sub5": {
-        "title": "Full Move + Storage Combo Deal",
-        "desc": "We load your belongings, place them in storage, and deliver/assemble them at your new address whenever you receive your keys.",
-        "extra": "Includes: Full packing service, van transport, storage loading, and final home setup.",
+        "title": "Express Packing & Move Combo",
+        "desc": "Not only do you need to move quickly, but you haven't packed yet? Our crew arrives with boxes and wrapping to pack and move you in one go.",
+        "extra": "Includes boxes, wrapping materials, and packing crew.",
         "price": "Request Combo Quote",
-        "cta": "Schedule Combo Deal"
+        "cta": "Book Pack & Move Combo"
       }
     },
     "section3": {
-      "badge": "🔒 SECURE CONTAINER SYSTEM",
-      "title": "Safe, Dry & Climate Controlled Storage",
-      "desc": "Moisture and temperature fluctuations can ruin wood furniture, fabrics, and documents. Our storage facilities maintain a stable climate to guarantee safety. Our booking is simple:",
+      "badge": "⚡ FAST DISPATCH SYSTEM",
+      "title": "How Our Last-Minute Process Works",
+      "desc": "We have streamlined our booking and loading process to handle emergency relocations smoothly. Our method:",
       "steps": [
-        "Select your unit size and duration",
-        "We pick up and wrap your furniture securely",
-        "Your goods are loaded into sealed units"
+        "Send us a list of items and locations via WhatsApp",
+        "Get an instant fixed price and confirm your booking",
+        "Our crew arrives and handles everything immediately"
       ],
-      "logistics": "We keep detailed inventory lists of all stored containers.",
+      "logistics": "We communicate directly with our drivers to coordinate express arrival.",
       "benefits": [
-        "Constant temperature control",
-        "24/7 CCTV surveillance",
-        "Transit + storage insurance cover"
+        "No last-minute premium price hikes",
+        "Experienced emergency crews",
+        "Real-time location updates"
       ],
-      "cta": "Check Storage Availability"
+      "cta": "Check Urgent Availability"
     },
     "section4": {
-      "title": "Fully Vetted Storage Facilities Maastricht",
-      "desc1": "We take the safety of your goods seriously. Our storage units feature:",
+      "title": "Emergency Relocation Coverage Maastricht",
+      "desc1": "We understand how stressful urgent moves are, and we are proud to offer same-day and next-day help in South Limburg. We focus on:",
       "points": [
-        "fire suppression",
-        "alarm monitoring",
-        "climate regulation",
-        "dust protections",
-        "secure access keys",
-        "inventory lists"
+        "quick response times",
+        "vetted polite movers",
+        "careful handling of items",
+        "no hidden charge surprises",
+        "GPS arrival tracking",
+        "transit insurance"
       ],
-      "desc2": "With moveit, your belongings stay clean, dry, and secure until you need them again."
+      "desc2": "Relocating on short notice doesn't have to be a disaster. Let MoveIt rescue your moving day with style."
     },
     "section5": {
       "title": "FAQ",
-      "q1": "Can you pick up my furniture and bring it to storage?",
-      "a1": "Yes — our professional moving team can handle the packing, loading, and transport from your home directly to our storage facility.",
-      "q2": "Is there a minimum storage period?",
-      "a2": "Our short-term units have a minimum storage period of 1 week. Long-term containers are billed monthly.",
-      "q3": "Are my stored items insured?",
-      "a3": "Yes — we offer storage insurance options covering fire, water, and theft while your goods are stored in our facility.",
-      "q4": "How much notice do I need to withdraw my items?",
-      "a4": "We request a 48-hour notice prior to item withdrawals so we can prepare your unit and coordinate delivery vehicles.",
-      "q5": "Can I access my storage unit anytime?",
-      "a5": "Access can be coordinated during our business hours. For security and safety, all visits are supervised by our facility manager."
+      "q1": "How fast can you arrive for a same-day move?",
+      "a1": "Depending on our current availability, we can often dispatch a crew and van to your location within 2 to 4 hours in the Maastricht area.",
+      "q2": "Do you charge extra for last-minute bookings?",
+      "a2": "No. We believe in fair, transparent pricing. Our rates for last-minute moves are based on our standard hourly/fixed prices, without hidden premium fees.",
+      "q3": "Can you help me pack if I am not ready?",
+      "a3": "Absolutely. We offer an express packing service. Our movers will arrive with boxes, bubble wrap, and tape to pack your entire home safely before loading.",
+      "q4": "What areas do you cover for urgent moves?",
+      "a4": "We provide emergency moving services throughout Maastricht, South Limburg, and nearby cross-border areas like Aachen and Genk.",
+      "q5": "How do I book an urgent move?",
+      "a5": "For the fastest response, click the WhatsApp button to chat with our dispatcher directly, or fill out our online quote form."
     },
     "cta": {
-      "title": "Need Storage Space in Maastricht?",
-      "desc": "Get in touch to check unit availability and get an instant quote for transport and storage.",
-      "btn_quote": "Check Unit Rates",
+      "title": "Need to Move Urgently?",
+      "desc": "Message us on WhatsApp or request a quote online for the fastest same-day or next-day availability.",
+      "btn_quote": "Get Urgent Quote",
       "btn_whatsapp": "WhatsApp Us"
     }
   },

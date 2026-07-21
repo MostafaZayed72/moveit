@@ -260,7 +260,7 @@ const bentoServices = [
   { id: 'piano', icon: '🎹', image: 'https://images.unsplash.com/photo-1550684848-fac1c5b4e853?auto=format&fit=crop&q=80&w=800', spanClass: 'lg:col-span-1' },
   { id: 'furniture_assembly', icon: '🔧', image: 'https://images.unsplash.com/photo-1585412727339-54e4bae3bbf9?auto=format&fit=crop&q=80&w=800', spanClass: 'lg:col-span-2' },
   { id: 'international', icon: '✈️', image: 'https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&q=80&w=800', spanClass: 'lg:col-span-2' },
-  { id: 'storage', icon: '🏢', image: 'https://images.unsplash.com/photo-1565610222536-ef125c59da2e?auto=format&fit=crop&q=80&w=800', spanClass: 'lg:col-span-1' },
+  { id: 'last_minute_moving', icon: '⚡', image: 'https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&fit=crop&q=80&w=800', spanClass: 'lg:col-span-1' },
   { id: 'student', icon: '🎓', image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=800', spanClass: 'lg:col-span-1' }
 ]
 

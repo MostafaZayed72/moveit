@@ -194,7 +194,7 @@ const visionValues = [
   color: #1e293b;
 }
 .dark .team-page {
-  background: #0f172a;
+  background: #0A0A0A;
   color: #e2e8f0;
 }
 .container {
@@ -210,6 +210,9 @@ const visionValues = [
   overflow: hidden;
   text-align: center;
   background: linear-gradient(135deg, #0f172a 0%, #1e293b 60%, #1a1a2e 100%);
+}
+.dark .team-hero {
+  background: linear-gradient(135deg, #000000 0%, #0A0A0A 60%, #020202 100%);
 }
 .hero-bg-gradient {
   position: absolute;
@@ -301,8 +304,8 @@ const visionValues = [
   flex-direction: column;
 }
 .dark .team-card {
-  background: #1e293b;
-  border-color: #334155;
+  background: #121212;
+  border-color: rgba(255, 255, 255, 0.08);
   box-shadow: 0 4px 24px rgba(0,0,0,.3);
 }
 .team-card:hover {
@@ -431,6 +434,9 @@ const visionValues = [
 .vision-section {
   padding: 4rem 0 6rem;
   background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+}
+.dark .vision-section {
+  background: linear-gradient(135deg, #000000 0%, #0A0A0A 100%);
 }
 .vision-card {
   max-width: 740px;

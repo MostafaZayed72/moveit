@@ -737,20 +737,20 @@ const configs = {
       { icon: '🛡️', key: 'insured_support' }
     ]
   },
-  storage: {
-    heroImage: 'https://images.unsplash.com/photo-1565610222536-ef125c59da2e?auto=format&fit=crop&q=80&w=2000',
-    heroBadge: '🔒 Secure Storage Helper',
-    gradientClass: 'from-blue-700 to-sky-500',
-    brandImage: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&q=80&w=2000',
-    sub4Icon: '🎓',
-    sub5Icon: '📦',
+  last_minute_moving: {
+    heroImage: 'https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&fit=crop&q=80&w=2000',
+    heroBadge: '⚡ Last Minute Moving Helper',
+    gradientClass: 'from-orange-600 to-yellow-500',
+    brandImage: 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&q=80&w=2000',
+    sub4Icon: '⏱️',
+    sub5Icon: '⚡',
     features: [
-      { icon: '🔒', key: 'secure_facility' },
-      { icon: '🌡️', key: 'climate_control' },
-      { icon: '📋', key: 'flexible_contracts' },
-      { icon: '🚚', key: 'loading_help' },
-      { icon: '🔑', key: 'easy_access' },
-      { icon: '🛡️', key: 'insured_storage' }
+      { icon: '⚡', key: 'urgent_response' },
+      { icon: '⏱️', key: 'same_day' },
+      { icon: '📦', key: 'rapid_packing' },
+      { icon: '🚚', key: 'fleet_availability' },
+      { icon: '🤝', key: 'dedicated_coordinator' },
+      { icon: '🛡️', key: 'insured_transit' }
     ]
   },
   clearance: {
@@ -823,10 +823,10 @@ const offeringImages = {
     sub2: 'https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?auto=format&fit=crop&q=80&w=800',
     sub3: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&q=80&w=800'
   },
-  storage: {
-    sub1: 'https://images.unsplash.com/photo-1565610222536-ef125c59da2e?auto=format&fit=crop&q=80&w=800',
-    sub2: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&q=80&w=800',
-    sub3: 'https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&q=80&w=800'
+  last_minute_moving: {
+    sub1: 'https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&fit=crop&q=80&w=800',
+    sub2: 'https://images.unsplash.com/photo-1524413840807-0c3cb6fa808d?auto=format&fit=crop&q=80&w=800',
+    sub3: 'https://images.unsplash.com/photo-1553413077-190dd305871c?auto=format&fit=crop&q=80&w=800'
   },
   clearance: {
     sub1: 'https://images.unsplash.com/photo-1616401784845-180882ba9ba8?auto=format&fit=crop&q=80&w=800',

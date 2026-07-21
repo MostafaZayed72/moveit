@@ -1,5 +1,5 @@
 <template>
-  <div class="pt-32 pb-24 min-h-screen bg-slate-900 text-slate-100 relative overflow-hidden">
+  <div class="pt-32 pb-24 min-h-screen bg-brand-cream dark:bg-brand-black text-brand-black dark:text-slate-100 relative overflow-hidden">
     <!-- Background Decor -->
     <div class="absolute inset-0 z-0 pointer-events-none">
       <div class="absolute -top-40 left-1/4 w-[500px] h-[500px] rounded-full bg-red-600/5 blur-3xl"></div>
@@ -12,7 +12,7 @@
       <div class="mb-8" data-aos="fade-right">
         <NuxtLink 
           :to="localePath('/products')" 
-          class="inline-flex items-center gap-2 text-xs font-bold text-slate-400 hover:text-white transition-colors uppercase tracking-wider bg-slate-950/40 px-4 py-2 rounded-xl border border-slate-850"
+          class="inline-flex items-center gap-2 text-xs font-bold text-slate-600 dark:text-slate-400 hover:text-red-500 dark:hover:text-white transition-colors uppercase tracking-wider bg-white dark:bg-slate-950/40 px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-850"
         >
           <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5"/>
@@ -26,14 +26,14 @@
         
         <!-- Left Column: Product Image -->
         <div class="lg:col-span-6 w-full" data-aos="fade-right" data-aos-delay="50">
-          <div class="glass-panel bg-slate-950/20 border border-slate-800 rounded-[2.5rem] overflow-hidden aspect-square flex items-center justify-center p-12 relative group">
+          <div class="glass-panel rounded-[2.5rem] overflow-hidden aspect-square flex items-center justify-center p-12 relative group">
             <img 
               v-if="product.image" 
               :src="product.image" 
               :alt="locale === 'nl' ? product.title_nl : product.title_en"
               class="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105"
             />
-            <div v-else class="text-slate-600 text-sm">No image available</div>
+            <div v-else class="text-slate-500 dark:text-slate-600 text-sm">No image available</div>
           </div>
         </div>
 
@@ -44,22 +44,22 @@
             <div class="inline-flex items-center space-x-2 px-3 py-1 bg-red-600/10 text-red-500 border border-red-500/20 rounded-full text-[10px] font-black uppercase tracking-wider">
               <span>{{ locale === 'nl' ? 'Premium Kwaliteit' : 'Premium Quality' }}</span>
             </div>
-            <h1 class="text-3xl md:text-5xl font-black text-white leading-tight tracking-tight">
+            <h1 class="text-3xl md:text-5xl font-black text-slate-900 dark:text-white leading-tight tracking-tight">
               {{ locale === 'nl' ? product.title_nl : product.title_en }}
             </h1>
           </div>
 
           <!-- Price & Tax -->
           <div class="space-y-1">
-            <div class="text-3xl md:text-4xl font-black text-white">
+            <div class="text-3xl md:text-4xl font-black text-slate-900 dark:text-white">
               €{{ formatPrice(product.price) }}
             </div>
             <p class="text-xs text-slate-500 font-semibold">{{ $t('products.tax_included') }}</p>
           </div>
 
           <!-- Availability & Logistics Meta -->
-          <div class="p-5 bg-slate-950/30 border border-slate-850 rounded-2xl space-y-3">
-            <div class="flex items-center gap-3 text-xs text-slate-300 font-bold">
+          <div class="p-5 bg-white dark:bg-slate-950/30 border border-slate-200 dark:border-slate-850 rounded-2xl space-y-3">
+            <div class="flex items-center gap-3 text-xs text-slate-700 dark:text-slate-300 font-bold">
               <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
               <span>{{ $t('products.pickup_available') }}</span>
             </div>
@@ -70,20 +70,20 @@
 
           <!-- Quantity Selector -->
           <div class="flex items-center gap-4">
-            <span class="text-xs font-bold uppercase tracking-wider text-slate-400">
+            <span class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
               {{ locale === 'nl' ? 'Aantal' : 'Quantity' }}
             </span>
-            <div class="flex items-center bg-slate-950/50 border border-slate-850 rounded-xl px-2 py-1">
+            <div class="flex items-center bg-white dark:bg-slate-950/50 border border-slate-200 dark:border-slate-850 rounded-xl px-2 py-1">
               <button 
                 @click="quantity = Math.max(1, quantity - 1)"
-                class="w-8 h-8 rounded-lg hover:bg-slate-900 flex items-center justify-center font-black text-sm text-slate-400 hover:text-white transition-colors"
+                class="w-8 h-8 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-900 flex items-center justify-center font-black text-sm text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors"
               >
                 —
               </button>
-              <span class="w-12 text-center font-bold text-sm text-white">{{ quantity }}</span>
+              <span class="w-12 text-center font-bold text-sm text-slate-900 dark:text-white">{{ quantity }}</span>
               <button 
                 @click="quantity++"
-                class="w-8 h-8 rounded-lg hover:bg-slate-900 flex items-center justify-center font-black text-sm text-slate-400 hover:text-white transition-colors"
+                class="w-8 h-8 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-900 flex items-center justify-center font-black text-sm text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors"
               >
                 +
               </button>
@@ -110,11 +110,11 @@
           </div>
 
           <!-- Description Section -->
-          <div class="space-y-3 pt-6 border-t border-slate-800">
-            <h4 class="text-xs uppercase font-bold text-slate-400 tracking-wider">
+          <div class="space-y-3 pt-6 border-t border-slate-200 dark:border-slate-800">
+            <h4 class="text-xs uppercase font-bold text-slate-500 dark:text-slate-400 tracking-wider">
               {{ $t('products.description') }}
             </h4>
-            <p class="text-slate-300 leading-relaxed font-medium text-sm whitespace-pre-line">
+            <p class="text-slate-700 dark:text-slate-300 leading-relaxed font-medium text-sm whitespace-pre-line">
               {{ locale === 'nl' ? product.description_nl : product.description_en }}
             </p>
           </div>
@@ -128,16 +128,16 @@
       </div>
 
       <!-- Not Found State -->
-      <div v-else class="text-center py-20 bg-slate-950/20 rounded-[2.5rem] border border-slate-900/60 max-w-xl mx-auto space-y-4">
-        <div class="w-16 h-16 bg-slate-900 border border-slate-850 rounded-full flex items-center justify-center mx-auto text-2xl">✕</div>
-        <p class="text-slate-400 text-sm font-bold">
+      <div v-else class="text-center py-20 bg-white dark:bg-slate-950/20 rounded-[2.5rem] border border-slate-200 dark:border-slate-900/60 max-w-xl mx-auto space-y-4">
+        <div class="w-16 h-16 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-850 rounded-full flex items-center justify-center mx-auto text-2xl">✕</div>
+        <p class="text-slate-600 dark:text-slate-400 text-sm font-bold">
           {{ locale === 'nl' ? 'Product niet gevonden.' : 'Product not found.' }}
         </p>
       </div>
 
       <!-- Suggested Products Section -->
-      <div v-if="suggestions.length > 0" class="space-y-8 pt-12 border-t border-slate-800" data-aos="fade-up">
-        <h2 class="text-2xl md:text-3xl font-black text-white tracking-tight">
+      <div v-if="suggestions.length > 0" class="space-y-8 pt-12 border-t border-slate-200 dark:border-slate-800" data-aos="fade-up">
+        <h2 class="text-2xl md:text-3xl font-black text-slate-900 dark:text-white tracking-tight">
           {{ $t('products.suggestions_title') }}
         </h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
@@ -145,19 +145,19 @@
             v-for="sug in suggestions"
             :key="sug.id"
             :to="localePath('/products/' + sug.slug)"
-            class="group glass-panel flex flex-col h-full bg-slate-950/30 hover:bg-slate-950/50 border border-slate-850 hover:border-red-500/40 rounded-[2rem] overflow-hidden shadow-xl hover:shadow-red-950/10 hover:scale-[1.01] active:scale-98 transition-all duration-300"
+            class="group glass-panel flex flex-col h-full hover:border-red-500/40 rounded-[2rem] overflow-hidden shadow-xl hover:shadow-red-950/10 hover:scale-[1.01] active:scale-98 transition-all duration-300"
           >
-            <div class="relative aspect-square overflow-hidden bg-slate-950/50 border-b border-slate-900/60 flex items-center justify-center p-6">
+            <div class="relative aspect-square overflow-hidden bg-slate-50 dark:bg-slate-950/50 border-b border-slate-100 dark:border-slate-900/60 flex items-center justify-center p-6">
               <img 
                 v-if="sug.image" 
                 :src="sug.image" 
                 :alt="locale === 'nl' ? sug.title_nl : sug.title_en"
                 class="w-full h-full object-contain transition-transform duration-500 group-hover:scale-108"
               />
-              <div v-else class="text-slate-600 text-sm">No image</div>
+              <div v-else class="text-slate-500 dark:text-slate-600 text-sm">No image</div>
             </div>
             <div class="p-5 flex-grow flex flex-col justify-between space-y-2">
-              <h3 class="text-sm font-black text-white group-hover:text-red-500 transition-colors leading-tight">
+              <h3 class="text-sm font-black text-slate-900 dark:text-white group-hover:text-red-500 transition-colors leading-tight">
                 {{ locale === 'nl' ? sug.title_nl : sug.title_en }}
               </h3>
               <div class="text-sm font-bold text-red-500 mt-2">
@@ -261,8 +261,3 @@ watch(() => route.params.slug, () => {
 })
 </script>
 
-<style scoped>
-.glass-panel {
-  @apply bg-slate-950/50 border border-slate-800/85 rounded-[2.5rem] backdrop-blur-xl shadow-2xl;
-}
-</style>
