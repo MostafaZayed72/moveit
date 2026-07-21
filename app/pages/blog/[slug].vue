@@ -1,5 +1,5 @@
 <template>
-  <div class="pt-32 pb-24 min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors duration-300 relative">
+  <div class="pt-32 pb-24 min-h-screen bg-slate-50 dark:bg-brand-black text-slate-900 dark:text-slate-100 transition-colors duration-300 relative">
     <!-- Background Decor -->
     <div class="absolute inset-0 z-0 pointer-events-none overflow-hidden">
       <div class="absolute top-1/4 -left-40 w-96 h-96 rounded-full bg-red-600/5 blur-3xl"></div>

@@ -1,5 +1,5 @@
 <template>
-  <div class="pt-24 min-h-screen bg-slate-50 dark:bg-slate-950 transition-colors duration-300 font-sans">
+  <div class="pt-24 min-h-screen bg-slate-50 dark:bg-brand-black transition-colors duration-300 font-sans">
     
     <!-- HERO SECTION -->
     <section class="relative py-20 md:py-28 overflow-hidden text-center">

@@ -1,5 +1,5 @@
 <template>
-  <div class="pt-24 min-h-screen bg-slate-50 dark:bg-slate-950">
+  <div class="pt-24 min-h-screen bg-slate-50 dark:bg-brand-black">
     <!-- Hero Section -->
     <section class="relative py-20 overflow-hidden">
       <div class="absolute inset-0 bg-gradient-to-b from-red-600/5 to-transparent -z-10"></div>
@@ -93,7 +93,7 @@
     </section>
 
     <!-- Why moveit Section -->
-    <section class="py-32 bg-slate-50 dark:bg-slate-950/50">
+    <section class="py-32 bg-slate-50 dark:bg-brand-black/50">
       <div class="container mx-auto max-w-7xl px-6">
         <div class="grid lg:grid-cols-2 gap-20 items-center">
           <div class="order-2 lg:order-1" data-aos="fade-right">

@@ -1,9 +1,9 @@
 <template>
-  <div v-if="loadingDb" class="pt-32 pb-24 min-h-screen bg-slate-50 dark:bg-slate-950 flex flex-col items-center justify-center space-y-4">
+  <div v-if="loadingDb" class="pt-32 pb-24 min-h-screen bg-slate-50 dark:bg-brand-black flex flex-col items-center justify-center space-y-4">
     <div class="w-12 h-12 border-4 border-red-600 border-t-transparent rounded-full animate-spin"></div>
     <p class="text-slate-500 dark:text-slate-400 font-bold">Loading service...</p>
   </div>
-  <div v-else class="pt-24 min-h-screen bg-slate-50 dark:bg-slate-950 transition-colors duration-300">
+  <div v-else class="pt-24 min-h-screen bg-slate-50 dark:bg-brand-black transition-colors duration-300">
     <ServiceDetailsPage 
       :service-id="serviceId" 
       :db-service="dbService" 
