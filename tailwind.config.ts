@@ -5,8 +5,8 @@ export default <Partial<Config>>{
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Inter', 'sans-serif'],
-        display: ['Montserrat', 'sans-serif'],
+        sans: ['Montserrat Alternates', 'sans-serif'],
+        display: ['Montserrat Alternates', 'sans-serif'],
       },
       colors: {
         brand: {

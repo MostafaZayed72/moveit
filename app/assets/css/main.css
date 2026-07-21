@@ -4,7 +4,7 @@
 
 @layer base {
   body {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Montserrat Alternates', sans-serif;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
     @apply antialiased selection:bg-brand-red selection:text-white;
     @apply bg-brand-cream text-brand-black transition-colors duration-300;
@@ -15,7 +15,7 @@
   }
 
   h1, h2, h3, h4 {
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Montserrat Alternates', sans-serif;
     letter-spacing: -0.025em;
   }
 }
