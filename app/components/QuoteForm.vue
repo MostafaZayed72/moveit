@@ -9,7 +9,7 @@
       <!-- Date and Type Fields -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-full box-border">
         <div class="space-y-1 w-full max-w-full box-border">
-          <label class="text-xs font-bold uppercase tracking-widest text-slate-400 pl-2">{{ $t('home.move_date') }} *</label>
+          <label class="text-xs font-bold uppercase tracking-wider text-slate-400 pl-2">{{ $t('home.move_date') }} *</label>
           <div class="relative w-full max-w-full box-border">
             <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400 z-10">
               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
@@ -30,7 +30,7 @@
         </div>
         
         <div class="space-y-1 w-full max-w-full box-border">
-          <label class="text-xs font-bold uppercase tracking-widest text-slate-400 pl-2">{{ $t('home.move_type') }} *</label>
+          <label class="text-xs font-bold uppercase tracking-wider text-slate-400 pl-2">{{ $t('home.move_type') }} *</label>
           <div class="relative w-full max-w-full box-border">
             <button 
               type="button"

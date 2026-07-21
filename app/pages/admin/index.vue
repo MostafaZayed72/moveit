@@ -361,8 +361,8 @@
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <div v-for="prod in paginatedProducts" :key="prod.id" class="glass-panel border border-slate-200 dark:border-slate-200 dark:border-slate-800/80 rounded-2xl overflow-hidden flex flex-col bg-white dark:bg-white dark:bg-slate-950/40">
               <div class="h-44 bg-slate-50 dark:bg-slate-900 relative">
-                <img v-if="prod.image" :src="prod.image" class="w-full h-full object-cover" :alt="prod.title_en" />
-                <div v-else class="w-full h-full flex items-center justify-center text-slate-600">No Image</div>
+                <img v-if="getFirstProductImage(prod.image)" :src="getFirstProductImage(prod.image)" class="w-full h-full object-cover" :alt="prod.title_en" />
+                <div v-else class="w-full h-full flex items-center justify-center text-slate-600 text-xs uppercase font-bold tracking-wider">No Image</div>
                 <div class="absolute top-3 left-3 px-2.5 py-0.5 bg-red-600 text-slate-900 dark:text-white text-[10px] font-bold rounded-full uppercase">€{{ prod.price }}</div>
               </div>
               <div class="p-6 flex-grow flex flex-col justify-between space-y-4">
@@ -1391,16 +1391,52 @@
               <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Sort Order</label>
               <input type="number" v-model.number="productForm.sort_order" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white outline-none focus:border-red-500 text-sm" />
             </div>
-            <div class="space-y-2 md:col-span-2">
-              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Product Image</label>
-              <div class="flex items-center gap-4">
-                <div class="w-16 h-16 rounded-xl overflow-hidden bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 flex items-center justify-center shrink-0">
-                  <img v-if="productForm.image" :src="productForm.image" class="w-full h-full object-cover" />
-                  <span v-else class="text-[8px] text-slate-600">None</span>
+            <div class="space-y-3 md:col-span-2">
+              <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Product Images (First is Cover)</label>
+              
+              <!-- Image grid -->
+              <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                <div 
+                  v-for="(imgUrl, i) in productImagesList" 
+                  :key="i" 
+                  class="relative group border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden aspect-square bg-white dark:bg-slate-950 flex items-center justify-center p-1"
+                >
+                  <img :src="imgUrl" class="w-full h-full object-contain" />
+                  
+                  <!-- Cover badge -->
+                  <div v-if="i === 0" class="absolute top-1.5 left-1.5 bg-red-600 text-white text-[8px] font-black uppercase px-2 py-0.5 rounded-full shadow-md z-10">
+                    Cover
+                  </div>
+                  
+                  <!-- Overlay actions on hover -->
+                  <div class="absolute inset-0 bg-slate-950/80 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center gap-1.5 p-2 z-20">
+                    <button 
+                      v-if="i > 0" 
+                      type="button" 
+                      @click="setProductCoverImage(i)" 
+                      class="text-[9px] bg-red-600 hover:bg-red-700 text-white font-bold px-2 py-1 rounded w-full text-center transition-all cursor-pointer"
+                    >
+                      Make Cover
+                    </button>
+                    <button 
+                      type="button" 
+                      @click="removeProductImage(i)" 
+                      class="text-[9px] bg-slate-800 hover:bg-slate-700 text-red-500 font-bold px-2 py-1 rounded w-full text-center border border-red-500/30 transition-all cursor-pointer"
+                    >
+                      Remove
+                    </button>
+                  </div>
                 </div>
-                <input type="file" @change="e => onFileChange(e, 'product')" accept="image/*" class="text-xs text-slate-500 dark:text-slate-400 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-[10px] file:font-bold file:bg-slate-100 dark:bg-slate-800 file:text-slate-800 dark:text-slate-200 file:cursor-pointer hover:file:bg-slate-700" />
+                
+                <!-- Add new image box -->
+                <div class="border-2 border-dashed border-slate-350 dark:border-slate-850 hover:border-red-500/50 rounded-xl flex flex-col items-center justify-center aspect-square p-4 transition-colors relative cursor-pointer group/upload">
+                  <span class="text-2xl text-slate-400 group-hover/upload:text-red-500 transition-colors font-light">+</span>
+                  <span class="text-[9px] font-bold text-slate-400 group-hover/upload:text-red-500 transition-colors uppercase mt-1">Upload</span>
+                  <input type="file" @change="onProductImageUpload" accept="image/*" class="absolute inset-0 opacity-0 cursor-pointer" />
+                </div>
               </div>
-              <div v-if="uploading" class="text-xs text-red-500 animate-pulse mt-1">Uploading to Cloudinary...</div>
+              
+              <div v-if="uploading" class="text-xs text-red-500 animate-pulse mt-1">Uploading image to Cloudinary...</div>
             </div>
             <div class="space-y-1 md:col-span-2">
               <label class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Description EN</label>
@@ -2236,6 +2272,61 @@ const modals = ref({
   product: false
 })
 
+const productImagesList = ref([])
+
+const getProductImagesList = (imageStr) => {
+  if (!imageStr) return []
+  try {
+    const parsed = JSON.parse(imageStr)
+    if (Array.isArray(parsed)) return parsed
+  } catch (e) {
+    // not JSON
+  }
+  if (imageStr.includes(',') && (imageStr.startsWith('http') || imageStr.startsWith('/'))) {
+    return imageStr.split(',').map(img => img.trim()).filter(Boolean)
+  }
+  return [imageStr]
+}
+
+const getFirstProductImage = (imageStr) => {
+  const imgs = getProductImagesList(imageStr)
+  return imgs[0] || ''
+}
+
+const onProductImageUpload = async (e) => {
+  const file = e.target.files[0]
+  if (!file) return
+  
+  uploading.value = true
+  const formData = new FormData()
+  formData.append('file', file)
+  
+  try {
+    const res = await $fetch('/api/upload', {
+      method: 'POST',
+      body: formData
+    })
+    
+    if (res && res.url) {
+      productImagesList.value.push(res.url)
+    }
+  } catch (err) {
+    alert('Failed to upload image.')
+  } finally {
+    uploading.value = false
+  }
+}
+
+const setProductCoverImage = (index) => {
+  if (index <= 0 || index >= productImagesList.value.length) return
+  const item = productImagesList.value.splice(index, 1)[0]
+  productImagesList.value.unshift(item)
+}
+
+const removeProductImage = (index) => {
+  productImagesList.value.splice(index, 1)
+}
+
 const productForm = ref({
   slug: '',
   title_en: '',
@@ -2251,6 +2342,7 @@ const productForm = ref({
 const openAddProductModal = () => {
   isEditing.value = false
   selectedItem.value = null
+  productImagesList.value = []
   productForm.value = {
     slug: '',
     title_en: '',
@@ -2268,6 +2360,7 @@ const openAddProductModal = () => {
 const openEditProductModal = (prod) => {
   isEditing.value = true
   selectedItem.value = prod
+  productImagesList.value = getProductImagesList(prod.image)
   productForm.value = { ...prod }
   modals.value.product = true
 }
@@ -2275,7 +2368,10 @@ const openEditProductModal = (prod) => {
 const saveProduct = async () => {
   if (!$supabase || !productForm.value.slug) return
 
-  const payload = { ...productForm.value }
+  const payload = { 
+    ...productForm.value,
+    image: JSON.stringify(productImagesList.value)
+  }
 
   if (isEditing.value && selectedItem.value) {
     const { error } = await $supabase

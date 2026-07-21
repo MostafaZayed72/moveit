@@ -28,12 +28,28 @@
         <div class="lg:col-span-6 w-full" data-aos="fade-right" data-aos-delay="50">
           <div class="glass-panel rounded-[2.5rem] overflow-hidden aspect-square flex items-center justify-center p-12 relative group">
             <img 
-              v-if="product.image" 
-              :src="product.image" 
+              v-if="activeImage" 
+              :src="activeImage" 
               :alt="locale === 'nl' ? product.title_nl : product.title_en"
               class="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105"
             />
             <div v-else class="text-slate-500 dark:text-slate-600 text-sm">No image available</div>
+          </div>
+
+          <!-- Interactive Thumbnails -->
+          <div v-if="productImages.length > 1" class="flex flex-wrap gap-3 mt-6 justify-center lg:justify-start">
+            <button 
+              v-for="(img, idx) in productImages" 
+              :key="idx"
+              @click="activeImage = img"
+              type="button"
+              :class="[
+                'w-16 h-16 rounded-2xl overflow-hidden bg-white dark:bg-slate-900 border-2 transition-all p-1.5 flex items-center justify-center aspect-square shadow-sm cursor-pointer',
+                activeImage === img ? 'border-red-600 scale-105 shadow-md shadow-red-600/10' : 'border-slate-200 dark:border-slate-800 opacity-60 hover:opacity-100 hover:scale-102'
+              ]"
+            >
+              <img :src="img" class="w-full h-full object-contain" />
+            </button>
           </div>
         </div>
 
@@ -185,6 +201,26 @@ const product = ref(null)
 const suggestions = ref([])
 const loading = ref(true)
 const quantity = ref(1)
+const activeImage = ref('')
+
+const productImages = computed(() => {
+  if (!product.value || !product.value.image) return []
+  const imageStr = product.value.image
+  try {
+    const parsed = JSON.parse(imageStr)
+    if (Array.isArray(parsed)) return parsed
+  } catch (e) {
+    // not JSON
+  }
+  if (imageStr.includes(',') && (imageStr.startsWith('http') || imageStr.startsWith('/'))) {
+    return imageStr.split(',').map(img => img.trim()).filter(Boolean)
+  }
+  return [imageStr]
+})
+
+watch(productImages, (newImgs) => {
+  activeImage.value = newImgs[0] || ''
+})
 
 const loadData = async () => {
   if (!$supabase) return
@@ -201,6 +237,7 @@ const loadData = async () => {
     
   if (!error && data) {
     product.value = data
+    activeImage.value = productImages.value[0] || ''
     
     // Dynamic SEO Metadata
     useSeoMeta({

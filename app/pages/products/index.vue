@@ -35,7 +35,7 @@
           <div class="relative aspect-square overflow-hidden bg-slate-50 dark:bg-slate-950/50 border-b border-slate-100 dark:border-slate-900/60 flex items-center justify-center p-6">
             <img 
               v-if="product.image" 
-              :src="product.image" 
+              :src="getFirstImage(product.image)" 
               :alt="locale === 'nl' ? product.title_nl : product.title_en"
               class="w-full h-full object-contain transition-transform duration-700 group-hover:scale-110"
             />
@@ -108,6 +108,25 @@ const loadProducts = async () => {
 const formatPrice = (val) => {
   if (!val) return '0.00'
   return Number(val).toFixed(2).replace('.', ',')
+}
+
+const getProductImages = (imageStr) => {
+  if (!imageStr) return []
+  try {
+    const parsed = JSON.parse(imageStr)
+    if (Array.isArray(parsed)) return parsed
+  } catch (e) {
+    // not JSON
+  }
+  if (imageStr.includes(',') && (imageStr.startsWith('http') || imageStr.startsWith('/'))) {
+    return imageStr.split(',').map(img => img.trim()).filter(Boolean)
+  }
+  return [imageStr]
+}
+
+const getFirstImage = (imageStr) => {
+  const imgs = getProductImages(imageStr)
+  return imgs[0] || ''
 }
 
 onMounted(() => {

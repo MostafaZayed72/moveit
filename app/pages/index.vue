@@ -13,30 +13,58 @@
           <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
             
             <!-- Left Column: Headline & Subtitle -->
-            <div class="lg:col-span-7 text-center lg:text-left space-y-8" data-aos="fade-right">
-              <!-- Trustpilot & Badges -->
-              <div class="inline-flex items-center space-x-2 px-5 py-2.5 bg-white/5 border border-white/10 rounded-full text-slate-200 text-xs md:text-sm font-semibold backdrop-blur-md">
-                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                <span>{{ $t('home.hero_badge') }}</span>
+            <div class="lg:col-span-6 text-center lg:text-left space-y-6" data-aos="fade-right">
+              <!-- Badge -->
+              <div class="inline-flex items-center space-x-2 px-4 py-2 bg-white/5 border border-white/10 rounded-full text-slate-200 text-xs font-semibold backdrop-blur-md">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                <span>{{ $t('home.hero_badge_new') }}</span>
               </div>
               
               <!-- Title -->
-              <h1 class="text-4xl md:text-6xl lg:text-7xl font-black leading-tight text-white tracking-tighter text-center lg:text-left">
-                {{ $t('home.hero_title_part1') }} {{ $t('home.hero_title_part2') }} <span class="text-red-500">{{ $t('home.hero_title_stress') }}</span>
-                <br />
-                <span class="block mt-2 text-3xl md:text-5xl lg:text-6xl font-extrabold text-slate-100/90 leading-tight">
-                  {{ $t('home.hero_title_part3') }}
-                </span>
+              <h1 class="text-3xl md:text-5xl lg:text-5xl xl:text-6xl font-black leading-tight text-white tracking-tight text-center lg:text-left">
+                {{ $t('home.hero_title_new_part1') }} <span class="text-red-500">{{ $t('home.hero_title_new_part2') }}</span>
               </h1>
 
               <!-- Description -->
-              <p class="text-base md:text-xl text-slate-300 leading-relaxed max-w-2xl mx-auto lg:mx-0 font-medium drop-shadow-md tracking-tight">
-                {{ $t('home.hero_desc') }}
+              <p class="text-sm md:text-base text-slate-300 leading-relaxed max-w-xl mx-auto lg:mx-0 drop-shadow-sm font-medium tracking-tight">
+                {{ $t('home.hero_desc_new') }}
               </p>
+
+              <!-- Buttons -->
+              <div class="flex flex-wrap gap-4 justify-center lg:justify-start items-center">
+                <a 
+                  href="#quote-form" 
+                  class="px-6 py-3 bg-red-600 hover:bg-red-700 text-slate-900 dark:text-white font-bold rounded-xl text-sm transition-all shadow-lg shadow-red-600/10 hover:shadow-red-600/20 active:scale-95 cursor-pointer"
+                >
+                  {{ $t('home.hero_btn_quote') }}
+                </a>
+                <a 
+                  href="#how-it-works" 
+                  class="px-6 py-3 bg-white/5 hover:bg-white/10 text-white font-bold rounded-xl text-sm transition-all border border-white/15 active:scale-95 cursor-pointer"
+                >
+                  {{ $t('home.hero_btn_process') }}
+                </a>
+              </div>
+
+              <!-- Trust Checkmarks -->
+              <div class="flex flex-wrap items-center justify-center lg:justify-start gap-y-2 gap-x-6 pt-2 text-xs font-semibold text-slate-400">
+                <div class="flex items-center space-x-1.5">
+                  <span class="text-emerald-500 text-sm font-bold">✓</span>
+                  <span>{{ $t('home.hero_trust_1') }}</span>
+                </div>
+                <div class="flex items-center space-x-1.5">
+                  <span class="text-emerald-500 text-sm font-bold">✓</span>
+                  <span>{{ $t('home.hero_trust_2') }}</span>
+                </div>
+                <div class="flex items-center space-x-1.5">
+                  <span class="text-emerald-500 text-sm font-bold">✓</span>
+                  <span>{{ $t('home.hero_trust_3') }}</span>
+                </div>
+              </div>
             </div>
 
             <!-- Right Column: Quote Form CTA -->
-            <div class="lg:col-span-5 w-full" data-aos="fade-left">
+            <div id="quote-form" class="lg:col-span-6 w-full scroll-mt-28" data-aos="fade-left">
               <QuoteForm />
             </div>
 
@@ -97,43 +125,42 @@
       <HowItWorks />
     </BaseSection>
 
-    <!-- 6. BENTO GRID SERVICES SUMMARY -->
+    <!-- 6. SERVICES SUMMARY -->
     <BaseSection :badge="$t('home.bento_services.badge')" :title="$t('home.bento_services.title')" :subtitle="$t('home.bento_services.subtitle')">
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
         <NuxtLink
           v-for="(service, idx) in bentoServices"
           :key="service.id"
           :to="localePath('/services/' + service.id)"
-          :class="[
-            'group relative rounded-[2rem] overflow-hidden h-72 cursor-pointer shadow-lg border border-slate-200/50 dark:border-slate-800/50 flex flex-col justify-between p-8',
-            service.spanClass
-          ]"
+          class="premium-card group flex flex-col overflow-hidden aspect-square cursor-pointer !p-0 shadow-lg border border-slate-200/50 dark:border-slate-800/50 rounded-3xl"
           data-aos="fade-up"
           :data-aos-delay="idx * 50"
         >
-          <!-- Background Image -->
-          <img :src="service.image" :alt="service.id" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-          
-          <!-- Gradient Overlay -->
-          <div class="absolute inset-0 bg-gradient-to-b from-slate-950/70 via-slate-950/20 to-slate-950/60 group-hover:from-slate-950/80 group-hover:to-slate-950/75 transition-all duration-300"></div>
-
-          <!-- Top: Title & Icon -->
-          <div class="relative z-10 flex justify-between items-start">
-            <h4 class="text-2xl font-black text-white tracking-tight leading-tight max-w-[80%]">
-              {{ $t(`services.list.${service.id}.title`) }}
-            </h4>
-            <div class="w-12 h-12 bg-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center text-white border border-white/10 group-hover:bg-red-600 group-hover:border-red-500 group-hover:scale-110 transition-all duration-300 flex-shrink-0">
-              <span class="text-xl">{{ service.icon }}</span>
-            </div>
+          <!-- Top: Image -->
+          <div class="h-1/2 w-full overflow-hidden relative">
+            <img :src="service.image" :alt="service.id" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/20 to-transparent"></div>
           </div>
-
-          <!-- Bottom: Description & Arrow -->
-          <div class="relative z-10 flex justify-between items-end opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-y-2 group-hover:translate-y-0 transition-transform">
-            <p class="text-sm md:text-base text-slate-200 font-medium max-w-[85%] leading-relaxed">
-              {{ $t(`services.list.${service.id}.desc`) }}
-            </p>
-            <div class="text-red-500 group-hover:text-white transition-colors">
-              <svg class="w-6 h-6 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+          
+          <!-- Bottom: Content -->
+          <div class="p-5 flex flex-col justify-between flex-grow bg-white dark:bg-slate-900 transition-colors duration-300">
+            <div class="space-y-1">
+              <div class="flex items-center justify-between">
+                <h4 class="text-sm md:text-base font-black text-slate-900 dark:text-white tracking-tight leading-tight group-hover:text-red-500 transition-colors">
+                  {{ $t(`services.list.${service.id}.title`) }}
+                </h4>
+                <span class="text-lg flex-shrink-0 ml-2">{{ service.icon }}</span>
+              </div>
+              <p class="text-[10px] md:text-xs text-slate-500 dark:text-slate-400 line-clamp-2 leading-relaxed font-medium">
+                {{ $t(`services.list.${service.id}.desc`) }}
+              </p>
+            </div>
+            
+            <div class="flex justify-end pt-1">
+              <span class="text-[10px] font-bold text-red-500 group-hover:text-red-600 dark:group-hover:text-white transition-colors flex items-center gap-1 uppercase tracking-wider">
+                {{ locale === 'nl' ? 'Details' : 'Details' }}
+                <svg class="w-3 h-3 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+              </span>
             </div>
           </div>
         </NuxtLink>
@@ -247,10 +274,10 @@ const heroStats = [
 
 
 const whyUsItems = [
-  { key: 'fast', icon: '⚡', image: 'https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&fit=crop&q=80&w=600' },
-  { key: 'student', icon: '🎓', image: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&q=80&w=600' },
-  { key: 'transparent', icon: '💰', image: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&q=80&w=600' },
-  { key: 'insured', icon: '🛡️', image: 'https://images.unsplash.com/photo-1560448205-4d9b3e6bb6db?auto=format&fit=crop&q=80&w=600' }
+  { key: 'fast', icon: '⚡', image: '/images/why_us_fast.png' },
+  { key: 'student', icon: '🎓', image: '/images/why_us_student.png' },
+  { key: 'transparent', icon: '💰', image: '/images/why_us_transparent.png' },
+  { key: 'insured', icon: '🛡️', image: '/images/why_us_insured.png' }
 ]
 
 const bentoServices = [
