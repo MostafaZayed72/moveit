@@ -603,7 +603,7 @@
     ]
   },
   "footer": {
-    "rights": "© 2024 MoveIt Logistics. Alle rechten voorbehouden.",
+    "rights": "© {year} MoveIt Logistics. Alle rechten voorbehouden.",
     "slogan": "Uw spullen, onze verantwoordelijkheid.",
     "navigation": "Navigatie",
     "support": "Ondersteuning",

@@ -617,7 +617,7 @@
     ]
   },
   "footer": {
-    "rights": "© 2024 MoveIt Logistics. All rights reserved.",
+    "rights": "© {year} MoveIt Logistics. All rights reserved.",
     "slogan": "Your stuff, our responsibility.",
     "navigation": "Navigation",
     "support": "Support",
