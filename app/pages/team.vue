@@ -54,7 +54,7 @@
             <!-- Info -->
             <div class="card-body">
               <div class="card-role-tag">{{ member.role }}</div>
-              <h2 class="card-name">{{ member.name.split(' ')[0] }}</h2>
+              <h2 class="card-name">{{ member.displayName || member.name.split(' ')[0] }}</h2>
               <p class="card-desc">{{ member.desc }}</p>
 
               <!-- Responsibilities -->
@@ -118,17 +118,18 @@ useHead({
 
 const teamMembers = [
   {
-    name: 'SHERIF ELIWA',
-    role: 'Co-Founder & Operations Lead',
-    photo: '/images/team/s.jpg',
-    icon: '👨‍💼',
+    name: 'MOSTAFA ZAYED',
+    displayName: 'MOSTAFA',
+    role: 'Co-Founder & Lead Web Developer',
+    photo: '/images/team/m.jpg',
+    icon: '💻',
     featured: true,
-    desc: 'Sherif holds a Bachelor\'s degree in International Business (Cum Laude) from Zuyd University of Applied Sciences, specializing in Supply Chain Management. He has co-founded multiple ventures in Maastricht across the moving and local services industries since 2018. Today, he focuses fully on building MoveIt into the most trusted moving service in Limburg.',
+    desc: 'Mostafa is the Lead Web Developer behind MoveIt, responsible for building and maintaining the platform\'s web applications, user experience, and digital services. With a strong focus on software engineering, he ensures the website is fast, secure, and user-friendly.',
     responsibilities: [
-      'Planning & scheduling',
-      'Customer communication',
-      'Operational coordination',
-      'Quality assurance',
+      'Website & web app development',
+      'UI/UX design & frontend optimization',
+      'System performance & security',
+      'Technical maintenance & features',
     ],
   },
   {
