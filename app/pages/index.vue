@@ -32,15 +32,15 @@
 
               <!-- Buttons -->
               <div class="flex flex-wrap gap-4 justify-center lg:justify-start items-center">
-                <a 
-                  href="#quote-form" 
-                  class="px-6 py-3 bg-red-600 hover:bg-red-700 text-slate-900 dark:text-white font-bold rounded-xl text-sm transition-all shadow-lg shadow-red-600/10 hover:shadow-red-600/20 active:scale-95 cursor-pointer"
+                <NuxtLink 
+                  :to="localePath('/contact')" 
+                  class="px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl text-sm transition-all shadow-lg shadow-red-600/10 hover:shadow-red-600/20 active:scale-95 cursor-pointer inline-flex items-center justify-center"
                 >
                   {{ $t('home.hero_btn_quote') }}
-                </a>
+                </NuxtLink>
                 <a 
-                  href="#how-it-works" 
-                  class="px-6 py-3 bg-white/5 hover:bg-white/10 text-white font-bold rounded-xl text-sm transition-all border border-white/15 active:scale-95 cursor-pointer"
+                  href="#process" 
+                  class="px-6 py-3 bg-white/5 hover:bg-white/10 text-white font-bold rounded-xl text-sm transition-all border border-white/15 active:scale-95 cursor-pointer inline-flex items-center justify-center"
                 >
                   {{ $t('home.hero_btn_process') }}
                 </a>
@@ -85,6 +85,9 @@
 
     </section>
 
+    <!-- MOVING GALLERY SECTION -->
+    <MovingGallery />
+
     <!-- TRUST BADGES & RATINGS -->
     <TrustSection />
 
@@ -121,7 +124,7 @@
     </BaseSection>
 
     <!-- 5. HOW IT WORKS -->
-    <BaseSection :badge="$t('home.how_it_works.badge')" :title="$t('home.how_it_works.title')" :subtitle="$t('home.how_it_works.subtitle')">
+    <BaseSection id="process" class="scroll-mt-28" :badge="$t('home.how_it_works.badge')" :title="$t('home.how_it_works.title')" :subtitle="$t('home.how_it_works.subtitle')">
       <HowItWorks />
     </BaseSection>
 
