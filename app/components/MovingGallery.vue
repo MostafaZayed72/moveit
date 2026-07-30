@@ -94,19 +94,16 @@
 const col1Images = [
   'https://res.cloudinary.com/jhe8kzw7/image/upload/v1785118858/1de98bbd-f573-4415-a3a1-874039c8c1af_pff0xe.jpg',
   'https://res.cloudinary.com/jhe8kzw7/image/upload/v1785118858/8684d22b-048b-4bc6-828c-f7cd35ca79ca_t1kmfs.jpg',
-  'https://res.cloudinary.com/jhe8kzw7/image/upload/v1785118858/5eff9c92-8583-4464-8f55-52586c2fb788_ezoylo.jpg',
 ]
 
 const col2Images = [
-  'https://res.cloudinary.com/jhe8kzw7/image/upload/v1785118857/d663233c-d751-4470-9cf7-a1bdede3a6b2_efd0sl.jpg',
+  'https://res.cloudinary.com/jhe8kzw7/image/upload/v1785118858/5eff9c92-8583-4464-8f55-52586c2fb788_ezoylo.jpg',
   'https://res.cloudinary.com/jhe8kzw7/image/upload/v1785118857/ea67df57-8b6a-47b6-a9a5-0dc671c3436a_ghflte.jpg',
-  'https://res.cloudinary.com/jhe8kzw7/image/upload/v1785118857/800fdf14-7581-4717-985d-0066718772ed_tx5yuq.jpg',
 ]
 
 const col3Images = [
-  'https://res.cloudinary.com/jhe8kzw7/image/upload/v1785118857/01d1ffdf-6462-4fcf-8323-f675ea0c1420_hlwhdi.jpg',
+  'https://res.cloudinary.com/jhe8kzw7/image/upload/v1785118857/800fdf14-7581-4717-985d-0066718772ed_tx5yuq.jpg',
   'https://res.cloudinary.com/jhe8kzw7/image/upload/v1785118857/24b4dcd0-51bf-4cf5-877e-27af4553d650_dqniio.jpg',
-  'https://res.cloudinary.com/jhe8kzw7/image/upload/v1785118856/8d9318ba-ec36-4557-890f-eeecd8451ba7_mzdimz.jpg',
 ]
 </script>
 
