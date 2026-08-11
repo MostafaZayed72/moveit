@@ -187,12 +187,12 @@
         <div class="hidden xl:flex items-center gap-3.5">
           
           <!-- Phone -->
-          <a href="tel:+31684094271" :class="[
+          <a href="tel:+31634837587" :class="[
             'flex items-center gap-1.5 text-sm font-bold transition-colors whitespace-nowrap',
             !isScrolled ? 'text-white hover:text-red-200' : (isDark ? 'text-slate-300 hover:text-red-400' : 'text-slate-700 hover:text-red-600')
           ]">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
-            <span>+31 6 84094271</span>
+            <span>+31 6 34837587</span>
           </a>
 
           <!-- WhatsApp -->
@@ -289,7 +289,7 @@
         <div class="pt-6 border-t border-slate-200 dark:border-slate-800/60 space-y-3">
           <!-- Mobile Phone Number Link -->
           <a 
-            href="tel:+31684094271" 
+            href="tel:+31634837587" 
             :class="[
               'flex items-center justify-center gap-2 py-3 px-4 rounded-xl font-bold text-sm transition-colors border w-full',
               isDark ? 'bg-slate-900 border-slate-800 text-slate-200 hover:bg-slate-800' : 'bg-slate-100 border-slate-200 text-slate-800 hover:bg-slate-200'
@@ -298,7 +298,7 @@
             <svg class="w-4 h-4 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
             </svg>
-            <span>+31 6 84094271</span>
+            <span>+31 6 34837587</span>
           </a>
 
           <!-- Mobile WhatsApp Button -->
