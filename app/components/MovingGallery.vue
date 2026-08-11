@@ -1,5 +1,5 @@
 <template>
-  <section class="relative py-16 px-4 sm:px-6 overflow-hidden bg-slate-950/40 border-y border-white/5">
+  <section class="relative py-16 px-4 sm:px-6 overflow-hidden bg-slate-50 dark:bg-slate-950/40 border-y border-slate-200 dark:border-white/5">
     <div class="container mx-auto max-w-7xl relative z-10">
       
       <!-- Section Header -->
@@ -9,20 +9,20 @@
             {{ $t('home.gallery_badge') }}
           </span>
         </div>
-        <h2 class="text-3xl md:text-5xl font-black text-white tracking-tight mt-2">
+        <h2 class="text-3xl md:text-5xl font-black text-slate-900 dark:text-white tracking-tight mt-2">
           {{ $t('home.gallery_title') }}
         </h2>
-        <p class="text-sm md:text-base text-slate-400 leading-relaxed font-medium mt-3 max-w-2xl mx-auto">
+        <p class="text-sm md:text-base text-slate-600 dark:text-slate-400 leading-relaxed font-medium mt-3 max-w-2xl mx-auto">
           {{ $t('home.gallery_subtitle') }}
         </p>
       </div>
 
       <!-- Vertical Moving Image Ticker Container -->
-      <div class="gallery-container relative h-[480px] sm:h-[560px] md:h-[620px] overflow-hidden rounded-3xl border border-white/10 bg-slate-900/50 backdrop-blur-md p-4 sm:p-6 shadow-2xl">
+      <div class="gallery-container relative h-[480px] sm:h-[560px] md:h-[620px] overflow-hidden rounded-3xl border border-slate-200 dark:border-white/10 bg-white/50 dark:bg-slate-900/50 backdrop-blur-md p-4 sm:p-6 shadow-2xl">
         
         <!-- Top & Bottom Gradient Shadows for Seamless Fade -->
-        <div class="absolute inset-x-0 top-0 h-24 sm:h-32 bg-gradient-to-b from-slate-950 via-slate-950/70 to-transparent pointer-events-none z-20"></div>
-        <div class="absolute inset-x-0 bottom-0 h-24 sm:h-32 bg-gradient-to-t from-slate-950 via-slate-950/70 to-transparent pointer-events-none z-20"></div>
+        <div class="absolute inset-x-0 top-0 h-24 sm:h-32 bg-gradient-to-b from-slate-50 via-slate-50/70 dark:from-slate-950 dark:via-slate-950/70 to-transparent pointer-events-none z-20"></div>
+        <div class="absolute inset-x-0 bottom-0 h-24 sm:h-32 bg-gradient-to-t from-slate-50 via-slate-50/70 dark:from-slate-950 dark:via-slate-950/70 to-transparent pointer-events-none z-20"></div>
 
         <div class="grid grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 h-full">
           
@@ -32,7 +32,7 @@
               <div 
                 v-for="(img, i) in [...col1Images, ...col1Images]" 
                 :key="'col1-' + i" 
-                class="group relative rounded-2xl overflow-hidden border border-white/10 shadow-lg bg-slate-800 shrink-0"
+                class="group relative rounded-2xl overflow-hidden border border-slate-200 dark:border-white/10 shadow-lg bg-white dark:bg-slate-800 shrink-0"
               >
                 <img 
                   :src="img" 
@@ -40,7 +40,7 @@
                   class="w-full h-52 sm:h-64 md:h-72 object-cover transition-transform duration-700 group-hover:scale-110" 
                   loading="lazy"
                 />
-                <div class="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div class="absolute inset-0 bg-gradient-to-t from-white/60 dark:from-slate-950/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </div>
             </div>
           </div>
@@ -51,7 +51,7 @@
               <div 
                 v-for="(img, i) in [...col2Images, ...col2Images]" 
                 :key="'col2-' + i" 
-                class="group relative rounded-2xl overflow-hidden border border-white/10 shadow-lg bg-slate-800 shrink-0"
+                class="group relative rounded-2xl overflow-hidden border border-slate-200 dark:border-white/10 shadow-lg bg-white dark:bg-slate-800 shrink-0"
               >
                 <img 
                   :src="img" 
@@ -59,7 +59,7 @@
                   class="w-full h-52 sm:h-64 md:h-72 object-cover transition-transform duration-700 group-hover:scale-110" 
                   loading="lazy"
                 />
-                <div class="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div class="absolute inset-0 bg-gradient-to-t from-white/60 dark:from-slate-950/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </div>
             </div>
           </div>
@@ -70,7 +70,7 @@
               <div 
                 v-for="(img, i) in [...col3Images, ...col3Images]" 
                 :key="'col3-' + i" 
-                class="group relative rounded-2xl overflow-hidden border border-white/10 shadow-lg bg-slate-800 shrink-0"
+                class="group relative rounded-2xl overflow-hidden border border-slate-200 dark:border-white/10 shadow-lg bg-white dark:bg-slate-800 shrink-0"
               >
                 <img 
                   :src="img" 
@@ -78,7 +78,7 @@
                   class="w-full h-52 sm:h-64 md:h-72 object-cover transition-transform duration-700 group-hover:scale-110" 
                   loading="lazy"
                 />
-                <div class="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div class="absolute inset-0 bg-gradient-to-t from-white/60 dark:from-slate-950/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </div>
             </div>
           </div>
