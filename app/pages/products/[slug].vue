@@ -285,7 +285,7 @@ const whatsappUrl = computed(() => {
     link: currentUrl
   })
   
-  return `https://wa.me/${phone}?text=${encodeURIComponent(msgTemplate)}`
+  return `https://api.whatsapp.com/send/?phone=${phone}&type=phone_number&app_absent=0&text=${encodeURIComponent(msgTemplate)}`
 })
 
 onMounted(() => {
