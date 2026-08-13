@@ -72,7 +72,7 @@
         <!-- Navigation Tabs -->
         <div class="flex border-b border-slate-200 dark:border-slate-800 mb-8 overflow-x-auto overflow-y-hidden gap-2 scrollbar-none">
           <button 
-            v-for="tab in ['locations', 'blog', 'services', 'pricing', 'products']" 
+            v-for="tab in ['orders', 'customers', 'financials', 'locations', 'blog', 'services', 'pricing', 'products']" 
             :key="tab"
             @click="activeTab = tab"
             :class="[
@@ -417,6 +417,126 @@
             >
               ▶
             </button>
+          </div>
+        </div>
+
+        <!-- TAB CONTENT: ORDERS -->
+        <div v-if="activeTab === 'orders'" class="space-y-6" data-aos="fade-up">
+          <div class="flex justify-between items-center">
+            <h2 class="text-2xl font-black text-slate-900 dark:text-white">Manage Orders</h2>
+            <button @click="fetchAdminOrders" class="px-4 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 font-bold rounded-xl text-sm transition-all">
+              🔄 Refresh
+            </button>
+          </div>
+          <div v-if="loadingAdminOrders" class="text-center py-8 text-slate-500">Loading orders...</div>
+          <div class="grid grid-cols-1 gap-6" v-else>
+            <div v-for="order in adminOrders" :key="order.id" class="glass-panel p-6 rounded-2xl border border-slate-200 dark:border-slate-800 flex flex-col md:flex-row gap-6">
+              <div class="flex-grow space-y-3">
+                <div class="flex justify-between items-center">
+                  <div class="flex gap-3 items-center">
+                    <span class="text-sm font-bold text-slate-500">ID: {{ order.id.split('-')[0] }}</span>
+                    <select v-model="order.status" @change="updateOrderStatus(order)" class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg px-2 py-1 text-xs font-bold outline-none cursor-pointer">
+                      <option>Pending</option>
+                      <option>In Transit</option>
+                      <option>Shipped</option>
+                      <option>Completed</option>
+                      <option>Cancelled</option>
+                    </select>
+                  </div>
+                  <span class="text-xs text-slate-400">{{ order.created_at }}</span>
+                </div>
+                <div class="text-sm">
+                  <p><strong>Customer:</strong> {{ order.customers?.full_name || 'N/A' }} ({{ order.customers?.email || 'N/A' }})</p>
+                  <p><strong>Date:</strong> {{ order.form_data?.date }}</p>
+                  <p><strong>From:</strong> {{ order.form_data?.from }} | <strong>To:</strong> {{ order.form_data?.to }}</p>
+                  <p><strong>Package:</strong> {{ order.form_data?.package }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB CONTENT: CUSTOMERS -->
+        <div v-if="activeTab === 'customers'" class="space-y-6" data-aos="fade-up">
+          <div class="flex justify-between items-center">
+            <h2 class="text-2xl font-black text-slate-900 dark:text-white">Manage Customers</h2>
+            <button @click="fetchAdminCustomers" class="px-4 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 font-bold rounded-xl text-sm transition-all">
+              🔄 Refresh
+            </button>
+          </div>
+          <div v-if="loadingAdminCustomers" class="text-center py-8 text-slate-500">Loading customers...</div>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" v-else>
+            <div v-for="customer in adminCustomers" :key="customer.id" class="glass-panel p-6 rounded-2xl border border-slate-200 dark:border-slate-800">
+              <h3 class="font-bold text-lg mb-1">{{ customer.full_name || 'No Name' }}</h3>
+              <p class="text-sm text-slate-500 mb-2">{{ customer.email }}</p>
+              <p class="text-xs text-slate-400">Phone: {{ customer.phone || 'N/A' }}</p>
+              <div class="mt-4 pt-4 border-t border-slate-200 dark:border-slate-800">
+                <button @click="editCustomer(customer)" class="text-xs text-red-500 font-bold hover:underline">Edit Info</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB CONTENT: FINANCIALS -->
+        <div v-if="activeTab === 'financials'" class="space-y-6" data-aos="fade-up">
+          <div class="flex justify-between items-center">
+            <h2 class="text-2xl font-black text-slate-900 dark:text-white">Financial Reports</h2>
+            <button @click="fetchFinancials" class="px-4 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 font-bold rounded-xl text-sm transition-all">
+              🔄 Refresh
+            </button>
+          </div>
+          
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div class="glass-panel p-6 rounded-2xl border-l-4 border-red-500">
+              <p class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-1">Total Expenses</p>
+              <p class="text-3xl font-black text-red-500">€{{ totalExpenses }}</p>
+            </div>
+            <div class="glass-panel p-6 rounded-2xl border-l-4 border-emerald-500">
+              <p class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-1">Total Income</p>
+              <p class="text-3xl font-black text-emerald-500">€{{ totalIncome }}</p>
+            </div>
+            <div class="glass-panel p-6 rounded-2xl border-l-4 border-blue-500">
+              <p class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-1">Net Profit</p>
+              <p class="text-3xl font-black text-blue-500">€{{ totalIncome - totalExpenses }}</p>
+            </div>
+          </div>
+
+          <div class="glass-panel p-6 rounded-2xl border border-slate-200 dark:border-slate-800">
+            <h3 class="font-bold text-lg mb-4">Add Expense</h3>
+            <form @submit.prevent="addExpense" class="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
+              <div>
+                <label class="text-[10px] font-bold uppercase text-slate-500 mb-1 block">Category</label>
+                <select v-model="expenseForm.category" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-sm" required>
+                  <option>Fuel</option>
+                  <option>Electricity</option>
+                  <option>Maintenance</option>
+                  <option>Marketing</option>
+                  <option>Other</option>
+                </select>
+              </div>
+              <div>
+                <label class="text-[10px] font-bold uppercase text-slate-500 mb-1 block">Amount (€)</label>
+                <input type="number" step="0.01" v-model="expenseForm.amount" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-sm" required />
+              </div>
+              <div>
+                <label class="text-[10px] font-bold uppercase text-slate-500 mb-1 block">Date</label>
+                <input type="date" v-model="expenseForm.date" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-sm" required />
+              </div>
+              <button type="submit" class="bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl px-4 py-2.5 text-sm transition-all">Add Expense</button>
+            </form>
+          </div>
+          
+          <div class="mt-8">
+            <h3 class="font-bold text-lg mb-4">Recent Expenses</h3>
+            <div class="space-y-3">
+              <div v-for="exp in expensesList" :key="exp.id" class="flex justify-between items-center p-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl">
+                <div>
+                  <span class="font-bold text-sm">{{ exp.category }}</span>
+                  <span class="text-xs text-slate-500 ml-3">{{ exp.date }}</span>
+                </div>
+                <span class="font-black text-red-500">-€{{ exp.amount }}</span>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -1464,7 +1584,6 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 
-const { $supabase } = useNuxtApp()
 const { t } = useI18n()
 
 // Authorization State
@@ -1474,11 +1593,122 @@ const passwordInput = ref('')
 const authLoading = ref(false)
 const authError = ref('')
 
+// Supabase setup for new tables
+const supabase = useSupabaseClient()
+
+// --- ORDERS LOGIC ---
+const adminOrders = ref([])
+const loadingAdminOrders = ref(false)
+
+const fetchAdminOrders = async () => {
+  loadingAdminOrders.value = true
+  try {
+    const { data, error } = await supabase.from('orders').select(`
+      *,
+      customers ( full_name, email )
+    `).order('created_at', { ascending: false })
+    if (error) throw error
+    adminOrders.value = data || []
+  } catch (err) {
+    console.error(err)
+  } finally {
+    loadingAdminOrders.value = false
+  }
+}
+
+const updateOrderStatus = async (order) => {
+  try {
+    const { error } = await supabase.from('orders').update({ status: order.status }).eq('id', order.id)
+    if (error) throw error
+    alert('Order status updated!')
+  } catch (err) {
+    console.error(err)
+    alert('Error updating order.')
+  }
+}
+
+// --- CUSTOMERS LOGIC ---
+const adminCustomers = ref([])
+const loadingAdminCustomers = ref(false)
+
+const fetchAdminCustomers = async () => {
+  loadingAdminCustomers.value = true
+  try {
+    const { data, error } = await supabase.from('customers').select('*').order('created_at', { ascending: false })
+    if (error) throw error
+    adminCustomers.value = data || []
+  } catch (err) {
+    console.error(err)
+  } finally {
+    loadingAdminCustomers.value = false
+  }
+}
+
+const editCustomer = (customer) => {
+  const newName = prompt('Enter new name:', customer.full_name)
+  const newPhone = prompt('Enter new phone:', customer.phone)
+  if (newName !== null && newPhone !== null) {
+    supabase.from('customers').update({ full_name: newName, phone: newPhone }).eq('id', customer.id).then(({error}) => {
+      if(error) alert('Error updating')
+      else fetchAdminCustomers()
+    })
+  }
+}
+
+// --- FINANCIALS LOGIC ---
+const totalExpenses = ref(0)
+const totalIncome = ref(0)
+const expensesList = ref([])
+
+const expenseForm = ref({
+  category: 'Fuel',
+  amount: 0,
+  date: new Date().toISOString().split('T')[0]
+})
+
+const fetchFinancials = async () => {
+  try {
+    // For Income, we might sum up completed orders if they had a price, or just a mock 0 for now since QuoteForm doesn't record price yet.
+    // As quoteform doesn't calculate price, we will keep it simple.
+    
+    const { data: exps, error: expErr } = await supabase.from('expenses').select('*').order('date', { ascending: false })
+    if (expErr) throw expErr
+    
+    expensesList.value = exps || []
+    totalExpenses.value = exps.reduce((acc, curr) => acc + Number(curr.amount), 0)
+    
+    // Total income dummy fetch or later integration
+    totalIncome.value = 0 // Changed from 5000 to 0 so it doesn't show fake data
+  } catch (err) {
+    console.error(err)
+  }
+}
+
+const addExpense = async () => {
+  try {
+    const { error } = await supabase.from('expenses').insert({
+      category: expenseForm.value.category,
+      amount: expenseForm.value.amount,
+      date: expenseForm.value.date
+    })
+    if (error) throw error
+    expenseForm.value.amount = 0
+    fetchFinancials()
+    alert('Expense added!')
+  } catch (err) {
+    console.error(err)
+    alert('Failed to add expense')
+  }
+}
+
+// Ensure these are fetched when tabs switch
+
 const handleLogin = async () => {
+
   authLoading.value = true
   authError.value = ''
   try {
-    const { error } = await $supabase.auth.signInWithPassword({
+    const { error } = await supabase.auth.signInWithPassword({
       email: emailInput.value,
       password: passwordInput.value
     })
@@ -1494,7 +1724,7 @@ const handleLogin = async () => {
 }
 
 const logout = async () => {
-  await $supabase.auth.signOut()
+  await supabase.auth.signOut()
   isAuthorized.value = false
   emailInput.value = ''
   passwordInput.value = ''
@@ -1503,7 +1733,7 @@ const logout = async () => {
 // Check auth on mount
 onMounted(async () => {
   if (process.client) {
-    const { data: { session } } = await $supabase.auth.getSession()
+    const { data: { session } } = await supabase.auth.getSession()
     if (session) {
       isAuthorized.value = true
       loadAllData()
@@ -1513,6 +1743,12 @@ onMounted(async () => {
 
 // Tab control
 const activeTab = ref('locations')
+
+watch(activeTab, (newTab) => {
+  if (newTab === 'orders' && adminOrders.value.length === 0) fetchAdminOrders()
+  if (newTab === 'customers' && adminCustomers.value.length === 0) fetchAdminCustomers()
+  if (newTab === 'financials' && expensesList.value.length === 0) fetchFinancials()
+})
 
 // Data arrays
 const locations = ref([])
@@ -1594,26 +1830,26 @@ const totalProductsPages = computed(() => {
 
 // Load all data from Supabase
 const loadAllData = async () => {
-  if (!$supabase) return
+  if (!supabase) return
   
   // Load Locations
-  const { data: locs } = await $supabase.from('locations').select('*').order('name')
+  const { data: locs } = await supabase.from('locations').select('*').order('name')
   if (locs) locations.value = locs
 
   // Load Blog Posts
-  const { data: blogs } = await $supabase.from('blog_posts').select('*').order('created_at', { ascending: false })
+  const { data: blogs } = await supabase.from('blog_posts').select('*').order('created_at', { ascending: false })
   if (blogs) blogPosts.value = blogs
 
   // Load Services
-  const { data: servs } = await $supabase.from('services').select('*').order('id')
+  const { data: servs } = await supabase.from('services').select('*').order('id')
   if (servs) services.value = servs
 
   // Load Pricing Packages
-  const { data: pkgs } = await $supabase.from('pricing_packages').select('*').order('sort_order')
+  const { data: pkgs } = await supabase.from('pricing_packages').select('*').order('sort_order')
   if (pkgs) dbPackages.value = pkgs
 
   // Load Products
-  const { data: prods } = await $supabase.from('products').select('*').order('sort_order')
+  const { data: prods } = await supabase.from('products').select('*').order('sort_order')
   if (prods) products.value = prods
 }// 1. Locations Logic
 const locationForm = ref({
@@ -1656,10 +1892,10 @@ const openEditLocationModal = (loc) => {
 }
 
 const saveLocation = async () => {
-  if (!$supabase || !locationForm.value.slug) return
+  if (!supabase || !locationForm.value.slug) return
   
   if (isEditing.value && selectedItem.value) {
-    const { error } = await $supabase.from('locations').update({ ...locationForm.value }).eq('id', selectedItem.value.id)
+    const { error } = await supabase.from('locations').update({ ...locationForm.value }).eq('id', selectedItem.value.id)
     if (!error) {
       const idx = locations.value.findIndex(l => l.id === selectedItem.value.id)
       if (idx !== -1) locations.value[idx] = { ...locationForm.value }
@@ -1668,7 +1904,7 @@ const saveLocation = async () => {
       alert('Error updating location: ' + error.message)
     }
   } else {
-    const { data, error } = await $supabase.from('locations').insert([{ ...locationForm.value }]).select()
+    const { data, error } = await supabase.from('locations').insert([{ ...locationForm.value }]).select()
     if (!error && data) {
       locations.value.push(data[0])
       locations.value.sort((a, b) => a.name.localeCompare(b.name))
@@ -1680,8 +1916,8 @@ const saveLocation = async () => {
 }
 
 const deleteLocation = async (loc) => {
-  if (!$supabase || !confirm(`Delete location "${loc.name}"?`)) return
-  const { error } = await $supabase.from('locations').delete().eq('id', loc.id)
+  if (!supabase || !confirm(`Delete location "${loc.name}"?`)) return
+  const { error } = await supabase.from('locations').delete().eq('id', loc.id)
   if (!error) {
     locations.value = locations.value.filter(l => l.id !== loc.id)
     if (locationsPage.value > totalLocationsPages.value) {
@@ -1745,10 +1981,10 @@ const openEditBlogModal = (post) => {
 }
 
 const saveBlogPost = async () => {
-  if (!$supabase || !blogForm.value.slug) return
+  if (!supabase || !blogForm.value.slug) return
   
   if (isEditing.value && selectedItem.value) {
-    const { error } = await $supabase.from('blog_posts').update({ ...blogForm.value }).eq('id', selectedItem.value.id)
+    const { error } = await supabase.from('blog_posts').update({ ...blogForm.value }).eq('id', selectedItem.value.id)
     if (!error) {
       const idx = blogPosts.value.findIndex(p => p.id === selectedItem.value.id)
       if (idx !== -1) blogPosts.value[idx] = { ...blogForm.value }
@@ -1757,7 +1993,7 @@ const saveBlogPost = async () => {
       alert('Error updating post: ' + error.message)
     }
   } else {
-    const { data, error } = await $supabase.from('blog_posts').insert([{ ...blogForm.value }]).select()
+    const { data, error } = await supabase.from('blog_posts').insert([{ ...blogForm.value }]).select()
     if (!error && data) {
       blogPosts.value.unshift(data[0])
       modals.value.blog = false
@@ -1768,8 +2004,8 @@ const saveBlogPost = async () => {
 }
 
 const deleteBlogPost = async (post) => {
-  if (!$supabase || !confirm(`Delete post "${post.title_en}"?`)) return
-  const { error } = await $supabase.from('blog_posts').delete().eq('id', post.id)
+  if (!supabase || !confirm(`Delete post "${post.title_en}"?`)) return
+  const { error } = await supabase.from('blog_posts').delete().eq('id', post.id)
   if (!error) {
     blogPosts.value = blogPosts.value.filter(p => p.id !== post.id)
     if (blogPage.value > totalBlogPages.value) {
@@ -1796,10 +2032,10 @@ const openEditServiceModal = (service) => {
 }
 
 const saveService = async () => {
-  if (!$supabase || !serviceForm.value.slug) return
+  if (!supabase || !serviceForm.value.slug) return
   
   if (isEditing.value && selectedItem.value) {
-    const { error } = await $supabase.from('services').update({ ...serviceForm.value }).eq('id', selectedItem.value.id)
+    const { error } = await supabase.from('services').update({ ...serviceForm.value }).eq('id', selectedItem.value.id)
     if (!error) {
       const idx = services.value.findIndex(s => s.id === selectedItem.value.id)
       if (idx !== -1) services.value[idx] = { ...serviceForm.value }
@@ -1808,7 +2044,7 @@ const saveService = async () => {
       alert('Error updating service: ' + error.message)
     }
   } else {
-    const { data, error } = await $supabase.from('services').insert([{ ...serviceForm.value }]).select()
+    const { data, error } = await supabase.from('services').insert([{ ...serviceForm.value }]).select()
     if (!error && data) {
       services.value.push(data[0])
       modals.value.service = false
@@ -1819,8 +2055,8 @@ const saveService = async () => {
 }
 
 const deleteService = async (service) => {
-  if (!$supabase || !confirm(`Delete service "${service.title_en}" and all its sections?`)) return
-  const { error } = await $supabase.from('services').delete().eq('id', service.id)
+  if (!supabase || !confirm(`Delete service "${service.title_en}" and all its sections?`)) return
+  const { error } = await supabase.from('services').delete().eq('id', service.id)
   if (!error) {
     services.value = services.value.filter(s => s.id !== service.id)
     if (servicesPage.value > totalServicesPages.value) {
@@ -1852,13 +2088,13 @@ const cancelSectionEdit = () => {
 }
 
 const manageServiceSections = async (service) => {
-  if (!$supabase) return
+  if (!supabase) return
   selectedService.value = service
   sectionForm.value = { title_en: '', title_nl: '', content_en: '', content_nl: '', image: '', sort_order: 0 }
   cancelSectionEdit()
   
   // Load sections for this service
-  const { data: secs } = await $supabase
+  const { data: secs } = await supabase
     .from('service_sections')
     .select('*')
     .eq('service_id', service.id)
@@ -1869,9 +2105,9 @@ const manageServiceSections = async (service) => {
 }
 
 const addServiceSection = async () => {
-  if (!$supabase || !selectedService.value) return
+  if (!supabase || !selectedService.value) return
   
-  const { data, error } = await $supabase.from('service_sections').insert([{
+  const { data, error } = await supabase.from('service_sections').insert([{
     service_id: selectedService.value.id,
     ...sectionForm.value
   }]).select()
@@ -1886,9 +2122,9 @@ const addServiceSection = async () => {
 }
 
 const updateServiceSection = async () => {
-  if (!$supabase || !editingSectionId.value) return
+  if (!supabase || !editingSectionId.value) return
   
-  const { error } = await $supabase
+  const { error } = await supabase
     .from('service_sections')
     .update({
       title_en: editSectionForm.value.title_en,
@@ -1916,8 +2152,8 @@ const updateServiceSection = async () => {
 }
 
 const deleteServiceSection = async (sec) => {
-  if (!$supabase || !confirm(`Delete this section?`)) return
-  const { error } = await $supabase.from('service_sections').delete().eq('id', sec.id)
+  if (!supabase || !confirm(`Delete this section?`)) return
+  const { error } = await supabase.from('service_sections').delete().eq('id', sec.id)
   if (!error) {
     serviceSections.value = serviceSections.value.filter(s => s.id !== sec.id)
     if (editingSectionId.value === sec.id) {
@@ -1931,13 +2167,13 @@ const selectedBlog = ref(null)
 const blogSections = ref([])
 
 const manageBlogSections = async (blog) => {
-  if (!$supabase) return
+  if (!supabase) return
   selectedBlog.value = blog
   sectionForm.value = { title_en: '', title_nl: '', content_en: '', content_nl: '', image: '', sort_order: 0 }
   cancelSectionEdit()
   
   // Load sections for this blog post
-  const { data: secs } = await $supabase
+  const { data: secs } = await supabase
     .from('blog_sections')
     .select('*')
     .eq('blog_id', blog.id)
@@ -1948,9 +2184,9 @@ const manageBlogSections = async (blog) => {
 }
 
 const addBlogSection = async () => {
-  if (!$supabase || !selectedBlog.value) return
+  if (!supabase || !selectedBlog.value) return
   
-  const { data, error } = await $supabase.from('blog_sections').insert([{
+  const { data, error } = await supabase.from('blog_sections').insert([{
     blog_id: selectedBlog.value.id,
     ...sectionForm.value
   }]).select()
@@ -1965,9 +2201,9 @@ const addBlogSection = async () => {
 }
 
 const updateBlogSection = async () => {
-  if (!$supabase || !editingSectionId.value) return
+  if (!supabase || !editingSectionId.value) return
   
-  const { error } = await $supabase
+  const { error } = await supabase
     .from('blog_sections')
     .update({
       title_en: editSectionForm.value.title_en,
@@ -1995,8 +2231,8 @@ const updateBlogSection = async () => {
 }
 
 const deleteBlogSection = async (sec) => {
-  if (!$supabase || !confirm(`Delete this section?`)) return
-  const { error } = await $supabase.from('blog_sections').delete().eq('id', sec.id)
+  if (!supabase || !confirm(`Delete this section?`)) return
+  const { error } = await supabase.from('blog_sections').delete().eq('id', sec.id)
   if (!error) {
     blogSections.value = blogSections.value.filter(s => s.id !== sec.id)
     if (editingSectionId.value === sec.id) {
@@ -2010,13 +2246,13 @@ const selectedLocation = ref(null)
 const locationSections = ref([])
 
 const manageLocationSections = async (loc) => {
-  if (!$supabase) return
+  if (!supabase) return
   selectedLocation.value = loc
   sectionForm.value = { title_en: '', title_nl: '', content_en: '', content_nl: '', image: '', sort_order: 0 }
   cancelSectionEdit()
   
   // Load sections for this location
-  const { data: secs } = await $supabase
+  const { data: secs } = await supabase
     .from('location_sections')
     .select('*')
     .eq('location_id', loc.id)
@@ -2027,9 +2263,9 @@ const manageLocationSections = async (loc) => {
 }
 
 const addLocationSection = async () => {
-  if (!$supabase || !selectedLocation.value) return
+  if (!supabase || !selectedLocation.value) return
   
-  const { data, error } = await $supabase.from('location_sections').insert([{
+  const { data, error } = await supabase.from('location_sections').insert([{
     location_id: selectedLocation.value.id,
     ...sectionForm.value
   }]).select()
@@ -2044,9 +2280,9 @@ const addLocationSection = async () => {
 }
 
 const updateLocationSection = async () => {
-  if (!$supabase || !editingSectionId.value) return
+  if (!supabase || !editingSectionId.value) return
   
-  const { error } = await $supabase
+  const { error } = await supabase
     .from('location_sections')
     .update({
       title_en: editSectionForm.value.title_en,
@@ -2074,8 +2310,8 @@ const updateLocationSection = async () => {
 }
 
 const deleteLocationSection = async (sec) => {
-  if (!$supabase || !confirm(`Delete this section?`)) return
-  const { error } = await $supabase.from('location_sections').delete().eq('id', sec.id)
+  if (!supabase || !confirm(`Delete this section?`)) return
+  const { error } = await supabase.from('location_sections').delete().eq('id', sec.id)
   if (!error) {
     locationSections.value = locationSections.value.filter(s => s.id !== sec.id)
     if (editingSectionId.value === sec.id) {
@@ -2157,7 +2393,7 @@ const openEditPackageModal = (pkg) => {
 }
 
 const savePackage = async () => {
-  if (!$supabase || !packageForm.value.key_name) return
+  if (!supabase || !packageForm.value.key_name) return
 
   // Parse best_for and includes
   const best_for = packageForm.value.best_for_raw_en
@@ -2219,7 +2455,7 @@ const savePackage = async () => {
   }
 
   if (isEditing.value && selectedItem.value) {
-    const { error } = await $supabase
+    const { error } = await supabase
       .from('pricing_packages')
       .update(payload)
       .eq('id', selectedItem.value.id)
@@ -2232,7 +2468,7 @@ const savePackage = async () => {
       alert('Error updating package: ' + error.message)
     }
   } else {
-    const { data, error } = await $supabase
+    const { data, error } = await supabase
       .from('pricing_packages')
       .insert([payload])
       .select()
@@ -2248,8 +2484,8 @@ const savePackage = async () => {
 }
 
 const deletePackage = async (pkg) => {
-  if (!$supabase || !confirm(`Delete package "${pkg.name_en}"?`)) return
-  const { error } = await $supabase
+  if (!supabase || !confirm(`Delete package "${pkg.name_en}"?`)) return
+  const { error } = await supabase
     .from('pricing_packages')
     .delete()
     .eq('id', pkg.id)
@@ -2366,7 +2602,7 @@ const openEditProductModal = (prod) => {
 }
 
 const saveProduct = async () => {
-  if (!$supabase || !productForm.value.slug) return
+  if (!supabase || !productForm.value.slug) return
 
   const payload = { 
     ...productForm.value,
@@ -2374,7 +2610,7 @@ const saveProduct = async () => {
   }
 
   if (isEditing.value && selectedItem.value) {
-    const { error } = await $supabase
+    const { error } = await supabase
       .from('products')
       .update(payload)
       .eq('id', selectedItem.value.id)
@@ -2387,7 +2623,7 @@ const saveProduct = async () => {
       alert('Error updating product: ' + error.message)
     }
   } else {
-    const { data, error } = await $supabase
+    const { data, error } = await supabase
       .from('products')
       .insert([payload])
       .select()
@@ -2403,8 +2639,8 @@ const saveProduct = async () => {
 }
 
 const deleteProduct = async (prod) => {
-  if (!$supabase || !confirm(`Delete product "${prod.title_en}"?`)) return
-  const { error } = await $supabase
+  if (!supabase || !confirm(`Delete product "${prod.title_en}"?`)) return
+  const { error } = await supabase
     .from('products')
     .delete()
     .eq('id', prod.id)

@@ -23,6 +23,7 @@ export default defineNuxtConfig({
     '@nuxtjs/tailwindcss',
     '@vueuse/nuxt',
     '@nuxtjs/i18n',
+    '@nuxtjs/supabase',
   ],
   i18n: {
     locales: [
@@ -38,6 +39,11 @@ export default defineNuxtConfig({
   tailwindcss: {
     exposeConfig: true,
     viewer: true,
+  },
+  supabase: {
+    url: process.env.SUPABASE_URL || 'https://cpdtzlbsfpiiunylqxnj.supabase.co',
+    key: process.env.SUPABASE_KEY || 'sb_publishable_4WYYC_HyWBwrVd3JvKb-RQ_SilWg49m',
+    redirect: false,
   },
   runtimeConfig: {
     cloudinaryCloudName: process.env.CLOUDINARY_CLOUD_NAME || 'dgqyvw6wf',

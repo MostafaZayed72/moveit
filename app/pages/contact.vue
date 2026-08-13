@@ -39,10 +39,13 @@
                       :class="currentStep === 4 ? 'text-red-600' : currentStep > 4 ? 'text-emerald-500' : 'text-slate-400 dark:text-slate-500'">
                   {{ $t('contact.step_contact') }}
                 </span>
+                <span v-if="currentStep >= 5" class="text-[10px] font-bold tracking-wider uppercase transition-colors duration-300 text-red-600">
+                  Verification
+                </span>
               </div>
               <div class="w-full h-1 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
                 <div class="h-full bg-gradient-to-r from-red-500 to-red-600 transition-all duration-500 ease-out"
-                     :style="{ width: `${(currentStep / 4) * 100}%` }">
+                     :style="{ width: `${(currentStep / (currentStep >= 5 ? 5 : 4)) * 100}%` }">
                 </div>
               </div>
             </div>
@@ -460,32 +463,53 @@
               </div>
             </div>
 
+            <!-- STEP 5: OTP Verification -->
+            <div v-show="currentStep === 5" class="space-y-6">
+              <div class="text-center">
+                <h3 class="text-2xl font-bold text-slate-900 dark:text-white mb-2">Verify Your Email</h3>
+                <p class="text-sm text-slate-500 dark:text-slate-400 mb-6">We've sent a 6-digit verification code to <strong>{{ email }}</strong></p>
+              </div>
+
+              <div class="space-y-4 max-w-xs mx-auto">
+                <div class="space-y-2">
+                  <label class="form-label text-center">Enter Verification Code</label>
+                  <input type="text" v-model="otpCode" class="form-input text-center text-2xl tracking-[0.5em] font-mono" required placeholder="------" maxlength="6" />
+                </div>
+              </div>
+            
             <!-- Validation Error message -->
-            <div v-if="validationError" class="text-xs font-bold text-red-600 bg-red-500/5 border border-red-500/20 rounded-xl p-3 flex items-center gap-2 animate-pulse">
-              <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+            <div v-if="validationError" class="p-4 bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800 rounded-xl flex items-center gap-3 animate-pulse mt-4">
+              <svg class="w-5 h-5 shrink-0 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
               </svg>
-              <span>{{ validationError }}</span>
-            </div>
+              <span class="text-sm font-bold text-red-600 dark:text-red-400">{{ validationError }}</span>
+            </div></div>
 
             <!-- Footer Actions -->
             <div class="flex items-center justify-between pt-6 border-t border-slate-100 dark:border-slate-800/80 mt-8 gap-4">
               <span class="text-[11px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">
-                {{ $t('contact.step_counter', { current: currentStep, total: 4 }) !== 'contact.step_counter' ? $t('contact.step_counter', { current: currentStep, total: 4 }) : `Step ${currentStep} of 4` }}
+                {{ currentStep >= 5 ? 'Step 5 of 5' : ($t('contact.step_counter', { current: currentStep, total: 4 }) !== 'contact.step_counter' ? $t('contact.step_counter', { current: currentStep, total: 4 }) : `Step ${currentStep} of 4`) }}
               </span>
               <div class="flex gap-3">
-                <button v-if="currentStep > 1" type="button" @click="prevStep" class="btn px-5 py-3 border border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 rounded-xl hover:border-slate-300 dark:hover:border-slate-700 text-xs font-bold transition-all bg-white dark:bg-slate-900">
+                <button v-if="currentStep > 1 && currentStep < 5" type="button" @click="prevStep" class="btn px-5 py-3 border border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 rounded-xl hover:border-slate-300 dark:hover:border-slate-700 text-xs font-bold transition-all bg-white dark:bg-slate-900">
                   {{ $t('contact.back') }}
                 </button>
                 <button v-if="currentStep < 4" type="button" @click="nextStep" class="btn bg-red-600 hover:bg-red-700 text-white px-5 py-3 rounded-xl text-xs font-bold transition-all shadow-md shadow-red-500/20">
                   {{ $t('contact.continue') }}
                 </button>
-                <button v-else type="submit" class="btn bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-xl text-xs font-bold transition-all shadow-md shadow-red-500/20 flex items-center gap-2" :disabled="loading">
+                <button v-else-if="currentStep === 4" type="submit" class="btn bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-xl text-xs font-bold transition-all shadow-md shadow-red-500/20 flex items-center gap-2" :disabled="loading">
                   <svg v-if="loading" class="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                     <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                     <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                   </svg>
-                  <span>{{ loading ? $t('contact.sending') : $t('contact.get_quote') }}</span>
+                  <span>{{ loading ? 'Sending...' : 'Verify Email' }}</span>
+                </button>
+                <button v-else-if="currentStep === 5" type="button" @click="verifyOtpAndSubmit" class="btn bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-xl text-xs font-bold transition-all shadow-md shadow-red-500/20 flex items-center gap-2" :disabled="loading">
+                  <svg v-if="loading" class="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                  <span>{{ loading ? $t('contact.sending') : 'Submit Order' }}</span>
                 </button>
               </div>
             </div>
@@ -644,6 +668,10 @@ const currentStep  = ref(1)
 const submitted    = ref(false)
 const loading      = ref(false)
 const validationError = ref('')
+const otpCode      = ref('')
+
+const supabase = useSupabaseClient()
+const user = useSupabaseUser()
 
 const todayDate = computed(() => new Date().toISOString().split('T')[0])
 
@@ -739,13 +767,110 @@ const nextStep = () => {
 
   if (currentStep.value < 4) {
     currentStep.value++
-  } else {
-    handleSubmit()
+  } else if (currentStep.value === 4) {
+    if (user.value) {
+      // Already authenticated, skip OTP
+      verifyOtpAndSubmit()
+    } else {
+      handleSendOtp()
+    }
   }
 }
 
-const handleSubmit = async () => {
+const handleSendOtp = async () => {
   loading.value = true
+  validationError.value = ''
+  try {
+    const { error } = await supabase.auth.signInWithOtp({
+      email: email.value,
+      options: {
+        shouldCreateUser: true
+      }
+    })
+    if (error) throw error
+    currentStep.value = 5
+  } catch (error) {
+    validationError.value = error.message || 'Failed to send OTP. Please try again.'
+  } finally {
+    loading.value = false
+  }
+}
+
+const verifyOtpAndSubmit = async () => {
+  loading.value = true
+  validationError.value = ''
+
+  try {
+    if (!user.value) {
+      // Need to verify OTP
+      const { data, error } = await supabase.auth.verifyOtp({
+        email: email.value,
+        token: otpCode.value,
+        type: 'email'
+      })
+      if (error) throw error
+    }
+
+    // Now submit order to Supabase orders table
+    await submitToDatabase()
+
+    // Optionally also send the email as before
+    await sendLegacyEmail()
+
+    submitted.value = true
+  } catch (error) {
+    validationError.value = error.message || 'Invalid code or failed to submit order.'
+    console.error('Submit error:', error)
+  } finally {
+    loading.value = false
+  }
+}
+
+const submitToDatabase = async () => {
+  const formDataObj = {
+    name: fullName.value,
+    email: email.value,
+    phone: phone.value,
+    package: movingPackage.value,
+    from: movingFrom.value,
+    to: movingTo.value,
+    date: moveDate.value,
+    time: preferredTime.value,
+    altDate: alternativeDate.value,
+    size: moveSize.value,
+    pickupFloor: pickupFloor.value,
+    deliveryFloor: deliveryFloor.value,
+    elevator: elevatorAvailable.value,
+    lift: movingLiftNeeded.value,
+    packing: packingService.value,
+    assembly: furnitureAssembly.value,
+    fragile: fragileItems.value === 'yes' ? specialItemsDescription.value : 'no',
+    preference: contactPreference.value,
+    hear: hearAbout.value,
+    notes: notes.value
+  }
+
+  // Ensure customer record exists (since it's a new signup, trigger won't run synchronously)
+  const { data: customerData } = await supabase.from('customers').select('id').eq('id', (await supabase.auth.getUser()).data.user.id).single()
+  
+  if (!customerData) {
+    await supabase.from('customers').insert({
+      id: (await supabase.auth.getUser()).data.user.id,
+      email: email.value,
+      full_name: fullName.value,
+      phone: phone.value
+    })
+  }
+
+  const { error } = await supabase.from('orders').insert({
+    customer_id: (await supabase.auth.getUser()).data.user.id,
+    status: 'Pending',
+    form_data: formDataObj
+  })
+  if (error) throw error
+}
+
+const sendLegacyEmail = async () => {
 
   // Track conversion event
   const { $trackEvent } = useNuxtApp()
@@ -810,12 +935,8 @@ const handleSubmit = async () => {
       method: 'POST',
       body: formData
     })
-    submitted.value = true
   } catch (error) {
-    console.error('Error submitting form:', error)
-    alert('Failed to send quote request. Please try again or contact us directly.')
-  } finally {
-    loading.value = false
+    console.error('Error sending legacy email:', error)
   }
 }
 </script>

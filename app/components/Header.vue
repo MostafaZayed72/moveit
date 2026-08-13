@@ -201,6 +201,13 @@
             <span>WhatsApp</span>
           </a>
 
+          <!-- My Orders Button -->
+          <NuxtLink :to="localePath('/my-orders')">
+            <button class="px-4 py-2 bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white rounded-lg font-bold text-sm hover:bg-slate-200 dark:hover:bg-slate-700 transition-all shadow-md active:scale-95 whitespace-nowrap">
+              {{ $t('home.my_orders', 'My Orders') }}
+            </button>
+          </NuxtLink>
+
           <!-- Quote Button -->
           <NuxtLink :to="localePath('/contact')">
             <button class="px-4 py-2 bg-amber-500 text-slate-900 rounded-lg font-bold text-sm hover:bg-amber-600 transition-all shadow-md active:scale-95 whitespace-nowrap">
