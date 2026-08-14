@@ -142,7 +142,7 @@ export default defineEventHandler(async (event) => {
       `
       
       await transporter.sendMail({
-        from: \`MoveIt Maastricht <\${gmailUser}>\`,
+        from: `MoveIt Maastricht <${gmailUser}>`,
         to: replyTo,
         subject: 'Your Request is Confirmed - MoveIt Maastricht',
         html: autoReplyHtml
