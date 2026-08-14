@@ -477,7 +477,7 @@
                 </div>
                 <div class="text-center mt-4">
                   <button type="button" @click="resendOtp" class="text-sm font-bold text-slate-500 hover:text-red-600 transition-colors" :disabled="isResending">
-                    <span v-if="!isResending">{{ $t('contact.resend_otp', 'Didn\\'t receive the code? Resend') }}</span>
+                    <span v-if="!isResending">{{ $t('contact.resend_otp', "Didn't receive the code? Resend") }}</span>
                     <span v-else class="flex items-center justify-center gap-2">
                       <svg class="animate-spin h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
