@@ -116,6 +116,39 @@ export default defineEventHandler(async (event) => {
 
   try {
     await transporter.sendMail(mailOptions)
+
+    // Auto-reply to customer
+    if (replyTo) {
+      const autoReplyHtml = `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
+          <div style="background-color: #0f172a; padding: 30px; text-align: center; border-bottom: 4px solid #dc2626;">
+            <h1 style="color: white; margin: 0; font-size: 32px; font-weight: 800; letter-spacing: -1px;">
+              <span style="color: #dc2626;">move</span>it
+            </h1>
+          </div>
+          <div style="padding: 40px 30px; background-color: #ffffff; color: #334155;">
+            <h2 style="color: #0f172a; margin-top: 0; font-size: 24px;">Thank You for Your Request!</h2>
+            <p style="font-size: 16px; line-height: 1.6; color: #475569;">Dear Customer,</p>
+            <p style="font-size: 16px; line-height: 1.6; color: #475569;">Your order has been successfully registered. Our team is currently reviewing your details and we will contact you very soon to confirm everything.</p>
+            <p style="font-size: 16px; line-height: 1.6; color: #475569;">If you have any urgent questions, feel free to reply to this email or contact us directly.</p>
+            <br/>
+            <p style="font-size: 16px; margin-bottom: 0; color: #475569;">Best regards,</p>
+            <p style="font-size: 16px; font-weight: 700; color: #dc2626; margin-top: 5px;">The MoveIt Maastricht Team</p>
+          </div>
+          <div style="background-color: #f8fafc; padding: 20px; text-align: center; border-top: 1px solid #e2e8f0; font-size: 13px; color: #94a3b8;">
+            &copy; ${new Date().getFullYear()} MoveIt Maastricht. All rights reserved.
+          </div>
+        </div>
+      `
+      
+      await transporter.sendMail({
+        from: \`MoveIt Maastricht <\${gmailUser}>\`,
+        to: replyTo,
+        subject: 'Your Request is Confirmed - MoveIt Maastricht',
+        html: autoReplyHtml
+      })
+    }
+
     return { success: true }
   } catch (error: any) {
     console.error('Email sending error:', error)

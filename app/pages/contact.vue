@@ -851,7 +851,7 @@ const submitToDatabase = async () => {
   }
 
   // Ensure customer record exists (since it's a new signup, trigger won't run synchronously)
-  const { data: customerData } = await supabase.from('customers').select('id').eq('id', (await supabase.auth.getUser()).data.user.id).single()
+  const { data: customerData } = await supabase.from('customers').select('id').eq('id', (await supabase.auth.getUser()).data.user.id).maybeSingle()
   
   if (!customerData) {
     await supabase.from('customers').insert({
