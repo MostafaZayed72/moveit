@@ -53,6 +53,7 @@ export default defineNuxtConfig({
     adminPassword: process.env.ADMIN_PASSWORD || 'PYramidbricks@20',
     gmailUser: process.env.GMAIL_USER || 'moveitmaastricht@gmail.com',
     gmailPass: process.env.GMAIL_PASS || 'xfphkyhxkoxpjbhw',
+    resendApiKey: process.env.RESEND_API_KEY,
     public: {
       supabaseUrl: process.env.SUPABASE_URL || 'https://cpdtzlbsfpiiunylqxnj.supabase.co',
       supabaseKey: process.env.SUPABASE_KEY || 'sb_publishable_4WYYC_HyWBwrVd3JvKb-RQ_SilWg49m',

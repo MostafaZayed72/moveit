@@ -1,11 +1,13 @@
 import { readMultipartFormData, readBody, getHeader } from 'h3'
-import nodemailer from 'nodemailer'
+import { Resend } from 'resend'
 
 export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig()
-  const gmailUser = config.gmailUser
-  const gmailPass = config.gmailPass
+  const resendApiKey = config.resendApiKey
   const adminEmail = config.adminEmail
+
+  const resend = new Resend(resendApiKey)
+  const fromEmail = 'onboarding@moveitmaastricht.nl' // Using onboarding or info since it's verified
 
   let subject = 'New Quote/Contact Request'
   let replyTo = ''
@@ -95,27 +97,19 @@ export default defineEventHandler(async (event) => {
     `
   }
 
-  // Create Nodemailer Transporter using Gmail App Password
-  const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-      user: gmailUser,
-      pass: gmailPass
-    }
-  })
-
-  // Send mail to the admin email or gmail user
-  const mailOptions = {
-    from: `MoveIt Maastricht <${gmailUser}>`,
-    to: adminEmail || gmailUser,
-    replyTo: replyTo || undefined,
-    subject: subject,
-    html: html,
-    attachments: attachments
-  }
-
+  // Send mail to the admin email
   try {
-    await transporter.sendMail(mailOptions)
+    const data = await resend.emails.send({
+      from: `MoveIt Maastricht <${fromEmail}>`,
+      to: adminEmail,
+      replyTo: replyTo || undefined,
+      subject: subject,
+      html: html,
+      attachments: attachments.map(att => ({
+        filename: att.filename,
+        content: att.content
+      }))
+    })
 
     // Auto-reply to customer
     if (replyTo) {
@@ -141,15 +135,15 @@ export default defineEventHandler(async (event) => {
         </div>
       `
       
-      await transporter.sendMail({
-        from: `MoveIt Maastricht <${gmailUser}>`,
+      await resend.emails.send({
+        from: `MoveIt Maastricht <${fromEmail}>`,
         to: replyTo,
         subject: 'Your Request is Confirmed - MoveIt Maastricht',
         html: autoReplyHtml
       })
     }
 
-    return { success: true }
+    return { success: true, data }
   } catch (error: any) {
     console.error('Email sending error:', error)
     throw createError({
