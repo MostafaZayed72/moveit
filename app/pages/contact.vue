@@ -171,11 +171,11 @@
               <div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full min-w-0">
                 <div class="space-y-2 min-w-0">
                   <label class="form-label">{{ $t('contact.preferred_date') }}</label>
-                  <input type="date" v-model="moveDate" class="form-input cursor-pointer w-full min-w-0 max-w-full box-border" :min="todayDate" required />
+                  <input type="date" v-model="moveDate" class="form-input cursor-pointer w-full min-w-0 max-w-full box-border" :min="todayDate" required @click="$event.target.showPicker && $event.target.showPicker()" />
                 </div>
                 <div class="space-y-2 min-w-0">
                   <label class="form-label">{{ $t('contact.alternative_date') }}</label>
-                  <input type="date" v-model="alternativeDate" class="form-input cursor-pointer w-full min-w-0 max-w-full box-border" :min="todayDate" />
+                  <input type="date" v-model="alternativeDate" class="form-input cursor-pointer w-full min-w-0 max-w-full box-border" :min="todayDate" @click="$event.target.showPicker && $event.target.showPicker()" />
                 </div>
               </div>
 
@@ -473,7 +473,7 @@
               <div class="space-y-4 max-w-xs mx-auto">
                 <div class="space-y-2">
                   <label class="form-label text-center">Enter Verification Code</label>
-                  <input type="text" v-model="otpCode" class="form-input text-center text-2xl tracking-[0.5em] font-mono" required placeholder="------" maxlength="6" />
+                  <input type="text" v-model="otpCode" class="form-input text-center text-2xl tracking-[0.5em] font-mono" :required="currentStep === 5" placeholder="------" maxlength="6" />
                 </div>
               </div>
             
