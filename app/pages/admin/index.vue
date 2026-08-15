@@ -430,7 +430,7 @@
           </div>
           <div v-if="loadingAdminOrders" class="text-center py-8 text-slate-500">Loading orders...</div>
           <div class="grid grid-cols-1 gap-6" v-else>
-            <div v-for="order in adminOrders" :key="order.id" class="glass-panel p-6 rounded-2xl border border-slate-200 dark:border-slate-800 flex flex-col md:flex-row gap-6">
+            <div v-for="order in paginatedOrders" :key="order.id" class="glass-panel p-6 rounded-2xl border border-slate-200 dark:border-slate-800 flex flex-col md:flex-row gap-6">
               <div class="flex-grow space-y-3">
                 <div class="flex justify-between items-center">
                   <div class="flex gap-3 items-center">
@@ -450,9 +450,51 @@
                   <p><strong>Date:</strong> {{ order.form_data?.date }}</p>
                   <p><strong>From:</strong> {{ order.form_data?.from }} | <strong>To:</strong> {{ order.form_data?.to }}</p>
                   <p><strong>Package:</strong> {{ order.form_data?.package }}</p>
+                  <div v-if="order.form_data?.images?.length" class="mt-3 flex gap-2 overflow-x-auto pb-2">
+                    <img v-for="(img, idx) in order.form_data.images" :key="idx" :src="img" class="w-12 h-12 object-cover rounded-lg border border-slate-200 dark:border-slate-800" />
+                  </div>
+                </div>
+                <div class="flex justify-end gap-2 border-t border-slate-200 dark:border-slate-800 pt-3 mt-3">
+                  <button @click="openEditOrderModal(order)" class="px-3 py-1.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 text-xs font-bold rounded-lg transition-colors border border-slate-700">
+                    Edit
+                  </button>
+                  <button @click="deleteOrder(order)" class="p-2 bg-red-500/10 hover:bg-red-500/20 text-red-500 rounded-lg transition-colors">
+                    🗑️
+                  </button>
                 </div>
               </div>
             </div>
+          </div>
+
+          <!-- Pagination for Orders -->
+          <div v-if="totalOrdersPages > 1" class="flex justify-center items-center gap-2 mt-8">
+            <button 
+              @click="ordersPage--" 
+              :disabled="ordersPage === 1"
+              class="w-10 h-10 bg-slate-100 dark:bg-slate-800 border border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700 disabled:opacity-50 disabled:cursor-not-allowed text-slate-800 dark:text-slate-200 rounded-xl text-sm font-bold transition-all cursor-pointer flex items-center justify-center"
+            >
+              ◀
+            </button>
+            <button 
+              v-for="p in totalOrdersPages" 
+              :key="p"
+              @click="ordersPage = p"
+              :class="[
+                'w-10 h-10 rounded-xl text-sm font-bold border transition-all cursor-pointer flex items-center justify-center',
+                ordersPage === p 
+                  ? 'bg-red-600 border-red-600 text-slate-900 dark:text-white shadow-lg shadow-red-600/20' 
+                  : 'bg-slate-100 dark:bg-slate-800 border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-750 hover:text-slate-900 dark:text-white'
+              ]"
+            >
+              {{ p }}
+            </button>
+            <button 
+              @click="ordersPage++" 
+              :disabled="ordersPage === totalOrdersPages"
+              class="w-10 h-10 bg-slate-100 dark:bg-slate-800 border border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700 disabled:opacity-50 disabled:cursor-not-allowed text-slate-800 dark:text-slate-200 rounded-xl text-sm font-bold transition-all cursor-pointer flex items-center justify-center"
+            >
+              ▶
+            </button>
           </div>
         </div>
 
@@ -540,6 +582,56 @@
           </div>
         </div>
 
+      </div>
+    </div>
+
+    <!-- MODAL: EDIT ORDER -->
+    <div v-if="modals.order" class="fixed inset-0 z-50 flex items-center justify-center p-6 bg-white dark:bg-slate-950/80 backdrop-blur-sm overflow-y-auto">
+      <div class="glass-panel w-full max-w-lg rounded-3xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 p-8 shadow-2xl space-y-6">
+        <div class="flex justify-between items-center border-b border-slate-200 dark:border-slate-800 pb-4">
+          <h3 class="text-xl font-black text-slate-900 dark:text-white">Edit Order</h3>
+          <button @click="modals.order = false" class="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white">✕</button>
+        </div>
+        <div class="space-y-4 max-h-[400px] overflow-y-auto pr-2">
+          <div class="space-y-1">
+            <label class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Date</label>
+            <input type="text" v-model="orderForm.date" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white outline-none focus:border-red-500 text-sm" />
+          </div>
+          <div class="space-y-1">
+            <label class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">From</label>
+            <input type="text" v-model="orderForm.from" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white outline-none focus:border-red-500 text-sm" />
+          </div>
+          <div class="space-y-1">
+            <label class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">To</label>
+            <input type="text" v-model="orderForm.to" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white outline-none focus:border-red-500 text-sm" />
+          </div>
+          <div class="space-y-1">
+            <label class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Package</label>
+            <input type="text" v-model="orderForm.package" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white outline-none focus:border-red-500 text-sm" />
+          </div>
+          <div class="space-y-2 pt-2 border-t border-slate-200 dark:border-slate-800">
+            <label class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Attached Images ({{ orderForm.images?.length || 0 }})</label>
+            <div class="flex flex-wrap gap-3">
+              <div v-for="(img, idx) in orderForm.images" :key="idx" class="relative group">
+                <div class="w-16 h-16 rounded-xl overflow-hidden bg-slate-200 dark:bg-slate-800 border border-slate-300 dark:border-slate-700">
+                  <img :src="img" class="w-full h-full object-cover" />
+                </div>
+                <button @click="removeOrderImage(idx)" class="absolute -top-2 -right-2 bg-red-500 text-white w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold opacity-0 group-hover:opacity-100 transition-opacity shadow-md">✕</button>
+              </div>
+              <div class="border-2 border-dashed border-slate-300 dark:border-slate-700 hover:border-red-500 rounded-xl w-16 h-16 flex flex-col items-center justify-center cursor-pointer relative transition-colors group">
+                <span class="text-xl text-slate-400 group-hover:text-red-500">+</span>
+                <input type="file" @change="onOrderImageUpload" accept="image/*" class="absolute inset-0 opacity-0 cursor-pointer" />
+              </div>
+            </div>
+            <div v-if="uploadingOrderImage" class="text-[10px] text-red-500 animate-pulse mt-1">Uploading image...</div>
+          </div>
+        </div>
+        <div class="flex justify-end gap-3 pt-4 border-t border-slate-200 dark:border-slate-800">
+          <button @click="modals.order = false" class="px-5 py-2.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold rounded-xl text-sm transition-all border border-slate-700">Cancel</button>
+          <button @click="saveOrder" class="px-6 py-2.5 bg-red-600 hover:bg-red-700 text-slate-900 dark:text-white font-bold rounded-xl text-sm transition-all shadow-md">
+            Save Changes
+          </button>
+        </div>
       </div>
     </div>
 
@@ -1578,6 +1670,27 @@
       </div>
     </div>
 
+    <!-- CUSTOM DIALOG NOTIFICATION -->
+    <transition enter-active-class="transition ease-out duration-300" enter-from-class="opacity-0" enter-to-class="opacity-100" leave-active-class="transition ease-in duration-200" leave-from-class="opacity-100" leave-to-class="opacity-0">
+      <div v-if="dialog.show" class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/60 backdrop-blur-sm">
+        <div class="glass-panel w-full max-w-sm rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-8 shadow-2xl text-center transform transition-all scale-100">
+          <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full mb-4" :class="dialog.type === 'success' ? 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-500' : 'bg-red-100 dark:bg-red-900/30 text-red-500'">
+            <svg v-if="dialog.type === 'success'" class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+            <svg v-else class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+          </div>
+          <h3 class="text-xl font-black text-slate-900 dark:text-white">{{ dialog.title }}</h3>
+          <p class="mt-2 text-sm text-slate-500 dark:text-slate-400">{{ dialog.message }}</p>
+          <button @click="dialog.show = false" class="mt-8 w-full px-6 py-3 bg-red-600 hover:bg-red-700 text-slate-900 dark:text-white font-bold rounded-xl text-sm transition-all shadow-md">
+            Done
+          </button>
+        </div>
+      </div>
+    </transition>
+
   </div>
 </template>
 
@@ -1595,6 +1708,18 @@ const authError = ref('')
 
 // Supabase setup for new tables
 const supabase = useSupabaseClient()
+
+// --- DIALOG LOGIC ---
+const dialog = ref({
+  show: false,
+  title: '',
+  message: '',
+  type: 'success'
+})
+
+const showDialog = (title, message, type = 'success') => {
+  dialog.value = { show: true, title, message, type }
+}
 
 // --- ORDERS LOGIC ---
 const adminOrders = ref([])
@@ -1620,10 +1745,91 @@ const updateOrderStatus = async (order) => {
   try {
     const { error } = await supabase.from('orders').update({ status: order.status }).eq('id', order.id)
     if (error) throw error
-    alert('Order status updated!')
+    showDialog('Status Updated', 'The order status has been updated successfully.', 'success')
   } catch (err) {
     console.error(err)
-    alert('Error updating order.')
+    showDialog('Update Failed', 'An error occurred while updating the order status.', 'error')
+  }
+}
+
+const orderForm = ref({ id: '', date: '', from: '', to: '', package: '', images: [] })
+const uploadingOrderImage = ref(false)
+
+const openEditOrderModal = (order) => {
+  selectedItem.value = order
+  orderForm.value = { 
+    id: order.id, 
+    date: order.form_data?.date || '',
+    from: order.form_data?.from || '',
+    to: order.form_data?.to || '',
+    package: order.form_data?.package || '',
+    images: order.form_data?.images ? [...order.form_data.images] : []
+  }
+  modals.value.order = true
+}
+
+const removeOrderImage = (index) => {
+  orderForm.value.images.splice(index, 1)
+}
+
+const onOrderImageUpload = async (e) => {
+  const file = e.target.files?.[0]
+  if (!file) return
+  const fileData = new FormData()
+  fileData.append('file', file)
+  
+  uploadingOrderImage.value = true
+  try {
+    const res = await $fetch('/api/upload', {
+      method: 'POST',
+      body: fileData
+    })
+    if (res && res.url) {
+      if (!orderForm.value.images) orderForm.value.images = []
+      orderForm.value.images.push(res.url)
+    }
+  } catch (e) {
+    alert('Failed to upload image.')
+  } finally {
+    uploadingOrderImage.value = false
+  }
+}
+
+const saveOrder = async () => {
+  if (!supabase || !orderForm.value.id) return
+  const currentOrder = adminOrders.value.find(o => o.id === orderForm.value.id)
+  if (!currentOrder) return
+  
+  const updatedFormData = {
+    ...currentOrder.form_data,
+    date: orderForm.value.date,
+    from: orderForm.value.from,
+    to: orderForm.value.to,
+    package: orderForm.value.package
+  }
+  
+  const { error } = await supabase.from('orders').update({ form_data: updatedFormData }).eq('id', orderForm.value.id)
+  if (!error) {
+    const idx = adminOrders.value.findIndex(o => o.id === orderForm.value.id)
+    if (idx !== -1) {
+      adminOrders.value[idx].form_data = updatedFormData
+    }
+    modals.value.order = false
+  } else {
+    alert('Error updating order: ' + error.message)
+  }
+}
+
+const deleteOrder = async (order) => {
+  if (!supabase || !confirm('Are you sure you want to delete this order?')) return
+  const { error } = await supabase.from('orders').delete().eq('id', order.id)
+  if (!error) {
+    adminOrders.value = adminOrders.value.filter(o => o.id !== order.id)
+    if (ordersPage.value > totalOrdersPages.value) {
+      ordersPage.value = Math.max(1, totalOrdersPages.value)
+    }
+  } else {
+    alert('Error deleting order: ' + error.message)
   }
 }
 
@@ -1786,7 +1992,17 @@ const packageForm = ref({
 
 // Pagination Setup
 const itemsPerPage = 10
+const ordersPage = ref(1)
 const locationsPage = ref(1)
+
+const paginatedOrders = computed(() => {
+  const start = (ordersPage.value - 1) * itemsPerPage
+  return adminOrders.value.slice(start, start + itemsPerPage)
+})
+
+const totalOrdersPages = computed(() => {
+  return Math.ceil(adminOrders.value.length / itemsPerPage) || 1
+})
 const blogPage = ref(1)
 const servicesPage = ref(1)
 
@@ -2498,6 +2714,7 @@ const deletePackage = async (pkg) => {
 }
 // Modals display control
 const modals = ref({
+  order: false,
   location: false,
   blog: false,
   service: false,

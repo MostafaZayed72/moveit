@@ -41,7 +41,7 @@
         </div>
 
         <div v-else class="space-y-6">
-          <div v-for="order in orders" :key="order.id" class="glass-panel p-6 rounded-3xl border border-slate-200 dark:border-slate-800 flex flex-col md:flex-row gap-6 items-start">
+          <div v-for="order in paginatedOrders" :key="order.id" class="glass-panel p-6 rounded-3xl border border-slate-200 dark:border-slate-800 flex flex-col md:flex-row gap-6 items-start">
             <div class="flex-grow space-y-3">
               <div class="flex items-center gap-3">
                 <span class="text-xs font-bold text-slate-400">Order #{{ order.id.split('-')[0] }}</span>
@@ -85,20 +85,42 @@
                   <strong>From:</strong> {{ order.form_data?.from }} <br/>
                   <strong>To:</strong> {{ order.form_data?.to }}
                 </p>
-                <div class="mt-3">
-                  <button @click="startEdit(order)" class="text-xs font-bold text-red-500 hover:text-red-600 hover:underline">✏️ Edit Details</button>
+                <div class="mt-3 flex gap-4 items-center">
+                  <button @click="startEdit(order)" class="text-xs font-bold text-emerald-600 hover:text-emerald-700 hover:underline">✏️ Edit Details</button>
+                  <button @click="deleteOrder(order.id)" class="text-xs font-bold text-red-500 hover:text-red-600 hover:underline">🗑️ Delete Order</button>
                 </div>
               </div>
               
               <div class="pt-4 border-t border-slate-200 dark:border-slate-800/80 mt-4">
-                <p class="text-xs font-bold text-slate-500 mb-2">UPLOADED IMAGES ({{ order.images?.length || 0 }})</p>
+                <p class="text-xs font-bold text-slate-500 mb-2">UPLOADED IMAGES ({{ order.form_data?.images?.length || 0 }})</p>
                 <div class="flex gap-2 flex-wrap">
-                  <div v-for="(img, idx) in order.images" :key="idx" class="w-16 h-16 rounded-lg bg-slate-200 dark:bg-slate-800 overflow-hidden">
+                  <div v-for="(img, idx) in order.form_data?.images || []" :key="idx" class="w-16 h-16 rounded-lg bg-slate-200 dark:bg-slate-800 overflow-hidden">
                     <img :src="img" class="w-full h-full object-cover" />
                   </div>
                 </div>
               </div>
             </div>
+          </div>
+          
+          <!-- Pagination Controls -->
+          <div v-if="totalPages > 1" class="flex justify-center items-center gap-2 mt-8">
+            <button 
+              @click="currentPage--" 
+              :disabled="currentPage === 1"
+              class="w-10 h-10 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed rounded-xl text-sm font-bold transition-all flex items-center justify-center shadow-sm"
+            >
+              &larr;
+            </button>
+            <span class="text-sm font-bold text-slate-500 mx-2">
+              Page {{ currentPage }} of {{ totalPages }}
+            </span>
+            <button 
+              @click="currentPage++" 
+              :disabled="currentPage === totalPages"
+              class="w-10 h-10 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed rounded-xl text-sm font-bold transition-all flex items-center justify-center shadow-sm"
+            >
+              &rarr;
+            </button>
           </div>
         </div>
       </div>
@@ -108,7 +130,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch } from 'vue'
+import { ref, computed, watch } from 'vue'
 
 const supabase = useSupabaseClient()
 const user = useSupabaseUser()
@@ -121,6 +143,17 @@ const errorMsg = ref('')
 
 const orders = ref([])
 const loadingOrders = ref(false)
+
+const currentPage = ref(1)
+const itemsPerPage = 5
+
+const totalPages = computed(() => Math.ceil(orders.value.length / itemsPerPage))
+
+const paginatedOrders = computed(() => {
+  const start = (currentPage.value - 1) * itemsPerPage
+  const end = start + itemsPerPage
+  return orders.value.slice(start, end)
+})
 
 const editingOrder = ref(null)
 const editForm = ref({
@@ -164,15 +197,40 @@ const logout = async () => {
   otpSent.value = false
   email.value = ''
   otpCode.value = ''
+  currentPage.value = 1
 }
 
 const fetchOrders = async () => {
-  if (!user.value) return
+  const { data: authData } = await supabase.auth.getUser()
+  const currentUser = authData?.user
+  
+  if (!currentUser || !currentUser.id) {
+    console.error('Cannot fetch orders: user ID is missing or undefined.', currentUser)
+    return
+  }
+  
+  const userId = currentUser.id
+  const userEmail = currentUser.email
+  
   loadingOrders.value = true
   try {
-    const { data, error } = await supabase.from('orders').select('*').eq('customer_id', user.value.id).order('created_at', { ascending: false })
+    const { data, error } = await supabase
+      .from('orders')
+      .select('*')
+      .or(`customer_id.eq.${userId},form_data->>email.eq.${userEmail}`)
+      .order('created_at', { ascending: false })
+      
     if (error) throw error
     orders.value = data || []
+    
+    // Auto-claim orders that match email but lack the correct customer_id
+    const unclaimedOrders = orders.value.filter(o => o.customer_id !== userId)
+    if (unclaimedOrders.length > 0) {
+      for (const order of unclaimedOrders) {
+        await supabase.from('orders').update({ customer_id: userId }).eq('id', order.id)
+        order.customer_id = userId
+      }
+    }
   } catch (e) {
     console.error('Failed to load orders', e)
   } finally {
@@ -218,6 +276,32 @@ const saveEdit = async (order) => {
   } catch (e) {
     console.error(e)
     alert('Failed to update order.')
+  }
+}
+
+const deleteOrder = async (orderId) => {
+  if (!confirm('Are you sure you want to delete this order? This action cannot be undone.')) return
+  
+  try {
+    const { error } = await supabase
+      .from('orders')
+      .delete()
+      .eq('id', orderId)
+      
+    if (error) throw error
+    
+    // Update local state
+    orders.value = orders.value.filter(o => o.id !== orderId)
+    
+    // Adjust pagination if needed
+    if (currentPage.value > totalPages.value) {
+      currentPage.value = Math.max(1, totalPages.value)
+    }
+    
+    alert('Order deleted successfully.')
+  } catch (e) {
+    console.error(e)
+    alert('Failed to delete order. ' + e.message)
   }
 }
 

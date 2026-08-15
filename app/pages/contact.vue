@@ -884,23 +884,49 @@ const submitToDatabase = async () => {
     fragile: fragileItems.value === 'yes' ? specialItemsDescription.value : 'no',
     preference: contactPreference.value,
     hear: hearAbout.value,
-    notes: notes.value
+    notes: notes.value,
+    images: [] // To store Cloudinary URLs
   }
 
-  // Ensure customer record exists (since it's a new signup, trigger won't run synchronously)
-  const { data: customerData } = await supabase.from('customers').select('id').eq('id', (await supabase.auth.getUser()).data.user.id).maybeSingle()
+  // Upload images to Cloudinary first
+  if (mediaFiles.value && mediaFiles.value.length > 0) {
+    for (const item of mediaFiles.value) {
+      if (item.file) {
+        const fileData = new FormData()
+        fileData.append('file', item.file)
+        try {
+          const res = await $fetch('/api/upload', {
+            method: 'POST',
+            body: fileData
+          })
+          if (res && res.url) {
+            formDataObj.images.push(res.url)
+          }
+        } catch(e) {
+          console.error('Failed to upload image:', e)
+        }
+      }
+    }
+  }
+
+  const authUser = (await supabase.auth.getUser()).data.user
+  if (!authUser) throw new Error("User not authenticated")
+
+  // Check if customer exists by ID
+  const { data: customerById } = await supabase.from('customers').select('id').eq('id', authUser.id).maybeSingle()
   
-  if (!customerData) {
-    await supabase.from('customers').insert({
-      id: (await supabase.auth.getUser()).data.user.id,
+  if (!customerById) {
+    const { error: insertErr } = await supabase.from('customers').insert({
+      id: authUser.id,
       email: email.value,
       full_name: fullName.value,
       phone: phone.value
     })
+    if (insertErr) console.error("Error inserting customer:", insertErr)
   }
 
   const { error } = await supabase.from('orders').insert({
-    customer_id: (await supabase.auth.getUser()).data.user.id,
+    customer_id: authUser.id,
     status: 'Pending',
     form_data: formDataObj
   })
