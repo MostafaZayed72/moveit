@@ -94,7 +94,7 @@
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div v-for="loc in paginatedLocations" :key="loc.id" class="glass-panel border border-slate-200 dark:border-slate-200 dark:border-slate-800/80 rounded-2xl overflow-hidden flex flex-col bg-white dark:bg-white dark:bg-slate-950/40">
+            <div v-for="loc in locations" :key="loc.id" class="glass-panel border border-slate-200 dark:border-slate-200 dark:border-slate-800/80 rounded-2xl overflow-hidden flex flex-col bg-white dark:bg-white dark:bg-slate-950/40">
               <div class="h-44 bg-slate-50 dark:bg-slate-900 relative">
                 <img v-if="loc.image" :src="loc.image" class="w-full h-full object-cover" :alt="loc.name" />
                 <div v-else class="w-full h-full flex items-center justify-center text-slate-600">No Image</div>
@@ -165,7 +165,7 @@
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div v-for="post in paginatedBlogPosts" :key="post.id" class="glass-panel border border-slate-200 dark:border-slate-200 dark:border-slate-800/80 rounded-2xl overflow-hidden flex flex-col bg-white dark:bg-white dark:bg-slate-950/40">
+            <div v-for="post in blogPosts" :key="post.id" class="glass-panel border border-slate-200 dark:border-slate-200 dark:border-slate-800/80 rounded-2xl overflow-hidden flex flex-col bg-white dark:bg-white dark:bg-slate-950/40">
               <div class="h-44 bg-slate-50 dark:bg-slate-900 relative">
                 <img v-if="post.image" :src="post.image" class="w-full h-full object-cover" :alt="post.title_en" />
                 <div v-else class="w-full h-full flex items-center justify-center text-slate-600">No Image</div>
@@ -239,7 +239,7 @@
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div v-for="service in paginatedServices" :key="service.id" class="glass-panel border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden p-6 bg-white dark:bg-white dark:bg-slate-950/40 flex gap-6">
+            <div v-for="service in services" :key="service.id" class="glass-panel border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden p-6 bg-white dark:bg-white dark:bg-slate-950/40 flex gap-6">
               <div class="w-24 h-24 rounded-xl overflow-hidden shrink-0 bg-slate-50 dark:bg-slate-900">
                 <img v-if="service.image" :src="service.image" class="w-full h-full object-cover" :alt="service.title_en" />
                 <div v-else class="w-full h-full flex items-center justify-center text-xs text-slate-600">No Image</div>
@@ -359,7 +359,7 @@
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div v-for="prod in paginatedProducts" :key="prod.id" class="glass-panel border border-slate-200 dark:border-slate-200 dark:border-slate-800/80 rounded-2xl overflow-hidden flex flex-col bg-white dark:bg-white dark:bg-slate-950/40">
+            <div v-for="prod in products" :key="prod.id" class="glass-panel border border-slate-200 dark:border-slate-200 dark:border-slate-800/80 rounded-2xl overflow-hidden flex flex-col bg-white dark:bg-white dark:bg-slate-950/40">
               <div class="h-44 bg-slate-50 dark:bg-slate-900 relative">
                 <img v-if="getFirstProductImage(prod.image)" :src="getFirstProductImage(prod.image)" class="w-full h-full object-cover" :alt="prod.title_en" />
                 <div v-else class="w-full h-full flex items-center justify-center text-slate-600 text-xs uppercase font-bold tracking-wider">No Image</div>
@@ -430,7 +430,7 @@
           </div>
           <div v-if="loadingAdminOrders" class="text-center py-8 text-slate-500">Loading orders...</div>
           <div class="grid grid-cols-1 gap-6" v-else>
-            <div v-for="order in paginatedOrders" :key="order.id" class="glass-panel p-6 rounded-2xl border border-slate-200 dark:border-slate-800 flex flex-col md:flex-row gap-6">
+            <div v-for="order in adminOrders" :key="order.id" class="glass-panel p-6 rounded-2xl border border-slate-200 dark:border-slate-800 flex flex-col md:flex-row gap-6">
               <div class="flex-grow space-y-3">
                 <div class="flex justify-between items-center">
                   <div class="flex gap-3 items-center">
@@ -1728,12 +1728,12 @@ const loadingAdminOrders = ref(false)
 const fetchAdminOrders = async () => {
   loadingAdminOrders.value = true
   try {
-    const { data, error } = await supabase.from('orders').select(`
-      *,
-      customers ( full_name, email )
-    `).order('created_at', { ascending: false })
+    const start = (ordersPage.value - 1) * itemsPerPage
+    const end = start + itemsPerPage - 1
+    const { data, error, count } = await supabase.from('orders').select('*, customers ( full_name, email )', { count: 'exact' }).order('created_at', { ascending: false }).range(start, end)
     if (error) throw error
     adminOrders.value = data || []
+    if (count !== null) totalOrdersCount.value = count
   } catch (err) {
     console.error(err)
   } finally {
@@ -1840,9 +1840,10 @@ const loadingAdminCustomers = ref(false)
 const fetchAdminCustomers = async () => {
   loadingAdminCustomers.value = true
   try {
-    const { data, error } = await supabase.from('customers').select('*').order('created_at', { ascending: false })
+    const { data, error, count } = await supabase.from('customers').select('*', { count: 'exact' }).order('created_at', { ascending: false }).range(0, 49)
     if (error) throw error
     adminCustomers.value = data || []
+    if (count !== null) totalCustomersCount.value = count
   } catch (err) {
     console.error(err)
   } finally {
@@ -1991,726 +1992,79 @@ const packageForm = ref({
 })
 
 // Pagination Setup
+
+const totalOrdersCount = ref(0)
+const totalLocationsCount = ref(0)
+const totalBlogPostsCount = ref(0)
+const totalServicesCount = ref(0)
+const totalProductsCount = ref(0)
+const totalCustomersCount = ref(0)
+
 const itemsPerPage = 10
 const ordersPage = ref(1)
 const locationsPage = ref(1)
 
-const paginatedOrders = computed(() => {
-  const start = (ordersPage.value - 1) * itemsPerPage
-  return adminOrders.value.slice(start, start + itemsPerPage)
-})
+
 
 const totalOrdersPages = computed(() => {
-  return Math.ceil(adminOrders.value.length / itemsPerPage) || 1
+  return Math.ceil(totalOrdersCount.value / itemsPerPage) || 1
 })
 const blogPage = ref(1)
 const servicesPage = ref(1)
 
-const paginatedLocations = computed(() => {
-  const start = (locationsPage.value - 1) * itemsPerPage
-  return locations.value.slice(start, start + itemsPerPage)
-})
+
 
 const totalLocationsPages = computed(() => {
-  return Math.ceil(locations.value.length / itemsPerPage) || 1
+  return Math.ceil(totalLocationsCount.value / itemsPerPage) || 1
 })
 
-const paginatedBlogPosts = computed(() => {
-  const start = (blogPage.value - 1) * itemsPerPage
-  return blogPosts.value.slice(start, start + itemsPerPage)
-})
+
 
 const totalBlogPages = computed(() => {
-  return Math.ceil(blogPosts.value.length / itemsPerPage) || 1
+  return Math.ceil(totalBlogPostsCount.value / itemsPerPage) || 1
 })
 
-const paginatedServices = computed(() => {
-  const start = (servicesPage.value - 1) * itemsPerPage
-  return services.value.slice(start, start + itemsPerPage)
-})
+
 
 const totalServicesPages = computed(() => {
-  return Math.ceil(services.value.length / itemsPerPage) || 1
+  return Math.ceil(totalServicesCount.value / itemsPerPage) || 1
 })
 
 const productsPage = ref(1)
 
-const paginatedProducts = computed(() => {
-  const start = (productsPage.value - 1) * itemsPerPage
-  return products.value.slice(start, start + itemsPerPage)
-})
+
 
 const totalProductsPages = computed(() => {
-  return Math.ceil(products.value.length / itemsPerPage) || 1
+  return Math.ceil(totalProductsCount.value / itemsPerPage) || 1
 })
 
 // Load all data from Supabase
 const loadAllData = async () => {
   if (!supabase) return
   
-  // Load Locations
-  const { data: locs } = await supabase.from('locations').select('*').order('name')
+  const locStart = (locationsPage.value - 1) * itemsPerPage
+  const { data: locs, count: locCount } = await supabase.from('locations').select('*', { count: 'exact' }).order('name').range(locStart, locStart + itemsPerPage - 1)
   if (locs) locations.value = locs
+  if (locCount !== null) totalLocationsCount.value = locCount
 
-  // Load Blog Posts
-  const { data: blogs } = await supabase.from('blog_posts').select('*').order('created_at', { ascending: false })
+  const blogStart = (blogPage.value - 1) * itemsPerPage
+  const { data: blogs, count: blogCount } = await supabase.from('blog_posts').select('*', { count: 'exact' }).order('created_at', { ascending: false }).range(blogStart, blogStart + itemsPerPage - 1)
   if (blogs) blogPosts.value = blogs
+  if (blogCount !== null) totalBlogPostsCount.value = blogCount
 
-  // Load Services
-  const { data: servs } = await supabase.from('services').select('*').order('id')
+  const servStart = (servicesPage.value - 1) * itemsPerPage
+  const { data: servs, count: servCount } = await supabase.from('services').select('*', { count: 'exact' }).order('id').range(servStart, servStart + itemsPerPage - 1)
   if (servs) services.value = servs
+  if (servCount !== null) totalServicesCount.value = servCount
 
   // Load Pricing Packages
   const { data: pkgs } = await supabase.from('pricing_packages').select('*').order('sort_order')
   if (pkgs) dbPackages.value = pkgs
 
-  // Load Products
-  const { data: prods } = await supabase.from('products').select('*').order('sort_order')
+  const prodStart = (productsPage.value - 1) * itemsPerPage
+  const { data: prods, count: prodCount } = await supabase.from('products').select('*', { count: 'exact' }).order('sort_order').range(prodStart, prodStart + itemsPerPage - 1)
   if (prods) products.value = prods
-}// 1. Locations Logic
-const locationForm = ref({
-  slug: '', name: '', country: '', image: '',
-  images_boxes: '', images_van: '', images_room: '',
-  hero_title_en: '', hero_title_nl: '', hero_subtitle_en: '', hero_subtitle_nl: '',
-  seo_title_en: '', seo_title_nl: '', seo_desc_en: '', seo_desc_nl: '', seo_keywords_en: '', seo_keywords_nl: '',
-  intro_title_en: '', intro_title_nl: '', intro_text_en: '', intro_text_nl: '',
-  residential_title_en: '', residential_title_nl: '', residential_text_en: '', residential_text_nl: '',
-  commercial_title_en: '', commercial_title_nl: '', commercial_text_en: '', commercial_text_nl: '',
-  packing_title_en: '', packing_title_nl: '', packing_text_en: '', packing_text_nl: '',
-  insights_title_en: '', insights_title_nl: '', insights_text_en: '', insights_text_nl: '',
-  costs_title_en: '', costs_title_nl: '', costs_text_en: '', costs_text_nl: '',
-  neighborhoods_title_en: '', neighborhoods_title_nl: '', neighborhoods_list_en: '', neighborhoods_list_nl: ''
-})
-
-const openAddLocationModal = () => {
-  isEditing.value = false
-  locationForm.value = {
-    slug: '', name: '', country: '', image: '',
-    images_boxes: '', images_van: '', images_room: '',
-    hero_title_en: '', hero_title_nl: '', hero_subtitle_en: '', hero_subtitle_nl: '',
-    seo_title_en: '', seo_title_nl: '', seo_desc_en: '', seo_desc_nl: '', seo_keywords_en: '', seo_keywords_nl: '',
-    intro_title_en: '', intro_title_nl: '', intro_text_en: '', intro_text_nl: '',
-    residential_title_en: '', residential_title_nl: '', residential_text_en: '', residential_text_nl: '',
-    commercial_title_en: '', commercial_title_nl: '', commercial_text_en: '', commercial_text_nl: '',
-    packing_title_en: '', packing_title_nl: '', packing_text_en: '', packing_text_nl: '',
-    insights_title_en: '', insights_title_nl: '', insights_text_en: '', insights_text_nl: '',
-    costs_title_en: '', costs_title_nl: '', costs_text_en: '', costs_text_nl: '',
-    neighborhoods_title_en: '', neighborhoods_title_nl: '', neighborhoods_list_en: '', neighborhoods_list_nl: ''
-  }
-  modals.value.location = true
-}
-
-const openEditLocationModal = (loc) => {
-  isEditing.value = true
-  selectedItem.value = loc
-  locationForm.value = { ...loc }
-  modals.value.location = true
-}
-
-const saveLocation = async () => {
-  if (!supabase || !locationForm.value.slug) return
-  
-  if (isEditing.value && selectedItem.value) {
-    const { error } = await supabase.from('locations').update({ ...locationForm.value }).eq('id', selectedItem.value.id)
-    if (!error) {
-      const idx = locations.value.findIndex(l => l.id === selectedItem.value.id)
-      if (idx !== -1) locations.value[idx] = { ...locationForm.value }
-      modals.value.location = false
-    } else {
-      alert('Error updating location: ' + error.message)
-    }
-  } else {
-    const { data, error } = await supabase.from('locations').insert([{ ...locationForm.value }]).select()
-    if (!error && data) {
-      locations.value.push(data[0])
-      locations.value.sort((a, b) => a.name.localeCompare(b.name))
-      modals.value.location = false
-    } else {
-      alert('Error creating location: ' + error.message)
-    }
-  }
-}
-
-const deleteLocation = async (loc) => {
-  if (!supabase || !confirm(`Delete location "${loc.name}"?`)) return
-  const { error } = await supabase.from('locations').delete().eq('id', loc.id)
-  if (!error) {
-    locations.value = locations.value.filter(l => l.id !== loc.id)
-    if (locationsPage.value > totalLocationsPages.value) {
-      locationsPage.value = Math.max(1, totalLocationsPages.value)
-    }
-  }
-}
-
-
-// 2. Blog Posts Logic
-const blogForm = ref({ slug: '', date: '', title_en: '', title_nl: '', desc_en: '', desc_nl: '', content_en: '', content_nl: '', category_en: '', category_nl: '', read_time_en: '', read_time_nl: '', image: '' })
-const isEditing = ref(false)
-const selectedItem = ref(null)
-const uploading = ref(false)
-const editingSectionId = ref(null)
-const editSectionForm = ref({ title_en: '', title_nl: '', content_en: '', content_nl: '', image: '', sort_order: 0 })
-
-const onFileChange = async (e, type) => {
-  const file = e.target.files[0]
-  if (!file) return
-  
-  uploading.value = true
-  const formData = new FormData()
-  formData.append('file', file)
-  
-  try {
-    const res = await $fetch('/api/upload', {
-      method: 'POST',
-      body: formData
-    })
-    
-    if (res && res.url) {
-      if (type === 'blog') blogForm.value.image = res.url
-      else if (type === 'product') productForm.value.image = res.url
-      else if (type === 'service') serviceForm.value.image = res.url
-      else if (type === 'section') sectionForm.value.image = res.url
-      else if (type === 'edit_section') editSectionForm.value.image = res.url
-      else if (type === 'location') locationForm.value.image = res.url
-      else if (type === 'location_van') locationForm.value.images_van = res.url
-      else if (type === 'location_boxes') locationForm.value.images_boxes = res.url
-      else if (type === 'location_room') locationForm.value.images_room = res.url
-    }
-  } catch (err) {
-    alert('Failed to upload image to Cloudinary.')
-  } finally {
-    uploading.value = false
-  }
-}
-
-const openAddBlogModal = () => {
-  isEditing.value = false
-  blogForm.value = { slug: '', date: '', title_en: '', title_nl: '', desc_en: '', desc_nl: '', content_en: '', content_nl: '', category_en: '', category_nl: '', read_time_en: '', read_time_nl: '', image: '' }
-  modals.value.blog = true
-}
-
-const openEditBlogModal = (post) => {
-  isEditing.value = true
-  selectedItem.value = post
-  blogForm.value = { ...post }
-  modals.value.blog = true
-}
-
-const saveBlogPost = async () => {
-  if (!supabase || !blogForm.value.slug) return
-  
-  if (isEditing.value && selectedItem.value) {
-    const { error } = await supabase.from('blog_posts').update({ ...blogForm.value }).eq('id', selectedItem.value.id)
-    if (!error) {
-      const idx = blogPosts.value.findIndex(p => p.id === selectedItem.value.id)
-      if (idx !== -1) blogPosts.value[idx] = { ...blogForm.value }
-      modals.value.blog = false
-    } else {
-      alert('Error updating post: ' + error.message)
-    }
-  } else {
-    const { data, error } = await supabase.from('blog_posts').insert([{ ...blogForm.value }]).select()
-    if (!error && data) {
-      blogPosts.value.unshift(data[0])
-      modals.value.blog = false
-    } else {
-      alert('Error creating post: ' + error.message)
-    }
-  }
-}
-
-const deleteBlogPost = async (post) => {
-  if (!supabase || !confirm(`Delete post "${post.title_en}"?`)) return
-  const { error } = await supabase.from('blog_posts').delete().eq('id', post.id)
-  if (!error) {
-    blogPosts.value = blogPosts.value.filter(p => p.id !== post.id)
-    if (blogPage.value > totalBlogPages.value) {
-      blogPage.value = Math.max(1, totalBlogPages.value)
-    }
-  }
-}
-
-
-// 3. Services Logic
-const serviceForm = ref({ slug: '', title_en: '', title_nl: '', description_en: '', description_nl: '', image: '' })
-
-const openAddServiceModal = () => {
-  isEditing.value = false
-  serviceForm.value = { slug: '', title_en: '', title_nl: '', description_en: '', description_nl: '', image: '' }
-  modals.value.service = true
-}
-
-const openEditServiceModal = (service) => {
-  isEditing.value = true
-  selectedItem.value = service
-  serviceForm.value = { ...service }
-  modals.value.service = true
-}
-
-const saveService = async () => {
-  if (!supabase || !serviceForm.value.slug) return
-  
-  if (isEditing.value && selectedItem.value) {
-    const { error } = await supabase.from('services').update({ ...serviceForm.value }).eq('id', selectedItem.value.id)
-    if (!error) {
-      const idx = services.value.findIndex(s => s.id === selectedItem.value.id)
-      if (idx !== -1) services.value[idx] = { ...serviceForm.value }
-      modals.value.service = false
-    } else {
-      alert('Error updating service: ' + error.message)
-    }
-  } else {
-    const { data, error } = await supabase.from('services').insert([{ ...serviceForm.value }]).select()
-    if (!error && data) {
-      services.value.push(data[0])
-      modals.value.service = false
-    } else {
-      alert('Error creating service: ' + error.message)
-    }
-  }
-}
-
-const deleteService = async (service) => {
-  if (!supabase || !confirm(`Delete service "${service.title_en}" and all its sections?`)) return
-  const { error } = await supabase.from('services').delete().eq('id', service.id)
-  if (!error) {
-    services.value = services.value.filter(s => s.id !== service.id)
-    if (servicesPage.value > totalServicesPages.value) {
-      servicesPage.value = Math.max(1, totalServicesPages.value)
-    }
-  }
-}
-
-
-// 4. Service Inner Sections Logic
-const selectedService = ref(null)
-const sectionForm = ref({ title_en: '', title_nl: '', content_en: '', content_nl: '', image: '', sort_order: 0 })
-
-const editSection = (sec) => {
-  editingSectionId.value = sec.id
-  editSectionForm.value = {
-    title_en: sec.title_en || '',
-    title_nl: sec.title_nl || '',
-    content_en: sec.content_en || '',
-    content_nl: sec.content_nl || '',
-    image: sec.image || '',
-    sort_order: sec.sort_order || 0
-  }
-}
-
-const cancelSectionEdit = () => {
-  editingSectionId.value = null
-  editSectionForm.value = { title_en: '', title_nl: '', content_en: '', content_nl: '', image: '', sort_order: 0 }
-}
-
-const manageServiceSections = async (service) => {
-  if (!supabase) return
-  selectedService.value = service
-  sectionForm.value = { title_en: '', title_nl: '', content_en: '', content_nl: '', image: '', sort_order: 0 }
-  cancelSectionEdit()
-  
-  // Load sections for this service
-  const { data: secs } = await supabase
-    .from('service_sections')
-    .select('*')
-    .eq('service_id', service.id)
-    .order('sort_order')
-    
-  if (secs) serviceSections.value = secs
-  modals.value.sections = true
-}
-
-const addServiceSection = async () => {
-  if (!supabase || !selectedService.value) return
-  
-  const { data, error } = await supabase.from('service_sections').insert([{
-    service_id: selectedService.value.id,
-    ...sectionForm.value
-  }]).select()
-  
-  if (!error && data) {
-    serviceSections.value.push(data[0])
-    serviceSections.value.sort((a, b) => a.sort_order - b.sort_order)
-    sectionForm.value = { title_en: '', title_nl: '', content_en: '', content_nl: '', image: '', sort_order: 0 }
-  } else {
-    alert('Error adding section: ' + (error ? error.message : 'Unknown error'))
-  }
-}
-
-const updateServiceSection = async () => {
-  if (!supabase || !editingSectionId.value) return
-  
-  const { error } = await supabase
-    .from('service_sections')
-    .update({
-      title_en: editSectionForm.value.title_en,
-      title_nl: editSectionForm.value.title_nl,
-      content_en: editSectionForm.value.content_en,
-      content_nl: editSectionForm.value.content_nl,
-      image: editSectionForm.value.image,
-      sort_order: editSectionForm.value.sort_order
-    })
-    .eq('id', editingSectionId.value)
-    
-  if (!error) {
-    const idx = serviceSections.value.findIndex(s => s.id === editingSectionId.value)
-    if (idx !== -1) {
-      serviceSections.value[idx] = { 
-        ...serviceSections.value[idx],
-        ...editSectionForm.value
-      }
-    }
-    serviceSections.value.sort((a, b) => a.sort_order - b.sort_order)
-    cancelSectionEdit()
-  } else {
-    alert('Error updating section: ' + error.message)
-  }
-}
-
-const deleteServiceSection = async (sec) => {
-  if (!supabase || !confirm(`Delete this section?`)) return
-  const { error } = await supabase.from('service_sections').delete().eq('id', sec.id)
-  if (!error) {
-    serviceSections.value = serviceSections.value.filter(s => s.id !== sec.id)
-    if (editingSectionId.value === sec.id) {
-      cancelSectionEdit()
-    }
-  }
-}
-
-// 5. Blog Posts Inner Sections Logic
-const selectedBlog = ref(null)
-const blogSections = ref([])
-
-const manageBlogSections = async (blog) => {
-  if (!supabase) return
-  selectedBlog.value = blog
-  sectionForm.value = { title_en: '', title_nl: '', content_en: '', content_nl: '', image: '', sort_order: 0 }
-  cancelSectionEdit()
-  
-  // Load sections for this blog post
-  const { data: secs } = await supabase
-    .from('blog_sections')
-    .select('*')
-    .eq('blog_id', blog.id)
-    .order('sort_order')
-    
-  if (secs) blogSections.value = secs
-  modals.value.blogSections = true
-}
-
-const addBlogSection = async () => {
-  if (!supabase || !selectedBlog.value) return
-  
-  const { data, error } = await supabase.from('blog_sections').insert([{
-    blog_id: selectedBlog.value.id,
-    ...sectionForm.value
-  }]).select()
-  
-  if (!error && data) {
-    blogSections.value.push(data[0])
-    blogSections.value.sort((a, b) => a.sort_order - b.sort_order)
-    sectionForm.value = { title_en: '', title_nl: '', content_en: '', content_nl: '', image: '', sort_order: 0 }
-  } else {
-    alert('Error adding section: ' + (error ? error.message : 'Unknown error'))
-  }
-}
-
-const updateBlogSection = async () => {
-  if (!supabase || !editingSectionId.value) return
-  
-  const { error } = await supabase
-    .from('blog_sections')
-    .update({
-      title_en: editSectionForm.value.title_en,
-      title_nl: editSectionForm.value.title_nl,
-      content_en: editSectionForm.value.content_en,
-      content_nl: editSectionForm.value.content_nl,
-      image: editSectionForm.value.image,
-      sort_order: editSectionForm.value.sort_order
-    })
-    .eq('id', editingSectionId.value)
-    
-  if (!error) {
-    const idx = blogSections.value.findIndex(s => s.id === editingSectionId.value)
-    if (idx !== -1) {
-      blogSections.value[idx] = { 
-        ...blogSections.value[idx],
-        ...editSectionForm.value
-      }
-    }
-    blogSections.value.sort((a, b) => a.sort_order - b.sort_order)
-    cancelSectionEdit()
-  } else {
-    alert('Error updating section: ' + error.message)
-  }
-}
-
-const deleteBlogSection = async (sec) => {
-  if (!supabase || !confirm(`Delete this section?`)) return
-  const { error } = await supabase.from('blog_sections').delete().eq('id', sec.id)
-  if (!error) {
-    blogSections.value = blogSections.value.filter(s => s.id !== sec.id)
-    if (editingSectionId.value === sec.id) {
-      cancelSectionEdit()
-    }
-  }
-}
-
-// 6. Locations Inner Sections Logic
-const selectedLocation = ref(null)
-const locationSections = ref([])
-
-const manageLocationSections = async (loc) => {
-  if (!supabase) return
-  selectedLocation.value = loc
-  sectionForm.value = { title_en: '', title_nl: '', content_en: '', content_nl: '', image: '', sort_order: 0 }
-  cancelSectionEdit()
-  
-  // Load sections for this location
-  const { data: secs } = await supabase
-    .from('location_sections')
-    .select('*')
-    .eq('location_id', loc.id)
-    .order('sort_order')
-    
-  if (secs) locationSections.value = secs
-  modals.value.locationSections = true
-}
-
-const addLocationSection = async () => {
-  if (!supabase || !selectedLocation.value) return
-  
-  const { data, error } = await supabase.from('location_sections').insert([{
-    location_id: selectedLocation.value.id,
-    ...sectionForm.value
-  }]).select()
-  
-  if (!error && data) {
-    locationSections.value.push(data[0])
-    locationSections.value.sort((a, b) => a.sort_order - b.sort_order)
-    sectionForm.value = { title_en: '', title_nl: '', content_en: '', content_nl: '', image: '', sort_order: 0 }
-  } else {
-    alert('Error adding section: ' + (error ? error.message : 'Unknown error'))
-  }
-}
-
-const updateLocationSection = async () => {
-  if (!supabase || !editingSectionId.value) return
-  
-  const { error } = await supabase
-    .from('location_sections')
-    .update({
-      title_en: editSectionForm.value.title_en,
-      title_nl: editSectionForm.value.title_nl,
-      content_en: editSectionForm.value.content_en,
-      content_nl: editSectionForm.value.content_nl,
-      image: editSectionForm.value.image,
-      sort_order: editSectionForm.value.sort_order
-    })
-    .eq('id', editingSectionId.value)
-    
-  if (!error) {
-    const idx = locationSections.value.findIndex(s => s.id === editingSectionId.value)
-    if (idx !== -1) {
-      locationSections.value[idx] = { 
-        ...locationSections.value[idx],
-        ...editSectionForm.value
-      }
-    }
-    locationSections.value.sort((a, b) => a.sort_order - b.sort_order)
-    cancelSectionEdit()
-  } else {
-    alert('Error updating section: ' + error.message)
-  }
-}
-
-const deleteLocationSection = async (sec) => {
-  if (!supabase || !confirm(`Delete this section?`)) return
-  const { error } = await supabase.from('location_sections').delete().eq('id', sec.id)
-  if (!error) {
-    locationSections.value = locationSections.value.filter(s => s.id !== sec.id)
-    if (editingSectionId.value === sec.id) {
-      cancelSectionEdit()
-    }
-  }
-}
-
-// Pricing CRUD methods
-const openAddPackageModal = () => {
-  isEditing.value = false
-  selectedItem.value = null
-  packageForm.value = {
-    key_name: '',
-    icon: '🚐',
-    popular: false,
-    name_en: '',
-    name_nl: '',
-    price_en: '',
-    price_nl: '',
-    unit_en: '',
-    unit_nl: '',
-    cta_text_en: '',
-    cta_text_nl: '',
-    cta_link: '/contact',
-    tag_en: '',
-    tag_nl: '',
-    description_en: '',
-    description_nl: '',
-    best_for_raw_en: '',
-    best_for_raw_nl: '',
-    includes_raw_en: '',
-    includes_raw_nl: '',
-    sort_order: dbPackages.value.length
-  }
-  modals.value.pricingPackage = true
-}
-
-const openEditPackageModal = (pkg) => {
-  isEditing.value = true
-  selectedItem.value = pkg
-  
-  const bestForListEN = pkg.best_for || []
-  const bestForListNL = pkg.best_for_nl || []
-  
-  const tagItemEN = bestForListEN.find(item => item.icon === 'tag')
-  const descItemEN = bestForListEN.find(item => item.icon === 'description')
-  
-  const tagItemNL = bestForListNL.find(item => item.icon === 'tag')
-  const descItemNL = bestForListNL.find(item => item.icon === 'description')
-  
-  const filteredBestForEN = bestForListEN.filter(item => item.icon !== 'tag' && item.icon !== 'description')
-  const filteredBestForNL = bestForListNL.filter(item => item.icon !== 'tag' && item.icon !== 'description')
-
-  packageForm.value = {
-    key_name: pkg.key_name,
-    icon: pkg.icon,
-    popular: pkg.popular,
-    name_en: pkg.name_en,
-    name_nl: pkg.name_nl,
-    price_en: pkg.price_en,
-    price_nl: pkg.price_nl,
-    unit_en: pkg.unit_en,
-    unit_nl: pkg.unit_nl,
-    cta_text_en: pkg.cta_text_en,
-    cta_text_nl: pkg.cta_text_nl,
-    cta_link: pkg.cta_link,
-    tag_en: tagItemEN ? tagItemEN.text : '',
-    tag_nl: tagItemNL ? tagItemNL.text : '',
-    description_en: descItemEN ? descItemEN.text : '',
-    description_nl: descItemNL ? descItemNL.text : '',
-    best_for_raw_en: filteredBestForEN.map(item => `${item.icon || '📦'}|${item.text || ''}`).join('\n'),
-    best_for_raw_nl: filteredBestForNL.map(item => `${item.icon || '📦'}|${item.text || ''}`).join('\n'),
-    includes_raw_en: (pkg.includes_en || []).join('\n'),
-    includes_raw_nl: (pkg.includes_nl || []).join('\n'),
-    sort_order: pkg.sort_order
-  }
-  modals.value.pricingPackage = true
-}
-
-const savePackage = async () => {
-  if (!supabase || !packageForm.value.key_name) return
-
-  // Parse best_for and includes
-  const best_for = packageForm.value.best_for_raw_en
-    .split('\n')
-    .filter(line => line.trim())
-    .map(line => {
-      const [icon, ...textParts] = line.split('|')
-      return { icon: icon ? icon.trim() : '📦', text: textParts.join('|').trim() }
-    })
-
-  const best_for_nl = packageForm.value.best_for_raw_nl
-    .split('\n')
-    .filter(line => line.trim())
-    .map(line => {
-      const [icon, ...textParts] = line.split('|')
-      return { icon: icon ? icon.trim() : '📦', text: textParts.join('|').trim() }
-    })
-
-  // Add tag and description to best_for arrays
-  if (packageForm.value.tag_en) {
-    best_for.push({ icon: 'tag', text: packageForm.value.tag_en })
-  }
-  if (packageForm.value.tag_nl) {
-    best_for_nl.push({ icon: 'tag', text: packageForm.value.tag_nl })
-  }
-  if (packageForm.value.description_en) {
-    best_for.push({ icon: 'description', text: packageForm.value.description_en })
-  }
-  if (packageForm.value.description_nl) {
-    best_for_nl.push({ icon: 'description', text: packageForm.value.description_nl })
-  }
-
-  const includes_en = packageForm.value.includes_raw_en
-    .split('\n')
-    .filter(line => line.trim())
-
-  const includes_nl = packageForm.value.includes_raw_nl
-    .split('\n')
-    .filter(line => line.trim())
-
-  const payload = {
-    key_name: packageForm.value.key_name,
-    icon: packageForm.value.icon,
-    popular: packageForm.value.popular,
-    name_en: packageForm.value.name_en,
-    name_nl: packageForm.value.name_nl,
-    price_en: packageForm.value.price_en,
-    price_nl: packageForm.value.price_nl,
-    unit_en: packageForm.value.unit_en,
-    unit_nl: packageForm.value.unit_nl,
-    cta_text_en: packageForm.value.cta_text_en,
-    cta_text_nl: packageForm.value.cta_text_nl,
-    cta_link: packageForm.value.cta_link,
-    best_for,
-    best_for_nl,
-    includes_en,
-    includes_nl,
-    sort_order: packageForm.value.sort_order
-  }
-
-  if (isEditing.value && selectedItem.value) {
-    const { error } = await supabase
-      .from('pricing_packages')
-      .update(payload)
-      .eq('id', selectedItem.value.id)
-
-    if (!error) {
-      const idx = dbPackages.value.findIndex(p => p.id === selectedItem.value.id)
-      if (idx !== -1) dbPackages.value[idx] = { ...selectedItem.value, ...payload }
-      modals.value.pricingPackage = false
-    } else {
-      alert('Error updating package: ' + error.message)
-    }
-  } else {
-    const { data, error } = await supabase
-      .from('pricing_packages')
-      .insert([payload])
-      .select()
-
-    if (!error && data) {
-      dbPackages.value.push(data[0])
-      dbPackages.value.sort((a, b) => a.sort_order - b.sort_order)
-      modals.value.pricingPackage = false
-    } else {
-      alert('Error creating package: ' + error.message)
-    }
-  }
-}
-
-const deletePackage = async (pkg) => {
-  if (!supabase || !confirm(`Delete package "${pkg.name_en}"?`)) return
-  const { error } = await supabase
-    .from('pricing_packages')
-    .delete()
-    .eq('id', pkg.id)
-
-  if (!error) {
-    dbPackages.value = dbPackages.value.filter(p => p.id !== pkg.id)
-  } else {
-    alert('Error deleting package: ' + error.message)
-  }
+  if (prodCount !== null) totalProductsCount.value = prodCount
 }
 // Modals display control
 const modals = ref({

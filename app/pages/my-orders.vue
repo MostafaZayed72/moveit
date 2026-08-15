@@ -41,7 +41,7 @@
         </div>
 
         <div v-else class="space-y-6">
-          <div v-for="order in paginatedOrders" :key="order.id" class="glass-panel p-6 rounded-3xl border border-slate-200 dark:border-slate-800 flex flex-col md:flex-row gap-6 items-start">
+          <div v-for="order in orders" :key="order.id" class="glass-panel p-6 rounded-3xl border border-slate-200 dark:border-slate-800 flex flex-col md:flex-row gap-6 items-start">
             <div class="flex-grow space-y-3">
               <div class="flex items-center gap-3">
                 <span class="text-xs font-bold text-slate-400">Order #{{ order.id.split('-')[0] }}</span>
@@ -145,15 +145,12 @@ const orders = ref([])
 const loadingOrders = ref(false)
 
 const currentPage = ref(1)
+const totalOrdersCount = ref(0)
 const itemsPerPage = 5
 
-const totalPages = computed(() => Math.ceil(orders.value.length / itemsPerPage))
+const totalPages = computed(() => Math.ceil(totalOrdersCount.value / itemsPerPage) || 1)
 
-const paginatedOrders = computed(() => {
-  const start = (currentPage.value - 1) * itemsPerPage
-  const end = start + itemsPerPage
-  return orders.value.slice(start, end)
-})
+
 
 const editingOrder = ref(null)
 const editForm = ref({
@@ -214,14 +211,19 @@ const fetchOrders = async () => {
   
   loadingOrders.value = true
   try {
-    const { data, error } = await supabase
+    const start = (currentPage.value - 1) * itemsPerPage
+    const end = start + itemsPerPage - 1
+
+    const { data, error, count } = await supabase
       .from('orders')
-      .select('*')
+      .select('*', { count: 'exact' })
       .or(`customer_id.eq.${userId},form_data->>email.eq.${userEmail}`)
       .order('created_at', { ascending: false })
+      .range(start, end)
       
     if (error) throw error
     orders.value = data || []
+    if (count !== null) totalOrdersCount.value = count
     
     // Auto-claim orders that match email but lack the correct customer_id
     const unclaimedOrders = orders.value.filter(o => o.customer_id !== userId)
