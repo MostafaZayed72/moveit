@@ -2319,8 +2319,11 @@
   "admin": {
     "title": "Admin Dashboard",
     "menu": {
-      "orders": "ORDERS",
-      "customers": "CUSTOMERS",
+      "orders": "ORDERS & LEADS",
+      "sales_dashboard": "SALES DASHBOARD",
+      "smart_dispatch": "SMART DISPATCH",
+      "crm_leads": "CRM & CUSTOMERS",
+      "ai_intelligence": "AI CALL INTELLIGENCE",
       "financials": "FINANCIALS",
       "locations": "LOCATIONS",
       "blog": "BLOG",

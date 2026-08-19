@@ -2275,8 +2275,11 @@
   "admin": {
     "title": "Beheerdersdashboard",
     "menu": {
-      "orders": "BESTELLINGEN",
-      "customers": "KLANTEN",
+      "orders": "ORDERS & LEADS",
+      "sales_dashboard": "VERKOOP DASHBOARD",
+      "smart_dispatch": "SLIMME DISPATCH",
+      "crm_leads": "CRM & KLANTEN",
+      "ai_intelligence": "AI GESPREKSINZICHT",
       "financials": "FINANCIËN",
       "locations": "LOCATIES",
       "blog": "BLOG",
