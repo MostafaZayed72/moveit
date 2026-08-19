@@ -1,12 +1,12 @@
 <template>
-  <div class="pt-32 pb-24 min-h-screen bg-slate-50 dark:bg-brand-black text-slate-900 dark:text-slate-100 font-sans relative">
+  <div class="pt-8 pb-24 min-h-screen bg-slate-50 dark:bg-brand-black text-slate-900 dark:text-slate-100 font-sans relative">
     <!-- Background Decor -->
     <div class="absolute inset-0 z-0 pointer-events-none overflow-hidden">
       <div class="absolute -top-40 left-1/4 w-96 h-96 rounded-full bg-red-600/10 blur-3xl"></div>
       <div class="absolute top-1/2 -right-40 w-96 h-96 rounded-full bg-red-600/5 blur-3xl"></div>
     </div>
 
-    <div class="container mx-auto px-6 max-w-6xl relative z-10">
+    <div class="w-full px-4 sm:px-6 lg:px-8 relative z-10 max-w-[1920px] mx-auto">
       <!-- 1. Password Protection Gate -->
       <div v-if="!isAuthorized" class="max-w-md mx-auto my-12" data-aos="zoom-in">
         <div class="glass-panel p-10 rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-white dark:bg-slate-950/60 shadow-2xl text-center space-y-6">
@@ -41,7 +41,7 @@
             <p v-if="authError" class="text-xs font-bold text-red-500 bg-red-500/10 rounded-xl py-2 px-4 text-center">{{ authError }}</p>
             <button 
               type="submit" 
-              class="w-full py-4 bg-red-600 hover:bg-red-700 text-slate-900 dark:text-white rounded-xl font-bold shadow-lg transition-all active:scale-95 flex items-center justify-center gap-2 mt-2"
+              class="w-full py-4 bg-red-600 hover:bg-red-700 text-white rounded-xl font-bold shadow-lg transition-all active:scale-95 flex items-center justify-center gap-2 mt-2"
               :disabled="authLoading"
             >
               <svg v-if="authLoading" class="animate-spin h-5 w-5 text-slate-900 dark:text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -55,41 +55,99 @@
       </div>
 
       <!-- 2. Main Dashboard Interface -->
-      <div v-else>
-        <!-- Header -->
-        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-12">
-          <div>
-            <h1 class="text-4xl md:text-5xl font-black text-slate-900 dark:text-white tracking-tight">
-              Move<span class="text-red-500">It</span> Dashboard
-            </h1>
-            <p class="text-slate-500 dark:text-slate-400 mt-1">Manage locations, blog posts, and service pages.</p>
+      <div v-else class="flex flex-col md:flex-row gap-8 w-full mx-auto transition-all duration-300">
+        
+        <!-- Sidebar -->
+        <aside class="w-full md:w-64 flex-shrink-0 flex flex-col gap-6 bg-white dark:bg-slate-950/60 p-6 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xl h-fit sticky top-6 z-20 backdrop-blur-xl">
+          <!-- Header -->
+          <div class="mb-4 border-b border-slate-100 dark:border-slate-800 pb-6">
+            <NuxtLink to="/" class="block group">
+              <img :src="'/images/logo.svg'" alt="MoveIt Logo" class="h-10 w-auto group-hover:scale-105 transition-transform origin-left" />
+            </NuxtLink>
+            <p class="text-[10px] uppercase tracking-widest font-bold text-slate-400 mt-4">{{ $t('admin.title') }}</p>
           </div>
-          <button @click="logout" class="px-5 py-2.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold rounded-xl text-sm transition-all border border-slate-700 flex items-center gap-2">
-            Logout <span>🚪</span>
-          </button>
-        </div>
 
-        <!-- Navigation Tabs -->
-        <div class="flex border-b border-slate-200 dark:border-slate-800 mb-8 overflow-x-auto overflow-y-hidden gap-2 scrollbar-none">
-          <button 
-            v-for="tab in ['orders', 'customers', 'financials', 'locations', 'blog', 'services', 'pricing', 'products']" 
-            :key="tab"
-            @click="activeTab = tab"
-            :class="[
-              'px-6 py-4 font-bold text-sm tracking-wider uppercase transition-all whitespace-nowrap border-b-2 -mb-[2px]',
-              activeTab === tab ? 'border-red-600 text-red-500' : 'border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white'
-            ]"
-          >
-            {{ tab }}
-          </button>
-        </div>
+          <!-- Navigation -->
+          <nav class="flex flex-col gap-2">
+            <button 
+              v-for="tab in ['orders', 'customers', 'financials', 'locations', 'blog', 'services', 'pricing', 'products']" 
+              :key="tab"
+              @click="activeTab = tab"
+              :class="[
+                'w-full text-left px-5 py-3.5 rounded-2xl font-bold text-xs tracking-wider uppercase transition-all flex items-center justify-between group overflow-hidden relative',
+                activeTab === tab 
+                  ? 'bg-red-600 text-white shadow-lg shadow-red-600/20 ring-1 ring-red-500' 
+                  : 'bg-transparent text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-900 hover:text-slate-900 dark:hover:text-white border border-transparent hover:border-slate-200 dark:hover:border-slate-800'
+              ]"
+            >
+              <div v-if="activeTab === tab" class="absolute inset-0 bg-gradient-to-r from-red-500/0 via-white/20 to-red-500/0 translate-x-[-100%] animate-[shimmer_2s_infinite]"></div>
+              <span class="relative z-10 flex items-center gap-3">
+                <span class="text-lg opacity-80" v-if="tab === 'orders'">📦</span>
+                <span class="text-lg opacity-80" v-if="tab === 'customers'">👥</span>
+                <span class="text-lg opacity-80" v-if="tab === 'financials'">💰</span>
+                <span class="text-lg opacity-80" v-if="tab === 'locations'">📍</span>
+                <span class="text-lg opacity-80" v-if="tab === 'blog'">📝</span>
+                <span class="text-lg opacity-80" v-if="tab === 'services'">🛠️</span>
+                <span class="text-lg opacity-80" v-if="tab === 'pricing'">🏷️</span>
+                <span class="text-lg opacity-80" v-if="tab === 'products'">🛍️</span>
+                {{ $t('admin.menu.' + tab) }}
+              </span>
+            </button>
+          </nav>
 
-        <!-- TAB CONTENT: LOCATIONS -->
+          
+          <!-- Toggles & Actions -->
+          <div class="mt-8 pt-6 border-t border-slate-100 dark:border-slate-800 space-y-4">
+            <!-- Language and Theme Toggles -->
+            <div class="flex items-center justify-between px-2">
+              <div class="flex items-center gap-2">
+                <button @click="setLocale('en')" :class="['w-8 h-8 rounded-full overflow-hidden transition-all', locale === 'en' ? 'ring-2 ring-red-500' : 'opacity-40 hover:opacity-100']">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 30" class="w-full h-full">
+                    <clipPath id="ma"><path d="M0 0v30h60V0z"/></clipPath>
+                    <clipPath id="mb"><path d="M30 15h30v15zv15H0zH0V0zV0h30z"/></clipPath>
+                    <g clip-path="url(#ma)">
+                      <path d="M0 0v30h60V0z" fill="#012169"/>
+                      <path d="M0 0l60 30m0-30L0 30" stroke="#fff" stroke-width="6"/>
+                      <path d="M0 0l60 30m0-30L0 30" clip-path="url(#mb)" stroke="#C8102E" stroke-width="4"/>
+                      <path d="M30 0v30M0 15h60" stroke="#fff" stroke-width="10"/>
+                      <path d="M30 0v30M0 15h60" stroke="#C8102E" stroke-width="6"/>
+                    </g>
+                  </svg>
+                </button>
+                <button @click="setLocale('nl')" :class="['w-8 h-8 rounded-full overflow-hidden transition-all', locale === 'nl' ? 'ring-2 ring-red-500' : 'opacity-40 hover:opacity-100']">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 9 6" class="w-full h-full">
+                    <rect width="9" height="2" y="0" fill="#AE1C28"/>
+                    <rect width="9" height="2" y="2" fill="#fff"/>
+                    <rect width="9" height="2" y="4" fill="#21468B"/>
+                  </svg>
+                </button>
+              </div>
+
+              <button @click="toggleDark()" :class="['w-8 h-8 rounded-full flex items-center justify-center border transition-colors', isDark ? 'bg-slate-800 border-slate-700 text-yellow-400 hover:bg-slate-700' : 'bg-slate-100 border-slate-200 text-slate-700 hover:bg-slate-200']">
+                <svg v-if="isDark" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707M17.657 17.657l-.707-.707M6.343 6.343l-.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z"/></svg>
+                <svg v-else class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+              </button>
+            </div>
+
+            <!-- Logout -->
+            <button @click="logout" class="w-full px-5 py-3.5 bg-slate-50 dark:bg-slate-900 hover:bg-red-500/10 hover:text-red-500 text-slate-700 dark:text-slate-300 font-bold rounded-2xl text-xs tracking-wider uppercase transition-all border border-slate-200 dark:border-slate-800 hover:border-red-500/30 flex items-center justify-center gap-2 group">
+              <span>{{ $t('admin.menu.logout') }}</span> 
+              <span class="group-hover:translate-x-1 transition-transform">🚪</span>
+            </button>
+          </div>
+
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="flex-1 min-w-0 bg-white dark:bg-slate-950/60 backdrop-blur-xl border border-slate-200 dark:border-slate-800 rounded-3xl p-6 md:p-10 shadow-2xl overflow-hidden min-h-[75vh] relative flex flex-col">
+          <div class="absolute top-0 right-0 w-64 h-64 bg-red-500/5 blur-3xl rounded-full pointer-events-none"></div>
+          
+<!-- TAB CONTENT: LOCATIONS -->
         <div v-if="activeTab === 'locations'" class="space-y-6" data-aos="fade-up">
           <div class="flex justify-between items-center">
-            <h2 class="text-2xl font-black text-slate-900 dark:text-white">Manage Locations</h2>
-            <button @click="openAddLocationModal" class="px-6 py-3 bg-red-600 hover:bg-red-700 text-slate-900 dark:text-white font-bold rounded-xl flex items-center gap-2 shadow-lg shadow-red-600/10 dark:shadow-red-600/20">
-              ➕ Add New Location
+            <h2 class="text-2xl font-black text-slate-900 dark:text-white">{{ $t('admin.locations.title') }}</h2>
+            <button @click="openAddLocationModal" class="px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl flex items-center gap-2 shadow-lg shadow-red-600/10 dark:shadow-red-600/20">
+              ➕ {{ $t('admin.locations.add') }}
             </button>
           </div>
 
@@ -98,7 +156,7 @@
               <div class="h-44 bg-slate-50 dark:bg-slate-900 relative">
                 <img v-if="loc.image" :src="loc.image" class="w-full h-full object-cover" :alt="loc.name" />
                 <div v-else class="w-full h-full flex items-center justify-center text-slate-600">No Image</div>
-                <div class="absolute top-3 left-3 px-2 py-0.5 bg-red-600 text-slate-900 dark:text-white text-[10px] font-bold rounded-full uppercase">{{ loc.country || 'Netherlands' }}</div>
+                <div class="absolute top-3 left-3 px-2 py-0.5 bg-red-600 text-white text-[10px] font-bold rounded-full uppercase">{{ loc.country || 'Netherlands' }}</div>
               </div>
               <div class="p-6 flex-grow flex flex-col justify-between space-y-4">
                 <div>
@@ -119,7 +177,7 @@
               </div>
             </div>
             <div v-if="locations.length === 0" class="col-span-full py-16 text-center text-slate-500 bg-slate-100 dark:bg-white dark:bg-slate-950/20 border border-slate-200 dark:border-slate-900 rounded-3xl">
-              No locations found. Click "Add New Location" to create one.
+              {{ $t('admin.locations.empty') }}
             </div>
           </div>
 
@@ -159,7 +217,7 @@
         <div v-if="activeTab === 'blog'" class="space-y-6" data-aos="fade-up">
           <div class="flex justify-between items-center">
             <h2 class="text-2xl font-black text-slate-900 dark:text-white">Manage Blog Posts</h2>
-            <button @click="openAddBlogModal" class="px-6 py-3 bg-red-600 hover:bg-red-700 text-slate-900 dark:text-white font-bold rounded-xl flex items-center gap-2 shadow-lg shadow-red-600/10 dark:shadow-red-600/20">
+            <button @click="openAddBlogModal" class="px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl flex items-center gap-2 shadow-lg shadow-red-600/10 dark:shadow-red-600/20">
               ➕ Add New Post
             </button>
           </div>
@@ -169,7 +227,7 @@
               <div class="h-44 bg-slate-50 dark:bg-slate-900 relative">
                 <img v-if="post.image" :src="post.image" class="w-full h-full object-cover" :alt="post.title_en" />
                 <div v-else class="w-full h-full flex items-center justify-center text-slate-600">No Image</div>
-                <div class="absolute top-3 left-3 px-2 py-0.5 bg-red-600 text-slate-900 dark:text-white text-[10px] font-bold rounded-full uppercase">{{ post.category_en }}</div>
+                <div class="absolute top-3 left-3 px-2 py-0.5 bg-red-600 text-white text-[10px] font-bold rounded-full uppercase">{{ post.category_en }}</div>
               </div>
               <div class="p-6 flex-grow flex flex-col justify-between space-y-4">
                 <div>
@@ -233,7 +291,7 @@
         <div v-if="activeTab === 'services'" class="space-y-6" data-aos="fade-up">
           <div class="flex justify-between items-center">
             <h2 class="text-2xl font-black text-slate-900 dark:text-white">Manage Services</h2>
-            <button @click="openAddServiceModal" class="px-6 py-3 bg-red-600 hover:bg-red-700 text-slate-900 dark:text-white font-bold rounded-xl flex items-center gap-2 shadow-lg shadow-red-600/10 dark:shadow-red-600/20">
+            <button @click="openAddServiceModal" class="px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl flex items-center gap-2 shadow-lg shadow-red-600/10 dark:shadow-red-600/20">
               ➕ Add New Service
             </button>
           </div>
@@ -309,7 +367,7 @@
           <div class="space-y-6">
             <div class="flex justify-between items-center">
               <h2 class="text-2xl font-black text-slate-900 dark:text-white">Manage Pricing Packages</h2>
-              <button @click="openAddPackageModal" class="px-6 py-3 bg-red-600 hover:bg-red-700 text-slate-900 dark:text-white font-bold rounded-xl flex items-center gap-2 shadow-lg shadow-red-600/10 dark:shadow-red-600/20">
+              <button @click="openAddPackageModal" class="px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl flex items-center gap-2 shadow-lg shadow-red-600/10 dark:shadow-red-600/20">
                 ➕ Add New Package
               </button>
             </div>
@@ -353,7 +411,7 @@
         <div v-if="activeTab === 'products'" class="space-y-6" data-aos="fade-up">
           <div class="flex justify-between items-center">
             <h2 class="text-2xl font-black text-slate-900 dark:text-white">Manage Products</h2>
-            <button @click="openAddProductModal" class="px-6 py-3 bg-red-600 hover:bg-red-700 text-slate-900 dark:text-white font-bold rounded-xl flex items-center gap-2 shadow-lg shadow-red-600/10 dark:shadow-red-600/20">
+            <button @click="openAddProductModal" class="px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl flex items-center gap-2 shadow-lg shadow-red-600/10 dark:shadow-red-600/20">
               ➕ Add New Product
             </button>
           </div>
@@ -363,7 +421,7 @@
               <div class="h-44 bg-slate-50 dark:bg-slate-900 relative">
                 <img v-if="getFirstProductImage(prod.image)" :src="getFirstProductImage(prod.image)" class="w-full h-full object-cover" :alt="prod.title_en" />
                 <div v-else class="w-full h-full flex items-center justify-center text-slate-600 text-xs uppercase font-bold tracking-wider">No Image</div>
-                <div class="absolute top-3 left-3 px-2.5 py-0.5 bg-red-600 text-slate-900 dark:text-white text-[10px] font-bold rounded-full uppercase">€{{ prod.price }}</div>
+                <div class="absolute top-3 left-3 px-2.5 py-0.5 bg-red-600 text-white text-[10px] font-bold rounded-full uppercase">€{{ prod.price }}</div>
               </div>
               <div class="p-6 flex-grow flex flex-col justify-between space-y-4">
                 <div>
@@ -423,12 +481,25 @@
         <!-- TAB CONTENT: ORDERS -->
         <div v-if="activeTab === 'orders'" class="space-y-6" data-aos="fade-up">
           <div class="flex justify-between items-center">
-            <h2 class="text-2xl font-black text-slate-900 dark:text-white">Manage Orders</h2>
+            <h2 class="text-2xl font-black text-slate-900 dark:text-white">{{ $t('admin.orders.title') }}</h2>
             <button @click="fetchAdminOrders" class="px-4 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 font-bold rounded-xl text-sm transition-all">
               🔄 Refresh
             </button>
           </div>
-          <div v-if="loadingAdminOrders" class="text-center py-8 text-slate-500">Loading orders...</div>
+          
+          <div class="flex flex-col md:flex-row gap-4 mt-6 mb-6 bg-slate-50 dark:bg-slate-900/50 p-4 rounded-2xl border border-slate-200 dark:border-slate-800">
+            <input type="text" v-model="ordersSearchQuery" :placeholder="$t('admin.orders.search')" class="flex-grow bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-sm outline-none focus:border-red-500" @keyup.enter="applyOrdersFilter" />
+            <input type="date" v-model="ordersDateFilter" class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-sm outline-none focus:border-red-500" @change="applyOrdersFilter" />
+            <select v-model="ordersStatusFilter" class="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-sm outline-none focus:border-red-500" @change="applyOrdersFilter">
+              <option value="all">{{ $t('admin.orders.status.all') }}</option>
+              <option value="Pending">Pending</option>
+              <option value="Confirmed">Confirmed</option>
+              <option value="Completed">Completed</option>
+              <option value="Cancelled">Cancelled</option>
+            </select>
+            <button @click="applyOrdersFilter" class="bg-red-600 text-white px-6 py-2 rounded-xl font-bold text-sm hover:bg-red-700 transition-colors">Search</button>
+          </div>
+<div v-if="loadingAdminOrders" class="text-center py-8 text-slate-500">Loading orders...</div>
           <div class="grid grid-cols-1 gap-6" v-else>
             <div v-for="order in adminOrders" :key="order.id" class="glass-panel p-6 rounded-2xl border border-slate-200 dark:border-slate-800 flex flex-col md:flex-row gap-6">
               <div class="flex-grow space-y-3">
@@ -501,12 +572,17 @@
         <!-- TAB CONTENT: CUSTOMERS -->
         <div v-if="activeTab === 'customers'" class="space-y-6" data-aos="fade-up">
           <div class="flex justify-between items-center">
-            <h2 class="text-2xl font-black text-slate-900 dark:text-white">Manage Customers</h2>
+            <h2 class="text-2xl font-black text-slate-900 dark:text-white">{{ $t('admin.customers.title') }}</h2>
             <button @click="fetchAdminCustomers" class="px-4 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 font-bold rounded-xl text-sm transition-all">
               🔄 Refresh
             </button>
           </div>
-          <div v-if="loadingAdminCustomers" class="text-center py-8 text-slate-500">Loading customers...</div>
+          
+          <div class="flex flex-col md:flex-row gap-4 mt-6 mb-6 bg-slate-50 dark:bg-slate-900/50 p-4 rounded-2xl border border-slate-200 dark:border-slate-800">
+            <input type="text" v-model="customersSearchQuery" :placeholder="$t('admin.customers.search')" class="flex-grow bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-sm outline-none focus:border-red-500" @keyup.enter="applyCustomersFilter" />
+            <button @click="applyCustomersFilter" class="bg-red-600 text-white px-6 py-2 rounded-xl font-bold text-sm hover:bg-red-700 transition-colors">Search</button>
+          </div>
+<div v-if="loadingAdminCustomers" class="text-center py-8 text-slate-500">Loading customers...</div>
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" v-else>
             <div v-for="customer in adminCustomers" :key="customer.id" class="glass-panel p-6 rounded-2xl border border-slate-200 dark:border-slate-800">
               <h3 class="font-bold text-lg mb-1">{{ customer.full_name || 'No Name' }}</h3>
@@ -530,7 +606,7 @@
           
           <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
             <div class="glass-panel p-6 rounded-2xl border-l-4 border-red-500">
-              <p class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-1">Total Expenses</p>
+              <p class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-1">{{ $t('admin.financials.summary.expenses') }}</p>
               <p class="text-3xl font-black text-red-500">€{{ totalExpenses }}</p>
             </div>
             <div class="glass-panel p-6 rounded-2xl border-l-4 border-emerald-500">
@@ -538,7 +614,7 @@
               <p class="text-3xl font-black text-emerald-500">€{{ totalIncome }}</p>
             </div>
             <div class="glass-panel p-6 rounded-2xl border-l-4 border-blue-500">
-              <p class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-1">Net Profit</p>
+              <p class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-1">{{ $t('admin.financials.summary.profit') }}</p>
               <p class="text-3xl font-black text-blue-500">€{{ totalIncome - totalExpenses }}</p>
             </div>
           </div>
@@ -582,6 +658,7 @@
           </div>
         </div>
 
+        </main>
       </div>
     </div>
 
@@ -598,11 +675,11 @@
             <input type="text" v-model="orderForm.date" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white outline-none focus:border-red-500 text-sm" />
           </div>
           <div class="space-y-1">
-            <label class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">From</label>
+            <label class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">{{ $t('admin.orders.details.from') }}</label>
             <input type="text" v-model="orderForm.from" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white outline-none focus:border-red-500 text-sm" />
           </div>
           <div class="space-y-1">
-            <label class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">To</label>
+            <label class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">{{ $t('admin.orders.details.to') }}</label>
             <input type="text" v-model="orderForm.to" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white outline-none focus:border-red-500 text-sm" />
           </div>
           <div class="space-y-1">
@@ -628,7 +705,7 @@
         </div>
         <div class="flex justify-end gap-3 pt-4 border-t border-slate-200 dark:border-slate-800">
           <button @click="modals.order = false" class="px-5 py-2.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold rounded-xl text-sm transition-all border border-slate-700">Cancel</button>
-          <button @click="saveOrder" class="px-6 py-2.5 bg-red-600 hover:bg-red-700 text-slate-900 dark:text-white font-bold rounded-xl text-sm transition-all shadow-md">
+          <button @click="saveOrder" class="px-6 py-2.5 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl text-sm transition-all shadow-md">
             Save Changes
           </button>
         </div>
@@ -639,7 +716,7 @@
     <div v-if="modals.location" class="fixed inset-0 z-50 flex items-center justify-center p-6 bg-white dark:bg-slate-950/80 backdrop-blur-sm overflow-y-auto">
       <div class="glass-panel w-full max-w-4xl rounded-3xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 p-8 shadow-2xl my-8 space-y-6 flex flex-col max-h-[90vh]">
         <div class="flex justify-between items-center border-b border-slate-200 dark:border-slate-800 pb-4 shrink-0">
-          <h3 class="text-xl font-black text-slate-900 dark:text-white">{{ isEditing ? 'Edit Location' : 'Add New Location' }}</h3>
+          <h3 class="text-xl font-black text-slate-900 dark:text-white">{{ isEditing ? $t('admin.locations.edit') : $t('admin.locations.add') }}</h3>
           <button @click="modals.location = false" class="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-white">✕</button>
         </div>
 
@@ -914,7 +991,7 @@
 
         <div class="flex justify-end gap-3 pt-4 border-t border-slate-200 dark:border-slate-800 shrink-0">
           <button @click="modals.location = false" class="px-5 py-2.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold rounded-xl text-sm transition-all border border-slate-700">Cancel</button>
-          <button @click="saveLocation" :disabled="uploading" class="px-6 py-2.5 bg-red-600 hover:bg-red-700 text-slate-900 dark:text-white font-bold rounded-xl text-sm transition-all shadow-md">
+          <button @click="saveLocation" :disabled="uploading" class="px-6 py-2.5 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl text-sm transition-all shadow-md">
             {{ isEditing ? 'Save Changes' : 'Create Location' }}
           </button>
         </div>
@@ -993,7 +1070,7 @@
         </div>
         <div class="flex justify-end gap-3 pt-4 border-t border-slate-200 dark:border-slate-800">
           <button @click="modals.blog = false" class="px-5 py-2.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold rounded-xl text-sm transition-all border border-slate-700">Cancel</button>
-          <button @click="saveBlogPost" :disabled="uploading" class="px-6 py-2.5 bg-red-600 hover:bg-red-700 text-slate-900 dark:text-white font-bold rounded-xl text-sm transition-all shadow-md">
+          <button @click="saveBlogPost" :disabled="uploading" class="px-6 py-2.5 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl text-sm transition-all shadow-md">
             {{ isEditing ? 'Save Changes' : 'Create Post' }}
           </button>
         </div>
@@ -1044,7 +1121,7 @@
         </div>
         <div class="flex justify-end gap-3 pt-4 border-t border-slate-200 dark:border-slate-800">
           <button @click="modals.service = false" class="px-5 py-2.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold rounded-xl text-sm transition-all border border-slate-700">Cancel</button>
-          <button @click="saveService" :disabled="uploading" class="px-6 py-2.5 bg-red-600 hover:bg-red-700 text-slate-900 dark:text-white font-bold rounded-xl text-sm transition-all shadow-md">
+          <button @click="saveService" :disabled="uploading" class="px-6 py-2.5 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl text-sm transition-all shadow-md">
             {{ isEditing ? 'Save Changes' : 'Create Service' }}
           </button>
         </div>
@@ -1101,7 +1178,7 @@
               </div>
             </div>
             <div class="flex justify-end pt-2">
-              <button @click="addServiceSection" :disabled="uploading" class="px-5 py-2 bg-red-600 hover:bg-red-700 text-slate-900 dark:text-white font-bold rounded-lg text-xs shadow-md">
+              <button @click="addServiceSection" :disabled="uploading" class="px-5 py-2 bg-red-600 hover:bg-red-700 text-white font-bold rounded-lg text-xs shadow-md">
                 Add Section
               </button>
             </div>
@@ -1150,7 +1227,7 @@
                   <button @click="cancelSectionEdit" class="px-4 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold rounded-lg text-xs border border-slate-700">
                     Cancel
                   </button>
-                  <button @click="updateServiceSection" :disabled="uploading" class="px-5 py-2 bg-red-600 hover:bg-red-700 text-slate-900 dark:text-white font-bold rounded-lg text-xs shadow-md">
+                  <button @click="updateServiceSection" :disabled="uploading" class="px-5 py-2 bg-red-600 hover:bg-red-700 text-white font-bold rounded-lg text-xs shadow-md">
                     Save Changes
                   </button>
                 </div>
@@ -1239,7 +1316,7 @@
               </div>
             </div>
             <div class="flex justify-end pt-2">
-              <button @click="addBlogSection" :disabled="uploading" class="px-5 py-2 bg-red-600 hover:bg-red-700 text-slate-900 dark:text-white font-bold rounded-lg text-xs shadow-md">
+              <button @click="addBlogSection" :disabled="uploading" class="px-5 py-2 bg-red-600 hover:bg-red-700 text-white font-bold rounded-lg text-xs shadow-md">
                 Add Section
               </button>
             </div>
@@ -1288,7 +1365,7 @@
                   <button @click="cancelSectionEdit" class="px-4 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold rounded-lg text-xs border border-slate-700">
                     Cancel
                   </button>
-                  <button @click="updateBlogSection" :disabled="uploading" class="px-5 py-2 bg-red-600 hover:bg-red-700 text-slate-900 dark:text-white font-bold rounded-lg text-xs shadow-md">
+                  <button @click="updateBlogSection" :disabled="uploading" class="px-5 py-2 bg-red-600 hover:bg-red-700 text-white font-bold rounded-lg text-xs shadow-md">
                     Save Changes
                   </button>
                 </div>
@@ -1377,7 +1454,7 @@
               </div>
             </div>
             <div class="flex justify-end pt-2">
-              <button @click="addLocationSection" :disabled="uploading" class="px-5 py-2 bg-red-600 hover:bg-red-700 text-slate-900 dark:text-white font-bold rounded-lg text-xs shadow-md">
+              <button @click="addLocationSection" :disabled="uploading" class="px-5 py-2 bg-red-600 hover:bg-red-700 text-white font-bold rounded-lg text-xs shadow-md">
                 Add Section
               </button>
             </div>
@@ -1426,7 +1503,7 @@
                   <button @click="cancelSectionEdit" class="px-4 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold rounded-lg text-xs border border-slate-700">
                     Cancel
                   </button>
-                  <button @click="updateLocationSection" :disabled="uploading" class="px-5 py-2 bg-red-600 hover:bg-red-700 text-slate-900 dark:text-white font-bold rounded-lg text-xs shadow-md">
+                  <button @click="updateLocationSection" :disabled="uploading" class="px-5 py-2 bg-red-600 hover:bg-red-700 text-white font-bold rounded-lg text-xs shadow-md">
                     Save Changes
                   </button>
                 </div>
@@ -1562,7 +1639,7 @@
 
         <div class="flex justify-end gap-3 pt-4 border-t border-slate-200 dark:border-slate-800 shrink-0">
           <button @click="modals.pricingPackage = false" class="px-5 py-2.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold rounded-xl text-sm transition-all border border-slate-700">Cancel</button>
-          <button @click="savePackage" class="px-6 py-2.5 bg-red-600 hover:bg-red-700 text-slate-900 dark:text-white font-bold rounded-xl text-sm transition-all shadow-md">
+          <button @click="savePackage" class="px-6 py-2.5 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl text-sm transition-all shadow-md">
             {{ isEditing ? 'Save Changes' : 'Create Package' }}
           </button>
         </div>
@@ -1663,7 +1740,7 @@
 
         <div class="flex justify-end gap-3 pt-4 border-t border-slate-200 dark:border-slate-800 shrink-0">
           <button @click="modals.product = false" class="px-5 py-2.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold rounded-xl text-sm transition-all border border-slate-700">Cancel</button>
-          <button @click="saveProduct" :disabled="uploading" class="px-6 py-2.5 bg-red-600 hover:bg-red-700 text-slate-900 dark:text-white font-bold rounded-xl text-sm transition-all shadow-md">
+          <button @click="saveProduct" :disabled="uploading" class="px-6 py-2.5 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl text-sm transition-all shadow-md">
             {{ isEditing ? 'Save Changes' : 'Create Product' }}
           </button>
         </div>
@@ -1684,7 +1761,7 @@
           </div>
           <h3 class="text-xl font-black text-slate-900 dark:text-white">{{ dialog.title }}</h3>
           <p class="mt-2 text-sm text-slate-500 dark:text-slate-400">{{ dialog.message }}</p>
-          <button @click="dialog.show = false" class="mt-8 w-full px-6 py-3 bg-red-600 hover:bg-red-700 text-slate-900 dark:text-white font-bold rounded-xl text-sm transition-all shadow-md">
+          <button @click="dialog.show = false" class="mt-8 w-full px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl text-sm transition-all shadow-md">
             Done
           </button>
         </div>
@@ -1695,9 +1772,25 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+definePageMeta({ layout: false })
 
-const { t } = useI18n()
+import { jsPDF } from "jspdf"
+import autoTable from "jspdf-autotable"
+
+import { ref, computed, onMounted } from 'vue'
+import { useDark, useToggle } from '@vueuse/core'
+
+const { t, locale, setLocale } = useI18n()
+
+const localePath = useLocalePath()
+const isDark = useDark({
+  selector: 'html',
+  attribute: 'class',
+  valueDark: 'dark',
+  valueLight: 'light',
+})
+const toggleDark = useToggle(isDark)
+
 
 // Authorization State
 const isAuthorized = ref(false)
@@ -1722,18 +1815,24 @@ const showDialog = (title, message, type = 'success') => {
 }
 
 // --- ORDERS LOGIC ---
-const adminOrders = ref([])
+
+const ordersSearchQuery = ref('')
+const ordersStatusFilter = ref('all')
+const ordersDateFilter = ref('')
+
+const applyOrdersFilter = () => {
+  ordersPage.value = 1
+}
+
+const allAdminOrders = ref([])
 const loadingAdminOrders = ref(false)
 
 const fetchAdminOrders = async () => {
   loadingAdminOrders.value = true
   try {
-    const start = (ordersPage.value - 1) * itemsPerPage
-    const end = start + itemsPerPage - 1
-    const { data, error, count } = await supabase.from('orders').select('*, customers ( full_name, email )', { count: 'exact' }).order('created_at', { ascending: false }).range(start, end)
+    const { data, error } = await supabase.from('orders').select('*, customers ( full_name, email )').order('created_at', { ascending: false }).limit(2000)
     if (error) throw error
-    adminOrders.value = data || []
-    if (count !== null) totalOrdersCount.value = count
+    allAdminOrders.value = data || []
   } catch (err) {
     console.error(err)
   } finally {
@@ -1741,10 +1840,39 @@ const fetchAdminOrders = async () => {
   }
 }
 
+const filteredOrders = computed(() => {
+  let list = allAdminOrders.value || []
+  if (ordersStatusFilter.value !== 'all') {
+    list = list.filter(o => o.status === ordersStatusFilter.value)
+  }
+  if (ordersDateFilter.value) {
+    list = list.filter(o => (o.date === ordersDateFilter.value) || (o.form_data && o.form_data.date === ordersDateFilter.value))
+  }
+  if (ordersSearchQuery.value) {
+    const q = ordersSearchQuery.value.toLowerCase()
+    list = list.filter(o => 
+      (o.id || '').toLowerCase().includes(q) ||
+      (o.customers?.full_name || '').toLowerCase().includes(q) ||
+      (o.customers?.email || '').toLowerCase().includes(q) ||
+      (o.form_data?.from || '').toLowerCase().includes(q) ||
+      (o.form_data?.to || '').toLowerCase().includes(q) ||
+      (o.form_data?.package || '').toLowerCase().includes(q)
+    )
+  }
+  return list
+})
+
+const adminOrders = computed(() => {
+  const start = (ordersPage.value - 1) * itemsPerPage
+  return filteredOrders.value.slice(start, start + itemsPerPage)
+})
+
 const updateOrderStatus = async (order) => {
   try {
     const { error } = await supabase.from('orders').update({ status: order.status }).eq('id', order.id)
     if (error) throw error
+    const idx = allAdminOrders.value.findIndex(o => o.id === order.id);
+    if (idx !== -1) allAdminOrders.value[idx].status = order.status;
     showDialog('Status Updated', 'The order status has been updated successfully.', 'success')
   } catch (err) {
     console.error(err)
@@ -1763,7 +1891,22 @@ const openEditOrderModal = (order) => {
     from: order.form_data?.from || '',
     to: order.form_data?.to || '',
     package: order.form_data?.package || '',
-    images: order.form_data?.images ? [...order.form_data.images] : []
+    images: order.form_data?.images ? [...order.form_data.images] : [],
+    est_revenue: order.est_revenue || 0,
+    actual_revenue: order.actual_revenue || 0,
+    est_hours: order.est_hours || 0,
+    actual_hours: order.actual_hours || 0,
+    est_fuel_litres: order.est_fuel_litres || 0,
+    actual_fuel_litres: order.actual_fuel_litres || 0,
+    est_fuel_cost: order.est_fuel_cost || 0,
+    actual_fuel_cost: order.actual_fuel_cost || 0,
+    est_distance: order.est_distance || 0,
+    actual_distance: order.actual_distance || 0,
+    est_van_cost: order.est_van_cost || 0,
+    actual_van_cost: order.actual_van_cost || 0,
+    est_materials: order.est_materials || 0,
+    actual_materials: order.actual_materials || 0,
+    status: order.status || ''
   }
   modals.value.order = true
 }
@@ -1797,7 +1940,7 @@ const onOrderImageUpload = async (e) => {
 
 const saveOrder = async () => {
   if (!supabase || !orderForm.value.id) return
-  const currentOrder = adminOrders.value.find(o => o.id === orderForm.value.id)
+  const currentOrder = allAdminOrders.value ? allAdminOrders.value.find(o => o.id === orderForm.value.id) : adminOrders.value.find(o => o.id === orderForm.value.id)
   if (!currentOrder) return
   
   const updatedFormData = {
@@ -1808,13 +1951,35 @@ const saveOrder = async () => {
     package: orderForm.value.package
   }
   
-  const { error } = await supabase.from('orders').update({ form_data: updatedFormData }).eq('id', orderForm.value.id)
+  const updatePayload = { 
+    form_data: updatedFormData,
+    est_revenue: orderForm.value.est_revenue,
+    actual_revenue: orderForm.value.actual_revenue,
+    est_hours: orderForm.value.est_hours,
+    actual_hours: orderForm.value.actual_hours,
+    est_fuel_litres: orderForm.value.est_fuel_litres,
+    actual_fuel_litres: orderForm.value.actual_fuel_litres,
+    est_fuel_cost: orderForm.value.est_fuel_cost,
+    actual_fuel_cost: orderForm.value.actual_fuel_cost,
+    est_distance: orderForm.value.est_distance,
+    actual_distance: orderForm.value.actual_distance,
+    est_van_cost: orderForm.value.est_van_cost,
+    actual_van_cost: orderForm.value.actual_van_cost,
+    est_materials: orderForm.value.est_materials,
+    actual_materials: orderForm.value.actual_materials,
+    status: orderForm.value.status
+  }
+
+  const { error } = await supabase.from('orders').update(updatePayload).eq('id', orderForm.value.id)
   if (!error) {
-    const idx = adminOrders.value.findIndex(o => o.id === orderForm.value.id)
-    if (idx !== -1) {
-      adminOrders.value[idx].form_data = updatedFormData
+    if (typeof allAdminOrders !== 'undefined' && allAdminOrders.value) {
+      const idx = allAdminOrders.value.findIndex(o => o.id === orderForm.value.id)
+      if (idx !== -1) {
+        allAdminOrders.value[idx] = { ...allAdminOrders.value[idx], ...updatePayload }
+      }
     }
     modals.value.order = false
+    showDialog('Order Updated', 'The order details have been saved successfully.', 'success')
   } else {
     alert('Error updating order: ' + error.message)
   }
@@ -1824,7 +1989,7 @@ const deleteOrder = async (order) => {
   if (!supabase || !confirm('Are you sure you want to delete this order?')) return
   const { error } = await supabase.from('orders').delete().eq('id', order.id)
   if (!error) {
-    adminOrders.value = adminOrders.value.filter(o => o.id !== order.id)
+    allAdminOrders.value = allAdminOrders.value.filter(o => o.id !== order.id)
     if (ordersPage.value > totalOrdersPages.value) {
       ordersPage.value = Math.max(1, totalOrdersPages.value)
     }
@@ -1834,22 +1999,46 @@ const deleteOrder = async (order) => {
 }
 
 // --- CUSTOMERS LOGIC ---
-const adminCustomers = ref([])
+
+const customersSearchQuery = ref('')
+
+const applyCustomersFilter = () => {
+  customersPage.value = 1
+}
+
+const allAdminCustomers = ref([])
 const loadingAdminCustomers = ref(false)
 
 const fetchAdminCustomers = async () => {
   loadingAdminCustomers.value = true
   try {
-    const { data, error, count } = await supabase.from('customers').select('*', { count: 'exact' }).order('created_at', { ascending: false }).range(0, 49)
+    const { data, error } = await supabase.from('customers').select('*').order('created_at', { ascending: false }).limit(2000)
     if (error) throw error
-    adminCustomers.value = data || []
-    if (count !== null) totalCustomersCount.value = count
+    allAdminCustomers.value = data || []
   } catch (err) {
     console.error(err)
   } finally {
     loadingAdminCustomers.value = false
   }
 }
+
+const filteredCustomers = computed(() => {
+  let list = allAdminCustomers.value || []
+  if (customersSearchQuery.value) {
+    const q = customersSearchQuery.value.toLowerCase()
+    list = list.filter(c => 
+      (c.full_name || '').toLowerCase().includes(q) ||
+      (c.email || '').toLowerCase().includes(q) ||
+      (c.phone || '').toLowerCase().includes(q)
+    )
+  }
+  return list
+})
+
+const adminCustomers = computed(() => {
+  const start = (customersPage.value - 1) * itemsPerPage
+  return filteredCustomers.value.slice(start, start + itemsPerPage)
+})
 
 const editCustomer = (customer) => {
   const newName = prompt('Enter new name:', customer.full_name)
@@ -1872,6 +2061,94 @@ const expenseForm = ref({
   amount: 0,
   date: new Date().toISOString().split('T')[0]
 })
+
+
+const printReport = () => {
+  const doc = new jsPDF();
+  
+  // Title
+  doc.setFontSize(22);
+  doc.setTextColor(220, 38, 38);
+  doc.text("MoveIt - Financial Report", 14, 20);
+  
+  // Date and Meta
+  doc.setFontSize(11);
+  doc.setTextColor(100, 100, 100);
+  const dateStr = new Date().toLocaleDateString("en-GB");
+  const filterStr = dateFilterType.value === 'all' ? 'All Time' : 
+                    dateFilterType.value === 'today' ? 'Today' : 
+                    dateFilterType.value === 'week' ? 'This Week' : 
+                    dateFilterType.value === 'month' ? 'This Month' : 
+                    dateFilterType.value === 'year' ? 'This Year' : 'Custom';
+  doc.text(`Generated on: ${dateStr} | Filter: ${filterStr}`, 14, 30);
+  
+  // Summary boxes
+  doc.setDrawColor(200, 200, 200);
+  doc.setFillColor(250, 250, 250);
+  doc.roundedRect(14, 35, 55, 25, 3, 3, 'FD');
+  doc.roundedRect(75, 35, 55, 25, 3, 3, 'FD');
+  doc.roundedRect(136, 35, 60, 25, 3, 3, 'FD');
+  
+  doc.setFontSize(9);
+  doc.setTextColor(100, 100, 100);
+  doc.text("TOTAL EXPENSES", 18, 42);
+  doc.text("TOTAL INCOME", 79, 42);
+  doc.text("NET PROFIT", 140, 42);
+  
+  doc.setFontSize(16);
+  doc.setTextColor(220, 38, 38);
+  doc.text(`€${totalExpenses.value.toLocaleString()}`, 18, 53);
+  doc.setTextColor(16, 185, 129);
+  doc.text(`€${totalIncome.value.toLocaleString()}`, 79, 53);
+  doc.setTextColor(59, 130, 246);
+  doc.text(`€${(totalIncome.value - totalExpenses.value).toLocaleString()}`, 140, 53);
+  
+  // Table
+  autoTable(doc, {
+    startY: 70,
+    head: [['Date', 'Category', 'Amount']],
+    body: expensesList.value.map(item => [
+      new Date(item.date).toLocaleDateString("en-GB"),
+      item.category,
+      `€${item.amount.toLocaleString()}`
+    ]),
+    theme: 'grid',
+    headStyles: { fillColor: [220, 38, 38] },
+    alternateRowStyles: { fillColor: [250, 250, 250] },
+    margin: { top: 70 }
+  });
+  
+  doc.save("MoveIt_Financial_Report.pdf");
+}
+
+const exportCSV = () => {
+  if (!expensesList.value || expensesList.value.length === 0) {
+    alert('No data to export');
+    return;
+  }
+  
+  const headers = ['ID', 'Date', 'Category', 'Amount', 'Amount (Excl VAT)', 'Notes'];
+  const rows = expensesList.value.map(exp => [
+    exp.id, 
+    exp.date, 
+    exp.category, 
+    exp.amount,
+    exp.amount_excl_vat || '',
+    (exp.notes || '').replace(/,/g, ' ')
+  ]);
+  
+  const csvContent = [headers, ...rows].map(e => e.join(",")).join("\n");
+  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  
+  const link = document.createElement('a');
+  link.setAttribute('href', url);
+  link.setAttribute('download', 'financial_report_' + new Date().toISOString().split('T')[0] + '.csv');
+  link.style.visibility = 'hidden';
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
 
 const fetchFinancials = async () => {
   try {
@@ -1993,15 +2270,16 @@ const packageForm = ref({
 
 // Pagination Setup
 
-const totalOrdersCount = ref(0)
+const totalOrdersCount = computed(() => filteredOrders.value ? filteredOrders.value.length : 0)
 const totalLocationsCount = ref(0)
 const totalBlogPostsCount = ref(0)
 const totalServicesCount = ref(0)
 const totalProductsCount = ref(0)
-const totalCustomersCount = ref(0)
+const totalCustomersCount = computed(() => filteredCustomers.value ? filteredCustomers.value.length : 0)
 
 const itemsPerPage = 10
 const ordersPage = ref(1)
+const customersPage = ref(1)
 const locationsPage = ref(1)
 
 

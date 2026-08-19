@@ -58,14 +58,38 @@
     ],
     "values_title": "Onze Waarden",
     "values_list": [
-      { "title": "Klant Eerst", "desc": "We plaatsen de klantervaring in het middelpunt van alles." },
-      { "title": "Transparante Communicatie", "desc": "Heldere prijzen, eerlijk advies en snelle reacties. Altijd!" },
-      { "title": "Betrouwbaarheid", "desc": "We verschijnen voorbereid, punctueel en klaar om problemen op te lossen." },
-      { "title": "Zorg & Respect", "desc": "We behandelen elke klant, elk huis en elk item met respect." },
-      { "title": "Kalm Onder Druk", "desc": "Verhuizen kan stressvol zijn. We blijven kalm, proactief en oplossingsgericht." },
-      { "title": "Energie & Positiviteit", "desc": "Vriendelijke verhuizers zorgen voor betere verhuisdagen." },
-      { "title": "Precisie & Voorbereiding", "desc": "Goede verhuizingen gebeuren door planning, communicatie en aandacht voor detail." },
-      { "title": "Veerkracht", "desc": "Geen trappen, weer, obstakels of langeafstandsverhuizing houdt ons tegen om de klus te klaren." }
+      {
+        "title": "Klant Eerst",
+        "desc": "We plaatsen de klantervaring in het middelpunt van alles."
+      },
+      {
+        "title": "Transparante Communicatie",
+        "desc": "Heldere prijzen, eerlijk advies en snelle reacties. Altijd!"
+      },
+      {
+        "title": "Betrouwbaarheid",
+        "desc": "We verschijnen voorbereid, punctueel en klaar om problemen op te lossen."
+      },
+      {
+        "title": "Zorg & Respect",
+        "desc": "We behandelen elke klant, elk huis en elk item met respect."
+      },
+      {
+        "title": "Kalm Onder Druk",
+        "desc": "Verhuizen kan stressvol zijn. We blijven kalm, proactief en oplossingsgericht."
+      },
+      {
+        "title": "Energie & Positiviteit",
+        "desc": "Vriendelijke verhuizers zorgen voor betere verhuisdagen."
+      },
+      {
+        "title": "Precisie & Voorbereiding",
+        "desc": "Goede verhuizingen gebeuren door planning, communicatie en aandacht voor detail."
+      },
+      {
+        "title": "Veerkracht",
+        "desc": "Geen trappen, weer, obstakels of langeafstandsverhuizing houdt ons tegen om de klus te klaren."
+      }
     ],
     "cta_title": "Klaar om een Michelin-ster verhuizing te ervaren?",
     "cta_button": "Vraag een Directe Offerte aan"
@@ -91,7 +115,15 @@
     "gallery_subtitle": "Hier is een blik op ons toegewijde team dat elke dag verhuizingen moeiteloos maakt door heel Nederland.",
     "hero_prefix": "Verhuist",
     "hero_suffix": "Vooruit",
-    "hero_cities": ["Maastricht", "Sittard", "Heerlen", "Kerkrade", "Geleen", "Limburg", "Nederland"],
+    "hero_cities": [
+      "Maastricht",
+      "Sittard",
+      "Heerlen",
+      "Kerkrade",
+      "Geleen",
+      "Limburg",
+      "Nederland"
+    ],
     "hero_subtitles": [
       "Brengt u naar uw volgende hoofdstuk.",
       "Minder stress. Beter verhuizen.",
@@ -141,18 +173,39 @@
     "why_us": {
       "badge": "WAAROM MOVEIT",
       "title": "Waarom Kiezen voor MoveIt?",
-      "fast": { "title": "Snelle Reactie", "desc": "Stuur ons een bericht via WhatsApp en ontvang binnen enkele minuten, niet dagen, een bevestigde offerte." },
-      "student": { "title": "Studentvriendelijk", "desc": "Flexibele uurprijzen en gratis meerijden. Gebouwd voor strakke budgetten en strakke deadlines." },
-      "transparent": { "title": "Transparante Prijzen", "desc": "De prijs die je ziet is de prijs die je betaalt. Geen brandstofkosten, geen trappenkosten. Nooit." },
-      "insured": { "title": "Verzekerde Verhuizingen", "desc": "Elk item gedekt van ophalen tot bezorgen. Als er iets misgaat, lossen we het op." }
+      "fast": {
+        "title": "Snelle Reactie",
+        "desc": "Stuur ons een bericht via WhatsApp en ontvang binnen enkele minuten, niet dagen, een bevestigde offerte."
+      },
+      "student": {
+        "title": "Studentvriendelijk",
+        "desc": "Flexibele uurprijzen en gratis meerijden. Gebouwd voor strakke budgetten en strakke deadlines."
+      },
+      "transparent": {
+        "title": "Transparante Prijzen",
+        "desc": "De prijs die je ziet is de prijs die je betaalt. Geen brandstofkosten, geen trappenkosten. Nooit."
+      },
+      "insured": {
+        "title": "Verzekerde Verhuizingen",
+        "desc": "Elk item gedekt van ophalen tot bezorgen. Als er iets misgaat, lossen we het op."
+      }
     },
     "how_it_works": {
       "badge": "PROCES",
       "title": "3 Stappen naar je Nieuwe Plek",
       "subtitle": "Geen ingewikkelde processen. Geen heen-en-weer. Gewoon een snelle, vlotte verhuizing.",
-      "step1": { "title": "Vraag je Offerte Aan", "desc": "Vertel ons over je verhuizing via WhatsApp of het offerteformulier. We reageren binnen enkele minuten met een vaste prijs en zonder verplichtingen." },
-      "step2": { "title": "Leg je Datum Vast", "desc": "Kies de dag die voor jou werkt. We bevestigen direct — datum, tijd, prijs en team. Alles zwart op wit." },
-      "step3": { "title": "Ontspan. Wij regelen het.", "desc": "Ons team arriveert op tijd, gaat zorgvuldig met je spullen om en zorgt dat je gesetteld bent in je nieuwe plek voordat de dag voorbij is." },
+      "step1": {
+        "title": "Vraag je Offerte Aan",
+        "desc": "Vertel ons over je verhuizing via WhatsApp of het offerteformulier. We reageren binnen enkele minuten met een vaste prijs en zonder verplichtingen."
+      },
+      "step2": {
+        "title": "Leg je Datum Vast",
+        "desc": "Kies de dag die voor jou werkt. We bevestigen direct — datum, tijd, prijs en team. Alles zwart op wit."
+      },
+      "step3": {
+        "title": "Ontspan. Wij regelen het.",
+        "desc": "Ons team arriveert op tijd, gaat zorgvuldig met je spullen om en zorgt dat je gesetteld bent in je nieuwe plek voordat de dag voorbij is."
+      },
       "step_prefix": "Stap"
     },
     "cities": {
@@ -220,8 +273,14 @@
         "price": "€69.99",
         "unit": "/uur",
         "best_for": [
-          { "icon": "tag", "text": "ALLEEN BUS" },
-          { "icon": "description", "text": "U regelt het tillen - wij regelen de rit." }
+          {
+            "icon": "tag",
+            "text": "ALLEEN BUS"
+          },
+          {
+            "icon": "description",
+            "text": "U regelt het tillen - wij regelen de rit."
+          }
         ],
         "includes": [
           "✓ 1 Ervaren chauffeur",
@@ -241,8 +300,14 @@
         "price": "€79.99",
         "unit": "/uur",
         "best_for": [
-          { "icon": "tag", "text": "BUS + 1 VERHUIZER" },
-          { "icon": "description", "text": "Perfect voor studentenkamers, studio's en krappe budgetten met grote plannen." }
+          {
+            "icon": "tag",
+            "text": "BUS + 1 VERHUIZER"
+          },
+          {
+            "icon": "description",
+            "text": "Perfect voor studentenkamers, studio's en krappe budgetten met grote plannen."
+          }
         ],
         "includes": [
           "✓ 1 Professionele verhuizer",
@@ -265,8 +330,14 @@
         "price": "€94.99",
         "unit": "/uur",
         "best_for": [
-          { "icon": "tag", "text": "BUS + 2 VERHUIZERS" },
-          { "icon": "description", "text": "Wij regelen de meubels. U regelt de nieuwe sleutels." }
+          {
+            "icon": "tag",
+            "text": "BUS + 2 VERHUIZERS"
+          },
+          {
+            "icon": "description",
+            "text": "Wij regelen de meubels. U regelt de nieuwe sleutels."
+          }
         ],
         "includes": [
           "✓ 2 Professionele verhuizers (tot 30% sneller)",
@@ -287,8 +358,14 @@
         "price": "€149",
         "unit": "/uur",
         "best_for": [
-          { "icon": "tag", "text": "Volledige Service" },
-          { "icon": "description", "text": "Zorg op conciërgeniveau voor huizen, kunst, antiek en compromisloze normen." }
+          {
+            "icon": "tag",
+            "text": "Volledige Service"
+          },
+          {
+            "icon": "description",
+            "text": "Zorg op conciërgeniveau voor huizen, kunst, antiek en compromisloze normen."
+          }
         ],
         "includes": [
           "✓ 2+ Professionele verhuizers",
@@ -393,7 +470,17 @@
     "intl_text": "Dankzij onze strategische ligging zijn wij gespecialiseerd in internationale verhuizingen tussen Nederland, België en Duitsland. Wij bedienen regelmatig steden als Aken, Luik en Brussel met dezelfde zorg en efficiëntie als onze lokale verhuizingen.",
     "service_areas": "Servicegebieden",
     "main_cities": "Belangrijkste Steden",
-    "cities": ["Maastricht", "Heerlen", "Sittard", "Geleen", "Roermond", "Venlo", "Valkenburg", "Aken (DE)", "Genk (BE)"]
+    "cities": [
+      "Maastricht",
+      "Heerlen",
+      "Sittard",
+      "Geleen",
+      "Roermond",
+      "Venlo",
+      "Valkenburg",
+      "Aken (DE)",
+      "Genk (BE)"
+    ]
   },
   "faq": {
     "title": "Veelgestelde Vragen",
@@ -2184,5 +2271,96 @@
     "tax_included": "Inclusief belastingen.",
     "pickup_available": "Ophalen mogelijk bij MoveIt Maastricht",
     "usually_ready": "Meestal klaar in 1 uur"
+  },
+  "admin": {
+    "title": "Beheerdersdashboard",
+    "menu": {
+      "orders": "BESTELLINGEN",
+      "customers": "KLANTEN",
+      "financials": "FINANCIËN",
+      "locations": "LOCATIES",
+      "blog": "BLOG",
+      "services": "DIENSTEN",
+      "pricing": "PRIJZEN",
+      "products": "PRODUCTEN",
+      "logout": "Uitloggen"
+    },
+    "orders": {
+      "title": "Beheer Bestellingen",
+      "search": "Zoeken (ID, Naam, E-mail)...",
+      "status": {
+        "all": "Alle statussen",
+        "pending": "In behandeling",
+        "confirmed": "Bevestigd",
+        "completed": "Voltooid",
+        "cancelled": "Geannuleerd"
+      },
+      "table": {
+        "id": "Bestel-ID",
+        "customer": "Klant",
+        "date": "Datum",
+        "service": "Dienst",
+        "status": "Status",
+        "total": "Totaal",
+        "actions": "Acties"
+      },
+      "details": {
+        "title": "Bestelgegevens",
+        "orderInfo": "Bestelinformatie",
+        "customerInfo": "Klantinformatie",
+        "moveDetails": "Verhuisgegevens",
+        "inventory": "Inventaris & Items",
+        "financials": "Financiën & Betaling",
+        "cost": "Geschatte kosten",
+        "totalVolume": "Totale volume",
+        "from": "Van",
+        "to": "Naar",
+        "date": "Verhuisdatum",
+        "floor": "Verdieping",
+        "elevator": "Lift",
+        "yes": "Ja",
+        "no": "Nee",
+        "parkingSpace": "Parkeerplaats",
+        "close": "Sluiten",
+        "save": "Opslaan"
+      }
+    },
+    "customers": {
+      "title": "Beheer Klanten",
+      "search": "Zoeken (Naam, E-mail, Telefoon)...",
+      "table": {
+        "name": "Naam",
+        "email": "E-mail",
+        "phone": "Telefoon",
+        "orders": "Totaal Bestellingen",
+        "spent": "Totaal Besteed",
+        "joined": "Lid sinds",
+        "actions": "Acties"
+      }
+    },
+    "financials": {
+      "title": "Financieel Overzicht",
+      "summary": {
+        "revenue": "Totale Omzet",
+        "expenses": "Totale Uitgaven",
+        "profit": "Netto Winst",
+        "pending": "Openstaande Betalingen"
+      },
+      "table": {
+        "orderId": "Bestel-ID",
+        "date": "Datum",
+        "customer": "Klant",
+        "amount": "Bedrag",
+        "status": "Status",
+        "type": "Type"
+      }
+    },
+    "locations": {
+      "title": "Beheer Locaties",
+      "add": "Nieuwe Locatie",
+      "empty": "Geen locaties gevonden. Klik op 'Nieuwe Locatie' om er een aan te maken.",
+      "sections": "Secties",
+      "edit": "Bewerken"
+    }
   }
 }

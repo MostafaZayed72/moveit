@@ -58,14 +58,38 @@
     ],
     "values_title": "Our Values",
     "values_list": [
-      { "title": "Customer First", "desc": "We put the customer experience at the center of everything." },
-      { "title": "Transparent Communication", "desc": "Clear pricing, honest advice and fast responses. Always!" },
-      { "title": "Reliability", "desc": "We show up prepared, punctual and ready to solve problems." },
-      { "title": "Care & Respect", "desc": "We treat every customer, home and item with respect." },
-      { "title": "Calm Under Pressure", "desc": "Moving can be stressful. We stay calm, proactive and solution-oriented." },
-      { "title": "Energy & Positivity", "desc": "Friendly movers create better moving days." },
-      { "title": "Precision & Preparation", "desc": "Good moves happen because of planning, communication and attention to detail." },
-      { "title": "Resilience", "desc": "No stairs, weather, obstacles or long-distance move stops us from getting the job done." }
+      {
+        "title": "Customer First",
+        "desc": "We put the customer experience at the center of everything."
+      },
+      {
+        "title": "Transparent Communication",
+        "desc": "Clear pricing, honest advice and fast responses. Always!"
+      },
+      {
+        "title": "Reliability",
+        "desc": "We show up prepared, punctual and ready to solve problems."
+      },
+      {
+        "title": "Care & Respect",
+        "desc": "We treat every customer, home and item with respect."
+      },
+      {
+        "title": "Calm Under Pressure",
+        "desc": "Moving can be stressful. We stay calm, proactive and solution-oriented."
+      },
+      {
+        "title": "Energy & Positivity",
+        "desc": "Friendly movers create better moving days."
+      },
+      {
+        "title": "Precision & Preparation",
+        "desc": "Good moves happen because of planning, communication and attention to detail."
+      },
+      {
+        "title": "Resilience",
+        "desc": "No stairs, weather, obstacles or long-distance move stops us from getting the job done."
+      }
     ],
     "cta_title": "Ready to experience a Michelin-star move?",
     "cta_button": "Get an Instant Quote"
@@ -91,7 +115,15 @@
     "gallery_subtitle": "Here is a glimpse of our dedicated team making moves effortless across the Netherlands every day.",
     "hero_prefix": "Moving",
     "hero_suffix": "Forward",
-    "hero_cities": ["Maastricht", "Sittard", "Heerlen", "Kerkrade", "Geleen", "Limburg", "Netherlands"],
+    "hero_cities": [
+      "Maastricht",
+      "Sittard",
+      "Heerlen",
+      "Kerkrade",
+      "Geleen",
+      "Limburg",
+      "Netherlands"
+    ],
     "hero_subtitles": [
       "Moving you into your next chapter.",
       "Stress less. Move better.",
@@ -128,21 +160,51 @@
       "bad_title": "Moving is One of Life's Most Stressful Events. And Most Companies Make It Worse.",
       "bad_subtitle": "You've probably heard the horror stories. Or lived one. The moving industry has a well-earned reputation — and for good reason.",
       "bad": {
-        "late": { "title": "Late Arrivals", "desc": "No communication. Your day is thrown off." },
-        "broken": { "title": "Damaged Belongings", "desc": "Scratches, broken furniture and careless handling." },
-        "price": { "title": "Surprise Invoices", "desc": "Quoted €300. Charged €520." },
-        "team": { "title": "Random Crews", "desc": "The people who show up aren't the people you spoke with." },
-        "slow": { "title": "Endless Back-and-Forth", "desc": "Three days and four emails just to get a quote." }
+        "late": {
+          "title": "Late Arrivals",
+          "desc": "No communication. Your day is thrown off."
+        },
+        "broken": {
+          "title": "Damaged Belongings",
+          "desc": "Scratches, broken furniture and careless handling."
+        },
+        "price": {
+          "title": "Surprise Invoices",
+          "desc": "Quoted €300. Charged €520."
+        },
+        "team": {
+          "title": "Random Crews",
+          "desc": "The people who show up aren't the people you spoke with."
+        },
+        "slow": {
+          "title": "Endless Back-and-Forth",
+          "desc": "Three days and four emails just to get a quote."
+        }
       },
       "good_badge": "HOW WE DO IT DIFFERENTLY",
       "good_title": "We Built moveit to Fix Every Single One of Those Problems.",
       "good_subtitle": "1,000 moves later, here's the standard we hold ourselves to on every job:",
       "good": {
-        "ontime": { "title": "On Time, Every Time", "desc": "We respect your schedule and keep you informed." },
-        "insured": { "title": "Protected Before They're Insured", "desc": "Furniture blankets, wrapping, straps and careful handling come first. Insurance is there as a backup." },
-        "price": { "title": "Transparent Pricing", "desc": "The price we quote is the price you pay." },
-        "team": { "title": "Dedicated Move Coordinator", "desc": "One point of contact from quote to completion." },
-        "whatsapp": { "title": "Quotes Within Minutes", "desc": "Fast responses via WhatsApp, phone or email." }
+        "ontime": {
+          "title": "On Time, Every Time",
+          "desc": "We respect your schedule and keep you informed."
+        },
+        "insured": {
+          "title": "Protected Before They're Insured",
+          "desc": "Furniture blankets, wrapping, straps and careful handling come first. Insurance is there as a backup."
+        },
+        "price": {
+          "title": "Transparent Pricing",
+          "desc": "The price we quote is the price you pay."
+        },
+        "team": {
+          "title": "Dedicated Move Coordinator",
+          "desc": "One point of contact from quote to completion."
+        },
+        "whatsapp": {
+          "title": "Quotes Within Minutes",
+          "desc": "Fast responses via WhatsApp, phone or email."
+        }
       },
       "cta_btn": "Get My Free Quote"
     },
@@ -155,18 +217,39 @@
     "why_us": {
       "badge": "WHY MOVEIT",
       "title": "Why Choose MoveIt?",
-      "fast": { "title": "Fast Response", "desc": "Message us on WhatsApp and get a confirmed quote within minutes, not days." },
-      "student": { "title": "Student Friendly", "desc": "Flexible hourly pricing and a free ride-along. Built for tight budgets and tight deadlines." },
-      "transparent": { "title": "Transparent Pricing", "desc": "The rate you see is the rate you pay. No fuel charges, no stair fees. Ever." },
-      "insured": { "title": "Insured Moves", "desc": "Every item covered from pickup to delivery. If something goes wrong, we make it right." }
+      "fast": {
+        "title": "Fast Response",
+        "desc": "Message us on WhatsApp and get a confirmed quote within minutes, not days."
+      },
+      "student": {
+        "title": "Student Friendly",
+        "desc": "Flexible hourly pricing and a free ride-along. Built for tight budgets and tight deadlines."
+      },
+      "transparent": {
+        "title": "Transparent Pricing",
+        "desc": "The rate you see is the rate you pay. No fuel charges, no stair fees. Ever."
+      },
+      "insured": {
+        "title": "Insured Moves",
+        "desc": "Every item covered from pickup to delivery. If something goes wrong, we make it right."
+      }
     },
     "how_it_works": {
       "badge": "PROCESS",
       "title": "3 Steps to Your New Place",
       "subtitle": "No complicated processes. No back-and-forth. Just a fast, clean move.",
-      "step1": { "title": "Get Your Quote", "desc": "Tell us about your move via WhatsApp or the quote form. We respond within minutes with a fixed price and zero obligations." },
-      "step2": { "title": "Lock In Your Date", "desc": "Pick the day that works for you. We confirm instantly — date, time, price, and team. Everything in writing." },
-      "step3": { "title": "Relax. We've Got It.", "desc": "Our crew shows up on time, handles your belongings with care, and has you settled in your new place before the day is done." },
+      "step1": {
+        "title": "Get Your Quote",
+        "desc": "Tell us about your move via WhatsApp or the quote form. We respond within minutes with a fixed price and zero obligations."
+      },
+      "step2": {
+        "title": "Lock In Your Date",
+        "desc": "Pick the day that works for you. We confirm instantly — date, time, price, and team. Everything in writing."
+      },
+      "step3": {
+        "title": "Relax. We've Got It.",
+        "desc": "Our crew shows up on time, handles your belongings with care, and has you settled in your new place before the day is done."
+      },
       "step_prefix": "Step"
     },
     "cities": {
@@ -234,8 +317,14 @@
         "price": "€69.99",
         "unit": "/hr",
         "best_for": [
-          { "icon": "tag", "text": "VAN ONLY" },
-          { "icon": "description", "text": "You handle the lifting - we handle the drive." }
+          {
+            "icon": "tag",
+            "text": "VAN ONLY"
+          },
+          {
+            "icon": "description",
+            "text": "You handle the lifting - we handle the drive."
+          }
         ],
         "includes": [
           "✓ 1 Experienced driver",
@@ -255,8 +344,14 @@
         "price": "€79.99",
         "unit": "/hr",
         "best_for": [
-          { "icon": "tag", "text": "VAN + 1 MOVER" },
-          { "icon": "description", "text": "Perfect for dorm moves, studio hops and budgets with big plans." }
+          {
+            "icon": "tag",
+            "text": "VAN + 1 MOVER"
+          },
+          {
+            "icon": "description",
+            "text": "Perfect for dorm moves, studio hops and budgets with big plans."
+          }
         ],
         "includes": [
           "✓ 1 Professional mover",
@@ -279,8 +374,14 @@
         "price": "€94.99",
         "unit": "/hr",
         "best_for": [
-          { "icon": "tag", "text": "VAN + 2 MOVERS" },
-          { "icon": "description", "text": "We handle the furniture. You handle the new keys." }
+          {
+            "icon": "tag",
+            "text": "VAN + 2 MOVERS"
+          },
+          {
+            "icon": "description",
+            "text": "We handle the furniture. You handle the new keys."
+          }
         ],
         "includes": [
           "✓ 2 Professional movers (Up to 30% faster)",
@@ -301,8 +402,14 @@
         "price": "€149",
         "unit": "/hr",
         "best_for": [
-          { "icon": "tag", "text": "Full Service" },
-          { "icon": "description", "text": "Concierge-level care for homes, art, antiques, and zero-compromise standards." }
+          {
+            "icon": "tag",
+            "text": "Full Service"
+          },
+          {
+            "icon": "description",
+            "text": "Concierge-level care for homes, art, antiques, and zero-compromise standards."
+          }
         ],
         "includes": [
           "✓ 2+ Professional movers",
@@ -407,7 +514,17 @@
     "intl_text": "Thanks to our strategic location, we specialize in international moves between the Netherlands, Belgium, and Germany. We regularly serve cities like Aachen, Liège, and Brussels with the same care and efficiency as our local moves.",
     "service_areas": "Service Areas",
     "main_cities": "Primary Cities",
-    "cities": ["Maastricht", "Heerlen", "Sittard", "Geleen", "Roermond", "Venlo", "Valkenburg", "Aachen (DE)", "Genk (BE)"]
+    "cities": [
+      "Maastricht",
+      "Heerlen",
+      "Sittard",
+      "Geleen",
+      "Roermond",
+      "Venlo",
+      "Valkenburg",
+      "Aachen (DE)",
+      "Genk (BE)"
+    ]
   },
   "faq": {
     "title": "Frequently Asked Questions",
@@ -2198,5 +2315,96 @@
     "tax_included": "Taxes included.",
     "pickup_available": "Pickup available at MoveIt Maastricht",
     "usually_ready": "Usually ready in 1 hour"
+  },
+  "admin": {
+    "title": "Admin Dashboard",
+    "menu": {
+      "orders": "ORDERS",
+      "customers": "CUSTOMERS",
+      "financials": "FINANCIALS",
+      "locations": "LOCATIONS",
+      "blog": "BLOG",
+      "services": "SERVICES",
+      "pricing": "PRICING",
+      "products": "PRODUCTS",
+      "logout": "Logout"
+    },
+    "orders": {
+      "title": "Manage Orders",
+      "search": "Search orders (ID, Name, Email)...",
+      "status": {
+        "all": "All Statuses",
+        "pending": "Pending",
+        "confirmed": "Confirmed",
+        "completed": "Completed",
+        "cancelled": "Cancelled"
+      },
+      "table": {
+        "id": "Order ID",
+        "customer": "Customer",
+        "date": "Date",
+        "service": "Service",
+        "status": "Status",
+        "total": "Total",
+        "actions": "Actions"
+      },
+      "details": {
+        "title": "Order Details",
+        "orderInfo": "Order Info",
+        "customerInfo": "Customer Info",
+        "moveDetails": "Move Details",
+        "inventory": "Inventory & Items",
+        "financials": "Financials & Payment",
+        "cost": "Est. Cost",
+        "totalVolume": "Total Volume",
+        "from": "From",
+        "to": "To",
+        "date": "Move Date",
+        "floor": "Floor",
+        "elevator": "Elevator",
+        "yes": "Yes",
+        "no": "No",
+        "parkingSpace": "Parking Space",
+        "close": "Close",
+        "save": "Save Changes"
+      }
+    },
+    "customers": {
+      "title": "Manage Customers",
+      "search": "Search customers (Name, Email, Phone)...",
+      "table": {
+        "name": "Name",
+        "email": "Email",
+        "phone": "Phone",
+        "orders": "Total Orders",
+        "spent": "Total Spent",
+        "joined": "Joined",
+        "actions": "Actions"
+      }
+    },
+    "financials": {
+      "title": "Financial Overview",
+      "summary": {
+        "revenue": "Total Revenue",
+        "expenses": "Total Expenses",
+        "profit": "Net Profit",
+        "pending": "Pending Payments"
+      },
+      "table": {
+        "orderId": "Order ID",
+        "date": "Date",
+        "customer": "Customer",
+        "amount": "Amount",
+        "status": "Status",
+        "type": "Type"
+      }
+    },
+    "locations": {
+      "title": "Manage Locations",
+      "add": "Add New Location",
+      "empty": "No locations found. Click 'Add New Location' to create one.",
+      "sections": "Sections",
+      "edit": "Edit"
+    }
   }
 }
