@@ -1,24 +1,12 @@
 <template>
   <div class="min-h-screen bg-slate-100 dark:bg-slate-950 text-slate-900 dark:text-slate-100 font-sans relative selection:bg-red-500 selection:text-white pb-16 transition-colors duration-200">
-    <!-- Top System Bar (MoveItPro+ Header) -->
-    <header v-if="isAuthorized" class="sticky top-0 z-40 bg-white/95 dark:bg-slate-900/90 backdrop-blur-xl border-b border-slate-200 dark:border-slate-800/80 px-4 sm:px-8 py-3.5 flex items-center justify-between shadow-sm dark:shadow-2xl transition-colors">
-      <!-- Left: Logo & Search -->
+    <!-- Top System Bar (MoveIt Admin Header) -->
+    <header v-if="isAuthorized" class="sticky top-0 z-40 bg-white/95 dark:bg-slate-900/90 backdrop-blur-xl border-b border-slate-200 dark:border-slate-800/80 px-4 sm:px-8 py-3 flex items-center justify-between shadow-sm dark:shadow-2xl transition-colors">
+      <!-- Left: Logo (Clean without PRO+) -->
       <div class="flex items-center gap-6">
         <NuxtLink to="/" class="flex items-center gap-2 group">
           <img src="/images/logo.svg" alt="MoveIt" class="h-8 w-auto group-hover:scale-105 transition-transform" />
-          <span class="px-2 py-0.5 bg-gradient-to-r from-red-600 to-rose-500 text-white text-[10px] font-black tracking-widest rounded-md uppercase shadow-lg shadow-red-600/30">PRO+</span>
         </NuxtLink>
-
-        <!-- Dynamic Search Bar that actively filters orders -->
-        <div class="hidden lg:flex items-center relative w-72">
-          <span class="absolute left-3 text-slate-400 text-sm">🔍</span>
-          <input 
-            type="text" 
-            v-model="ordersSearchQuery" 
-            placeholder="Search leads, clients, orders... ⌘K" 
-            class="w-full bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 rounded-xl pl-9 pr-4 py-1.5 text-xs text-slate-900 dark:text-slate-200 placeholder-slate-400 dark:placeholder-slate-500 focus:border-red-500 focus:ring-1 focus:ring-red-500 outline-none transition-all"
-          />
-        </div>
       </div>
 
       <!-- Center: Real Dynamic Live Stats Ticker from Database -->
@@ -35,25 +23,15 @@
         <div>Est. Revenue: <span class="font-bold text-emerald-600 dark:text-emerald-400">€{{ totalGridEstimatedRevenue.toLocaleString() }}</span></div>
       </div>
 
-      <!-- Right: Action Buttons & User Profile -->
+      <!-- Right: Action Button & User Profile -->
       <div class="flex items-center gap-3">
-        <!-- + New Lead / New Order Manual Creation Button -->
+        <!-- + New Lead Button -->
         <button 
           @click="openNewLeadModal" 
           class="px-4 py-2 bg-gradient-to-r from-red-600 via-rose-600 to-red-500 hover:from-red-500 hover:to-rose-500 text-white font-black text-xs uppercase tracking-wider rounded-xl shadow-lg shadow-red-600/30 active:scale-95 transition-all flex items-center gap-2 cursor-pointer"
         >
           <span class="text-sm font-bold">➕</span>
           <span>New Lead</span>
-        </button>
-
-        <!-- Theme Toggle -->
-        <button 
-          @click="toggleDark()" 
-          class="w-9 h-9 rounded-xl flex items-center justify-center border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-950/80 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:border-slate-400 dark:hover:border-slate-700 transition-colors cursor-pointer"
-          title="Toggle Light/Dark Theme"
-        >
-          <span v-if="isDark">🌙</span>
-          <span v-else>☀️</span>
         </button>
 
         <!-- Admin Profile -->
@@ -77,8 +55,8 @@
             🔒
           </div>
           <div>
-            <h2 class="text-3xl font-black text-slate-900 dark:text-white mb-2">MoveItPro+ Portal</h2>
-            <p class="text-sm text-slate-500 dark:text-slate-400">Please enter administrator credentials to access the enterprise dashboard.</p>
+            <h2 class="text-3xl font-black text-slate-900 dark:text-white mb-2">MoveIt Admin Portal</h2>
+            <p class="text-sm text-slate-500 dark:text-slate-400">Please enter administrator credentials to access the dashboard.</p>
           </div>
           <form @submit.prevent="handleLogin" class="space-y-4 text-left">
             <div class="space-y-1">
@@ -120,146 +98,183 @@
       <!-- 2. Main Dashboard Interface -->
       <div v-else class="flex flex-col lg:flex-row gap-6 w-full mx-auto transition-all duration-300">
         
-        <!-- Sidebar Navigation -->
-        <aside class="w-full lg:w-72 flex-shrink-0 flex flex-col gap-6 bg-white dark:bg-slate-900/80 p-5 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xl dark:shadow-2xl h-fit lg:sticky lg:top-20 z-20 backdrop-blur-xl transition-colors">
+        <!-- Sidebar Navigation (Full Height) -->
+        <aside class="w-full lg:w-72 flex-shrink-0 flex flex-col justify-between bg-white dark:bg-slate-900/80 p-5 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xl dark:shadow-2xl min-h-[calc(100vh-100px)] lg:sticky lg:top-20 z-20 backdrop-blur-xl transition-colors">
           <!-- Main Section -->
-          <div>
-            <p class="text-[10px] uppercase tracking-widest font-black text-slate-400 dark:text-slate-500 px-3 mb-2">MAIN OPERATIONS</p>
-            <nav class="flex flex-col gap-1.5">
-              <!-- Orders & Leads (Excel Data Grid) -->
-              <button 
-                @click="activeTab = 'orders'"
-                :class="[
-                  'w-full text-left px-4 py-3 rounded-2xl font-bold text-xs tracking-wider uppercase transition-all flex items-center justify-between group overflow-hidden relative cursor-pointer',
-                  activeTab === 'orders' 
-                    ? 'bg-gradient-to-r from-red-600 to-rose-600 text-white shadow-lg shadow-red-600/30' 
-                    : 'bg-transparent text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white'
-                ]"
-              >
-                <span class="flex items-center gap-3">
-                  <span class="text-base">📊</span>
-                  <span>Orders & Leads (Grid)</span>
-                </span>
-                <span v-if="allAdminOrders.length" class="px-2 py-0.5 text-[10px] rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold">
-                  {{ allAdminOrders.length }}
-                </span>
-              </button>
+          <div class="space-y-6">
+            <div>
+              <p class="text-[10px] uppercase tracking-widest font-black text-slate-400 dark:text-slate-500 px-3 mb-2">MAIN OPERATIONS</p>
+              <nav class="flex flex-col gap-1.5">
+                <!-- Orders & Leads (Excel Data Grid) -->
+                <button 
+                  @click="activeTab = 'orders'"
+                  :class="[
+                    'w-full text-left px-4 py-3 rounded-2xl font-bold text-xs tracking-wider uppercase transition-all flex items-center justify-between group overflow-hidden relative cursor-pointer',
+                    activeTab === 'orders' 
+                      ? 'bg-gradient-to-r from-red-600 to-rose-600 text-white shadow-lg shadow-red-600/30' 
+                      : 'bg-transparent text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white'
+                  ]"
+                >
+                  <span class="flex items-center gap-3">
+                    <span class="text-base">📊</span>
+                    <span>Orders & Leads (Grid)</span>
+                  </span>
+                  <span v-if="allAdminOrders.length" class="px-2 py-0.5 text-[10px] rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold">
+                    {{ allAdminOrders.length }}
+                  </span>
+                </button>
 
-              <!-- Sales Dashboard & Goal Race -->
-              <button 
-                @click="activeTab = 'sales_dashboard'"
-                :class="[
-                  'w-full text-left px-4 py-3 rounded-2xl font-bold text-xs tracking-wider uppercase transition-all flex items-center justify-between group overflow-hidden relative cursor-pointer',
-                  activeTab === 'sales_dashboard' 
-                    ? 'bg-gradient-to-r from-red-600 to-rose-600 text-white shadow-lg shadow-red-600/30' 
-                    : 'bg-transparent text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white'
-                ]"
-              >
-                <span class="flex items-center gap-3">
-                  <span class="text-base">🏁</span>
-                  <span>Sales Goal Race</span>
-                </span>
-                <span class="px-2 py-0.5 text-[10px] rounded-full bg-red-500/20 text-red-600 dark:text-red-400 font-bold">
-                  {{ salesGoalProgressPercentage }}%
-                </span>
-              </button>
+                <!-- Sales Dashboard & Goal Race -->
+                <button 
+                  @click="activeTab = 'sales_dashboard'"
+                  :class="[
+                    'w-full text-left px-4 py-3 rounded-2xl font-bold text-xs tracking-wider uppercase transition-all flex items-center justify-between group overflow-hidden relative cursor-pointer',
+                    activeTab === 'sales_dashboard' 
+                      ? 'bg-gradient-to-r from-red-600 to-rose-600 text-white shadow-lg shadow-red-600/30' 
+                      : 'bg-transparent text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white'
+                  ]"
+                >
+                  <span class="flex items-center gap-3">
+                    <span class="text-base">🏁</span>
+                    <span>Sales Goal Race</span>
+                  </span>
+                  <span class="px-2 py-0.5 text-[10px] rounded-full bg-red-500/20 text-red-600 dark:text-red-400 font-bold">
+                    {{ salesGoalProgressPercentage }}%
+                  </span>
+                </button>
 
-              <!-- Smart Dispatch & Calendar -->
-              <button 
-                @click="activeTab = 'smart_dispatch'"
-                :class="[
-                  'w-full text-left px-4 py-3 rounded-2xl font-bold text-xs tracking-wider uppercase transition-all flex items-center justify-between group overflow-hidden relative cursor-pointer',
-                  activeTab === 'smart_dispatch' 
-                    ? 'bg-gradient-to-r from-red-600 to-rose-600 text-white shadow-lg shadow-red-600/30' 
-                    : 'bg-transparent text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white'
-                ]"
-              >
-                <span class="flex items-center gap-3">
-                  <span class="text-base">📅</span>
-                  <span>Smart Dispatch</span>
-                </span>
-                <span class="px-2 py-0.5 text-[10px] rounded-full bg-blue-500/20 text-blue-600 dark:text-blue-400 font-bold">
-                  {{ calendarMonthLabel }}
-                </span>
-              </button>
+                <!-- Smart Dispatch & Calendar -->
+                <button 
+                  @click="activeTab = 'smart_dispatch'"
+                  :class="[
+                    'w-full text-left px-4 py-3 rounded-2xl font-bold text-xs tracking-wider uppercase transition-all flex items-center justify-between group overflow-hidden relative cursor-pointer',
+                    activeTab === 'smart_dispatch' 
+                      ? 'bg-gradient-to-r from-red-600 to-rose-600 text-white shadow-lg shadow-red-600/30' 
+                      : 'bg-transparent text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white'
+                  ]"
+                >
+                  <span class="flex items-center gap-3">
+                    <span class="text-base">📅</span>
+                    <span>Smart Dispatch</span>
+                  </span>
+                  <span class="px-2 py-0.5 text-[10px] rounded-full bg-blue-500/20 text-blue-600 dark:text-blue-400 font-bold">
+                    {{ calendarMonthLabel }}
+                  </span>
+                </button>
 
-              <!-- CRM & Customer 360 -->
-              <button 
-                @click="activeTab = 'crm_leads'"
-                :class="[
-                  'w-full text-left px-4 py-3 rounded-2xl font-bold text-xs tracking-wider uppercase transition-all flex items-center justify-between group overflow-hidden relative cursor-pointer',
-                  activeTab === 'crm_leads' 
-                    ? 'bg-gradient-to-r from-red-600 to-rose-600 text-white shadow-lg shadow-red-600/30' 
-                    : 'bg-transparent text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white'
-                ]"
-              >
-                <span class="flex items-center gap-3">
-                  <span class="text-base">👥</span>
-                  <span>CRM & Clients</span>
-                </span>
-                <span v-if="crmClientsList.length" class="px-2 py-0.5 text-[10px] rounded-full bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 font-bold">
-                  {{ crmClientsList.length }}
-                </span>
-              </button>
+                <!-- CRM & Customer 360 -->
+                <button 
+                  @click="activeTab = 'crm_leads'"
+                  :class="[
+                    'w-full text-left px-4 py-3 rounded-2xl font-bold text-xs tracking-wider uppercase transition-all flex items-center justify-between group overflow-hidden relative cursor-pointer',
+                    activeTab === 'crm_leads' 
+                      ? 'bg-gradient-to-r from-red-600 to-rose-600 text-white shadow-lg shadow-red-600/30' 
+                      : 'bg-transparent text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white'
+                  ]"
+                >
+                  <span class="flex items-center gap-3">
+                    <span class="text-base">👥</span>
+                    <span>CRM & Clients</span>
+                  </span>
+                  <span v-if="crmClientsList.length" class="px-2 py-0.5 text-[10px] rounded-full bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 font-bold">
+                    {{ crmClientsList.length }}
+                  </span>
+                </button>
 
-              <!-- Financials -->
-              <button 
-                @click="activeTab = 'financials'"
-                :class="[
-                  'w-full text-left px-4 py-3 rounded-2xl font-bold text-xs tracking-wider uppercase transition-all flex items-center justify-between group overflow-hidden relative cursor-pointer',
-                  activeTab === 'financials' 
-                    ? 'bg-gradient-to-r from-red-600 to-rose-600 text-white shadow-lg shadow-red-600/30' 
-                    : 'bg-transparent text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white'
-                ]"
-              >
-                <span class="flex items-center gap-3">
-                  <span class="text-base">💰</span>
-                  <span>Financials & P&L</span>
-                </span>
-              </button>
-            </nav>
-          </div>
-
-          <!-- Content Management -->
-          <div class="pt-4 border-t border-slate-200 dark:border-slate-800">
-            <p class="text-[10px] uppercase tracking-widest font-black text-slate-400 dark:text-slate-500 px-3 mb-2">MANAGEMENT & CMS</p>
-            <nav class="flex flex-col gap-1.5">
-              <button 
-                v-for="tab in ['locations', 'blog', 'services', 'pricing', 'products']" 
-                :key="tab"
-                @click="activeTab = tab"
-                :class="[
-                  'w-full text-left px-4 py-2.5 rounded-2xl font-bold text-xs tracking-wider uppercase transition-all flex items-center justify-between group cursor-pointer',
-                  activeTab === tab 
-                    ? 'bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white border border-slate-300 dark:border-slate-700' 
-                    : 'bg-transparent text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white'
-                ]"
-              >
-                <span class="flex items-center gap-3">
-                  <span class="text-sm" v-if="tab === 'locations'">📍</span>
-                  <span class="text-sm" v-if="tab === 'blog'">📝</span>
-                  <span class="text-sm" v-if="tab === 'services'">🛠️</span>
-                  <span class="text-sm" v-if="tab === 'pricing'">🏷️</span>
-                  <span class="text-sm" v-if="tab === 'products'">🛍️</span>
-                  {{ tab }}
-                </span>
-              </button>
-            </nav>
-          </div>
-
-          <!-- Bottom Actions -->
-          <div class="mt-auto pt-4 border-t border-slate-200 dark:border-slate-800 flex flex-col gap-3">
-            <!-- Language Selection -->
-            <div class="flex items-center justify-between px-2">
-              <span class="text-xs font-bold text-slate-500 uppercase">Language</span>
-              <div class="flex items-center gap-2">
-                <button @click="setLocale('en')" :class="['px-2 py-1 rounded-md text-xs font-bold transition-all cursor-pointer', locale === 'en' ? 'bg-red-600 text-white' : 'text-slate-500 hover:text-slate-900 dark:hover:text-white']">EN</button>
-                <button @click="setLocale('nl')" :class="['px-2 py-1 rounded-md text-xs font-bold transition-all cursor-pointer', locale === 'nl' ? 'bg-red-600 text-white' : 'text-slate-500 hover:text-slate-900 dark:hover:text-white']">NL</button>
-              </div>
+                <!-- Financials -->
+                <button 
+                  @click="activeTab = 'financials'"
+                  :class="[
+                    'w-full text-left px-4 py-3 rounded-2xl font-bold text-xs tracking-wider uppercase transition-all flex items-center justify-between group overflow-hidden relative cursor-pointer',
+                    activeTab === 'financials' 
+                      ? 'bg-gradient-to-r from-red-600 to-rose-600 text-white shadow-lg shadow-red-600/30' 
+                      : 'bg-transparent text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white'
+                  ]"
+                >
+                  <span class="flex items-center gap-3">
+                    <span class="text-base">💰</span>
+                    <span>Financials & P&L</span>
+                  </span>
+                </button>
+              </nav>
             </div>
 
-            <!-- Logout -->
-            <button @click="logout" class="w-full px-4 py-3 bg-slate-50 dark:bg-slate-950 hover:bg-red-500/10 hover:text-red-500 text-slate-600 dark:text-slate-400 font-bold rounded-2xl text-xs tracking-wider uppercase transition-all border border-slate-200 dark:border-slate-800 hover:border-red-500/30 flex items-center justify-center gap-2 cursor-pointer">
+            <!-- Content Management -->
+            <div class="pt-4 border-t border-slate-200 dark:border-slate-800">
+              <p class="text-[10px] uppercase tracking-widest font-black text-slate-400 dark:text-slate-500 px-3 mb-2">MANAGEMENT & CMS</p>
+              <nav class="flex flex-col gap-1.5">
+                <button 
+                  v-for="tab in ['locations', 'blog', 'services', 'pricing', 'products']" 
+                  :key="tab"
+                  @click="activeTab = tab"
+                  :class="[
+                    'w-full text-left px-4 py-2.5 rounded-2xl font-bold text-xs tracking-wider uppercase transition-all flex items-center justify-between group cursor-pointer',
+                    activeTab === tab 
+                      ? 'bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white border border-slate-300 dark:border-slate-700' 
+                      : 'bg-transparent text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white'
+                  ]"
+                >
+                  <span class="flex items-center gap-3">
+                    <span class="text-sm" v-if="tab === 'locations'">📍</span>
+                    <span class="text-sm" v-if="tab === 'blog'">📝</span>
+                    <span class="text-sm" v-if="tab === 'services'">🛠️</span>
+                    <span class="text-sm" v-if="tab === 'pricing'">🏷️</span>
+                    <span class="text-sm" v-if="tab === 'products'">🛍️</span>
+                    {{ tab }}
+                  </span>
+                </button>
+              </nav>
+            </div>
+          </div>
+
+          <!-- Bottom Actions (Settings, Language, Theme, Logout) -->
+          <div class="pt-4 border-t border-slate-200 dark:border-slate-800 flex flex-col gap-3">
+            <!-- Language and Theme Controls Row -->
+            <div class="flex items-center justify-between gap-2 px-1">
+              <!-- Language Toggle Pills -->
+              <div class="flex items-center p-1 rounded-xl bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 flex-1">
+                <button 
+                  @click="setLocale('en')" 
+                  :class="[
+                    'flex-1 py-1.5 rounded-lg text-xs font-black transition-all cursor-pointer flex items-center justify-center gap-1.5',
+                    locale === 'en' ? 'bg-red-600 text-white shadow-md' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                  ]"
+                  title="Switch to English"
+                >
+                  <span>🇬🇧</span>
+                  <span>EN</span>
+                </button>
+                <button 
+                  @click="setLocale('nl')" 
+                  :class="[
+                    'flex-1 py-1.5 rounded-lg text-xs font-black transition-all cursor-pointer flex items-center justify-center gap-1.5',
+                    locale === 'nl' ? 'bg-red-600 text-white shadow-md' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                  ]"
+                  title="Overschakelen naar Nederlands"
+                >
+                  <span>🇳🇱</span>
+                  <span>NL</span>
+                </button>
+              </div>
+
+              <!-- Theme Toggle Button (Dark / Light Mode) -->
+              <button
+                @click="toggleDark()"
+                :class="[
+                  'w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 border cursor-pointer shrink-0',
+                  isDark 
+                    ? 'bg-slate-950 border-slate-800 text-yellow-400 hover:bg-slate-800' 
+                    : 'bg-slate-100 border-slate-200 text-slate-700 hover:bg-slate-200'
+                ]"
+                :title="isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'"
+              >
+                <span v-if="isDark" class="text-base">🌙</span>
+                <span v-else class="text-base">☀️</span>
+              </button>
+            </div>
+
+            <!-- Logout Button -->
+            <button @click="logout" class="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-950 hover:bg-red-500/10 hover:text-red-500 text-slate-600 dark:text-slate-400 font-bold rounded-2xl text-xs tracking-wider uppercase transition-all border border-slate-200 dark:border-slate-800 hover:border-red-500/30 flex items-center justify-center gap-2 cursor-pointer">
               <span>Logout Portal</span>
               <span>🚪</span>
             </button>
@@ -3166,7 +3181,7 @@ onMounted(async () => {
 })
 
 // Tab control
-const activeTab = ref('locations')
+const activeTab = ref('orders')
 
 watch(activeTab, (newTab) => {
   if (newTab === 'orders' && adminOrders.value.length === 0) fetchAdminOrders()
@@ -3283,6 +3298,10 @@ const loadAllData = async () => {
   const { data: prods, count: prodCount } = await supabase.from('products').select('*', { count: 'exact' }).order('sort_order').range(prodStart, prodStart + itemsPerPage - 1)
   if (prods) products.value = prods
   if (prodCount !== null) totalProductsCount.value = prodCount
+
+  // Immediately preload orders and financials
+  fetchAdminOrders()
+  fetchFinancials()
 }
 // Modals display control
 const modals = ref({
