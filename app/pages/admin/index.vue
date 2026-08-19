@@ -692,8 +692,8 @@
           <p class="text-slate-500 dark:text-slate-400 text-sm">{{ confirmDialog.message }}</p>
         </div>
         <div class="flex gap-3 justify-center pt-2">
-          <button v-if="!confirmDialog.isAlert" @click="confirmDialog.cancel" class="px-5 py-2.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold rounded-xl text-sm transition-all border border-slate-700">Cancel</button>
-          <button @click="confirmDialog.confirm" class="px-5 py-2.5 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl text-sm transition-all shadow-md">OK</button>
+          <button v-if="!confirmDialog.isAlert" @click="confirmDialog.cancel && confirmDialog.cancel()" class="px-5 py-2.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold rounded-xl text-sm transition-all border border-slate-700">Cancel</button>
+          <button @click="confirmDialog.confirm && confirmDialog.confirm()" class="px-5 py-2.5 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl text-sm transition-all shadow-md">OK</button>
         </div>
       </div>
     </div>
@@ -1887,9 +1887,6 @@ const passwordInput = ref('')
 const authLoading = ref(false)
 const authError = ref('')
 
-// Supabase setup for new tables
-const supabase = useSupabaseClient()
-
 // --- DIALOG LOGIC ---
 const dialog = ref({
   show: false,
@@ -1901,6 +1898,34 @@ const dialog = ref({
 const showDialog = (title, message, type = 'success') => {
   dialog.value = { show: true, title, message, type }
 }
+
+// Supabase client
+const supabase = useSupabaseClient()
+
+// --- CONFIRM DIALOG LOGIC ---
+const confirmDialog = ref({ isOpen: false, title: '', message: '', isAlert: false, confirm: null, cancel: null })
+
+const showConfirm = (title, message, isAlert = false) => {
+  return new Promise((resolve) => {
+    confirmDialog.value = {
+      isOpen: true,
+      title,
+      message,
+      isAlert,
+      confirm: () => {
+        confirmDialog.value.isOpen = false
+        resolve(true)
+      },
+      cancel: () => {
+        confirmDialog.value.isOpen = false
+        resolve(false)
+      }
+    }
+  })
+}
+
+// Supabase client
+
 
 // --- ORDERS LOGIC ---
 
@@ -2075,18 +2100,31 @@ const saveOrder = async () => {
 }
 
 const deleteOrder = async (order) => {
-  if (!supabase) return
+  if (!supabase) { console.error('No supabase client'); return }
   if (!(await showConfirm('Confirmation', 'Are you sure you want to delete this order?'))) return
   
-  const { error } = await supabase.from('orders').delete().eq('id', order.id)
+  console.log('Deleting order ID:', order.id, 'type:', typeof order.id)
+  
+  const { data, error, count } = await supabase
+    .from('orders')
+    .delete()
+    .eq('id', order.id)
+    .select()
+  
+  console.log('Delete result - data:', data, 'error:', error, 'count:', count)
+  
   if (!error) {
     allAdminOrders.value = allAdminOrders.value.filter(o => o.id !== order.id)
     if (ordersPage.value > totalOrdersPages.value) {
       ordersPage.value = Math.max(1, totalOrdersPages.value)
     }
-    fetchFinancials() // Refresh financials after order deletion
+    totalIncome.value = totalIncome.value - Number(order.actual_revenue || 0)
+    await new Promise(r => setTimeout(r, 500))
+    await fetchFinancials()
+    console.log('Order deleted successfully, financials refreshed')
   } else {
-    await showConfirm("Notice", 'Error deleting order: ' + error.message, true)
+    console.error('Delete error:', error)
+    await showConfirm("Notice", 'Error deleting order: ' + error.message + ' (Code: ' + error.code + ')', true)
   }
 }
 
@@ -2256,11 +2294,17 @@ const exportCSV = async () => {
 }
 
 const fetchFinancials = async () => {
+  // Reset values immediately to avoid showing stale data
+  totalIncome.value = 0
+  totalExpenses.value = 0
+  
   try {
     const { data: exps, error: expErr } = await supabase.from('expenses').select('*').order('date', { ascending: false })
     if (expErr) throw expErr
     
-    const { data: ords, error: ordErr } = await supabase.from('orders').select('form_data, created_at, actual_revenue')
+    const { data: ords, error: ordErr } = await supabase
+      .from('orders')
+      .select('id, form_data, created_at, actual_revenue')
     if (ordErr) throw ordErr
     
     let filteredExps = exps || []
@@ -2269,14 +2313,17 @@ const fetchFinancials = async () => {
     const now = new Date()
     
     const filterByDate = (dateStr) => {
+        // In 'all' mode, include everything regardless of date
+        if (financialFilter.value === 'all') return true
         if (!dateStr) return false
         const d = new Date(dateStr)
         if (financialFilter.value === 'today') {
             return d.toDateString() === now.toDateString()
         } else if (financialFilter.value === 'week') {
-            const first = now.getDate() - now.getDay()
-            const firstDay = new Date(now.setDate(first))
-            return d >= firstDay
+            const startOfWeek = new Date(now)
+            startOfWeek.setDate(now.getDate() - now.getDay())
+            startOfWeek.setHours(0, 0, 0, 0)
+            return d >= startOfWeek
         } else if (financialFilter.value === 'month') {
             return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear()
         } else if (financialFilter.value === 'year') {
@@ -2285,6 +2332,7 @@ const fetchFinancials = async () => {
             if(!financialCustomFrom.value || !financialCustomTo.value) return true
             const start = new Date(financialCustomFrom.value)
             const end = new Date(financialCustomTo.value)
+            end.setHours(23, 59, 59, 999)
             return d >= start && d <= end
         }
         return true
@@ -2292,7 +2340,9 @@ const fetchFinancials = async () => {
     
     filteredExps = filteredExps.filter(e => filterByDate(e.date))
     filteredOrds = filteredOrds.filter(o => {
-        const orderDate = o.form_data?.date || o.created_at
+        // Try multiple date fields
+        const orderDate = o.form_data?.date || o.created_at || null
+        if (financialFilter.value === 'all') return true
         return filterByDate(orderDate)
     })
     
