@@ -597,12 +597,30 @@
 
         <!-- TAB CONTENT: FINANCIALS -->
         <div v-if="activeTab === 'financials'" class="space-y-6" data-aos="fade-up">
-          <div class="flex justify-between items-center">
-            <h2 class="text-2xl font-black text-slate-900 dark:text-white">Financial Reports</h2>
-            <button @click="fetchFinancials" class="px-4 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 font-bold rounded-xl text-sm transition-all">
-              🔄 Refresh
-            </button>
-          </div>
+          <div class="flex flex-col md:flex-row md:justify-between md:items-center gap-4">
+              <h2 class="text-2xl font-black text-slate-900 dark:text-white">{{ $t('admin.financials.title') }}</h2>
+              
+              <div class="flex flex-col md:flex-row items-center gap-2">
+                  <select v-model="financialFilter" class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-sm text-slate-900 dark:text-white">
+                      <option value="all">All Time</option>
+                      <option value="today">Today</option>
+                      <option value="week">This Week</option>
+                      <option value="month">This Month</option>
+                      <option value="year">This Year</option>
+                      <option value="custom">Custom Range</option>
+                  </select>
+                  
+                  <div v-if="financialFilter === 'custom'" class="flex items-center gap-2">
+                      <input type="date" v-model="financialCustomFrom" class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-sm text-slate-900 dark:text-white" />
+                      <span class="text-slate-500">to</span>
+                      <input type="date" v-model="financialCustomTo" class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-sm text-slate-900 dark:text-white" />
+                  </div>
+
+                  <button @click="fetchFinancials" class="px-4 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 font-bold rounded-xl text-sm transition-all text-slate-900 dark:text-white whitespace-nowrap">
+                    🔄 Refresh
+                  </button>
+              </div>
+            </div>
           
           <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
             <div class="glass-panel p-6 rounded-2xl border-l-4 border-red-500">
@@ -662,6 +680,24 @@
       </div>
     </div>
 
+    
+    <!-- Custom Confirm/Alert Dialog -->
+    <div v-if="confirmDialog.isOpen" class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm">
+      <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-8 max-w-sm w-full shadow-2xl text-center space-y-6" data-aos="zoom-in" data-aos-duration="200">
+        <div class="w-16 h-16 mx-auto bg-red-100 dark:bg-red-500/10 text-red-500 rounded-full flex items-center justify-center text-3xl">
+          ⚠️
+        </div>
+        <div>
+          <h3 class="text-xl font-black text-slate-900 dark:text-white mb-2">{{ confirmDialog.title }}</h3>
+          <p class="text-slate-500 dark:text-slate-400 text-sm">{{ confirmDialog.message }}</p>
+        </div>
+        <div class="flex gap-3 justify-center pt-2">
+          <button v-if="!confirmDialog.isAlert" @click="confirmDialog.cancel" class="px-5 py-2.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold rounded-xl text-sm transition-all border border-slate-700">Cancel</button>
+          <button @click="confirmDialog.confirm" class="px-5 py-2.5 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl text-sm transition-all shadow-md">OK</button>
+        </div>
+      </div>
+    </div>
+
     <!-- MODAL: EDIT ORDER -->
     <div v-if="modals.order" class="fixed inset-0 z-50 flex items-center justify-center p-6 bg-white dark:bg-slate-950/80 backdrop-blur-sm overflow-y-auto">
       <div class="glass-panel w-full max-w-lg rounded-3xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 p-8 shadow-2xl space-y-6">
@@ -686,6 +722,58 @@
             <label class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Package</label>
             <input type="text" v-model="orderForm.package" class="w-full bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-slate-900 dark:text-white outline-none focus:border-red-500 text-sm" />
           </div>
+
+          <!-- Financial Fields -->
+          <div class="space-y-4 pt-4 border-t border-slate-200 dark:border-slate-800">
+            <h4 class="text-sm font-black text-red-500 uppercase">Financials</h4>
+            <div class="grid grid-cols-2 gap-4">
+              <div class="space-y-1">
+                <label class="text-[10px] font-bold uppercase text-slate-500 dark:text-slate-400">Est Revenue</label>
+                <input type="number" v-model="orderForm.est_revenue" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 text-slate-900 dark:text-white outline-none focus:border-red-500 text-sm" />
+              </div>
+              <div class="space-y-1">
+                <label class="text-[10px] font-bold uppercase text-slate-500 dark:text-slate-400">Actual Revenue</label>
+                <input type="number" v-model="orderForm.actual_revenue" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 text-slate-900 dark:text-white outline-none focus:border-red-500 text-sm" />
+              </div>
+              
+              <div class="space-y-1">
+                <label class="text-[10px] font-bold uppercase text-slate-500 dark:text-slate-400">Est Hours</label>
+                <input type="number" v-model="orderForm.est_hours" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 text-slate-900 dark:text-white outline-none focus:border-red-500 text-sm" />
+              </div>
+              <div class="space-y-1">
+                <label class="text-[10px] font-bold uppercase text-slate-500 dark:text-slate-400">Actual Hours</label>
+                <input type="number" v-model="orderForm.actual_hours" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 text-slate-900 dark:text-white outline-none focus:border-red-500 text-sm" />
+              </div>
+
+              <div class="space-y-1">
+                <label class="text-[10px] font-bold uppercase text-slate-500 dark:text-slate-400">Est Fuel (L)</label>
+                <input type="number" v-model="orderForm.est_fuel_litres" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 text-slate-900 dark:text-white outline-none focus:border-red-500 text-sm" />
+              </div>
+              <div class="space-y-1">
+                <label class="text-[10px] font-bold uppercase text-slate-500 dark:text-slate-400">Actual Fuel (L)</label>
+                <input type="number" v-model="orderForm.actual_fuel_litres" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 text-slate-900 dark:text-white outline-none focus:border-red-500 text-sm" />
+              </div>
+
+              <div class="space-y-1">
+                <label class="text-[10px] font-bold uppercase text-slate-500 dark:text-slate-400">Est Distance</label>
+                <input type="number" v-model="orderForm.est_distance" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 text-slate-900 dark:text-white outline-none focus:border-red-500 text-sm" />
+              </div>
+              <div class="space-y-1">
+                <label class="text-[10px] font-bold uppercase text-slate-500 dark:text-slate-400">Actual Distance</label>
+                <input type="number" v-model="orderForm.actual_distance" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 text-slate-900 dark:text-white outline-none focus:border-red-500 text-sm" />
+              </div>
+              
+              <div class="space-y-1">
+                <label class="text-[10px] font-bold uppercase text-slate-500 dark:text-slate-400">Est Fuel Cost</label>
+                <input type="number" v-model="orderForm.est_fuel_cost" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 text-slate-900 dark:text-white outline-none focus:border-red-500 text-sm" />
+              </div>
+              <div class="space-y-1">
+                <label class="text-[10px] font-bold uppercase text-slate-500 dark:text-slate-400">Actual Fuel Cost</label>
+                <input type="number" v-model="orderForm.actual_fuel_cost" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 text-slate-900 dark:text-white outline-none focus:border-red-500 text-sm" />
+              </div>
+            </div>
+          </div>
+
           <div class="space-y-2 pt-2 border-t border-slate-200 dark:border-slate-800">
             <label class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Attached Images ({{ orderForm.images?.length || 0 }})</label>
             <div class="flex flex-wrap gap-3">
@@ -1880,6 +1968,7 @@ const updateOrderStatus = async (order) => {
   }
 }
 
+const selectedItem = ref(null)
 const orderForm = ref({ id: '', date: '', from: '', to: '', package: '', images: [] })
 const uploadingOrderImage = ref(false)
 
@@ -1932,7 +2021,7 @@ const onOrderImageUpload = async (e) => {
       orderForm.value.images.push(res.url)
     }
   } catch (e) {
-    alert('Failed to upload image.')
+    await showConfirm("Notice", 'Failed to upload image.', true)
   } finally {
     uploadingOrderImage.value = false
   }
@@ -1981,20 +2070,23 @@ const saveOrder = async () => {
     modals.value.order = false
     showDialog('Order Updated', 'The order details have been saved successfully.', 'success')
   } else {
-    alert('Error updating order: ' + error.message)
+    await showConfirm("Notice", 'Error updating order: ' + error.message, true)
   }
 }
 
 const deleteOrder = async (order) => {
-  if (!supabase || !confirm('Are you sure you want to delete this order?')) return
+  if (!supabase) return
+  if (!(await showConfirm('Confirmation', 'Are you sure you want to delete this order?'))) return
+  
   const { error } = await supabase.from('orders').delete().eq('id', order.id)
   if (!error) {
     allAdminOrders.value = allAdminOrders.value.filter(o => o.id !== order.id)
     if (ordersPage.value > totalOrdersPages.value) {
       ordersPage.value = Math.max(1, totalOrdersPages.value)
     }
+    fetchFinancials() // Refresh financials after order deletion
   } else {
-    alert('Error deleting order: ' + error.message)
+    await showConfirm("Notice", 'Error deleting order: ' + error.message, true)
   }
 }
 
@@ -2044,8 +2136,8 @@ const editCustomer = (customer) => {
   const newName = prompt('Enter new name:', customer.full_name)
   const newPhone = prompt('Enter new phone:', customer.phone)
   if (newName !== null && newPhone !== null) {
-    supabase.from('customers').update({ full_name: newName, phone: newPhone }).eq('id', customer.id).then(({error}) => {
-      if(error) alert('Error updating')
+    supabase.from('customers').update({ full_name: newName, phone: newPhone }).eq('id', customer.id).then(async ({error}) => {
+      if(error) await showConfirm("Notice", 'Error updating', true)
       else fetchAdminCustomers()
     })
   }
@@ -2054,6 +2146,19 @@ const editCustomer = (customer) => {
 // --- FINANCIALS LOGIC ---
 const totalExpenses = ref(0)
 const totalIncome = ref(0)
+
+const financialFilter = ref('all')
+const financialCustomFrom = ref('')
+const financialCustomTo = ref('')
+
+watch([financialFilter, financialCustomFrom, financialCustomTo], () => {
+    if (financialFilter.value === 'custom') {
+        if (financialCustomFrom.value && financialCustomTo.value) fetchFinancials()
+    } else {
+        fetchFinancials()
+    }
+})
+
 const expensesList = ref([])
 
 const expenseForm = ref({
@@ -2121,9 +2226,9 @@ const printReport = () => {
   doc.save("MoveIt_Financial_Report.pdf");
 }
 
-const exportCSV = () => {
+const exportCSV = async () => {
   if (!expensesList.value || expensesList.value.length === 0) {
-    alert('No data to export');
+    await showConfirm("Notice", 'No data to export', true);
     return;
   }
   
@@ -2152,17 +2257,49 @@ const exportCSV = () => {
 
 const fetchFinancials = async () => {
   try {
-    // For Income, we might sum up completed orders if they had a price, or just a mock 0 for now since QuoteForm doesn't record price yet.
-    // As quoteform doesn't calculate price, we will keep it simple.
-    
     const { data: exps, error: expErr } = await supabase.from('expenses').select('*').order('date', { ascending: false })
     if (expErr) throw expErr
     
-    expensesList.value = exps || []
-    totalExpenses.value = exps.reduce((acc, curr) => acc + Number(curr.amount), 0)
+    const { data: ords, error: ordErr } = await supabase.from('orders').select('form_data, created_at, actual_revenue')
+    if (ordErr) throw ordErr
     
-    // Total income dummy fetch or later integration
-    totalIncome.value = 0 // Changed from 5000 to 0 so it doesn't show fake data
+    let filteredExps = exps || []
+    let filteredOrds = ords || []
+    
+    const now = new Date()
+    
+    const filterByDate = (dateStr) => {
+        if (!dateStr) return false
+        const d = new Date(dateStr)
+        if (financialFilter.value === 'today') {
+            return d.toDateString() === now.toDateString()
+        } else if (financialFilter.value === 'week') {
+            const first = now.getDate() - now.getDay()
+            const firstDay = new Date(now.setDate(first))
+            return d >= firstDay
+        } else if (financialFilter.value === 'month') {
+            return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear()
+        } else if (financialFilter.value === 'year') {
+            return d.getFullYear() === now.getFullYear()
+        } else if (financialFilter.value === 'custom') {
+            if(!financialCustomFrom.value || !financialCustomTo.value) return true
+            const start = new Date(financialCustomFrom.value)
+            const end = new Date(financialCustomTo.value)
+            return d >= start && d <= end
+        }
+        return true
+    }
+    
+    filteredExps = filteredExps.filter(e => filterByDate(e.date))
+    filteredOrds = filteredOrds.filter(o => {
+        const orderDate = o.form_data?.date || o.created_at
+        return filterByDate(orderDate)
+    })
+    
+    expensesList.value = filteredExps
+    totalExpenses.value = filteredExps.reduce((acc, curr) => acc + Number(curr.amount || 0), 0)
+    totalIncome.value = filteredOrds.reduce((acc, curr) => acc + Number(curr.actual_revenue || 0), 0)
+    
   } catch (err) {
     console.error(err)
   }
@@ -2178,10 +2315,10 @@ const addExpense = async () => {
     if (error) throw error
     expenseForm.value.amount = 0
     fetchFinancials()
-    alert('Expense added!')
+    await showConfirm("Notice", 'Expense added!', true)
   } catch (err) {
     console.error(err)
-    alert('Failed to add expense')
+    await showConfirm("Notice", 'Failed to add expense', true)
   }
 }
 
@@ -2396,7 +2533,7 @@ const onProductImageUpload = async (e) => {
       productImagesList.value.push(res.url)
     }
   } catch (err) {
-    alert('Failed to upload image.')
+    await showConfirm("Notice", 'Failed to upload image.', true)
   } finally {
     uploading.value = false
   }
@@ -2469,7 +2606,7 @@ const saveProduct = async () => {
       if (idx !== -1) products.value[idx] = { ...selectedItem.value, ...payload }
       modals.value.product = false
     } else {
-      alert('Error updating product: ' + error.message)
+      await showConfirm("Notice", 'Error updating product: ' + error.message, true)
     }
   } else {
     const { data, error } = await supabase
@@ -2482,7 +2619,7 @@ const saveProduct = async () => {
       products.value.sort((a, b) => a.sort_order - b.sort_order)
       modals.value.product = false
     } else {
-      alert('Error creating product: ' + error.message)
+      await showConfirm("Notice", 'Error creating product: ' + error.message, true)
     }
   }
 }
@@ -2500,7 +2637,7 @@ const deleteProduct = async (prod) => {
       productsPage.value = Math.max(1, totalProductsPages.value)
     }
   } else {
-    alert('Error deleting product: ' + error.message)
+    await showConfirm("Notice", 'Error deleting product: ' + error.message, true)
   }
 }
 
