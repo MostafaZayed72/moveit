@@ -114,6 +114,41 @@
     </div>
 
 
+    <!-- Addons & Extra Services Grid -->
+    <div class="pt-4 border-t border-slate-100 dark:border-slate-800" data-aos="fade-up">
+      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 mb-6">
+        <div>
+          <span class="text-[10px] font-black tracking-widest uppercase text-red-600 dark:text-red-400 block mb-0.5">
+            {{ isNl ? 'FLEXIBELE EXTRA OPTIES' : 'FLEXIBLE EXTRA ADD-ONS' }}
+          </span>
+          <h4 class="text-xl font-black text-slate-900 dark:text-white">
+            {{ $t('home.packages.optional_addons') }}
+          </h4>
+        </div>
+        <p class="text-xs text-slate-500 dark:text-slate-400">
+          {{ $t('home.packages.available_during_booking') }}
+        </p>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+        <div 
+          v-for="(addon, idx) in addonsList" 
+          :key="idx"
+          class="bg-white dark:bg-slate-900/90 border border-slate-200/80 dark:border-slate-800/80 rounded-2xl p-4 hover:border-red-500/50 hover:shadow-lg transition-all group flex flex-col justify-between"
+        >
+          <div class="text-2xl mb-3 group-hover:scale-110 transition-transform">{{ addon.icon }}</div>
+          <div>
+            <div class="text-xs font-bold text-slate-800 dark:text-slate-200 group-hover:text-red-600 transition-colors leading-snug mb-1">
+              {{ addon.title }}
+            </div>
+            <div class="text-xs font-black text-red-600 dark:text-red-400">
+              {{ addon.price }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Footnotes Section -->
     <div class="max-w-4xl mx-auto pt-8 border-t border-slate-100 dark:border-slate-800 px-6 lg:px-0">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 items-center text-center md:text-left">
@@ -253,7 +288,7 @@ const resolvedPackages = computed(() => {
       description: descItem ? descItem.text : '',
       price: t(`home.packages.${key}.price`),
       unit: t(`home.packages.${key}.unit`),
-      popular: key === 'package2',
+      popular: key === 'package3',
       best_for: filteredBestFor,
       includes: (tm(`home.packages.${key}.includes`) || []).map(item => rt(item)),
       cta: { 
@@ -268,6 +303,27 @@ const resolvedPackages = computed(() => {
     resolvePkg('package2', '📦'),
     resolvePkg('package3', '🏠'),
     resolvePkg('package4', '🌍'),
+  ]
+})
+
+const addonsList = computed(() => {
+  if (isNl.value) {
+    return [
+      { icon: '🛠️', title: 'Meubelmontage', price: '€35.00/u' },
+      { icon: '📦', title: 'IKEA Ophalen', price: '€45.00' },
+      { icon: '🛍️', title: 'Marktplaats Ophalen', price: '€35.00' },
+      { icon: '🏗️', title: 'Verhuislift Huren', price: '€150.00' },
+      { icon: '🚗', title: 'Meerijdservice', price: '€10 (Maastricht)' },
+      { icon: '👥', title: 'Extra Verhuizer', price: '€15.99/u' },
+    ]
+  }
+  return [
+    { icon: '🛠️', title: 'Furniture Assembly', price: '€35.00/hr' },
+    { icon: '📦', title: 'IKEA Pickup', price: '€45.00' },
+    { icon: '🛍️', title: 'Marktplaats Pickup', price: '€35.00' },
+    { icon: '🏗️', title: 'Moving Lift Rental', price: '€150.00' },
+    { icon: '🚗', title: 'Ride Along Service', price: '€10 (Maastricht)' },
+    { icon: '👥', title: 'Extra Mover', price: '€15.99/hr' },
   ]
 })
 

@@ -306,9 +306,10 @@
       "footnote_time": "Time is calculated from departure and return to our Maastricht location.",
       "footnote_student": "Free ride along for students within Maastricht",
       "optional_addons_list": [
-        "Furniture assembly €27.99",
-        "Packing service (custom quote)",
-        "Moving lift rental (custom quote)",
+        "Furniture assembly €35.00",
+        "IKEA Pickup €45.00",
+        "Marktplaats Pickup €35.00",
+        "Moving lift rental €150.00",
         "Ride along service (€10 within Maastricht)",
         "Extra mover (€15.99/hr)"
       ],
@@ -792,7 +793,7 @@
         "title": "IKEA Furniture Assembly & Disassembly",
         "desc": "Need help building the furniture you just bought? Our team can assemble or disassemble IKEA furniture quickly and carefully — whether it's brand-new or second-hand.",
         "supported": "Supported Furniture: Beds, Wardrobes, Desks, Shelves, Sofas, Etc.",
-        "price": "From €25 Excl. VAT",
+        "price": "From €35.00 Excl. VAT",
         "cta": "Book Assembly Service"
       },
       "marktplaats": {
@@ -1442,7 +1443,7 @@
         "title": "Disassembly & Reassembly Service",
         "desc": "Moving to a new home? We dismantle your current furniture safely at point A, transport it, and rebuild it at point B.",
         "extra": "Ideal for: Large beds, wardrobes, and dining tables that cannot be moved in one piece.",
-        "price": "From €27.99/hr Excl. VAT",
+        "price": "From €35.00/hr Excl. VAT",
         "cta": "Schedule Reassembly"
       },
       "sub5": {

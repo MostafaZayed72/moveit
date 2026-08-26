@@ -262,9 +262,10 @@
       "footnote_time": "Tijd wordt berekend vanaf vertrek en terugkeer naar onze locatie in Maastricht.",
       "footnote_student": "Gratis meerijden voor studenten binnen Maastricht",
       "optional_addons_list": [
-        "Meubelmontage €27.99",
-        "Inpakservice (offerte op maat)",
-        "Verhuislift huren (offerte op maat)",
+        "Meubelmontage €35.00",
+        "IKEA Ophaalservice €45.00",
+        "Marktplaats Ophaalservice €35.00",
+        "Verhuislift huren €150.00",
         "Meerijdservice (€10 binnen Maastricht)",
         "Extra verhuizer (€15.99/u)"
       ],
@@ -748,7 +749,7 @@
         "title": "IKEA Meubel Montage & Demontage",
         "desc": "Hulp nodig bij het monteren van de meubels die u zojuist heeft gekocht? Ons team kan IKEA meubels snel en zorgvuldig monteren of demonteren — of ze nu gloednieuw of tweedehands zijn.",
         "supported": "Ondersteunde meubels: Bedden, Kasten, Bureaus, Planken, Banken, enz.",
-        "price": "Vanaf €25 Excl. BTW",
+        "price": "Vanaf €35.00 Excl. BTW",
         "cta": "Montageservice Boeken"
       },
       "marktplaats": {
@@ -1398,7 +1399,7 @@
         "title": "Demontage & Remontage (Verhuisdag)",
         "desc": "Gaat u verhuizen? Wij demonteren uw grote meubels veilig in uw oude woning, transporteren ze en bouwen ze in de nieuwe woning weer op.",
         "extra": "Ideaal voor: Grote bedden, kledingkasten en tafels die niet in één stuk kunnen worden vervoerd.",
-        "price": "Vanaf €27.99/u Excl. BTW",
+        "price": "Vanaf €35.00/u Excl. BTW",
         "cta": "Plan Remontage"
       },
       "sub5": {

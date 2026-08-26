@@ -374,7 +374,7 @@ export default defineEventHandler(async (event) => {
       const packageRow = {
         key_name: key,
         icon: packageIcons[idx],
-        popular: key === 'package2',
+        popular: key === 'package3',
         name_en: pkgEN.name,
         name_nl: pkgNL.name,
         price_en: pkgEN.price,
