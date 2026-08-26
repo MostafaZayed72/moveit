@@ -60,11 +60,11 @@
           </div>
           <form @submit.prevent="handleLogin" class="space-y-4 text-left">
             <div class="space-y-1">
-              <label class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Email Address</label>
+              <label class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Username or Email</label>
               <input 
-                type="email" 
+                type="text" 
                 v-model="emailInput" 
-                placeholder="info@moveitmaastricht.nl"
+                placeholder="test or info@moveitmaastricht.nl"
                 class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-5 py-4 text-slate-900 dark:text-white focus:border-red-500 focus:ring-1 focus:ring-red-500 outline-none text-base"
                 required
               />
@@ -3143,26 +3143,66 @@ const addExpense = async () => {
 // Ensure these are fetched when tabs switch
 
 const handleLogin = async () => {
-
   authLoading.value = true
   authError.value = ''
   try {
+    const rawEmail = (emailInput.value || '').trim()
+    const password = (passwordInput.value || '').trim()
+
+    // 1. Support direct user "test" / "test@moveitmaastricht.nl" with password "@Tetst123456"
+    if (
+      (rawEmail.toLowerCase() === 'test' || rawEmail.toLowerCase() === 'test@moveitmaastricht.nl') && 
+      password === '@Tetst123456'
+    ) {
+      isAuthorized.value = true
+      if (process.client) {
+        localStorage.setItem('moveit_admin_auth', JSON.stringify({ user: 'test', time: Date.now() }))
+      }
+      loadAllData()
+      return
+    }
+
+    // 2. Default admin check
+    if (
+      (rawEmail.toLowerCase() === 'info@moveitmaastricht.nl' || rawEmail.toLowerCase() === 'admin') && 
+      password === 'PYramidbricks@20'
+    ) {
+      isAuthorized.value = true
+      if (process.client) {
+        localStorage.setItem('moveit_admin_auth', JSON.stringify({ user: 'admin', time: Date.now() }))
+      }
+      loadAllData()
+      return
+    }
+
+    // 3. Supabase Auth fallback
+    let emailToUse = rawEmail
+    if (!emailToUse.includes('@')) {
+      emailToUse = `${emailToUse}@moveitmaastricht.nl`
+    }
+
     const { error } = await supabase.auth.signInWithPassword({
-      email: emailInput.value,
-      password: passwordInput.value
+      email: emailToUse,
+      password: password
     })
     if (error) throw error
     
     isAuthorized.value = true
+    if (process.client) {
+      localStorage.setItem('moveit_admin_auth', JSON.stringify({ user: rawEmail, time: Date.now() }))
+    }
     loadAllData()
   } catch (err) {
-    authError.value = err.message || 'Incorrect email or password. Access denied.'
+    authError.value = err.message || 'Incorrect username/email or password. Access denied.'
   } finally {
     authLoading.value = false
   }
 }
 
 const logout = async () => {
+  if (process.client) {
+    localStorage.removeItem('moveit_admin_auth')
+  }
   await supabase.auth.signOut()
   isAuthorized.value = false
   emailInput.value = ''
@@ -3172,6 +3212,17 @@ const logout = async () => {
 // Check auth on mount
 onMounted(async () => {
   if (process.client) {
+    const saved = localStorage.getItem('moveit_admin_auth')
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved)
+        if (parsed && (Date.now() - parsed.time < 30 * 24 * 60 * 60 * 1000)) {
+          isAuthorized.value = true
+          loadAllData()
+          return
+        }
+      } catch (e) {}
+    }
     const { data: { session } } = await supabase.auth.getSession()
     if (session) {
       isAuthorized.value = true
