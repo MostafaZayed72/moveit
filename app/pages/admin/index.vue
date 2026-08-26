@@ -3463,6 +3463,615 @@ const deleteProduct = async (prod) => {
   }
 }
 
+// Global modal and upload states
+const isEditing = ref(false)
+const uploading = ref(false)
+
+// Universal file upload handler
+const onFileChange = async (e, type) => {
+  const file = e.target.files?.[0]
+  if (!file) return
+  uploading.value = true
+  const formData = new FormData()
+  formData.append('file', file)
+  try {
+    const res = await $fetch('/api/upload', {
+      method: 'POST',
+      body: formData
+    })
+    if (res && res.url) {
+      if (type === 'location') locationForm.value.image = res.url
+      else if (type === 'location_van') locationForm.value.images_van = res.url
+      else if (type === 'location_boxes') locationForm.value.images_boxes = res.url
+      else if (type === 'location_room') locationForm.value.images_room = res.url
+      else if (type === 'service') serviceForm.value.image = res.url
+      else if (type === 'blog') blogForm.value.image = res.url
+      else if (type === 'section') sectionForm.value.image = res.url
+      else if (type === 'edit_section') editSectionForm.value.image = res.url
+    }
+  } catch (err) {
+    console.error('File upload error:', err)
+    showDialog('Upload Failed', 'Failed to upload image to Cloudinary.', 'error')
+  } finally {
+    uploading.value = false
+  }
+}
+
+// ==========================================
+// 1. LOCATIONS CRUD
+// ==========================================
+const locationForm = ref({
+  name: '',
+  slug: '',
+  country: 'Netherlands 🇳🇱',
+  image: '',
+  images_van: '',
+  images_boxes: '',
+  images_room: '',
+  hero_title_en: '',
+  hero_title_nl: '',
+  hero_subtitle_en: '',
+  hero_subtitle_nl: '',
+  seo_title_en: '',
+  seo_title_nl: '',
+  seo_desc_en: '',
+  seo_desc_nl: '',
+  seo_keywords_en: '',
+  seo_keywords_nl: '',
+  intro_title_en: '',
+  intro_title_nl: '',
+  intro_text_en: '',
+  intro_text_nl: '',
+  residential_title_en: '',
+  residential_title_nl: '',
+  residential_text_en: '',
+  residential_text_nl: '',
+  commercial_title_en: '',
+  commercial_title_nl: '',
+  commercial_text_en: '',
+  commercial_text_nl: '',
+  packing_title_en: '',
+  packing_title_nl: '',
+  packing_text_en: '',
+  packing_text_nl: '',
+  insights_title_en: '',
+  insights_title_nl: '',
+  insights_text_en: '',
+  insights_text_nl: '',
+  costs_title_en: '',
+  costs_title_nl: '',
+  costs_text_en: '',
+  costs_text_nl: '',
+  neighborhoods_title_en: '',
+  neighborhoods_title_nl: '',
+  neighborhoods_list_en: '',
+  neighborhoods_list_nl: ''
+})
+
+const openAddLocationModal = () => {
+  isEditing.value = false
+  selectedItem.value = null
+  locationForm.value = {
+    name: '',
+    slug: '',
+    country: 'Netherlands 🇳🇱',
+    image: '',
+    images_van: '',
+    images_boxes: '',
+    images_room: '',
+    hero_title_en: '',
+    hero_title_nl: '',
+    hero_subtitle_en: '',
+    hero_subtitle_nl: '',
+    seo_title_en: '',
+    seo_title_nl: '',
+    seo_desc_en: '',
+    seo_desc_nl: '',
+    seo_keywords_en: '',
+    seo_keywords_nl: '',
+    intro_title_en: '',
+    intro_title_nl: '',
+    intro_text_en: '',
+    intro_text_nl: '',
+    residential_title_en: '',
+    residential_title_nl: '',
+    residential_text_en: '',
+    residential_text_nl: '',
+    commercial_title_en: '',
+    commercial_title_nl: '',
+    commercial_text_en: '',
+    commercial_text_nl: '',
+    packing_title_en: '',
+    packing_title_nl: '',
+    packing_text_en: '',
+    packing_text_nl: '',
+    insights_title_en: '',
+    insights_title_nl: '',
+    insights_text_en: '',
+    insights_text_nl: '',
+    costs_title_en: '',
+    costs_title_nl: '',
+    costs_text_en: '',
+    costs_text_nl: '',
+    neighborhoods_title_en: '',
+    neighborhoods_title_nl: '',
+    neighborhoods_list_en: '',
+    neighborhoods_list_nl: ''
+  }
+  modals.value.location = true
+}
+
+const openEditLocationModal = (loc) => {
+  isEditing.value = true
+  selectedItem.value = loc
+  locationForm.value = { ...loc }
+  modals.value.location = true
+}
+
+const saveLocation = async () => {
+  if (!supabase || !locationForm.value.slug || !locationForm.value.name) {
+    showDialog('Missing Info', 'Please provide location name and slug.', 'error')
+    return
+  }
+  uploading.value = true
+  try {
+    const payload = { ...locationForm.value }
+    if (isEditing.value && selectedItem.value) {
+      const { error } = await supabase.from('locations').update(payload).eq('id', selectedItem.value.id)
+      if (error) throw error
+      const idx = locations.value.findIndex(l => l.id === selectedItem.value.id)
+      if (idx !== -1) locations.value[idx] = { ...selectedItem.value, ...payload }
+      showDialog('Location Updated', `${locationForm.value.name} was updated successfully.`, 'success')
+    } else {
+      const { data, error } = await supabase.from('locations').insert([payload]).select()
+      if (error) throw error
+      if (data && data[0]) {
+        locations.value.unshift(data[0])
+        totalLocationsCount.value++
+      }
+      showDialog('Location Created', `New location ${locationForm.value.name} was created.`, 'success')
+    }
+    modals.value.location = false
+  } catch (err) {
+    console.error('Error saving location:', err)
+    showDialog('Save Error', err.message || 'Could not save location.', 'error')
+  } finally {
+    uploading.value = false
+  }
+}
+
+const deleteLocation = async (loc) => {
+  const confirmed = await showConfirm('Delete Location', `Are you sure you want to delete ${loc.name}?`)
+  if (!confirmed || !supabase) return
+  try {
+    const { error } = await supabase.from('locations').delete().eq('id', loc.id)
+    if (error) throw error
+    locations.value = locations.value.filter(l => l.id !== loc.id)
+    totalLocationsCount.value = Math.max(0, totalLocationsCount.value - 1)
+    showDialog('Deleted', `${loc.name} was deleted successfully.`, 'success')
+  } catch (err) {
+    console.error(err)
+    showDialog('Error', 'Failed to delete location: ' + err.message, 'error')
+  }
+}
+
+// ==========================================
+// 2. SERVICES CRUD
+// ==========================================
+const serviceForm = ref({
+  slug: '',
+  title_en: '',
+  title_nl: '',
+  description_en: '',
+  description_nl: '',
+  image: ''
+})
+
+const openAddServiceModal = () => {
+  isEditing.value = false
+  selectedItem.value = null
+  serviceForm.value = {
+    slug: '',
+    title_en: '',
+    title_nl: '',
+    description_en: '',
+    description_nl: '',
+    image: ''
+  }
+  modals.value.service = true
+}
+
+const openEditServiceModal = (service) => {
+  isEditing.value = true
+  selectedItem.value = service
+  serviceForm.value = { ...service }
+  modals.value.service = true
+}
+
+const saveService = async () => {
+  if (!supabase || !serviceForm.value.slug || !serviceForm.value.title_en) {
+    showDialog('Missing Info', 'Please enter service title and slug.', 'error')
+    return
+  }
+  uploading.value = true
+  try {
+    const payload = { ...serviceForm.value }
+    if (isEditing.value && selectedItem.value) {
+      const { error } = await supabase.from('services').update(payload).eq('id', selectedItem.value.id)
+      if (error) throw error
+      const idx = services.value.findIndex(s => s.id === selectedItem.value.id)
+      if (idx !== -1) services.value[idx] = { ...selectedItem.value, ...payload }
+      showDialog('Service Updated', `${serviceForm.value.title_en} was updated successfully.`, 'success')
+    } else {
+      const { data, error } = await supabase.from('services').insert([payload]).select()
+      if (error) throw error
+      if (data && data[0]) {
+        services.value.unshift(data[0])
+        totalServicesCount.value++
+      }
+      showDialog('Service Created', `New service ${serviceForm.value.title_en} was created.`, 'success')
+    }
+    modals.value.service = false
+  } catch (err) {
+    console.error('Error saving service:', err)
+    showDialog('Save Error', err.message || 'Could not save service.', 'error')
+  } finally {
+    uploading.value = false
+  }
+}
+
+const deleteService = async (service) => {
+  const confirmed = await showConfirm('Delete Service', `Are you sure you want to delete ${service.title_en}?`)
+  if (!confirmed || !supabase) return
+  try {
+    const { error } = await supabase.from('services').delete().eq('id', service.id)
+    if (error) throw error
+    services.value = services.value.filter(s => s.id !== service.id)
+    totalServicesCount.value = Math.max(0, totalServicesCount.value - 1)
+    showDialog('Deleted', `${service.title_en} was deleted successfully.`, 'success')
+  } catch (err) {
+    console.error(err)
+    showDialog('Error', 'Failed to delete service: ' + err.message, 'error')
+  }
+}
+
+// ==========================================
+// 3. BLOG CRUD
+// ==========================================
+const blogForm = ref({
+  slug: '',
+  title_en: '',
+  title_nl: '',
+  category_en: 'Moving Guide',
+  category_nl: 'Verhuisgids',
+  desc_en: '',
+  desc_nl: '',
+  content_en: '',
+  content_nl: '',
+  image: '',
+  date: new Date().toISOString().split('T')[0]
+})
+
+const openAddBlogModal = () => {
+  isEditing.value = false
+  selectedItem.value = null
+  blogForm.value = {
+    slug: '',
+    title_en: '',
+    title_nl: '',
+    category_en: 'Moving Guide',
+    category_nl: 'Verhuisgids',
+    desc_en: '',
+    desc_nl: '',
+    content_en: '',
+    content_nl: '',
+    image: '',
+    date: new Date().toISOString().split('T')[0]
+  }
+  modals.value.blog = true
+}
+
+const openEditBlogModal = (post) => {
+  isEditing.value = true
+  selectedItem.value = post
+  blogForm.value = { ...post }
+  modals.value.blog = true
+}
+
+const saveBlogPost = async () => {
+  if (!supabase || !blogForm.value.slug || !blogForm.value.title_en) {
+    showDialog('Missing Info', 'Please enter blog title and slug.', 'error')
+    return
+  }
+  uploading.value = true
+  try {
+    const payload = { ...blogForm.value }
+    if (isEditing.value && selectedItem.value) {
+      const { error } = await supabase.from('blog_posts').update(payload).eq('id', selectedItem.value.id)
+      if (error) throw error
+      const idx = blogPosts.value.findIndex(b => b.id === selectedItem.value.id)
+      if (idx !== -1) blogPosts.value[idx] = { ...selectedItem.value, ...payload }
+      showDialog('Post Updated', `${blogForm.value.title_en} was updated successfully.`, 'success')
+    } else {
+      const { data, error } = await supabase.from('blog_posts').insert([payload]).select()
+      if (error) throw error
+      if (data && data[0]) {
+        blogPosts.value.unshift(data[0])
+        totalBlogPostsCount.value++
+      }
+      showDialog('Post Created', `New blog post was published.`, 'success')
+    }
+    modals.value.blog = false
+  } catch (err) {
+    console.error('Error saving blog post:', err)
+    showDialog('Save Error', err.message || 'Could not save post.', 'error')
+  } finally {
+    uploading.value = false
+  }
+}
+
+const deleteBlogPost = async (post) => {
+  const confirmed = await showConfirm('Delete Blog Post', `Are you sure you want to delete ${post.title_en}?`)
+  if (!confirmed || !supabase) return
+  try {
+    const { error } = await supabase.from('blog_posts').delete().eq('id', post.id)
+    if (error) throw error
+    blogPosts.value = blogPosts.value.filter(b => b.id !== post.id)
+    totalBlogPostsCount.value = Math.max(0, totalBlogPostsCount.value - 1)
+    showDialog('Deleted', `${post.title_en} was deleted.`, 'success')
+  } catch (err) {
+    console.error(err)
+    showDialog('Error', 'Failed to delete post: ' + err.message, 'error')
+  }
+}
+
+// ==========================================
+// 4. SUB-SECTIONS (LOCATIONS / SERVICES / BLOG)
+// ==========================================
+const selectedLocation = ref(null)
+const selectedService = ref(null)
+const selectedBlog = ref(null)
+const locationSections = ref([])
+const blogSections = ref([])
+const editingSectionId = ref(null)
+
+const sectionForm = ref({
+  title_en: '',
+  title_nl: '',
+  content_en: '',
+  content_nl: '',
+  sort_order: 1,
+  image: ''
+})
+
+const editSectionForm = ref({
+  title_en: '',
+  title_nl: '',
+  content_en: '',
+  content_nl: '',
+  sort_order: 1,
+  image: ''
+})
+
+const manageLocationSections = async (loc) => {
+  selectedLocation.value = loc
+  locationSections.value = []
+  if (supabase) {
+    const { data } = await supabase.from('location_sections').select('*').eq('location_id', loc.id).order('sort_order')
+    if (data) locationSections.value = data
+  }
+  modals.value.locationSections = true
+}
+
+const addLocationSection = async () => {
+  if (!supabase || !selectedLocation.value) return
+  const payload = {
+    location_id: selectedLocation.value.id,
+    ...sectionForm.value
+  }
+  const { data, error } = await supabase.from('location_sections').insert([payload]).select()
+  if (!error && data) {
+    locationSections.value.push(data[0])
+    sectionForm.value = { title_en: '', title_nl: '', content_en: '', content_nl: '', sort_order: locationSections.value.length + 1, image: '' }
+    showDialog('Section Added', 'Custom sub-section added successfully.', 'success')
+  }
+}
+
+const editSection = (sec) => {
+  editingSectionId.value = sec.id
+  editSectionForm.value = { ...sec }
+}
+
+const cancelSectionEdit = () => {
+  editingSectionId.value = null
+}
+
+const updateLocationSection = async () => {
+  if (!supabase || !editingSectionId.value) return
+  const { error } = await supabase.from('location_sections').update(editSectionForm.value).eq('id', editingSectionId.value)
+  if (!error) {
+    const idx = locationSections.value.findIndex(s => s.id === editingSectionId.value)
+    if (idx !== -1) locationSections.value[idx] = { ...locationSections.value[idx], ...editSectionForm.value }
+    editingSectionId.value = null
+    showDialog('Updated', 'Sub-section updated.', 'success')
+  }
+}
+
+const deleteLocationSection = async (sec) => {
+  if (!supabase) return
+  const { error } = await supabase.from('location_sections').delete().eq('id', sec.id)
+  if (!error) {
+    locationSections.value = locationSections.value.filter(s => s.id !== sec.id)
+    showDialog('Deleted', 'Section deleted.', 'success')
+  }
+}
+
+const manageServiceSections = async (serv) => {
+  selectedService.value = serv
+  serviceSections.value = []
+  if (supabase) {
+    const { data } = await supabase.from('service_sections').select('*').eq('service_id', serv.id).order('sort_order')
+    if (data) serviceSections.value = data
+  }
+  modals.value.sections = true
+}
+
+const addServiceSection = async () => {
+  if (!supabase || !selectedService.value) return
+  const payload = {
+    service_id: selectedService.value.id,
+    ...sectionForm.value
+  }
+  const { data, error } = await supabase.from('service_sections').insert([payload]).select()
+  if (!error && data) {
+    serviceSections.value.push(data[0])
+    sectionForm.value = { title_en: '', title_nl: '', content_en: '', content_nl: '', sort_order: serviceSections.value.length + 1, image: '' }
+    showDialog('Section Added', 'Custom service section added.', 'success')
+  }
+}
+
+const updateServiceSection = async () => {
+  if (!supabase || !editingSectionId.value) return
+  const { error } = await supabase.from('service_sections').update(editSectionForm.value).eq('id', editingSectionId.value)
+  if (!error) {
+    const idx = serviceSections.value.findIndex(s => s.id === editingSectionId.value)
+    if (idx !== -1) serviceSections.value[idx] = { ...serviceSections.value[idx], ...editSectionForm.value }
+    editingSectionId.value = null
+    showDialog('Updated', 'Service section updated.', 'success')
+  }
+}
+
+const deleteServiceSection = async (sec) => {
+  if (!supabase) return
+  const { error } = await supabase.from('service_sections').delete().eq('id', sec.id)
+  if (!error) {
+    serviceSections.value = serviceSections.value.filter(s => s.id !== sec.id)
+    showDialog('Deleted', 'Section deleted.', 'success')
+  }
+}
+
+const manageBlogSections = async (post) => {
+  selectedBlog.value = post
+  blogSections.value = []
+  if (supabase) {
+    const { data } = await supabase.from('blog_sections').select('*').eq('blog_id', post.id).order('sort_order')
+    if (data) blogSections.value = data
+  }
+  modals.value.blogSections = true
+}
+
+// ==========================================
+// 5. PRICING PACKAGES CRUD
+// ==========================================
+const openAddPackageModal = () => {
+  isEditing.value = false
+  selectedItem.value = null
+  packageForm.value = {
+    key_name: 'package' + (dbPackages.value.length + 1),
+    icon: '📦',
+    popular: false,
+    name_en: '',
+    name_nl: '',
+    price_en: '',
+    price_nl: '',
+    unit_en: '/hr',
+    unit_nl: '/uur',
+    cta_text_en: 'Book Now',
+    cta_text_nl: 'Boek nu',
+    cta_link: '/contact',
+    tag_en: '',
+    tag_nl: '',
+    description_en: '',
+    description_nl: '',
+    best_for_raw_en: '',
+    best_for_raw_nl: '',
+    includes_raw_en: '',
+    includes_raw_nl: '',
+    sort_order: dbPackages.value.length + 1
+  }
+  modals.value.pricingPackage = true
+}
+
+const openEditPackageModal = (pkg) => {
+  isEditing.value = true
+  selectedItem.value = pkg
+  const bf_en = (pkg.best_for || []).map(item => `${item.icon}|${item.text}`).join('\n')
+  const bf_nl = (pkg.best_for_nl || []).map(item => `${item.icon}|${item.text}`).join('\n')
+  const inc_en = (pkg.includes_en || []).join('\n')
+  const inc_nl = (pkg.includes_nl || []).join('\n')
+
+  packageForm.value = {
+    ...pkg,
+    best_for_raw_en: bf_en,
+    best_for_raw_nl: bf_nl,
+    includes_raw_en: inc_en,
+    includes_raw_nl: inc_nl
+  }
+  modals.value.pricingPackage = true
+}
+
+const savePackage = async () => {
+  if (!supabase || !packageForm.value.key_name || !packageForm.value.name_en) return
+
+  const bestForEN = (packageForm.value.best_for_raw_en || '').split('\n').filter(Boolean).map(line => {
+    const parts = line.split('|')
+    return { icon: parts[0] || '📦', text: parts[1] || parts[0] }
+  })
+  const bestForNL = (packageForm.value.best_for_raw_nl || '').split('\n').filter(Boolean).map(line => {
+    const parts = line.split('|')
+    return { icon: parts[0] || '📦', text: parts[1] || parts[0] }
+  })
+  const incEN = (packageForm.value.includes_raw_en || '').split('\n').filter(Boolean)
+  const incNL = (packageForm.value.includes_raw_nl || '').split('\n').filter(Boolean)
+
+  const payload = {
+    key_name: packageForm.value.key_name,
+    icon: packageForm.value.icon,
+    popular: packageForm.value.popular,
+    name_en: packageForm.value.name_en,
+    name_nl: packageForm.value.name_nl,
+    price_en: packageForm.value.price_en,
+    price_nl: packageForm.value.price_nl,
+    unit_en: packageForm.value.unit_en,
+    unit_nl: packageForm.value.unit_nl,
+    cta_text_en: packageForm.value.cta_text_en,
+    cta_text_nl: packageForm.value.cta_text_nl,
+    cta_link: packageForm.value.cta_link,
+    best_for: bestForEN,
+    best_for_nl: bestForNL,
+    includes_en: incEN,
+    includes_nl: incNL,
+    sort_order: packageForm.value.sort_order
+  }
+
+  if (isEditing.value && selectedItem.value) {
+    const { error } = await supabase.from('pricing_packages').update(payload).eq('id', selectedItem.value.id)
+    if (!error) {
+      const idx = dbPackages.value.findIndex(p => p.id === selectedItem.value.id)
+      if (idx !== -1) dbPackages.value[idx] = { ...selectedItem.value, ...payload }
+      modals.value.pricingPackage = false
+      showDialog('Saved', 'Pricing package updated.', 'success')
+    }
+  } else {
+    const { data, error } = await supabase.from('pricing_packages').insert([payload]).select()
+    if (!error && data) {
+      dbPackages.value.push(data[0])
+      modals.value.pricingPackage = false
+      showDialog('Created', 'Pricing package created.', 'success')
+    }
+  }
+}
+
+const deletePackage = async (pkg) => {
+  const confirmed = await showConfirm('Delete Package', `Are you sure you want to delete ${pkg.name_en}?`)
+  if (!confirmed || !supabase) return
+  const { error } = await supabase.from('pricing_packages').delete().eq('id', pkg.id)
+  if (!error) {
+    dbPackages.value = dbPackages.value.filter(p => p.id !== pkg.id)
+    showDialog('Deleted', 'Pricing package deleted.', 'success')
+  }
+}
+
 
 
 // ==========================================
