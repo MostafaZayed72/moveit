@@ -26,7 +26,7 @@ export default defineEventHandler(async (event) => {
   // Read logo if exists for optional inline CID
   let logoBuffer: Buffer | null = null
   try {
-    const logoPath = path.resolve(process.cwd(), 'public/images/logo.png')
+    const logoPath = path.resolve(process.cwd(), 'public/images/logo-email.png')
     if (fs.existsSync(logoPath)) {
       logoBuffer = fs.readFileSync(logoPath)
     }
@@ -129,8 +129,29 @@ export default defineEventHandler(async (event) => {
     whatsapp: '#25D366'
   }
 
+  // Common Header Styles with Google Fonts (Montserrat & Inter)
+  const fontHeadTags = `
+    <!--[if !mso]><!-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800;900&display=swap');
+      * {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif !important;
+      }
+      h1, h2, h3, h4, .brand-title, .font-heading {
+        font-family: 'Montserrat', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif !important;
+        font-weight: 800 !important;
+        letter-spacing: -0.03em !important;
+      }
+    </style>
+    <!--<![endif]-->
+  `
+
   // Common Header Component for All Emails
   const renderHeader = (subtitle: string) => `
+    ${fontHeadTags}
     <div style="background-color: ${BRAND.dark}; padding: 32px 20px; text-align: center; border-bottom: 3px solid ${BRAND.redLight};">
       <div style="display: inline-block; text-align: center;">
         <a href="https://moveitmaastricht.nl" target="_blank" style="text-decoration: none; display: inline-block;">
@@ -141,7 +162,7 @@ export default defineEventHandler(async (event) => {
             style="width: 220px; max-width: 260px; height: auto; display: block; margin: 0 auto; border: 0; outline: none; text-decoration: none;" 
           />
         </a>
-        <p style="font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #94a3b8; margin: 12px 0 0 0; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.18em;">
+        <p style="font-family: 'Montserrat', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #94a3b8; margin: 12px 0 0 0; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.18em;">
           ${subtitle}
         </p>
       </div>
@@ -150,17 +171,17 @@ export default defineEventHandler(async (event) => {
 
   // Common Footer Component for All Emails
   const renderFooter = () => `
-    <div style="background-color: ${BRAND.bgLight}; padding: 25px 20px; text-align: center; border-top: 1px solid ${BRAND.border}; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+    <div style="background-color: ${BRAND.bgLight}; padding: 25px 20px; text-align: center; border-top: 1px solid ${BRAND.border}; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
       <div style="margin-bottom: 12px;">
-        <a href="https://moveitmaastricht.nl" style="color: ${BRAND.redLight}; text-decoration: none; font-weight: 700; font-size: 13px; margin: 0 10px;">Website</a>
+        <a href="https://moveitmaastricht.nl" style="font-family: 'Montserrat', 'Inter', sans-serif; color: ${BRAND.redLight}; text-decoration: none; font-weight: 700; font-size: 13px; margin: 0 10px;">Website</a>
         <span style="color: #cbd5e1;">•</span>
-        <a href="https://wa.me/31684094271" style="color: ${BRAND.whatsapp}; text-decoration: none; font-weight: 700; font-size: 13px; margin: 0 10px;">WhatsApp</a>
+        <a href="https://wa.me/31684094271" style="font-family: 'Montserrat', 'Inter', sans-serif; color: ${BRAND.whatsapp}; text-decoration: none; font-weight: 700; font-size: 13px; margin: 0 10px;">WhatsApp</a>
         <span style="color: #cbd5e1;">•</span>
-        <a href="tel:+31684094271" style="color: ${BRAND.slateMuted}; text-decoration: none; font-weight: 700; font-size: 13px; margin: 0 10px;">+31 6 84094271</a>
+        <a href="tel:+31684094271" style="font-family: 'Montserrat', 'Inter', sans-serif; color: ${BRAND.slateMuted}; text-decoration: none; font-weight: 700; font-size: 13px; margin: 0 10px;">+31 6 84094271</a>
       </div>
-      <p style="margin: 0; font-size: 12px; color: ${BRAND.slateMuted}; line-height: 1.6;">
+      <p style="font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; margin: 0; font-size: 12px; color: ${BRAND.slateMuted}; line-height: 1.6;">
         &copy; ${new Date().getFullYear()} <strong>MoveIt Maastricht</strong>. All rights reserved.<br/>
-        Premium Relocation & Logistics Services • Maastricht & Limburg, Netherlands
+        Premium Relocation &amp; Logistics Services • Maastricht &amp; Limburg, Netherlands
       </p>
     </div>
   `
@@ -214,15 +235,15 @@ export default defineEventHandler(async (event) => {
     // -------------------------------------------------------------
     if (directTo) {
       const composeHtml = `
-        <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; max-width: 620px; margin: 0 auto; background: #ffffff; border: 1px solid ${BRAND.border}; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);">
+        <div style="font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; max-width: 620px; margin: 0 auto; background: #ffffff; border: 1px solid ${BRAND.border}; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);">
           ${renderHeader('Official Communication • MoveIt Maastricht')}
           
-          <div style="padding: 35px 30px; color: ${BRAND.slateText}; line-height: 1.7; font-size: 15px;">
+          <div style="padding: 35px 30px; color: ${BRAND.slateText}; line-height: 1.7; font-size: 15px; font-family: 'Inter', sans-serif;">
             ${rawText ? rawText.replace(/\n/g, '<br>') : html}
             
             <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid ${BRAND.border};">
               <p style="margin: 0; font-size: 14px; color: ${BRAND.slateMuted};">Best regards,</p>
-              <p style="margin: 4px 0 0 0; font-size: 16px; font-weight: 800; color: ${BRAND.red};">The MoveIt Maastricht Team</p>
+              <p style="font-family: 'Montserrat', 'Inter', sans-serif; margin: 4px 0 0 0; font-size: 16px; font-weight: 800; color: ${BRAND.red};">The MoveIt Maastricht Team</p>
               <p style="margin: 4px 0 0 0; font-size: 13px; color: ${BRAND.slateMuted};">
                 📞 <a href="tel:+31684094271" style="color: inherit; text-decoration: none;">+31 6 84094271</a> &nbsp;|&nbsp; 
                 ✉️ <a href="mailto:info@moveitmaastricht.nl" style="color: inherit; text-decoration: none;">info@moveitmaastricht.nl</a>
@@ -258,43 +279,43 @@ export default defineEventHandler(async (event) => {
     const moveDateStr = fieldsMap['Preferred Date'] || fieldsMap['date'] || ''
 
     let adminHtml = `
-      <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; max-width: 650px; margin: 0 auto; background: #ffffff; border: 1px solid ${BRAND.border}; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);">
+      <div style="font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; max-width: 650px; margin: 0 auto; background: #ffffff; border: 1px solid ${BRAND.border}; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);">
         ${renderHeader('Admin Dispatch Console • New Order Alert')}
 
-        <div style="padding: 30px 25px;">
+        <div style="padding: 30px 25px; font-family: 'Inter', sans-serif;">
           <!-- Alert Banner -->
           <div style="background-color: #fef2f2; border: 1px solid #fecaca; border-left: 5px solid ${BRAND.red}; border-radius: 10px; padding: 14px 18px; margin-bottom: 25px;">
-            <div style="font-size: 13px; font-weight: 800; color: ${BRAND.red}; text-transform: uppercase; letter-spacing: 0.05em;">
+            <div style="font-family: 'Montserrat', 'Inter', sans-serif; font-size: 13px; font-weight: 800; color: ${BRAND.red}; text-transform: uppercase; letter-spacing: 0.05em;">
               🚨 New Order / Quote Request
             </div>
-            <div style="font-size: 16px; font-weight: 700; color: #1e293b; margin-top: 4px;">
+            <div style="font-family: 'Montserrat', 'Inter', sans-serif; font-size: 17px; font-weight: 800; color: #1e293b; margin-top: 4px;">
               ${custName} — ${moveDateStr || 'Upcoming Date'}
             </div>
           </div>
 
           <!-- Quick Customer Contact Box -->
           <div style="background-color: ${BRAND.bgLight}; border: 1px solid ${BRAND.border}; border-radius: 12px; padding: 18px 20px; margin-bottom: 25px;">
-            <h4 style="margin: 0 0 10px 0; font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: ${BRAND.slateMuted};">
+            <h4 style="font-family: 'Montserrat', 'Inter', sans-serif; margin: 0 0 10px 0; font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: ${BRAND.slateMuted};">
               👤 Customer Contact
             </h4>
-            <div style="font-size: 15px; font-weight: 700; color: #0f172a; margin-bottom: 6px;">${custName}</div>
+            <div style="font-family: 'Montserrat', 'Inter', sans-serif; font-size: 16px; font-weight: 800; color: #0f172a; margin-bottom: 6px;">${custName}</div>
             <div style="font-size: 14px; color: ${BRAND.slateText}; margin-bottom: 4px;">
               ✉️ <a href="mailto:${custEmail}" style="color: ${BRAND.red}; font-weight: 600; text-decoration: none;">${custEmail}</a>
             </div>
             <div style="font-size: 14px; color: ${BRAND.slateText};">
               📞 <a href="tel:${custPhone}" style="color: #0f172a; font-weight: 600; text-decoration: none;">${custPhone}</a>
               &nbsp;&nbsp;
-              <a href="https://wa.me/${custPhone.replace(/[^0-9]/g, '')}" target="_blank" style="display: inline-block; background-color: ${BRAND.whatsapp}; color: #ffffff; font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 6px; text-decoration: none;">
+              <a href="https://wa.me/${custPhone.replace(/[^0-9]/g, '')}" target="_blank" style="font-family: 'Montserrat', 'Inter', sans-serif; display: inline-block; background-color: ${BRAND.whatsapp}; color: #ffffff; font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 6px; text-decoration: none;">
                 WhatsApp Chat
               </a>
             </div>
           </div>
 
           <!-- Detailed Fields Table -->
-          <h4 style="margin: 0 0 12px 0; font-size: 13px; text-transform: uppercase; letter-spacing: 0.08em; color: ${BRAND.slateMuted}; border-bottom: 2px solid ${BRAND.border}; padding-bottom: 8px;">
-            📋 Order & Move Specifications
+          <h4 style="font-family: 'Montserrat', 'Inter', sans-serif; margin: 0 0 12px 0; font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: ${BRAND.slateMuted}; border-bottom: 2px solid ${BRAND.border}; padding-bottom: 8px;">
+            📋 Order &amp; Move Specifications
           </h4>
-          <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+          <table style="width: 100%; border-collapse: collapse; font-size: 14px; font-family: 'Inter', sans-serif;">
             <tbody>
     `
 
@@ -346,34 +367,34 @@ export default defineEventHandler(async (event) => {
         : ''
 
       const customerHtml = `
-        <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; max-width: 620px; margin: 0 auto; background: #ffffff; border: 1px solid ${BRAND.border}; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);">
+        <div style="font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; max-width: 620px; margin: 0 auto; background: #ffffff; border: 1px solid ${BRAND.border}; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);">
           ${renderHeader('Premium Relocation & Logistics • Maastricht')}
 
-          <div style="padding: 35px 30px; color: ${BRAND.slateText};">
+          <div style="padding: 35px 30px; color: ${BRAND.slateText}; font-family: 'Inter', sans-serif;">
             
             <!-- Status Badge -->
             <div style="text-align: center; margin-bottom: 25px;">
-              <span style="display: inline-block; background-color: #ecfdf5; border: 1px solid #a7f3d0; color: #059669; font-weight: 800; font-size: 12px; padding: 6px 16px; border-radius: 9999px; text-transform: uppercase; letter-spacing: 0.08em;">
-                ✓ Request Registered & Confirmed
+              <span style="font-family: 'Montserrat', 'Inter', sans-serif; display: inline-block; background-color: #ecfdf5; border: 1px solid #a7f3d0; color: #059669; font-weight: 800; font-size: 12px; padding: 6px 16px; border-radius: 9999px; text-transform: uppercase; letter-spacing: 0.08em;">
+                ✓ Request Registered &amp; Confirmed
               </span>
             </div>
 
             <!-- Title -->
-            <h2 style="color: #0f172a; margin: 0 0 12px 0; font-size: 24px; font-weight: 900; letter-spacing: -0.5px; text-align: center;">
+            <h2 style="font-family: 'Montserrat', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #0f172a; margin: 0 0 12px 0; font-size: 25px; font-weight: 900; letter-spacing: -0.5px; text-align: center;">
               Thank you, ${custName}!
             </h2>
             
-            <p style="font-size: 15px; line-height: 1.7; color: #475569; text-align: center; margin: 0 0 25px 0;">
+            <p style="font-family: 'Inter', sans-serif; font-size: 15px; line-height: 1.7; color: #475569; text-align: center; margin: 0 0 25px 0;">
               Your moving request has been successfully received by our Maastricht dispatch team. We are calculating optimal scheduling and will reach out with your exact quote confirmation.
             </p>
 
             <!-- Order Summary Card -->
             <div style="background-color: #f8fafc; border: 1px solid ${BRAND.border}; border-radius: 14px; padding: 22px 20px; margin-bottom: 25px;">
-              <h3 style="margin: 0 0 14px 0; font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: ${BRAND.red};">
+              <h3 style="font-family: 'Montserrat', 'Inter', sans-serif; margin: 0 0 14px 0; font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: ${BRAND.red};">
                 📋 Summary of Your Request
               </h3>
               
-              <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+              <table style="width: 100%; border-collapse: collapse; font-size: 14px; font-family: 'Inter', sans-serif;">
                 <tbody>
                   ${(fromLocation && toLocation) ? `
                     <tr style="border-bottom: 1px solid #e2e8f0;">
@@ -392,7 +413,7 @@ export default defineEventHandler(async (event) => {
                   ${movePackage ? `
                     <tr style="border-bottom: 1px solid #e2e8f0;">
                       <td style="padding: 9px 0; font-weight: 700; color: #64748b;">Package:</td>
-                      <td style="padding: 9px 0; font-weight: 700; color: ${BRAND.red};">${movePackage}</td>
+                      <td style="font-family: 'Montserrat', 'Inter', sans-serif; padding: 9px 0; font-weight: 800; color: ${BRAND.red};">${movePackage}</td>
                     </tr>
                   ` : ''}
 
@@ -415,26 +436,26 @@ export default defineEventHandler(async (event) => {
 
             <!-- 3-Step Process Guide -->
             <div style="background-color: #ffffff; border: 1px solid ${BRAND.border}; border-radius: 14px; padding: 20px; margin-bottom: 30px;">
-              <h4 style="margin: 0 0 15px 0; font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; color: #0f172a;">
+              <h4 style="font-family: 'Montserrat', 'Inter', sans-serif; margin: 0 0 15px 0; font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; color: #0f172a;">
                 🚀 What Happens Next?
               </h4>
               
               <div style="margin-bottom: 12px; display: flex; align-items: flex-start;">
-                <div style="background: ${BRAND.dark}; color: #ffffff; width: 22px; height: 22px; border-radius: 50%; text-align: center; line-height: 22px; font-size: 11px; font-weight: 800; display: inline-block; margin-right: 12px; vertical-align: middle;">1</div>
+                <div style="font-family: 'Montserrat', sans-serif; background: ${BRAND.dark}; color: #ffffff; width: 22px; height: 22px; border-radius: 50%; text-align: center; line-height: 22px; font-size: 11px; font-weight: 800; display: inline-block; margin-right: 12px; vertical-align: middle;">1</div>
                 <div style="display: inline-block; font-size: 14px; color: #475569; width: calc(100% - 40px); vertical-align: middle;">
-                  <strong style="color: #0f172a;">Coordination & Quote:</strong> Our coordinator reviews your access details and route.
+                  <strong style="color: #0f172a;">Coordination &amp; Quote:</strong> Our coordinator reviews your access details and route.
                 </div>
               </div>
 
               <div style="margin-bottom: 12px; display: flex; align-items: flex-start;">
-                <div style="background: ${BRAND.dark}; color: #ffffff; width: 22px; height: 22px; border-radius: 50%; text-align: center; line-height: 22px; font-size: 11px; font-weight: 800; display: inline-block; margin-right: 12px; vertical-align: middle;">2</div>
+                <div style="font-family: 'Montserrat', sans-serif; background: ${BRAND.dark}; color: #ffffff; width: 22px; height: 22px; border-radius: 50%; text-align: center; line-height: 22px; font-size: 11px; font-weight: 800; display: inline-block; margin-right: 12px; vertical-align: middle;">2</div>
                 <div style="display: inline-block; font-size: 14px; color: #475569; width: calc(100% - 40px); vertical-align: middle;">
                   <strong style="color: #0f172a;">Schedule Confirmation:</strong> We confirm team, truck, and arrival window with you.
                 </div>
               </div>
 
               <div style="display: flex; align-items: flex-start;">
-                <div style="background: ${BRAND.red}; color: #ffffff; width: 22px; height: 22px; border-radius: 50%; text-align: center; line-height: 22px; font-size: 11px; font-weight: 800; display: inline-block; margin-right: 12px; vertical-align: middle;">3</div>
+                <div style="font-family: 'Montserrat', sans-serif; background: ${BRAND.red}; color: #ffffff; width: 22px; height: 22px; border-radius: 50%; text-align: center; line-height: 22px; font-size: 11px; font-weight: 800; display: inline-block; margin-right: 12px; vertical-align: middle;">3</div>
                 <div style="display: inline-block; font-size: 14px; color: #475569; width: calc(100% - 40px); vertical-align: middle;">
                   <strong style="color: #0f172a;">Moving Day Execution:</strong> Our certified moving crew arrives on time for a stress-free move.
                 </div>
@@ -446,14 +467,14 @@ export default defineEventHandler(async (event) => {
               <p style="font-size: 14px; color: ${BRAND.slateMuted}; margin-bottom: 14px;">
                 Have questions or need to make urgent changes to your date?
               </p>
-              <a href="https://wa.me/31684094271" style="display: inline-block; background-color: ${BRAND.whatsapp}; color: #ffffff; font-weight: 800; text-decoration: none; padding: 14px 28px; border-radius: 12px; font-size: 15px; box-shadow: 0 4px 12px rgba(37, 211, 102, 0.25);">
+              <a href="https://wa.me/31684094271" style="font-family: 'Montserrat', 'Inter', sans-serif; display: inline-block; background-color: ${BRAND.whatsapp}; color: #ffffff; font-weight: 800; text-decoration: none; padding: 14px 28px; border-radius: 12px; font-size: 15px; box-shadow: 0 4px 12px rgba(37, 211, 102, 0.25);">
                 💬 Chat with us on WhatsApp (+31 6 84094271)
               </a>
             </div>
 
             <div style="margin-top: 35px; padding-top: 20px; border-top: 1px solid ${BRAND.border};">
               <p style="margin: 0; font-size: 14px; color: ${BRAND.slateMuted};">Warm regards,</p>
-              <p style="margin: 4px 0 0 0; font-size: 16px; font-weight: 800; color: ${BRAND.red};">The MoveIt Maastricht Team</p>
+              <p style="font-family: 'Montserrat', 'Inter', sans-serif; margin: 4px 0 0 0; font-size: 16px; font-weight: 800; color: ${BRAND.red};">The MoveIt Maastricht Team</p>
               <p style="margin: 4px 0 0 0; font-size: 13px; color: ${BRAND.slateMuted};">Maastricht, Limburg • Netherlands</p>
             </div>
 
