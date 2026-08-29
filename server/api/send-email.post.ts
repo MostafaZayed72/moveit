@@ -135,7 +135,7 @@ export default defineEventHandler(async (event) => {
       <div style="display: inline-block; text-align: center;">
         <a href="https://moveitmaastricht.nl" target="_blank" style="text-decoration: none; display: inline-block;">
           <img 
-            src="https://www.moveitmaastricht.nl/images/logo.png" 
+            src="https://www.moveitmaastricht.nl/images/logo-email.png" 
             alt="MoveIt Maastricht" 
             width="220"
             style="width: 220px; max-width: 260px; height: auto; display: block; margin: 0 auto; border: 0; outline: none; text-decoration: none;" 
