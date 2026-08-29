@@ -129,19 +129,19 @@ export default defineEventHandler(async (event) => {
     whatsapp: '#25D366'
   }
 
-  // Common Header Styles with Google Fonts (Montserrat & Inter)
+  // Common Header Styles with Google Fonts (Montserrat Alternates, Montserrat & Inter)
   const fontHeadTags = `
     <!--[if !mso]><!-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800;900&family=Montserrat+Alternates:wght@600;700;800;900&display=swap" rel="stylesheet">
     <style>
-      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800;900&display=swap');
-      * {
-        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif !important;
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800;900&family=Montserrat+Alternates:wght@600;700;800;900&display=swap');
+      body, table, td, p, a, div, span {
+        font-family: 'Montserrat Alternates', 'Montserrat', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif !important;
       }
       h1, h2, h3, h4, .brand-title, .font-heading {
-        font-family: 'Montserrat', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif !important;
+        font-family: 'Montserrat Alternates', 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif !important;
         font-weight: 800 !important;
         letter-spacing: -0.03em !important;
       }
