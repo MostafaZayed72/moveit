@@ -891,9 +891,10 @@ const submitToDatabase = async () => {
   // Upload images to Cloudinary first
   if (mediaFiles.value && mediaFiles.value.length > 0) {
     for (const item of mediaFiles.value) {
-      if (item.file) {
+      const fileToUpload = item.raw || item.file
+      if (fileToUpload) {
         const fileData = new FormData()
-        fileData.append('file', item.file)
+        fileData.append('file', fileToUpload)
         try {
           const res = await $fetch('/api/upload', {
             method: 'POST',
@@ -989,17 +990,23 @@ const sendLegacyEmail = async () => {
     formData.append('Contact Preference', contactPrefLabels[contactPreference.value] || contactPreference.value || 'Not specified')
     formData.append('How Did You Hear', hearLabels[hearAbout.value] || hearAbout.value || 'Not specified')
     formData.append('Additional Notes', notes.value || 'None')
+    
     // Attach media files if any
-    mediaFiles.value.forEach((f, i) => {
-      formData.append(`attachment_${i + 1}`, f.raw, f.name)
-    })
+    if (mediaFiles.value && mediaFiles.value.length > 0) {
+      mediaFiles.value.forEach((f, i) => {
+        const fileObj = f.raw || f.file
+        if (fileObj) {
+          formData.append(`attachment_${i + 1}`, fileObj, f.name || `attachment_${i + 1}`)
+        }
+      })
+    }
 
     await $fetch('/api/send-email', {
       method: 'POST',
       body: formData
     })
   } catch (error) {
-    console.error('Error sending legacy email:', error)
+    console.error('Error sending confirmation email:', error)
   }
 }
 </script>
