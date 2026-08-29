@@ -449,21 +449,33 @@
                     >
                       <!-- 1. Order ID -->
                       <td class="py-3.5 px-4 font-mono font-bold text-slate-800 dark:text-slate-300 whitespace-nowrap">
-                        <div class="flex items-center gap-1.5">
-                          <span class="text-red-500">#</span>
-                          <span>{{ (order.id || '').toString().slice(0, 8) }}</span>
-                        </div>
+                        <button 
+                          @click="openOrderDetails(order)" 
+                          class="flex items-center gap-1.5 hover:text-red-500 transition-colors text-left cursor-pointer group/id"
+                          title="Click to view all order details"
+                        >
+                          <span class="text-red-500 font-black">#</span>
+                          <span class="underline decoration-slate-300 dark:decoration-slate-700 underline-offset-4 group-hover/id:decoration-red-500">{{ (order.id || '').toString().slice(0, 8) }}</span>
+                        </button>
                         <span class="text-[10px] text-slate-400 font-sans block mt-0.5">{{ formatDateShort(order.created_at) }}</span>
                       </td>
 
                       <!-- 2. Customer -->
                       <td class="py-3.5 px-4">
                         <div class="flex items-center gap-2.5">
-                          <div class="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 flex items-center justify-center font-bold text-slate-800 dark:text-slate-200 text-xs">
+                          <div 
+                            @click="openOrderDetails(order)"
+                            class="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 flex items-center justify-center font-bold text-slate-800 dark:text-slate-200 text-xs cursor-pointer hover:border-red-500 hover:scale-105 transition-all"
+                            title="View order details"
+                          >
                             {{ getCustomerInitials(getOrderName(order)) }}
                           </div>
                           <div>
-                            <button @click="openCustomer360(order)" class="font-bold text-slate-900 dark:text-white hover:text-red-500 transition-colors text-left block cursor-pointer">
+                            <button 
+                              @click="openOrderDetails(order)" 
+                              class="font-bold text-slate-900 dark:text-white hover:text-red-500 transition-colors text-left block cursor-pointer"
+                              title="Click to view complete details"
+                            >
                               {{ getOrderName(order) }}
                             </button>
                             <div class="text-[10px] text-slate-500 dark:text-slate-400 flex items-center gap-2 mt-0.5">
@@ -476,12 +488,16 @@
 
                       <!-- 3. Move Route -->
                       <td class="py-3.5 px-4">
-                        <div class="space-y-1">
-                          <div class="flex items-center gap-1.5 text-slate-700 dark:text-slate-300">
+                        <div 
+                          @click="openOrderDetails(order)" 
+                          class="space-y-1 cursor-pointer group/route" 
+                          title="Click to view full route & access details"
+                        >
+                          <div class="flex items-center gap-1.5 text-slate-700 dark:text-slate-300 group-hover/route:text-red-500 transition-colors">
                             <span class="text-emerald-500">🟢</span>
                             <span class="line-clamp-1 max-w-[160px]" :title="getOrderFrom(order)">{{ getOrderFrom(order) }}</span>
                           </div>
-                          <div class="flex items-center gap-1.5 text-slate-500 dark:text-slate-400">
+                          <div class="flex items-center gap-1.5 text-slate-500 dark:text-slate-400 group-hover/route:text-red-500 transition-colors">
                             <span class="text-red-500">📍</span>
                             <span class="line-clamp-1 max-w-[160px]" :title="getOrderTo(order)">{{ getOrderTo(order) }}</span>
                           </div>
@@ -545,6 +561,13 @@
                       <!-- 8. Quick Actions -->
                       <td class="py-3.5 px-4 text-right whitespace-nowrap">
                         <div class="flex items-center justify-end gap-1.5">
+                          <button 
+                            @click="openOrderDetails(order)" 
+                            class="p-1.5 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 rounded-lg transition-colors border border-emerald-500/20 cursor-pointer"
+                            title="View Full Order Details & Images"
+                          >
+                            👁️
+                          </button>
                           <button 
                             @click="openCustomer360(order)" 
                             class="p-1.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-lg transition-colors cursor-pointer"
@@ -1402,6 +1425,294 @@
 
 
     <!-- ============================================================ -->
+    
+    <!-- ============================================================ -->
+    <!-- MODAL: COMPLETE ORDER DETAILS & SPECIFICATIONS (360 VIEW) -->
+    <!-- ============================================================ -->
+    <div v-if="modals.orderDetails && selectedOrderDetails" class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-slate-950/80 backdrop-blur-md overflow-y-auto">
+      <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 sm:p-8 max-w-4xl w-full shadow-2xl space-y-6 max-h-[92vh] flex flex-col my-auto">
+        
+        <!-- Header -->
+        <div class="flex flex-wrap justify-between items-start gap-4 border-b border-slate-200 dark:border-slate-800 pb-5 shrink-0">
+          <div>
+            <div class="flex items-center gap-3">
+              <span class="px-3 py-1 bg-red-500/10 text-red-500 border border-red-500/20 rounded-xl font-mono font-bold text-xs">
+                #{{ selectedOrderDetails.id }}
+              </span>
+              <span class="text-xs text-slate-400">
+                Received: {{ formatDateTimeFull(selectedOrderDetails.created_at) }}
+              </span>
+            </div>
+            <h3 class="text-2xl font-black text-slate-900 dark:text-white mt-1.5">
+              Order & Move Specifications
+            </h3>
+          </div>
+
+          <div class="flex items-center gap-3">
+            <select 
+              :value="selectedOrderDetails.status || 'New Lead'" 
+              @change="quickUpdateOrderStatus(selectedOrderDetails, $event.target.value)"
+              class="text-xs font-black uppercase tracking-wider px-3.5 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white border border-slate-300 dark:border-slate-700 outline-none cursor-pointer"
+            >
+              <option value="New Lead">🟡 New Lead</option>
+              <option value="Estimate Sent">🔵 Estimate Sent</option>
+              <option value="Pending">🟠 Pending Review</option>
+              <option value="Confirmed">🟣 Confirmed</option>
+              <option value="In Transit">🚚 In Transit</option>
+              <option value="Completed">🟢 Completed</option>
+              <option value="Cancelled">🔴 Cancelled</option>
+            </select>
+            <button @click="modals.orderDetails = false" class="w-9 h-9 rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 flex items-center justify-center text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white font-bold transition-all cursor-pointer">
+              ✕
+            </button>
+          </div>
+        </div>
+
+        <!-- Scrollable Content Body -->
+        <div class="flex-grow overflow-y-auto space-y-6 pr-2">
+          
+          <!-- Section 1: Customer Contact & Acquisition Details -->
+          <div class="bg-slate-50 dark:bg-slate-950/60 p-5 rounded-2xl border border-slate-200 dark:border-slate-800 space-y-4">
+            <h4 class="font-black text-xs uppercase tracking-wider text-red-500 flex items-center gap-2">
+              <span>👤</span> Customer & Contact Information
+            </h4>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 text-xs">
+              <div class="space-y-1">
+                <span class="text-slate-400 uppercase text-[10px] font-bold tracking-wider">Full Name</span>
+                <p class="font-bold text-slate-900 dark:text-white text-sm">{{ getOrderName(selectedOrderDetails) }}</p>
+              </div>
+              <div class="space-y-1">
+                <span class="text-slate-400 uppercase text-[10px] font-bold tracking-wider">Email Address</span>
+                <p class="font-medium text-slate-900 dark:text-white">
+                  <a :href="'mailto:' + getOrderEmail(selectedOrderDetails)" class="text-blue-500 hover:underline">{{ getOrderEmail(selectedOrderDetails) }}</a>
+                </p>
+              </div>
+              <div class="space-y-1">
+                <span class="text-slate-400 uppercase text-[10px] font-bold tracking-wider">Phone Number</span>
+                <div class="flex items-center gap-2">
+                  <span class="font-bold text-slate-900 dark:text-white">{{ getOrderPhone(selectedOrderDetails) }}</span>
+                  <a 
+                    v-if="getOrderPhone(selectedOrderDetails) !== 'N/A'" 
+                    :href="'https://wa.me/' + getOrderPhone(selectedOrderDetails).replace(/[^0-9]/g, '')" 
+                    target="_blank"
+                    class="px-2 py-0.5 bg-[#25D366] text-white rounded font-bold text-[10px]"
+                  >
+                    WhatsApp
+                  </a>
+                </div>
+              </div>
+              <div class="space-y-1">
+                <span class="text-slate-400 uppercase text-[10px] font-bold tracking-wider">Contact Preference</span>
+                <p class="font-semibold text-slate-800 dark:text-slate-200">
+                  {{ formatContactPref(selectedOrderDetails.form_data?.preference) }}
+                </p>
+              </div>
+              <div class="space-y-1 sm:col-span-2">
+                <span class="text-slate-400 uppercase text-[10px] font-bold tracking-wider">How Did They Hear About MoveIt</span>
+                <p class="font-semibold text-slate-800 dark:text-slate-200">
+                  {{ formatHearAbout(selectedOrderDetails.form_data?.hear) }}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 2: Moving Route, Date & Package -->
+          <div class="bg-slate-50 dark:bg-slate-950/60 p-5 rounded-2xl border border-slate-200 dark:border-slate-800 space-y-4">
+            <h4 class="font-black text-xs uppercase tracking-wider text-red-500 flex items-center gap-2">
+              <span>🚚</span> Relocation Route & Scheduling
+            </h4>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+              <div class="space-y-1 bg-white dark:bg-slate-900 p-3.5 rounded-xl border border-slate-200 dark:border-slate-800">
+                <span class="text-emerald-500 uppercase text-[10px] font-bold tracking-wider flex items-center gap-1">
+                  <span>🟢</span> Moving From (Pickup Address)
+                </span>
+                <p class="font-bold text-slate-900 dark:text-white text-sm mt-1">{{ getOrderFrom(selectedOrderDetails) }}</p>
+                <a :href="'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(getOrderFrom(selectedOrderDetails))" target="_blank" class="text-[10px] text-blue-500 hover:underline mt-1 inline-block">
+                  Open in Google Maps ↗
+                </a>
+              </div>
+              <div class="space-y-1 bg-white dark:bg-slate-900 p-3.5 rounded-xl border border-slate-200 dark:border-slate-800">
+                <span class="text-red-500 uppercase text-[10px] font-bold tracking-wider flex items-center gap-1">
+                  <span>📍</span> Moving To (Destination Address)
+                </span>
+                <p class="font-bold text-slate-900 dark:text-white text-sm mt-1">{{ getOrderTo(selectedOrderDetails) }}</p>
+                <a :href="'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(getOrderTo(selectedOrderDetails))" target="_blank" class="text-[10px] text-blue-500 hover:underline mt-1 inline-block">
+                  Open in Google Maps ↗
+                </a>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs pt-2">
+              <div class="space-y-1">
+                <span class="text-slate-400 uppercase text-[10px] font-bold tracking-wider">Preferred Move Date</span>
+                <p class="font-bold text-slate-900 dark:text-white">{{ getOrderDate(selectedOrderDetails) }}</p>
+              </div>
+              <div class="space-y-1">
+                <span class="text-slate-400 uppercase text-[10px] font-bold tracking-wider">Preferred Time Window</span>
+                <p class="font-bold text-slate-900 dark:text-white">{{ formatTimeSlot(selectedOrderDetails.form_data?.time) }}</p>
+              </div>
+              <div class="space-y-1">
+                <span class="text-slate-400 uppercase text-[10px] font-bold tracking-wider">Alternative Date</span>
+                <p class="font-semibold text-slate-700 dark:text-slate-300">{{ selectedOrderDetails.form_data?.altDate || 'None' }}</p>
+              </div>
+              <div class="space-y-1">
+                <span class="text-slate-400 uppercase text-[10px] font-bold tracking-wider">Home / Move Size</span>
+                <p class="font-bold text-slate-900 dark:text-white">{{ formatMoveSize(selectedOrderDetails.form_data?.size) }}</p>
+              </div>
+            </div>
+
+            <div class="p-3 bg-red-500/5 dark:bg-red-500/10 border border-red-500/20 rounded-xl text-xs flex justify-between items-center">
+              <div>
+                <span class="text-slate-500 text-[10px] uppercase font-bold tracking-wider block">Selected Service Package</span>
+                <span class="text-red-500 font-black text-sm">{{ getOrderPackage(selectedOrderDetails) }}</span>
+              </div>
+              <span class="px-2.5 py-1 bg-red-500 text-white font-bold rounded-lg text-xs">Active Package</span>
+            </div>
+          </div>
+
+          <!-- Section 3: Building Access & Equipment -->
+          <div class="bg-slate-50 dark:bg-slate-950/60 p-5 rounded-2xl border border-slate-200 dark:border-slate-800 space-y-4">
+            <h4 class="font-black text-xs uppercase tracking-wider text-red-500 flex items-center gap-2">
+              <span>🏢</span> Building Access & Logistics
+            </h4>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs">
+              <div class="space-y-1">
+                <span class="text-slate-400 uppercase text-[10px] font-bold tracking-wider">Pickup Floor</span>
+                <p class="font-bold text-slate-900 dark:text-white">{{ formatFloor(selectedOrderDetails.form_data?.pickupFloor) }}</p>
+              </div>
+              <div class="space-y-1">
+                <span class="text-slate-400 uppercase text-[10px] font-bold tracking-wider">Delivery Floor</span>
+                <p class="font-bold text-slate-900 dark:text-white">{{ formatFloor(selectedOrderDetails.form_data?.deliveryFloor) }}</p>
+              </div>
+              <div class="space-y-1">
+                <span class="text-slate-400 uppercase text-[10px] font-bold tracking-wider">Elevator Available</span>
+                <p class="font-bold text-slate-900 dark:text-white">{{ formatElevator(selectedOrderDetails.form_data?.elevator) }}</p>
+              </div>
+              <div class="space-y-1">
+                <span class="text-slate-400 uppercase text-[10px] font-bold tracking-wider">Moving Lift Needed</span>
+                <p class="font-bold text-slate-900 dark:text-white">{{ formatLift(selectedOrderDetails.form_data?.lift) }}</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 4: Additional Services & Special Items -->
+          <div class="bg-slate-50 dark:bg-slate-950/60 p-5 rounded-2xl border border-slate-200 dark:border-slate-800 space-y-4">
+            <h4 class="font-black text-xs uppercase tracking-wider text-red-500 flex items-center gap-2">
+              <span>✨</span> Additional Services & Notes
+            </h4>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+              <div class="space-y-1">
+                <span class="text-slate-400 uppercase text-[10px] font-bold tracking-wider">Packing Service</span>
+                <p class="font-semibold text-slate-800 dark:text-slate-200">{{ selectedOrderDetails.form_data?.packing === 'yes' ? '✅ Yes, pack for me' : '❌ No, customer packs' }}</p>
+              </div>
+              <div class="space-y-1">
+                <span class="text-slate-400 uppercase text-[10px] font-bold tracking-wider">Furniture Assembly</span>
+                <p class="font-semibold text-slate-800 dark:text-slate-200">{{ selectedOrderDetails.form_data?.assembly === 'yes' ? '✅ Yes, assembly needed' : '❌ No assembly needed' }}</p>
+              </div>
+              <div class="space-y-1 sm:col-span-2">
+                <span class="text-slate-400 uppercase text-[10px] font-bold tracking-wider">Fragile / Specialty Items</span>
+                <p class="font-semibold text-slate-800 dark:text-slate-200">{{ selectedOrderDetails.form_data?.fragile && selectedOrderDetails.form_data?.fragile !== 'no' ? selectedOrderDetails.form_data.fragile : 'None specified' }}</p>
+              </div>
+              <div class="space-y-1 sm:col-span-2">
+                <span class="text-slate-400 uppercase text-[10px] font-bold tracking-wider">Customer Special Notes</span>
+                <p class="p-3 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 italic">
+                  {{ selectedOrderDetails.form_data?.notes || 'No special notes provided.' }}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 5: Uploaded Photos / Media Gallery -->
+          <div class="bg-slate-50 dark:bg-slate-950/60 p-5 rounded-2xl border border-slate-200 dark:border-slate-800 space-y-4">
+            <h4 class="font-black text-xs uppercase tracking-wider text-red-500 flex items-center justify-between">
+              <span class="flex items-center gap-2"><span>📷</span> Customer Uploaded Photos & Media</span>
+              <span class="text-[10px] text-slate-400 font-bold">({{ (selectedOrderDetails.form_data?.images || []).length }} Photos)</span>
+            </h4>
+            
+            <div v-if="selectedOrderDetails.form_data?.images && selectedOrderDetails.form_data.images.length > 0" class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              <div 
+                v-for="(imgUrl, imgIdx) in selectedOrderDetails.form_data.images" 
+                :key="imgIdx"
+                @click="openImageLightbox(imgUrl)"
+                class="group relative h-28 rounded-xl overflow-hidden bg-slate-200 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 cursor-pointer shadow-sm"
+              >
+                <img :src="imgUrl" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" />
+                <div class="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white font-bold text-xs">
+                  🔍 View Full
+                </div>
+              </div>
+            </div>
+            <div v-else class="text-center py-6 text-slate-400 text-xs border border-dashed border-slate-300 dark:border-slate-800 rounded-xl">
+              No photos or media uploaded for this order.
+            </div>
+          </div>
+
+          <!-- Section 6: Financials -->
+          <div class="bg-slate-50 dark:bg-slate-950/60 p-5 rounded-2xl border border-slate-200 dark:border-slate-800 space-y-4">
+            <h4 class="font-black text-xs uppercase tracking-wider text-red-500 flex items-center gap-2">
+              <span>💶</span> Financials & Pricing
+            </h4>
+            <div class="grid grid-cols-3 gap-4 text-center">
+              <div class="bg-white dark:bg-slate-900 p-3 rounded-xl border border-slate-200 dark:border-slate-800">
+                <span class="text-[10px] uppercase font-bold text-slate-400 block">Est. Revenue</span>
+                <span class="text-lg font-black text-emerald-600 dark:text-emerald-400">€{{ getOrderEstRevenue(selectedOrderDetails).toLocaleString() }}</span>
+              </div>
+              <div class="bg-white dark:bg-slate-900 p-3 rounded-xl border border-slate-200 dark:border-slate-800">
+                <span class="text-[10px] uppercase font-bold text-slate-400 block">Actual Paid</span>
+                <span class="text-lg font-black text-blue-600 dark:text-blue-400">€{{ getOrderActualRevenue(selectedOrderDetails).toLocaleString() }}</span>
+              </div>
+              <div class="bg-white dark:bg-slate-900 p-3 rounded-xl border border-slate-200 dark:border-slate-800">
+                <span class="text-[10px] uppercase font-bold text-slate-400 block">Pending Balance</span>
+                <span class="text-lg font-black text-amber-600 dark:text-amber-400">€{{ Math.max(0, getOrderEstRevenue(selectedOrderDetails) - getOrderActualRevenue(selectedOrderDetails)).toLocaleString() }}</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Footer Actions -->
+        <div class="flex flex-wrap justify-between items-center gap-3 pt-4 border-t border-slate-200 dark:border-slate-800 shrink-0">
+          <div class="flex items-center gap-2">
+            <a 
+              v-if="getOrderPhone(selectedOrderDetails) !== 'N/A'" 
+              :href="'https://wa.me/' + getOrderPhone(selectedOrderDetails).replace(/[^0-9]/g, '')" 
+              target="_blank"
+              class="px-4 py-2.5 bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold rounded-xl text-xs transition-all flex items-center gap-1.5 shadow-sm"
+            >
+              <span>💬</span> WhatsApp
+            </a>
+            <button 
+              @click="openComposeEmail(selectedOrderDetails)"
+              class="px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl text-xs transition-all flex items-center gap-1.5 shadow-sm cursor-pointer"
+            >
+              <span>✉️</span> Compose Email
+            </button>
+            <button 
+              @click="openEditOrderModal(selectedOrderDetails)"
+              class="px-4 py-2.5 bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-900 dark:text-white font-bold rounded-xl text-xs transition-all flex items-center gap-1.5 cursor-pointer"
+            >
+              <span>✏️</span> Edit Order
+            </button>
+          </div>
+
+          <button @click="modals.orderDetails = false" class="px-6 py-2.5 bg-slate-900 hover:bg-slate-800 text-white dark:bg-white dark:text-slate-900 font-bold rounded-xl text-xs transition-all cursor-pointer">
+            Close Dialog
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- IMAGE LIGHTBOX ZOOM MODAL -->
+    <div v-if="modals.imageLightbox" @click="modals.imageLightbox = false" class="fixed inset-0 z-[70] flex items-center justify-center p-4 bg-slate-950/90 backdrop-blur-md cursor-pointer">
+      <div class="relative max-w-4xl max-h-[90vh] p-2" @click.stop>
+        <img :src="lightboxImageUrl" class="max-w-full max-h-[85vh] rounded-2xl object-contain shadow-2xl border border-white/20" />
+        <button @click="modals.imageLightbox = false" class="absolute -top-3 -right-3 w-8 h-8 rounded-full bg-red-600 text-white font-bold flex items-center justify-center shadow-lg">
+          ✕
+        </button>
+      </div>
+    </div>
+
     <!-- MODAL 3: CUSTOMER 360 CRM PROFILE & ORDER HISTORY -->
     <!-- ============================================================ -->
     <div v-if="modals.customerProfile" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md overflow-y-auto">
@@ -3356,6 +3667,8 @@ const loadAllData = async () => {
 }
 // Modals display control
 const modals = ref({
+  orderDetails: false,
+  imageLightbox: false,
   order: false,
   location: false,
   blog: false,
@@ -4431,6 +4744,97 @@ const exportOrdersToPDF = () => {
     console.error('PDF Export Error:', err)
     showDialog('PDF Export', 'Could not generate PDF directly.', 'error')
   }
+}
+
+
+// --- ORDER DETAILS DIALOG LOGIC ---
+const selectedOrderDetails = ref(null)
+const lightboxImageUrl = ref('')
+
+const openOrderDetails = (order) => {
+  selectedOrderDetails.value = order
+  modals.value.orderDetails = true
+}
+
+const openImageLightbox = (url) => {
+  lightboxImageUrl.value = url
+  modals.value.imageLightbox = true
+}
+
+const formatDateTimeFull = (d) => {
+  if (!d) return 'Recent'
+  try {
+    const dt = new Date(d)
+    return dt.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' })
+  } catch (e) {
+    return 'Recent'
+  }
+}
+
+const formatTimeSlot = (t) => {
+  const map = {
+    morning: 'Morning (9:00 - 12:00)',
+    afternoon: 'Afternoon (12:00 - 17:00)',
+    evening: 'Evening (17:00 - 21:00)'
+  }
+  return map[t] || t || 'Morning (9:00 - 12:00)'
+}
+
+const formatMoveSize = (s) => {
+  const map = {
+    studio: 'Studio / Single Room',
+    '1bed': '1-Bedroom Apartment',
+    '2bed': '2-Bedroom Apartment',
+    '3bed': '3+ Bedroom House',
+    items: 'Just a few large items'
+  }
+  return map[s] || s || 'Not specified'
+}
+
+const formatFloor = (f) => {
+  if (!f || f === '0' || f === 'ground') return 'Ground Floor (0)'
+  return 'Floor ' + f
+}
+
+const formatElevator = (e) => {
+  const map = {
+    both: 'Yes — at both locations',
+    pickup: 'Yes — pickup only',
+    delivery: 'Yes — delivery only',
+    none: 'No elevator'
+  }
+  return map[e] || e || 'Not specified'
+}
+
+const formatLift = (l) => {
+  const map = {
+    yes: 'Yes — Moving lift needed',
+    no: 'No lift required',
+    unsure: 'Not sure'
+  }
+  return map[l] || l || 'Not specified'
+}
+
+const formatContactPref = (p) => {
+  const map = {
+    whatsapp: '💬 WhatsApp',
+    email: '✉️ Email',
+    call: '📞 Phone Call'
+  }
+  return map[p] || p || 'Any (Default)'
+}
+
+const formatHearAbout = (h) => {
+  const map = {
+    referral: 'Word of Mouth / Referral',
+    returning: 'Returning Customer',
+    social: 'Social Media',
+    google: 'Google Search',
+    real_estate: 'Real Estate Agent Referral',
+    student_center: 'Student Service Center',
+    other: 'Other'
+  }
+  return map[h] || h || 'Direct Website'
 }
 
 // Customer 360 Drawer
