@@ -131,17 +131,17 @@ export default defineEventHandler(async (event) => {
 
   // Common Header Component for All Emails
   const renderHeader = (subtitle: string) => `
-    <div style="background-color: ${BRAND.dark}; padding: 30px 20px; text-align: center; border-bottom: 3px solid ${BRAND.redLight};">
+    <div style="background-color: ${BRAND.dark}; padding: 32px 20px; text-align: center; border-bottom: 3px solid ${BRAND.redLight};">
       <div style="display: inline-block; text-align: center;">
         <a href="https://moveitmaastricht.nl" target="_blank" style="text-decoration: none; display: inline-block;">
           <img 
             src="https://www.moveitmaastricht.nl/images/logo.png" 
             alt="MoveIt Maastricht" 
-            height="48" 
-            style="height: 48px; max-height: 48px; width: auto; max-width: 240px; display: block; margin: 0 auto; border: 0; outline: none; text-decoration: none;" 
+            width="220"
+            style="width: 220px; max-width: 260px; height: auto; display: block; margin: 0 auto; border: 0; outline: none; text-decoration: none;" 
           />
         </a>
-        <p style="font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #94a3b8; margin: 10px 0 0 0; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em;">
+        <p style="font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #94a3b8; margin: 12px 0 0 0; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.18em;">
           ${subtitle}
         </p>
       </div>

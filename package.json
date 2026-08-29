@@ -26,6 +26,7 @@
     "@types/aos": "^3.0.7",
     "@types/nodemailer": "^8.0.1",
     "@vueuse/nuxt": "^14.3.0",
-    "aos": "^2.3.4"
+    "aos": "^2.3.4",
+    "sharp": "^0.35.4"
   }
 }
