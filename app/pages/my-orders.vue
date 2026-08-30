@@ -43,8 +43,10 @@
         <div v-else class="space-y-6">
           <div v-for="order in orders" :key="order.id" class="glass-panel p-6 rounded-3xl border border-slate-200 dark:border-slate-800 flex flex-col md:flex-row gap-6 items-start">
             <div class="flex-grow space-y-3">
-              <div class="flex items-center gap-3">
+              <div class="flex items-center gap-3 flex-wrap">
                 <span class="text-xs font-bold text-slate-400">Order #{{ order.id.split('-')[0] }}</span>
+                <span v-if="order.form_data?.quote_code" class="text-[11px] font-mono px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-bold border border-slate-200 dark:border-slate-700">Code: {{ order.form_data.quote_code }}</span>
+                <span v-if="order.form_data?.invoice_number" class="text-[11px] font-mono px-2 py-0.5 rounded bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 font-bold border border-emerald-500/20">Inv: {{ order.form_data.invoice_number }}</span>
                 <span class="px-2 py-1 rounded-md text-[10px] font-black uppercase tracking-wider" :class="{
                   'bg-yellow-500/20 text-yellow-600': order.status === 'Pending',
                   'bg-blue-500/20 text-blue-600': order.status === 'In Transit',

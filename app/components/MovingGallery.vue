@@ -99,7 +99,7 @@ const col1Images = [
 
 const col2Images = [
   'https://res.cloudinary.com/jhe8kzw7/image/upload/v1785118858/5eff9c92-8583-4464-8f55-52586c2fb788_ezoylo.jpg',
-  'https://res.cloudinary.com/jhe8kzw7/image/upload/v1785118857/ea67df57-8b6a-47b6-a9a5-0dc671c3436a_ghflte.jpg',
+  'https://res.cloudinary.com/dgqyvw6wf/image/upload/v1788085507/ea67df57-8b6a-47b6-a9a5-0dc671c3436a.jpg',
   'https://res.cloudinary.com/dgqyvw6wf/image/upload/v1786484045/24b4dcd0-51bf-4cf5-877e-27af4553d650.jpg',
 ]
 

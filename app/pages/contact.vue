@@ -849,10 +849,10 @@ const verifyOtpAndSubmit = async () => {
     }
 
     // Now submit order to Supabase orders table
-    await submitToDatabase()
+    const orderDetails = await submitToDatabase()
 
-    // Optionally also send the email as before
-    await sendLegacyEmail()
+    // Send the email with all reference IDs
+    await sendLegacyEmail(orderDetails)
 
     submitted.value = true
   } catch (error) {
@@ -864,6 +864,12 @@ const verifyOtpAndSubmit = async () => {
 }
 
 const submitToDatabase = async () => {
+  const currentYear = new Date().getFullYear()
+  const randomNum = Math.floor(100000 + Math.random() * 900000)
+  const randomInv = Math.floor(1000 + Math.random() * 9000)
+  const quoteCode = `QT-${randomNum}`
+  const invoiceNumber = `INV-${currentYear}-${randomInv}`
+
   const formDataObj = {
     name: fullName.value,
     email: email.value,
@@ -885,7 +891,9 @@ const submitToDatabase = async () => {
     preference: contactPreference.value,
     hear: hearAbout.value,
     notes: notes.value,
-    images: [] // To store Cloudinary URLs
+    images: [],
+    quote_code: quoteCode,
+    invoice_number: invoiceNumber
   }
 
   // Upload images to Cloudinary first
@@ -926,15 +934,28 @@ const submitToDatabase = async () => {
     if (insertErr) console.error("Error inserting customer:", insertErr)
   }
 
-  const { error } = await supabase.from('orders').insert({
+  const { data: createdOrder, error } = await supabase.from('orders').insert({
     customer_id: authUser.id,
     status: 'Pending',
     form_data: formDataObj
-  })
+  }).select('id').single()
   if (error) throw error
+
+  const shortUuid = createdOrder?.id ? createdOrder.id.split('-')[0].toUpperCase() : `${randomNum}`
+  const orderNumber = `ORD-${shortUuid}`
+  const confirmationCode = `CNF-${shortUuid}`
+
+  return {
+    id: createdOrder?.id,
+    orderNumber,
+    quoteCode,
+    confirmationCode,
+    invoiceNumber
+  }
 }
 
-const sendLegacyEmail = async () => {
+const sendLegacyEmail = async (ids = {}) => {
+  const { id: orderId, orderNumber, quoteCode, confirmationCode, invoiceNumber } = ids
 
   // Track conversion event
   const { $trackEvent } = useNuxtApp()
@@ -947,10 +968,14 @@ const sendLegacyEmail = async () => {
       to: movingTo.value,
       date: moveDate.value,
       preferred_time: preferredTime.value,
+      order_id: orderId || '',
+      order_number: orderNumber || ''
     })
   }
 
-  const subject = `Quote Request from ${fullName.value} — ${moveDate.value}`
+  const subject = orderNumber 
+    ? `Quote Request [${orderNumber}] from ${fullName.value} — ${moveDate.value}`
+    : `Quote Request from ${fullName.value} — ${moveDate.value}`
 
   const packageLabels = {
     van_only: 'Van Only (€69.99/hr)',
@@ -965,6 +990,14 @@ const sendLegacyEmail = async () => {
     formData.append('_subject', subject)
     formData.append('_replyto', email.value)
     formData.append('_template', 'table')
+    
+    // Add distinct IDs
+    if (orderNumber) formData.append('Order Number (Order ID)', orderNumber)
+    if (quoteCode) formData.append('Quote Code (Code ID)', quoteCode)
+    if (confirmationCode) formData.append('Confirmation ID', confirmationCode)
+    if (invoiceNumber) formData.append('Invoice Number', invoiceNumber)
+    if (orderId) formData.append('Database Order ID', orderId)
+
     formData.append('Name', fullName.value)
     formData.append('Email', email.value)
     formData.append('Phone', phone.value)

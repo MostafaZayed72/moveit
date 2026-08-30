@@ -278,6 +278,14 @@ export default defineEventHandler(async (event) => {
     const toLocation = fieldsMap['Moving To'] || fieldsMap['to'] || ''
     const moveDateStr = fieldsMap['Preferred Date'] || fieldsMap['date'] || ''
 
+    const orderNumber = fieldsMap['Order Number (Order ID)'] || fieldsMap['Order Number'] || fieldsMap['order_number'] || ''
+    const quoteCode = fieldsMap['Quote Code (Code ID)'] || fieldsMap['Quote Code'] || fieldsMap['quote_code'] || fieldsMap['Code ID'] || ''
+    const confirmationId = fieldsMap['Confirmation ID'] || fieldsMap['confirmation_code'] || fieldsMap['Confirmation Code'] || ''
+    const invoiceNumber = fieldsMap['Invoice Number'] || fieldsMap['invoice_number'] || ''
+    const dbOrderId = fieldsMap['Database Order ID'] || fieldsMap['Database UUID'] || fieldsMap['Order ID'] || fieldsMap['order_id'] || ''
+
+    const displayOrderId = orderNumber || (dbOrderId ? `ORD-${dbOrderId.split('-')[0].toUpperCase()}` : '')
+
     let adminHtml = `
       <div style="font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; max-width: 650px; margin: 0 auto; background: #ffffff; border: 1px solid ${BRAND.border}; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);">
         ${renderHeader('Admin Dispatch Console • New Order Alert')}
@@ -285,12 +293,64 @@ export default defineEventHandler(async (event) => {
         <div style="padding: 30px 25px; font-family: 'Inter', sans-serif;">
           <!-- Alert Banner -->
           <div style="background-color: #fef2f2; border: 1px solid #fecaca; border-left: 5px solid ${BRAND.red}; border-radius: 10px; padding: 14px 18px; margin-bottom: 25px;">
-            <div style="font-family: 'Montserrat', 'Inter', sans-serif; font-size: 13px; font-weight: 800; color: ${BRAND.red}; text-transform: uppercase; letter-spacing: 0.05em;">
-              🚨 New Order / Quote Request
+            <table style="width: 100%; border-collapse: collapse;">
+              <tr>
+                <td style="vertical-align: middle;">
+                  <div style="font-family: 'Montserrat', 'Inter', sans-serif; font-size: 13px; font-weight: 800; color: ${BRAND.red}; text-transform: uppercase; letter-spacing: 0.05em;">
+                    🚨 New Order / Quote Request
+                  </div>
+                  <div style="font-family: 'Montserrat', 'Inter', sans-serif; font-size: 17px; font-weight: 800; color: #1e293b; margin-top: 4px;">
+                    ${custName} — ${moveDateStr || 'Upcoming Date'}
+                  </div>
+                </td>
+                ${displayOrderId ? `
+                  <td style="text-align: right; vertical-align: middle; white-space: nowrap;">
+                    <span style="display: inline-block; background-color: ${BRAND.red}; color: #ffffff; font-family: 'Montserrat', 'Inter', sans-serif; font-size: 13px; font-weight: 800; padding: 6px 12px; border-radius: 8px; letter-spacing: 0.05em;">
+                      ${displayOrderId}
+                    </span>
+                  </td>
+                ` : ''}
+              </tr>
+            </table>
+          </div>
+
+          <!-- Reference & Tracking IDs Grid -->
+          <div style="background-color: #f8fafc; border: 1px solid ${BRAND.border}; border-radius: 12px; padding: 16px 20px; margin-bottom: 25px;">
+            <div style="font-family: 'Montserrat', 'Inter', sans-serif; font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: ${BRAND.slateMuted}; margin-bottom: 12px;">
+              🏷️ Order &amp; Lifecycle Identifiers
             </div>
-            <div style="font-family: 'Montserrat', 'Inter', sans-serif; font-size: 17px; font-weight: 800; color: #1e293b; margin-top: 4px;">
-              ${custName} — ${moveDateStr || 'Upcoming Date'}
-            </div>
+            <table style="width: 100%; border-collapse: collapse; font-family: 'Inter', sans-serif; font-size: 13px;">
+              ${displayOrderId ? `
+                <tr style="border-bottom: 1px solid #e2e8f0;">
+                  <td style="padding: 7px 0; color: #64748b; font-weight: 600; width: 40%;">📦 Order ID:</td>
+                  <td style="padding: 7px 0; font-family: 'Montserrat', monospace; font-weight: 800; color: ${BRAND.red};">${displayOrderId}</td>
+                </tr>
+              ` : ''}
+              ${quoteCode ? `
+                <tr style="border-bottom: 1px solid #e2e8f0;">
+                  <td style="padding: 7px 0; color: #64748b; font-weight: 600;">🔖 Quote Code (Code ID):</td>
+                  <td style="padding: 7px 0; font-family: 'Montserrat', monospace; font-weight: 700; color: #0f172a;">${quoteCode}</td>
+                </tr>
+              ` : ''}
+              ${confirmationId ? `
+                <tr style="border-bottom: 1px solid #e2e8f0;">
+                  <td style="padding: 7px 0; color: #64748b; font-weight: 600;">✅ Confirmation ID:</td>
+                  <td style="padding: 7px 0; font-family: 'Montserrat', monospace; font-weight: 700; color: #0284c7;">${confirmationId}</td>
+                </tr>
+              ` : ''}
+              ${invoiceNumber ? `
+                <tr style="border-bottom: 1px solid #e2e8f0;">
+                  <td style="padding: 7px 0; color: #64748b; font-weight: 600;">🧾 Invoice Number:</td>
+                  <td style="padding: 7px 0; font-family: 'Montserrat', monospace; font-weight: 700; color: #059669;">${invoiceNumber}</td>
+                </tr>
+              ` : ''}
+              ${dbOrderId ? `
+                <tr>
+                  <td style="padding: 7px 0; color: #94a3b8; font-size: 11px;">Database UUID:</td>
+                  <td style="padding: 7px 0; font-size: 11px; color: #94a3b8; font-family: monospace;">${dbOrderId}</td>
+                </tr>
+              ` : ''}
+            </table>
           </div>
 
           <!-- Quick Customer Contact Box -->
@@ -348,11 +408,15 @@ export default defineEventHandler(async (event) => {
       </div>
     `
 
+    const adminSubject = displayOrderId
+      ? `[${displayOrderId}] ${subject.replace(/^\[New Request\]\s*/, '')}`
+      : `[New Request] ${subject}`
+
     // Send to Admins
     await sendEmailWithFallback({
       to: adminRecipients,
       replyTo: replyTo || undefined,
-      subject: `[New Request] ${subject}`,
+      subject: adminSubject,
       html: adminHtml,
       attachments
     })
@@ -375,7 +439,7 @@ export default defineEventHandler(async (event) => {
             <!-- Status Badge -->
             <div style="text-align: center; margin-bottom: 25px;">
               <span style="font-family: 'Montserrat', 'Inter', sans-serif; display: inline-block; background-color: #ecfdf5; border: 1px solid #a7f3d0; color: #059669; font-weight: 800; font-size: 12px; padding: 6px 16px; border-radius: 9999px; text-transform: uppercase; letter-spacing: 0.08em;">
-                ✓ Request Registered &amp; Confirmed
+                ✓ Request Registered &amp; Confirmed ${displayOrderId ? `(${displayOrderId})` : ''}
               </span>
             </div>
 
@@ -396,6 +460,24 @@ export default defineEventHandler(async (event) => {
               
               <table style="width: 100%; border-collapse: collapse; font-size: 14px; font-family: 'Inter', sans-serif;">
                 <tbody>
+                  ${displayOrderId ? `
+                    <tr style="border-bottom: 1px solid #e2e8f0;">
+                      <td style="padding: 9px 0; font-weight: 700; color: #64748b; width: 35%;">Order ID:</td>
+                      <td style="font-family: 'Montserrat', 'Inter', sans-serif; padding: 9px 0; font-weight: 800; color: ${BRAND.red};">${displayOrderId}</td>
+                    </tr>
+                  ` : ''}
+                  ${quoteCode ? `
+                    <tr style="border-bottom: 1px solid #e2e8f0;">
+                      <td style="padding: 9px 0; font-weight: 700; color: #64748b;">Quote Code:</td>
+                      <td style="font-family: 'Montserrat', 'Inter', sans-serif; padding: 9px 0; font-weight: 700; color: #0f172a;">${quoteCode}</td>
+                    </tr>
+                  ` : ''}
+                  ${confirmationId ? `
+                    <tr style="border-bottom: 1px solid #e2e8f0;">
+                      <td style="padding: 9px 0; font-weight: 700; color: #64748b;">Confirmation ID:</td>
+                      <td style="font-family: 'Montserrat', 'Inter', sans-serif; padding: 9px 0; font-weight: 700; color: #0284c7;">${confirmationId}</td>
+                    </tr>
+                  ` : ''}
                   ${(fromLocation && toLocation) ? `
                     <tr style="border-bottom: 1px solid #e2e8f0;">
                       <td style="padding: 9px 0; font-weight: 700; color: #64748b; width: 35%;">Route:</td>
