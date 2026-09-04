@@ -379,8 +379,27 @@ export default defineEventHandler(async (event) => {
             <tbody>
     `
 
+    let uploadedImages: string[] = []
+    const rawImagesVal = fieldsMap['images'] || fieldsMap['imageUrls'] || ''
+    if (rawImagesVal) {
+      try {
+        const parsed = JSON.parse(rawImagesVal)
+        if (Array.isArray(parsed)) uploadedImages = parsed.filter(Boolean)
+        else if (typeof parsed === 'string' && parsed.startsWith('http')) uploadedImages = [parsed]
+      } catch {
+        if (rawImagesVal.startsWith('http')) {
+          uploadedImages = rawImagesVal.split(',').map((s: string) => s.trim()).filter(Boolean)
+        }
+      }
+    }
+
+    const ignoredKeys = new Set([
+      'to', 'toEmail', 'text', 'message', 'images', 'imageUrls', 'attachments',
+      '_subject', '_replyto', '_template'
+    ])
+
     for (const [key, value] of Object.entries(fieldsMap)) {
-      if (!key.startsWith('_') && key !== 'to' && key !== 'toEmail' && key !== 'text' && key !== 'message') {
+      if (!key.startsWith('_') && !ignoredKeys.has(key)) {
         adminHtml += `
           <tr style="border-bottom: 1px solid #f1f5f9;">
             <td style="padding: 10px 8px; font-weight: 700; color: #475569; width: 35%;">${key}</td>
@@ -402,6 +421,34 @@ export default defineEventHandler(async (event) => {
     adminHtml += `
             </tbody>
           </table>
+    `
+
+    if (uploadedImages.length > 0) {
+      adminHtml += `
+        <div style="margin-top: 25px; padding: 18px 20px; background-color: #f8fafc; border: 1px solid ${BRAND.border}; border-radius: 12px;">
+          <h4 style="font-family: 'Montserrat', 'Inter', sans-serif; margin: 0 0 12px 0; font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: ${BRAND.slateMuted};">
+            📸 Customer Inventory Photos (${uploadedImages.length} Image${uploadedImages.length > 1 ? 's' : ''})
+          </h4>
+          <div style="display: flex; flex-wrap: wrap; gap: 12px; margin-top: 10px;">
+      `
+      for (let i = 0; i < uploadedImages.length; i++) {
+        const imgUrl = uploadedImages[i]
+        adminHtml += `
+          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 6px; width: 120px; text-align: center; box-sizing: border-box;">
+            <a href="${imgUrl}" target="_blank" style="text-decoration: none; display: block;">
+              <img src="${imgUrl}" alt="Photo ${i + 1}" style="width: 100%; height: 85px; object-fit: cover; border-radius: 6px; display: block;" />
+              <span style="font-family: 'Montserrat', 'Inter', sans-serif; font-size: 10px; font-weight: 800; color: ${BRAND.red}; display: inline-block; margin-top: 6px;">Photo #${i + 1} ↗</span>
+            </a>
+          </div>
+        `
+      }
+      adminHtml += `
+          </div>
+        </div>
+      `
+    }
+
+    adminHtml += `
         </div>
 
         ${renderFooter()}

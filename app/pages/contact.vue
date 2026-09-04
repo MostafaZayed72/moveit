@@ -950,12 +950,13 @@ const submitToDatabase = async () => {
     orderNumber,
     quoteCode,
     confirmationCode,
-    invoiceNumber
+    invoiceNumber,
+    images: formDataObj.images || []
   }
 }
 
 const sendLegacyEmail = async (ids = {}) => {
-  const { id: orderId, orderNumber, quoteCode, confirmationCode, invoiceNumber } = ids
+  const { id: orderId, orderNumber, quoteCode, confirmationCode, invoiceNumber, images: uploadedImages } = ids
 
   // Track conversion event
   const { $trackEvent } = useNuxtApp()
@@ -984,59 +985,47 @@ const sendLegacyEmail = async (ids = {}) => {
     full_service: 'Full Service (€149/hr)'
   }
 
-  try {
-    // Use FormData to support file attachments
-    const formData = new FormData()
-    formData.append('_subject', subject)
-    formData.append('_replyto', email.value)
-    formData.append('_template', 'table')
-    
-    // Add distinct IDs
-    if (orderNumber) formData.append('Order Number (Order ID)', orderNumber)
-    if (quoteCode) formData.append('Quote Code (Code ID)', quoteCode)
-    if (confirmationCode) formData.append('Confirmation ID', confirmationCode)
-    if (invoiceNumber) formData.append('Invoice Number', invoiceNumber)
-    if (orderId) formData.append('Database Order ID', orderId)
+  const timeLabels = {
+    morning: 'Morning (9:00 - 12:00)',
+    afternoon: 'Afternoon (12:00 - 17:00)',
+    evening: 'Evening (17:00 - 21:00)'
+  }
 
-    formData.append('Name', fullName.value)
-    formData.append('Email', email.value)
-    formData.append('Phone', phone.value)
-    formData.append('Moving Package', packageLabels[movingPackage.value] || movingPackage.value || 'Not specified')
-    formData.append('Moving From', movingFrom.value)
-    formData.append('Moving To', movingTo.value)
-    formData.append('Preferred Date', moveDate.value)
-    const timeLabels = {
-      morning: 'Morning (9:00 - 12:00)',
-      afternoon: 'Afternoon (12:00 - 17:00)',
-      evening: 'Evening (17:00 - 21:00)'
-    }
-    formData.append('Preferred Time', timeLabels[preferredTime.value] || preferredTime.value || 'Not specified')
-    formData.append('Alternative Date', alternativeDate.value || 'None')
-    formData.append('Move Size', sizeLabels[moveSize.value] || moveSize.value || 'Not specified')
-    formData.append('Pickup Floor', pickupFloor.value || 'Not specified')
-    formData.append('Delivery Floor', deliveryFloor.value || 'Not specified')
-    formData.append('Elevator Available', elevatorLabels[elevatorAvailable.value] || elevatorAvailable.value || 'Not specified')
-    formData.append('Moving Lift Needed', liftLabels[movingLiftNeeded.value] || movingLiftNeeded.value || 'Not specified')
-    formData.append('Packing Service', packingService.value === 'yes' ? 'Yes, pack for me' : 'No, I\'ll pack myself')
-    formData.append('Furniture Assembly', furnitureAssembly.value === 'yes' ? 'Yes, please' : 'No thanks')
-    formData.append('Fragile/Specialty Items', fragileItems.value === 'yes' ? specialItemsDescription.value : 'No')
-    formData.append('Contact Preference', contactPrefLabels[contactPreference.value] || contactPreference.value || 'Not specified')
-    formData.append('How Did You Hear', hearLabels[hearAbout.value] || hearAbout.value || 'Not specified')
-    formData.append('Additional Notes', notes.value || 'None')
-    
-    // Attach media files if any
-    if (mediaFiles.value && mediaFiles.value.length > 0) {
-      mediaFiles.value.forEach((f, i) => {
-        const fileObj = f.raw || f.file
-        if (fileObj) {
-          formData.append(`attachment_${i + 1}`, fileObj, f.name || `attachment_${i + 1}`)
-        }
-      })
+  try {
+    const payload = {
+      _subject: subject,
+      _replyto: email.value,
+      'Order Number (Order ID)': orderNumber || '',
+      'Quote Code (Code ID)': quoteCode || '',
+      'Confirmation ID': confirmationCode || '',
+      'Invoice Number': invoiceNumber || '',
+      'Database Order ID': orderId || '',
+      'Name': fullName.value,
+      'Email': email.value,
+      'Phone': phone.value,
+      'Moving Package': packageLabels[movingPackage.value] || movingPackage.value || 'Not specified',
+      'Moving From': movingFrom.value,
+      'Moving To': movingTo.value,
+      'Preferred Date': moveDate.value,
+      'Preferred Time': timeLabels[preferredTime.value] || preferredTime.value || 'Not specified',
+      'Alternative Date': alternativeDate.value || 'None',
+      'Move Size': sizeLabels[moveSize.value] || moveSize.value || 'Not specified',
+      'Pickup Floor': pickupFloor.value || 'Not specified',
+      'Delivery Floor': deliveryFloor.value || 'Not specified',
+      'Elevator Available': elevatorLabels[elevatorAvailable.value] || elevatorAvailable.value || 'Not specified',
+      'Moving Lift Needed': liftLabels[movingLiftNeeded.value] || movingLiftNeeded.value || 'Not specified',
+      'Packing Service': packingService.value === 'yes' ? 'Yes, pack for me' : 'No, I\'ll pack myself',
+      'Furniture Assembly': furnitureAssembly.value === 'yes' ? 'Yes, please' : 'No thanks',
+      'Fragile/Specialty Items': fragileItems.value === 'yes' ? specialItemsDescription.value : 'No',
+      'Contact Preference': contactPrefLabels[contactPreference.value] || contactPreference.value || 'Not specified',
+      'How Did You Hear': hearLabels[hearAbout.value] || hearAbout.value || 'Not specified',
+      'Additional Notes': notes.value || 'None',
+      images: uploadedImages || []
     }
 
     await $fetch('/api/send-email', {
       method: 'POST',
-      body: formData
+      body: payload
     })
   } catch (error) {
     console.error('Error sending confirmation email:', error)
