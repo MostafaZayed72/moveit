@@ -134,15 +134,21 @@
         <div 
           v-for="(addon, idx) in addonsList" 
           :key="idx"
-          class="bg-white dark:bg-slate-900/90 border border-slate-200/80 dark:border-slate-800/80 rounded-2xl p-4 hover:border-red-500/50 hover:shadow-lg transition-all group flex flex-col justify-between"
+          class="bg-white dark:bg-slate-900/90 border border-slate-200/80 dark:border-slate-800/80 rounded-2xl p-4 hover:border-red-500/50 hover:shadow-lg transition-all group flex flex-col justify-between text-left"
         >
           <div class="text-2xl mb-3 group-hover:scale-110 transition-transform">{{ addon.icon }}</div>
           <div>
-            <div class="text-xs font-bold text-slate-800 dark:text-slate-200 group-hover:text-red-600 transition-colors leading-snug mb-1">
+            <div class="text-xs font-bold text-slate-800 dark:text-slate-200 group-hover:text-red-600 transition-colors leading-snug mb-1.5">
               {{ addon.title }}
+              <span v-if="addon.subtitle" class="block text-[10.5px] font-medium text-slate-500 dark:text-slate-400 mt-0.5">
+                {{ addon.subtitle }}
+              </span>
             </div>
-            <div class="text-xs font-black text-red-600 dark:text-red-400">
+            <div class="text-xs font-black text-red-600 dark:text-red-400 leading-tight">
               {{ addon.price }}
+            </div>
+            <div v-if="addon.sub" class="text-[10.5px] font-semibold text-slate-500 dark:text-slate-400 mt-1">
+              {{ addon.sub }}
             </div>
           </div>
         </div>
@@ -309,21 +315,79 @@ const resolvedPackages = computed(() => {
 const addonsList = computed(() => {
   if (isNl.value) {
     return [
-      { icon: '🛠️', title: 'Meubelmontage', price: '€35.00/u' },
-      { icon: '📦', title: 'IKEA Ophalen', price: '€45.00' },
-      { icon: '🛍️', title: 'Marktplaats Ophalen', price: '€35.00' },
-      { icon: '🏗️', title: 'Verhuislift Huren', price: '€150.00' },
-      { icon: '🚗', title: 'Meerijdservice', price: '€10 (Maastricht)' },
-      { icon: '👥', title: 'Extra Verhuizer', price: '€15.99/u' },
+      {
+        icon: '🛠️',
+        title: 'Meubelmontage',
+        price: '€45/u',
+        sub: 'per monteur'
+      },
+      {
+        icon: '📦',
+        title: 'IKEA Heerlen Ophalen',
+        price: '(Offerte aanvraag)'
+      },
+      {
+        icon: '🛍️',
+        title: 'Marktplaats Ophalen',
+        price: '(Offerte aanvraag)'
+      },
+      {
+        icon: '🏗️',
+        title: 'Verhuislift Huren',
+        subtitle: '(incl. 1 bediener)',
+        price: '€185 voor het 1e uur',
+        sub: 'daarna €85 voor het 2e uur'
+      },
+      {
+        icon: '🚗',
+        title: 'Meerijdservice',
+        price: '€10 (Maastricht)',
+        sub: '€0.17/km (Buiten)'
+      },
+      {
+        icon: '👥',
+        title: 'Extra Verhuizer',
+        price: '€30/u',
+        sub: 'excl. BTW'
+      },
     ]
   }
   return [
-    { icon: '🛠️', title: 'Furniture Assembly', price: '€35.00/hr' },
-    { icon: '📦', title: 'IKEA Pickup', price: '€45.00' },
-    { icon: '🛍️', title: 'Marktplaats Pickup', price: '€35.00' },
-    { icon: '🏗️', title: 'Moving Lift Rental', price: '€150.00' },
-    { icon: '🚗', title: 'Ride Along Service', price: '€10 (Maastricht)' },
-    { icon: '👥', title: 'Extra Mover', price: '€15.99/hr' },
+    {
+      icon: '🛠️',
+      title: 'Furniture Assembly',
+      price: '€45/hr',
+      sub: 'per assembler'
+    },
+    {
+      icon: '📦',
+      title: 'IKEA Heerlen Pickup',
+      price: '(Quote request)'
+    },
+    {
+      icon: '🛍️',
+      title: 'Marketplaats Pickup',
+      price: '(Quote request)'
+    },
+    {
+      icon: '🏗️',
+      title: 'Moving Lift Rental',
+      subtitle: '(incl. 1 operator only)',
+      price: '€185 for the first hour',
+      sub: 'then €85 for second hour'
+    },
+    {
+      icon: '🚗',
+      title: 'Ride Along Service',
+      price: '€10 (Maastricht)',
+      sub: '€0.17/km (Outside)'
+    },
+    {
+      icon: '👥',
+      title: 'Extra Mover',
+      price: '€30/hr',
+      sub: 'excl. VAT'
+    },
   ]
 })
 

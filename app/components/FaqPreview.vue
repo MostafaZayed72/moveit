@@ -44,6 +44,6 @@ function toggle(i) {
   openIndex.value = openIndex.value === i ? -1 : i
 }
 
-const faqs = [1, 2, 3, 4, 5]
+const faqs = [1, 2, 3, 4]
 
 </script>

@@ -3,7 +3,7 @@
     <BaseSection :title="$t('faq.title')" :subtitle="$t('faq.subtitle')">
       <div class="max-w-3xl mx-auto space-y-4">
         <div 
-          v-for="i in 17" 
+          v-for="i in 16" 
           :key="i" 
           class="premium-card !p-0 overflow-hidden"
           data-aos="fade-up"

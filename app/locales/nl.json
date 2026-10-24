@@ -231,10 +231,8 @@
       "a2": "Absoluut niet. Onze prijzen zijn transparant. Het uurtarief dekt de bestelbus, chauffeur en verhuizers zoals aangegeven in uw pakket. BTW (21%) komt hier nog bij. Tijd wordt berekend vanaf vertrek tot terugkomst op onze locatie in Maastricht.",
       "q3": "Bieden jullie studentenkorting?",
       "a3": "Ja! Alle studenten rijden gratis mee binnen Maastricht. Laat gewoon uw studentenkaart zien op de verhuisdag. We bieden ook speciale studentvriendelijke prijzen voor kleine verhuizingen.",
-      "q4": "Wat als er iets beschadigd raakt tijdens de verhuizing?",
-      "a4": "Al onze verhuizingen zijn inclusief transportverzekering. In het zeldzame geval van schade hebben we een eenvoudig claimproces. Ons team is getraind in professionele hanteringstechnieken om elk risico te minimaliseren.",
-      "q5": "Kan ik meerijden in de verhuisbus?",
-      "a5": "Ja! Binnen Maastricht is het €10 vast. Buiten Maastricht (25-50km) is het €0.50/km. Studenten rijden gratis mee binnen Maastricht. Voor langeafstandsverhuizingen maken we een offerte op maat."
+      "q4": "Kan ik meerijden in de verhuisbus?",
+      "a4": "Ja! Binnen Maastricht is het €10 vast. Buiten Maastricht (25-50km) is het €0.50/km. Studenten rijden gratis mee binnen Maastricht. Voor langeafstandsverhuizingen maken we een offerte op maat."
     },
     "cta": {
       "title": "Jouw Volgende Hoofdstuk Begint Met Eén Klik",
@@ -262,12 +260,12 @@
       "footnote_time": "Tijd wordt berekend vanaf vertrek en terugkeer naar onze locatie in Maastricht.",
       "footnote_student": "Gratis meerijden voor studenten binnen Maastricht",
       "optional_addons_list": [
-        "Meubelmontage €35.00",
-        "IKEA Ophaalservice €45.00",
-        "Marktplaats Ophaalservice €35.00",
-        "Verhuislift huren €150.00",
-        "Meerijdservice (€10 binnen Maastricht)",
-        "Extra verhuizer (€15.99/u)"
+        "Meubelmontage €45/u per monteur",
+        "IKEA Heerlen Ophalen (Offerte aanvraag)",
+        "Marktplaats Ophalen (Offerte aanvraag)",
+        "Verhuislift huren (incl. 1 bediener) €185 voor het 1e uur, daarna €85 voor het 2e uur",
+        "Meerijdservice €10 (Maastricht) / €0.17/km (Buiten)",
+        "Extra verhuizer €30/u excl. BTW"
       ],
       "package1": {
         "name": "Alleen Bus",
@@ -492,34 +490,32 @@
     "a2": "Absoluut niet. Onze prijzen zijn transparant. Het uurtarief dekt de bus, chauffeur en verhuizers zoals gespecificeerd in uw pakket. BTW (21%) wordt hieraan toegevoegd. De tijd wordt berekend van vertrek tot terugkeer naar onze locatie in Maastricht.",
     "q3": "Bieden jullie studentenkorting?",
     "a3": "Ja! Alle studenten krijgen een gratis meerijservice binnen Maastricht. Toon gewoon je studentenkaart op de verhuisdag. We bieden ook speciale studentvriendelijke prijzen voor kleine verhuizingen.",
-    "q4": "Wat als er iets beschadigd raakt tijdens de verhuizing?",
-    "a4": "Al onze verhuizingen zijn inclusief transportverzekering. In het zeldzame geval van schade hebben we een eenvoudig claimproces. Ons team is getraind in professionele behandelingstechnieken om elk risico te minimaliseren.",
-    "q5": "Kan ik meerijden in de verhuisbus?",
-    "a5": "Ja, we laten één passagier gratis meerijden in de verhuisbus naar uw bestemming, waardoor u de kosten van een taxi of treinkaartje bespaart.",
-    "q6": "Kan ik op korte termijn een verhuizing boeken?",
-    "a6": "Ja, we kunnen vaak dringende verhuizingen regelen. Neem contact met ons op via WhatsApp voor de snelste reactie met betrekking tot beschikbaarheid op dezelfde of de volgende dag.",
-    "q7": "Leveren jullie inpakmaterialen?",
-    "a7": "Ja, we kunnen professionele verhuisdozen, noppenfolie en stevige tape leveren tegen een kleine meerprijs of als onderdeel van een full-service pakket.",
-    "q8": "Is uw opslagfaciliteit veilig?",
-    "a8": "Absoluut. Onze partneropslagfaciliteiten worden 24/7 bewaakt, zijn klimaatgecontroleerd en volledig verzekerd voor uw gemoedsrust.",
-    "q9": "Verzorgen jullie kantoorverhuizingen?",
-    "a9": "Ja, we hebben uitgebreide ervaring met bedrijfsverhuizingen, waarbij we zorgen voor minimale downtime voor uw activiteiten tijdens de transitie.",
-    "q10": "Welke regio's bestrijken jullie?",
-    "a10": "Hoewel we gevestigd zijn in Maastricht, bestrijken we heel Nederland, evenals grensoverschrijdende verhuizingen naar België en Duitsland.",
-    "q11": "Zijn mijn eigendommen verzekerd tijdens transport?",
-    "a11": "Ja, elk item dat we transporteren is gedekt door onze Goods-in-Transit verzekering vanaf het moment dat we het ophalen totdat het is afgeleverd.",
-    "q12": "Kunnen jullie mijn meubels demonteren?",
-    "a12": "Ja, ons team is uitgerust met gereedschap om uw meubels op verzoek professioneel te demonteren en op de bestemming weer in elkaar te zetten.",
-    "q13": "Verhuizen jullie piano's?",
-    "a13": "Ja, we hebben gespecialiseerde apparatuur en getraind personeel voor veilig pianotransport, zodat uw instrument veilig wordt verplaatst.",
-    "q14": "Hoe krijg ik een offerte?",
-    "a14": "U kunt ons online offerteformulier invullen, of ons eenvoudigweg een lijst met uw spullen en locaties sturen op WhatsApp voor een snelle schatting.",
-    "q15": "Bieden jullie seniorenverhuizingen aan?",
-    "a15": "Ja, we bieden een respectvolle service voor senioren, waarbij we elk detail met extra zorg en geduld behandelen om een stressvrije overgang te garanderen.",
-    "q16": "Is er een limiet aan het aantal stuks?",
-    "a16": "Nee, we behandelen alles van leveringen van één stuk tot grootschalige residentiële en commerciële verhuizingen.",
-    "q17": "Welke betaalmethoden accepteren jullie?",
-    "a17": "Wij accepteren bankoverschrijvingen, Tikkie (voor lokale klanten) en alle bekende creditcards."
+    "q4": "Kan ik meerijden in de verhuisbus?",
+    "a4": "Ja, we laten één passagier gratis meerijden in de verhuisbus naar uw bestemming, waardoor u de kosten van een taxi of treinkaartje bespaart.",
+    "q5": "Kan ik op korte termijn een verhuizing boeken?",
+    "a5": "Ja, we kunnen vaak dringende verhuizingen regelen. Neem contact met ons op via WhatsApp voor de snelste reactie met betrekking tot beschikbaarheid op dezelfde of de volgende dag.",
+    "q6": "Leveren jullie inpakmaterialen?",
+    "a6": "Ja, we kunnen professionele verhuisdozen, noppenfolie en stevige tape leveren tegen een kleine meerprijs of als onderdeel van een full-service pakket.",
+    "q7": "Is uw opslagfaciliteit veilig?",
+    "a7": "Absoluut. Onze partneropslagfaciliteiten worden 24/7 bewaakt, zijn klimaatgecontroleerd en volledig verzekerd voor uw gemoedsrust.",
+    "q8": "Verzorgen jullie kantoorverhuizingen?",
+    "a8": "Ja, we hebben uitgebreide ervaring met bedrijfsverhuizingen, waarbij we zorgen voor minimale downtime voor uw activiteiten tijdens de transitie.",
+    "q9": "Welke regio's bestrijken jullie?",
+    "a9": "Hoewel we gevestigd zijn in Maastricht, bestrijken we heel Nederland, evenals grensoverschrijdende verhuizingen naar België en Duitsland.",
+    "q10": "Zijn mijn eigendommen verzekerd tijdens transport?",
+    "a10": "Ja, elk item dat we transporteren is gedekt door onze Goods-in-Transit verzekering vanaf het moment dat we het ophalen totdat het is afgeleverd.",
+    "q11": "Kunnen jullie mijn meubels demonteren?",
+    "a11": "Ja, ons team is uitgerust met gereedschap om uw meubels op verzoek professioneel te demonteren en op de bestemming weer in elkaar te zetten.",
+    "q12": "Verhuizen jullie piano's?",
+    "a12": "Ja, we hebben gespecialiseerde apparatuur en getraind personeel voor veilig pianotransport, zodat uw instrument veilig wordt verplaatst.",
+    "q13": "Hoe krijg ik een offerte?",
+    "a13": "U kunt ons online offerteformulier invullen, of ons eenvoudigweg een lijst met uw spullen en locaties sturen op WhatsApp voor een snelle schatting.",
+    "q14": "Bieden jullie seniorenverhuizingen aan?",
+    "a14": "Ja, we bieden een respectvolle service voor senioren, waarbij we elk detail met extra zorg en geduld behandelen om een stressvrije overgang te garanderen.",
+    "q15": "Is er een limiet aan het aantal stuks?",
+    "a15": "Nee, we behandelen alles van leveringen van één stuk tot grootschalige residentiële en commerciële verhuizingen.",
+    "q16": "Welke betaalmethoden accepteren jullie?",
+    "a16": "Wij accepteren bankoverschrijvingen, Tikkie (voor lokale klanten) en alle bekende creditcards."
   },
   "contact": {
     "title": "Laten We Praten",
@@ -777,6 +773,55 @@
         "title": "Planten Transport Service",
         "desc": "Een grote plant gekocht, maar u kunt deze niet veilig vervoeren? Wij vervoeren zorgvuldig planten tussen woningen, winkels en appartementen in en rondom Maastricht.",
         "includes": "Inclusief: Veilig transport, Zorgvuldige behandeling en verpakking waar mogelijk, Deur-tot-deur bezorging",
+        "price": "Vanaf €25 Excl. BTW",
+        "cta": "Plantenbezorging Aanvragen"
+      },
+      "sub1": {
+        "tag": "🚚 IKEA Service",
+        "title": "IKEA Ophalen & Bezorgen",
+        "desc": "Meubels gekocht bij IKEA Heerlen of een andere IKEA vestiging? Wij kunnen uw bestelling ophalen en veilig direct afleveren in uw kamer, studio of appartement in Maastricht en omgeving.",
+        "bullets": [
+          "Ophalen & transport",
+          "Bezorging op uw adres",
+          "Flexibele planning",
+          "Studentvriendelijke prijzen"
+        ],
+        "price": "Offerte aanvraag",
+        "cta": "IKEA Ophaalservice Regelen"
+      },
+      "sub2": {
+        "tag": "🛠 Montage",
+        "title": "IKEA Meubel Montage & Demontage",
+        "desc": "Hulp nodig bij het monteren van de meubels die u zojuist heeft gekocht? Ons team kan IKEA meubels snel en zorgvuldig monteren of demonteren — of ze nu gloednieuw of tweedehands zijn.",
+        "extra": "Ondersteunde meubels: Bedden, Kasten, Bureaus, Planken, Banken, enz.",
+        "price": "€45/u per monteur",
+        "cta": "Montageservice Boeken"
+      },
+      "sub3": {
+        "tag": "📦 Marktplaats",
+        "title": "Marktplaats & Facebook Marketplace Ophalen",
+        "desc": "Online meubels gekocht maar geen vervoer? Wij kunnen items ophalen via Marktplaats, Facebook Marketplace of lokale verkopers en ze direct bij u afleveren.",
+        "extra": "Extra ondersteuning beschikbaar: Controle van itemconditie, Veilig transport, Same-day bezorging",
+        "bullets": [
+          "Controle van itemconditie",
+          "Veilig transport",
+          "Ophalen & later betalen optie",
+          "Same-day bezorging mogelijk"
+        ],
+        "price": "Offerte aanvraag",
+        "cta": "Ophaalservice Inplannen"
+      },
+      "sub4": {
+        "title": "Fiets Transport Service",
+        "desc": "Een fiets vervoeren door Maastricht of Limburg? Of u nu een nieuwe fiets heeft gekocht, een tweedehands fiets of vervoer naar een reparatiewerkplaats nodig heeft — wij kunnen helpen.",
+        "extra": "Ideaal voor: Nieuwe fietsophalingen, Fietsreparaties, Studentenverhuizingen",
+        "price": "Vanaf €20 Excl. BTW",
+        "cta": "Fietstransport Regelen"
+      },
+      "sub5": {
+        "title": "Planten Transport Service",
+        "desc": "Een grote plant gekocht, maar u kunt deze niet veilig vervoeren? Wij vervoeren zorgvuldig planten tussen woningen, winkels en appartementen in en rondom Maastricht.",
+        "extra": "Inclusief: Veilig transport, Zorgvuldige behandeling, Deur-tot-deur bezorging",
         "price": "Vanaf €25 Excl. BTW",
         "cta": "Plantenbezorging Aanvragen"
       }

@@ -275,10 +275,8 @@
       "a2": "Absolutely not. Our pricing is transparent. The hourly rate covers the van, driver, and movers as specified in your package. VAT (21%) is added on top. Time is calculated from departure to return to our Maastricht location.",
       "q3": "Do you offer student discounts?",
       "a3": "Yes! All students get free ride-along service within Maastricht. Just show your student ID on moving day. We also offer special student-friendly pricing for small moves.",
-      "q4": "What if something gets damaged during the move?",
-      "a4": "All our moves include transport insurance. In the rare event of damage, we have a straightforward claims process. Our team is trained in professional handling techniques to minimize any risk.",
-      "q5": "Can I ride along in the moving van?",
-      "a5": "Yes! Within Maastricht it is €10 fixed. Outside Maastricht (25-50km) it is €0.50/km. Students ride free within Maastricht. For long-distance moves, we provide a custom quote."
+      "q4": "Can I ride along in the moving van?",
+      "a4": "Yes! Within Maastricht it is €10 fixed. Outside Maastricht (25-50km) it is €0.50/km. Students ride free within Maastricht. For long-distance moves, we provide a custom quote."
     },
     "cta": {
       "title": "Your Next Chapter Starts With One Click",
@@ -306,12 +304,12 @@
       "footnote_time": "Time is calculated from departure and return to our Maastricht location.",
       "footnote_student": "Free ride along for students within Maastricht",
       "optional_addons_list": [
-        "Furniture assembly €35.00",
-        "IKEA Pickup €45.00",
-        "Marktplaats Pickup €35.00",
-        "Moving lift rental €150.00",
-        "Ride along service (€10 within Maastricht)",
-        "Extra mover (€15.99/hr)"
+        "Furniture assembly €45/hr per assembler",
+        "IKEA Heerlen Pickup (Quote request)",
+        "Marketplaats Pickup (Quote request)",
+        "Moving Lift Rental (incl. 1 operator only) €185 for the first hour, then €85 for second hour",
+        "Ride Along Service €10 (Maastricht) / €0.17/km (Outside)",
+        "Extra Mover €30/hr excl. VAT"
       ],
       "package1": {
         "name": "Van Only",
@@ -536,34 +534,32 @@
     "a2": "Absolutely not. Our pricing is transparent. The hourly rate covers the van, driver, and movers as specified in your package. VAT (21%) is added on top. Time is calculated from departure to return to our Maastricht location.",
     "q3": "Do you offer student discounts?",
     "a3": "Yes! All students get free ride-along service within Maastricht. Just show your student ID on moving day. We also offer special student-friendly pricing for small moves.",
-    "q4": "What if something gets damaged during the move?",
-    "a4": "All our moves include transport insurance. In the rare event of damage, we have a straightforward claims process. Our team is trained in professional handling techniques to minimize any risk.",
-    "q5": "Can I ride along in the moving van?",
-    "a5": "Yes, we allow one passenger to ride along for free in the moving van to your destination, saving you the cost of a taxi or train ticket.",
-    "q6": "Can I book a move on short notice?",
-    "a6": "Yes, we often accommodate urgent moves. Contact us via WhatsApp for the fastest response regarding same-day or next-day availability.",
-    "q7": "Do you provide packing materials?",
-    "a7": "Yes, we can provide professional-grade moving boxes, bubble wrap, and heavy-duty tape at a small additional cost or as part of a full-service package.",
-    "q8": "Is your storage facility secure?",
-    "a8": "Absolutely. Our partner storage facilities are 24/7 monitored, climate-controlled, and fully insured for your peace of mind.",
-    "q9": "Do you handle office relocations?",
-    "a9": "Yes, we have extensive experience in business moves, ensuring minimal downtime for your operations during the transition.",
-    "q10": "What regions do you cover?",
-    "a10": "While we are based in Maastricht, we cover the entire Netherlands, as well as cross-border moves to Belgium and Germany.",
-    "q11": "Are my belongings insured during transport?",
-    "a11": "Yes, every item we transport is covered by our Goods-in-Transit insurance from the moment we pick it up until it's delivered.",
-    "q12": "Can you disassemble my furniture?",
-    "a12": "Yes, our team is equipped with tools to professionally disassemble and reassemble your furniture at the destination upon request.",
-    "q13": "Do you move pianos?",
-    "a13": "Yes, we have specialized equipment and trained staff for safe piano transport, ensuring your instrument is moved securely.",
-    "q14": "How do I get a quote?",
-    "a14": "You can fill out our online quote form, or simply send us a list of your items and locations on WhatsApp for a quick estimate.",
-    "q15": "Do you offer senior moving services?",
-    "a15": "Yes, we provide a compassionate service for seniors, handling every detail with extra care and patience to ensure a stress-free transition.",
-    "q16": "Is there a limit on the number of items?",
-    "a16": "No, we handle everything from single-item deliveries to large residential and commercial relocations.",
-    "q17": "What payment methods do you accept?",
-    "a17": "We accept bank transfers, Tikkie (for local clients), and all major credit cards."
+    "q4": "Can I ride along in the moving van?",
+    "a4": "Yes, we allow one passenger to ride along for free in the moving van to your destination, saving you the cost of a taxi or train ticket.",
+    "q5": "Can I book a move on short notice?",
+    "a5": "Yes, we often accommodate urgent moves. Contact us via WhatsApp for the fastest response regarding same-day or next-day availability.",
+    "q6": "Do you provide packing materials?",
+    "a6": "Yes, we can provide professional-grade moving boxes, bubble wrap, and heavy-duty tape at a small additional cost or as part of a full-service package.",
+    "q7": "Is your storage facility secure?",
+    "a7": "Absolutely. Our partner storage facilities are 24/7 monitored, climate-controlled, and fully insured for your peace of mind.",
+    "q8": "Do you handle office relocations?",
+    "a8": "Yes, we have extensive experience in business moves, ensuring minimal downtime for your operations during the transition.",
+    "q9": "What regions do you cover?",
+    "a9": "While we are based in Maastricht, we cover the entire Netherlands, as well as cross-border moves to Belgium and Germany.",
+    "q10": "Are my belongings insured during transport?",
+    "a10": "Yes, every item we transport is covered by our Goods-in-Transit insurance from the moment we pick it up until it's delivered.",
+    "q11": "Can you disassemble my furniture?",
+    "a11": "Yes, our team is equipped with tools to professionally disassemble and reassemble your furniture at the destination upon request.",
+    "q12": "Do you move pianos?",
+    "a12": "Yes, we have specialized equipment and trained staff for safe piano transport, ensuring your instrument is moved securely.",
+    "q13": "How do I get a quote?",
+    "a13": "You can fill out our online quote form, or simply send us a list of your items and locations on WhatsApp for a quick estimate.",
+    "q14": "Do you offer senior moving services?",
+    "a14": "Yes, we provide a compassionate service for seniors, handling every detail with extra care and patience to ensure a stress-free transition.",
+    "q15": "Is there a limit on the number of items?",
+    "a15": "No, we handle everything from single-item deliveries to large residential and commercial relocations.",
+    "q16": "What payment methods do you accept?",
+    "a16": "We accept bank transfers, Tikkie (for local clients), and all major credit cards."
   },
   "contact": {
     "title": "Let's Talk",
@@ -821,6 +817,55 @@
         "title": "Plant Transport Service",
         "desc": "Bought a large plant, but can't transport it safely? We carefully transport plants between homes, shops and apartments across Maastricht and surrounding areas.",
         "includes": "Includes: Safe transport, Careful handling and wrapping when possible, Door-to-door delivery",
+        "price": "From €25 Excl. VAT",
+        "cta": "Request Plant Delivery"
+      },
+      "sub1": {
+        "tag": "🚚 IKEA Service",
+        "title": "IKEA Pickup & Delivery",
+        "desc": "Bought furniture from IKEA Heerlen or another IKEA location? We can pick up your order and safely deliver it directly to your room, studio or apartment in Maastricht and surrounding areas.",
+        "bullets": [
+          "Pickup & transport",
+          "Delivery to your address",
+          "Flexible scheduling",
+          "Student-friendly pricing"
+        ],
+        "price": "Quote request",
+        "cta": "Arrange IKEA Pickup"
+      },
+      "sub2": {
+        "tag": "🛠 Assembly",
+        "title": "IKEA Furniture Assembly & Disassembly",
+        "desc": "Need help building the furniture you just bought? Our team can assemble or disassemble IKEA furniture quickly and carefully — whether it's brand-new or second-hand.",
+        "extra": "Supported Furniture: Beds, Wardrobes, Desks, Shelves, Sofas, Etc.",
+        "price": "€45/hr per assembler",
+        "cta": "Book Assembly Service"
+      },
+      "sub3": {
+        "tag": "📦 Marktplaats",
+        "title": "Marktplaats & Facebook Marketplace Pickup",
+        "desc": "Bought furniture online but don't have transport? We can pick up items from Marktplaats, Facebook Marketplace or local sellers and deliver them directly to you.",
+        "extra": "Extra support available: Item condition check, Secure transport, Same-day delivery",
+        "bullets": [
+          "Item condition check",
+          "Secure transport",
+          "Collect & pay later option",
+          "Same-day delivery possible"
+        ],
+        "price": "Quote request",
+        "cta": "Schedule Pickup"
+      },
+      "sub4": {
+        "title": "Bike Transport Service",
+        "desc": "Need to transport a bicycle across Maastricht or Limburg? Whether you bought a new bike, a secondhand bike or need transport to a repair shop — we can help.",
+        "extra": "Ideal for: New bike pickups, Bike repairs, Student relocations",
+        "price": "From €20 Excl. VAT",
+        "cta": "Arrange Bike Transport"
+      },
+      "sub5": {
+        "title": "Plant Transport Service",
+        "desc": "Bought a large plant, but can't transport it safely? We carefully transport plants between homes, shops and apartments across Maastricht and surrounding areas.",
+        "extra": "Includes: Safe transport, Careful handling, Door-to-door delivery",
         "price": "From €25 Excl. VAT",
         "cta": "Request Plant Delivery"
       }

@@ -1,5 +1,6 @@
 <template>
-  <div v-if="loadingDb" class="pt-32 pb-24 min-h-screen bg-slate-50 dark:bg-brand-black flex flex-col items-center justify-center space-y-4">
+  <StudentMovingPage v-if="serviceId === 'student' || serviceId === 'student_moving'" />
+  <div v-else-if="loadingDb" class="pt-32 pb-24 min-h-screen bg-slate-50 dark:bg-brand-black flex flex-col items-center justify-center space-y-4">
     <div class="w-12 h-12 border-4 border-red-600 border-t-transparent rounded-full animate-spin"></div>
     <p class="text-slate-500 dark:text-slate-400 font-bold">Loading service...</p>
   </div>

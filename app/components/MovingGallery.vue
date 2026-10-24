@@ -35,9 +35,10 @@
                 class="group relative rounded-2xl overflow-hidden border border-slate-200 dark:border-white/10 shadow-lg bg-white dark:bg-slate-800 shrink-0"
               >
                 <img 
-                  :src="img" 
+                  :src="getSrc(img)" 
                   alt="MoveIt Moving Photo" 
                   class="w-full h-52 sm:h-64 md:h-72 object-cover transition-transform duration-700 group-hover:scale-110" 
+                  :style="getStyle(img)"
                   loading="lazy"
                 />
                 <div class="absolute inset-0 bg-gradient-to-t from-white/60 dark:from-slate-950/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
@@ -54,9 +55,10 @@
                 class="group relative rounded-2xl overflow-hidden border border-slate-200 dark:border-white/10 shadow-lg bg-white dark:bg-slate-800 shrink-0"
               >
                 <img 
-                  :src="img" 
+                  :src="getSrc(img)" 
                   alt="MoveIt Moving Photo" 
                   class="w-full h-52 sm:h-64 md:h-72 object-cover transition-transform duration-700 group-hover:scale-110" 
+                  :style="getStyle(img)"
                   loading="lazy"
                 />
                 <div class="absolute inset-0 bg-gradient-to-t from-white/60 dark:from-slate-950/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
@@ -73,9 +75,10 @@
                 class="group relative rounded-2xl overflow-hidden border border-slate-200 dark:border-white/10 shadow-lg bg-white dark:bg-slate-800 shrink-0"
               >
                 <img 
-                  :src="img" 
+                  :src="getSrc(img)" 
                   alt="MoveIt Moving Photo" 
                   class="w-full h-52 sm:h-64 md:h-72 object-cover transition-transform duration-700 group-hover:scale-110" 
+                  :style="getStyle(img)"
                   loading="lazy"
                 />
                 <div class="absolute inset-0 bg-gradient-to-t from-white/60 dark:from-slate-950/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
@@ -91,16 +94,34 @@
 </template>
 
 <script setup>
+const getSrc = (img) => typeof img === 'string' ? img : img.src
+const getStyle = (img) => (typeof img === 'object' && img.position) ? { objectPosition: img.position } : {}
+
 const col1Images = [
   'https://res.cloudinary.com/jhe8kzw7/image/upload/v1785118858/1de98bbd-f573-4415-a3a1-874039c8c1af_pff0xe.jpg',
-  'https://res.cloudinary.com/jhe8kzw7/image/upload/v1785118858/8684d22b-048b-4bc6-828c-f7cd35ca79ca_t1kmfs.jpg',
-  'https://res.cloudinary.com/dgqyvw6wf/image/upload/v1786484045/01d1ffdf-6462-4fcf-8323-f675ea0c1420.jpg',
+  {
+    src: 'https://res.cloudinary.com/jhe8kzw7/image/upload/v1785118858/8684d22b-048b-4bc6-828c-f7cd35ca79ca_t1kmfs.jpg',
+    position: 'center 20%'
+  },
+  {
+    src: 'https://res.cloudinary.com/dgqyvw6wf/image/upload/v1786484045/24b4dcd0-51bf-4cf5-877e-27af4553d650.jpg',
+    position: 'center 20%'
+  },
 ]
 
 const col2Images = [
-  'https://res.cloudinary.com/jhe8kzw7/image/upload/v1785118858/5eff9c92-8583-4464-8f55-52586c2fb788_ezoylo.jpg',
-  'https://res.cloudinary.com/dgqyvw6wf/image/upload/v1788085507/ea67df57-8b6a-47b6-a9a5-0dc671c3436a.jpg',
-  'https://res.cloudinary.com/dgqyvw6wf/image/upload/v1786484045/24b4dcd0-51bf-4cf5-877e-27af4553d650.jpg',
+  {
+    src: 'https://res.cloudinary.com/dgqyvw6wf/image/upload/v1786484045/01d1ffdf-6462-4fcf-8323-f675ea0c1420.jpg',
+    position: 'center 15%'
+  },
+  {
+    src: 'https://res.cloudinary.com/jhe8kzw7/image/upload/v1785118858/5eff9c92-8583-4464-8f55-52586c2fb788_ezoylo.jpg',
+    position: 'center 20%'
+  },
+  {
+    src: 'https://res.cloudinary.com/dgqyvw6wf/image/upload/v1788085507/ea67df57-8b6a-47b6-a9a5-0dc671c3436a.jpg',
+    position: 'center 20%'
+  },
 ]
 
 const col3Images = [
