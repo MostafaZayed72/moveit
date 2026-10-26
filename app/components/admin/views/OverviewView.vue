@@ -23,19 +23,21 @@
       </button>
     </div>
 
-    <!-- 1. Top 6 KPI Cards Grid -->
-    <div class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-4">
+    <!-- 1. Top 6 KPI Cards Grid (Enlarged Icons & Badges) -->
+    <div class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-4 sm:gap-5">
       <!-- 1. Total Revenue -->
-      <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs flex flex-col justify-between hover:shadow-md transition-all">
+      <div class="bg-white p-5 sm:p-6 rounded-2xl border border-slate-200/80 shadow-xs flex flex-col justify-between hover:shadow-md transition-all">
         <div class="flex items-center justify-between">
           <span class="text-xs font-bold text-slate-500">Total Revenue</span>
-          <span class="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center flex-shrink-0">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+          <span class="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center flex-shrink-0 shadow-xs">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+            </svg>
           </span>
         </div>
-        <div class="mt-3">
-          <div class="text-2xl font-black text-slate-900 font-sans tracking-tight">€28,450</div>
-          <div class="mt-1 flex items-center gap-1.5 text-xs">
+        <div class="mt-4">
+          <div class="text-2xl sm:text-3xl font-black text-slate-900 font-sans tracking-tight">€28,450</div>
+          <div class="mt-1.5 flex items-center gap-1.5 text-xs">
             <span class="font-bold text-emerald-600">↗ +18%</span>
             <span class="text-slate-400">vs. last month</span>
           </div>
@@ -43,16 +45,18 @@
       </div>
 
       <!-- 2. Job Contribution -->
-      <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs flex flex-col justify-between hover:shadow-md transition-all">
+      <div class="bg-white p-5 sm:p-6 rounded-2xl border border-slate-200/80 shadow-xs flex flex-col justify-between hover:shadow-md transition-all">
         <div class="flex items-center justify-between">
           <span class="text-xs font-bold text-slate-500">Job Contribution</span>
-          <span class="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center flex-shrink-0">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"/></svg>
+          <span class="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center flex-shrink-0 shadow-xs">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"/>
+            </svg>
           </span>
         </div>
-        <div class="mt-3">
-          <div class="text-2xl font-black text-slate-900 font-sans tracking-tight">€12,760</div>
-          <div class="mt-1 flex items-center gap-1.5 text-xs">
+        <div class="mt-4">
+          <div class="text-2xl sm:text-3xl font-black text-slate-900 font-sans tracking-tight">€12,760</div>
+          <div class="mt-1.5 flex items-center gap-1.5 text-xs">
             <span class="font-bold text-emerald-600">↗ +22%</span>
             <span class="text-slate-400">vs. last month</span>
           </div>
@@ -60,16 +64,18 @@
       </div>
 
       <!-- 3. Active Leads -->
-      <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs flex flex-col justify-between hover:shadow-md transition-all">
+      <div class="bg-white p-5 sm:p-6 rounded-2xl border border-slate-200/80 shadow-xs flex flex-col justify-between hover:shadow-md transition-all">
         <div class="flex items-center justify-between">
           <span class="text-xs font-bold text-slate-500">Active Leads</span>
-          <span class="w-8 h-8 rounded-xl bg-rose-50 text-rose-500 flex items-center justify-center flex-shrink-0">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+          <span class="w-12 h-12 rounded-2xl bg-rose-50 text-rose-500 flex items-center justify-center flex-shrink-0 shadow-xs">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+            </svg>
           </span>
         </div>
-        <div class="mt-3">
-          <div class="text-2xl font-black text-slate-900 font-sans tracking-tight">24</div>
-          <div class="mt-1 flex items-center gap-1.5 text-xs">
+        <div class="mt-4">
+          <div class="text-2xl sm:text-3xl font-black text-slate-900 font-sans tracking-tight">24</div>
+          <div class="mt-1.5 flex items-center gap-1.5 text-xs">
             <span class="font-bold text-rose-500">↘ -8%</span>
             <span class="text-slate-400">vs. last month</span>
           </div>
@@ -77,52 +83,64 @@
       </div>
 
       <!-- 4. Pending Quotations -->
-      <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs flex flex-col justify-between hover:shadow-md transition-all">
+      <div class="bg-white p-5 sm:p-6 rounded-2xl border border-slate-200/80 shadow-xs flex flex-col justify-between hover:shadow-md transition-all">
         <div class="flex items-center justify-between">
           <span class="text-xs font-bold text-slate-500">Pending Quotations</span>
-          <span class="w-8 h-8 rounded-xl bg-amber-50 text-amber-500 flex items-center justify-center flex-shrink-0">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+          <span class="w-12 h-12 rounded-2xl bg-amber-50 text-amber-500 flex items-center justify-center flex-shrink-0 shadow-xs">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+            </svg>
           </span>
         </div>
-        <div class="mt-3">
-          <div class="text-2xl font-black text-slate-900 font-sans tracking-tight">8</div>
-          <div class="mt-1 flex items-center gap-1 text-xs">
+        <div class="mt-4">
+          <div class="text-2xl sm:text-3xl font-black text-slate-900 font-sans tracking-tight">8</div>
+          <div class="mt-1.5 flex items-center gap-1 text-xs">
             <span class="font-bold text-amber-600">▲ 3 overdue</span>
           </div>
         </div>
       </div>
 
       <!-- 5. Confirmed Jobs -->
-      <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs flex flex-col justify-between hover:shadow-md transition-all">
+      <div class="bg-white p-5 sm:p-6 rounded-2xl border border-slate-200/80 shadow-xs flex flex-col justify-between hover:shadow-md transition-all">
         <div class="flex items-center justify-between">
           <span class="text-xs font-bold text-slate-500">Confirmed Jobs</span>
-          <span class="w-8 h-8 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center flex-shrink-0">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0"/></svg>
+          <span class="w-12 h-12 rounded-2xl bg-sky-50 text-sky-600 flex items-center justify-center flex-shrink-0 shadow-xs">
+            <!-- Large Truck Icon -->
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z"/>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0"/>
+            </svg>
           </span>
         </div>
-        <div class="mt-3">
-          <div class="text-2xl font-black text-slate-900 font-sans tracking-tight">15</div>
-          <div class="mt-1 flex items-center gap-1 text-xs">
+        <div class="mt-4">
+          <div class="text-2xl sm:text-3xl font-black text-slate-900 font-sans tracking-tight">15</div>
+          <div class="mt-1.5 flex items-center gap-1 text-xs">
             <span class="font-bold text-slate-600">▲ 6 this week</span>
           </div>
         </div>
       </div>
 
       <!-- 6. Reviews (This Month) -->
-      <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs flex flex-col justify-between hover:shadow-md transition-all">
+      <div class="bg-white p-5 sm:p-6 rounded-2xl border border-slate-200/80 shadow-xs flex flex-col justify-between hover:shadow-md transition-all">
         <div class="flex items-center justify-between">
           <span class="text-xs font-bold text-slate-500">Reviews (This Month)</span>
-          <span class="w-8 h-8 rounded-xl bg-amber-50 text-amber-500 flex items-center justify-center flex-shrink-0">
-            <svg class="w-4 h-4 fill-amber-400 text-amber-400" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <!-- Large Top-Right Golden Star Badge -->
+          <span class="w-12 h-12 rounded-2xl bg-amber-50 text-amber-500 flex items-center justify-center flex-shrink-0 shadow-xs">
+            <svg class="w-6.5 h-6.5 fill-amber-400 text-amber-400 filter drop-shadow-xs" viewBox="0 0 20 20">
+              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+            </svg>
           </span>
         </div>
-        <div class="mt-3">
-          <div class="text-2xl font-black text-slate-900 font-sans tracking-tight">4.8</div>
-          <div class="mt-1 flex items-center gap-1.5">
-            <div class="flex items-center text-amber-400">
-              <svg v-for="i in 5" :key="i" class="w-3.5 h-3.5 fill-amber-400 text-amber-400" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+        <div class="mt-4">
+          <div class="text-2xl sm:text-3xl font-black text-slate-900 font-sans tracking-tight">4.8</div>
+          <!-- Big, Prominent Golden Rating Stars Row -->
+          <div class="mt-2 flex items-center gap-1.5">
+            <div class="flex items-center gap-0.5 text-amber-400">
+              <svg v-for="i in 5" :key="i" class="w-5 h-5 fill-amber-400 text-amber-400 filter drop-shadow-xs transition-transform hover:scale-110" viewBox="0 0 20 20">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+              </svg>
             </div>
-            <span class="text-[11px] text-slate-400 font-medium">12 reviews</span>
+            <span class="text-xs text-slate-500 font-bold ml-1">12 reviews</span>
           </div>
         </div>
       </div>
