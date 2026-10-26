@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>وثيقة نطاق العمل ومخرجات الاستلام — المرحلة الأولى — نظام موف إت سي آر إم</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap');
+
+    @page {
+      size: A4;
+      margin: 10mm 12mm 10mm 12mm;
+      @bottom-right {
+        content: "صفحة " counter(page);
+        font-family: 'Cairo', sans-serif;
+        font-size: 8pt;
+        color: #64748b;
+      }
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+
+    body {
+      font-family: 'Cairo', 'Segoe UI', Tahoma, Arial, sans-serif;
+      color: #1e293b;
+      background-color: #ffffff;
+      line-height: 1.45;
+      font-size: 8.8pt;
+      margin: 0;
+      padding: 0;
+    }
+
+    .header-box {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: white;
+      padding: 16px 20px;
+      border-radius: 10px;
+      margin-bottom: 12px;
+      border-right: 6px solid #e11d48;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+    }
+
+    .header-title {
+      font-size: 16pt;
+      font-weight: 900;
+      margin: 0 0 4px 0;
+      color: #ffffff;
+      letter-spacing: -0.5px;
+    }
+
+    .header-subtitle {
+      font-size: 9.5pt;
+      color: #cbd5e1;
+      margin: 0;
+      font-weight: 600;
+    }
+
+    .badges-row {
+      display: flex;
+      gap: 8px;
+      margin-top: 8px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      display: inline-block;
+      background: #e11d48;
+      color: white;
+      font-size: 7.8pt;
+      font-weight: 700;
+      padding: 2px 9px;
+      border-radius: 20px;
+    }
+
+    .badge-secondary {
+      background: #334155;
+    }
+
+    .badge-success {
+      background: #059669;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .summary-card {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 8px 12px;
+      text-align: center;
+    }
+
+    .summary-card-label {
+      font-size: 7.5pt;
+      color: #64748b;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .summary-card-value {
+      font-size: 11pt;
+      font-weight: 900;
+      color: #0f172a;
+    }
+
+    .summary-card-value.highlight {
+      color: #e11d48;
+    }
+
+    .summary-card-value.success {
+      color: #059669;
+    }
+
+    .intro-card {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-right: 4px solid #2563eb;
+      border-radius: 8px;
+      padding: 10px 14px;
+      margin-bottom: 12px;
+      font-size: 8.5pt;
+      color: #334155;
+      line-height: 1.5;
+    }
+
+    .card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      margin-bottom: 12px;
+      overflow: hidden;
+      page-break-inside: avoid;
+    }
+
+    .card-header {
+      padding: 8px 14px;
+      border-bottom: 1px solid #e2e8f0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #f1f5f9;
+      border-right: 4px solid #0f172a;
+    }
+
+    .card-header.red {
+      border-right-color: #e11d48;
+      background: #fff1f2;
+    }
+
+    .card-header.blue {
+      border-right-color: #2563eb;
+      background: #eff6ff;
+    }
+
+    .card-header.green {
+      border-right-color: #059669;
+      background: #ecfdf5;
+    }
+
+    .card-title {
+      font-size: 10.5pt;
+      font-weight: 800;
+      margin: 0;
+      color: #0f172a;
+    }
+
+    .card-body {
+      padding: 10px 14px;
+    }
+
+    .section-subtitle {
+      font-size: 9pt;
+      font-weight: 800;
+      color: #0f172a;
+      margin: 8px 0 4px 0;
+    }
+
+    ul {
+      margin: 2px 0 6px 0;
+      padding-right: 18px;
+    }
+
+    li {
+      margin-bottom: 3px;
+      color: #334155;
+    }
+
+    li strong {
+      color: #0f172a;
+    }
+
+    .status-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      margin: 4px 0 8px 0;
+    }
+
+    .status-tag {
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-size: 7.8pt;
+      font-weight: 600;
+      color: #334155;
+    }
+
+    .status-tag.sales {
+      background: #eff6ff;
+      border-color: #bfdbfe;
+      color: #1e40af;
+    }
+
+    .status-tag.ops {
+      background: #fff7ed;
+      border-color: #fed7aa;
+      color: #c2410c;
+    }
+
+    .status-tag.payment {
+      background: #ecfdf5;
+      border-color: #a7f3d0;
+      color: #065f46;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 6px 0 10px 0;
+      font-size: 8.2pt;
+    }
+
+    th, td {
+      border: 1px solid #cbd5e1;
+      padding: 6px 8px;
+      text-align: right;
+    }
+
+    th {
+      background: #0f172a;
+      color: white;
+      font-weight: 700;
+    }
+
+    tr:nth-child(even) {
+      background: #f8fafc;
+    }
+
+    .deliverables-box {
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      border-right: 4px solid #10b981;
+      border-radius: 6px;
+      padding: 10px 14px;
+      margin-top: 10px;
+      page-break-inside: avoid;
+    }
+
+    .deliverables-title {
+      font-size: 9.5pt;
+      font-weight: 800;
+      color: #065f46;
+      margin-bottom: 6px;
+    }
+
+    .deliverables-list {
+      list-style-type: none;
+      padding-right: 0;
+      margin: 0;
+    }
+
+    .deliverables-list li {
+      position: relative;
+      padding-right: 20px;
+      margin-bottom: 4px;
+      color: #1e293b;
+      font-weight: 600;
+      font-size: 8.5pt;
+    }
+
+    .deliverables-list li::before {
+      content: "✓";
+      position: absolute;
+      right: 0;
+      color: #10b981;
+      font-weight: 900;
+      font-size: 10pt;
+    }
+
+    .timeline-table td:first-child {
+      font-weight: 800;
+      color: #0f172a;
+      white-space: nowrap;
+      width: 15%;
+    }
+
+    .page-break {
+      page-break-before: always;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- رأس الوثيقة -->
+  <div class="header-box">
+    <div class="header-title">وثيقة مخرجات الاستلام ونطاق العمل — المرحلة الأولى</div>
+    <div class="header-subtitle">مشروع تطوير وتحسين نظام إدارة العمليات والعملاء (سي آر إم) — شركة موف إت ماستريخت</div>
+    <div class="badges-row">
+      <span class="badge">المرحلة الأولى: الأساس والعمليات</span>
+      <span class="badge badge-secondary">منصة التنفيذ: أبورك</span>
+      <span class="badge badge-success">حماية البيانات التاريخية 100%</span>
+    </div>
+  </div>
+
+  <!-- بطاقات الملخص التعاقدي -->
+  <div class="summary-grid">
+    <div class="summary-card">
+      <div class="summary-card-label">الميزانية والاتفاق</div>
+      <div class="summary-card-value highlight">1,000 $</div>
+    </div>
+    <div class="summary-card">
+      <div class="summary-card-label">مدة التنفيذ</div>
+      <div class="summary-card-value">8 أيام عمل</div>
+    </div>
+    <div class="summary-card">
+      <div class="summary-card-label">طريقة السداد</div>
+      <div class="summary-card-value">أبورك إسكرو</div>
+    </div>
+    <div class="summary-card">
+      <div class="summary-card-label">ضمان ما بعد التسليم</div>
+      <div class="summary-card-value success">14 يوماً مجاناً</div>
+    </div>
+  </div>
+
+  <!-- مقدمة والتزام حماية البيانات -->
+  <div class="intro-card">
+    <strong>الهدف الأساسي للمرحلة الأولى:</strong> تطوير وترقية الواجهات وتدفق العمليات لنظام (موف إت) الحالي دون إعادة بناء النظام من الصفر، مع <strong>الالتزام التام وغير المشروط بالحفاظ على جميع بيانات وسجلات العملاء وعروض الأسعار والطلبات الحالية بنسبة 100%</strong> في قاعدة البيانات (سوبابيز) ودون أي فقدان أو ازدواجية.
+  </div>
+
+  <!-- بنود العمل التفصيلية للمرحلة الأولى -->
+  <div class="card">
+    <div class="card-header red">
+      <div class="card-title">1. البنود الفنية والتشغيلية المفصلة للمرحلة الأولى</div>
+    </div>
+    <div class="card-body">
+
+      <div class="section-subtitle">أ. القائمة الجانبية وإعادة هيكلة التنقل في لوحة التحكم:</div>
+      <ul>
+        <li>إعادة تنظيم التنقل إلى الأقسام الرئيسية المعتمدة: (نظرة عامة، الفرص وعروض الأسعار، النقلات المؤكدة والنشطة، العملاء، المستندات والمدفوعات، الإعدادات).</li>
+        <li>واجهة مستخدم متجاوبة بالكامل وعالية الكفاءة على شاشات سطح المكتب والهواتف المحمولة بهوية (موف إت) باللون الكحلي الداكن والأحمر.</li>
+      </ul>
+
+      <div class="section-subtitle">ب. جداول الفرص والطلبات بنمط (إكسيل) المطور مع الفصل الذكي:</div>
+      <ul>
+        <li>فصل البيانات إلى ثلاثة عروض مستقلة لنفس قاعدة البيانات دون تكرار أو ازدواجية في السجلات:
+          <ul>
+            <li><strong>عرض الفرص وعروض الأسعار:</strong> مخصص للطلبات الجديدة والعروض التي لم يتم تأكيدها بعد.</li>
+            <li><strong>عرض النقلات المؤكدة والنشطة:</strong> مخصص للنقلات المقبولة والمجدولة والجارية ميدانياً.</li>
+            <li><strong>عرض النقلات المكتملة والمغلقة:</strong> أرشيف العمليات المنتهية والملغاة.</li>
+          </ul>
+        </li>
+        <li><strong>أعمدة الجدول التفصيلية:</strong> (الرقم المرجعي، اسم العميل، تاريخ ووقت الاستلام، تاريخ النقل، مسار النقل من مدينة إلى مدينة، فئة النقل، الإيراد المتوقع بدون ضريبة، صافي الإسهام المالي المتوقع، الحالة، الأولوية، الموظف المسؤول، الإجراء القادم، وتاريخ المتابعة).</li>
+        <li><strong>إضافات النقلات المؤكدة:</strong> إظهار أسماء طاقم النقل، الشاحنة المخصصة، وقت الوصول المجدول، وحالة التشغيل.</li>
+        <li><strong>الفرز والفلترة:</strong> فرز حسب الأحدث، تاريخ النقل، الإيراد، والمساهمة المالية، مع فلاتر حسب النطاق الزمني، الحالة، نوع العميل، ونطاق السعر، مع ميزة التصدير لملفات (إكسيل).</li>
+        <li><strong>تحديد الأولويات التلقائي:</strong>
+          <ul>
+            <li><strong>أولوية عالية:</strong> العروض بقيمة 2,500 دولار فأكثر.</li>
+            <li><strong>أولوية متوسطة:</strong> العروض بقيمة 1,000 إلى 2,499 دولار.</li>
+            <li><strong>أولوية منخفضة:</strong> العروض الأقل من 1,000 دولار.</li>
+            <li>إمكانية التعديل اليدوي للأولوية مع دعم الأولويات الخاصة للنقلات العاجلة أو ذات هامش المساهمة المرتفع، وتخصيص الحدود من شاشة الإعدادات.</li>
+          </ul>
+        </li>
+      </ul>
+
+      <div class="section-subtitle">ج. نظام الحالات الثلاثي المنفصل لكل نقلة:</div>
+      <p style="margin: 2px 0 4px 0; color: #475569; font-size: 8.2pt;">تطبيق ثلاثة مسارات حالات مستقلة تماماً، بحيث لا ترتبط حالة الفاتورة أو التشغيل بمرحلة البيع:</p>
+      <div class="status-tags">
+        <span class="status-tag sales">مبيعات: فرصة جديدة</span>
+        <span class="status-tag sales">قيد المراجعة</span>
+        <span class="status-tag sales">طلب معلومات</span>
+        <span class="status-tag sales">تجهيز العرض</span>
+        <span class="status-tag sales">إرسال العرض</span>
+        <span class="status-tag sales">طلب تعديل</span>
+        <span class="status-tag sales">قبول العرض</span>
+        <span class="status-tag sales">فرصة ضائعة/مرفوضة</span>
+      </div>
+      <div class="status-tags">
+        <span class="status-tag ops">تشغيل: انتظار الحجز</span>
+        <span class="status-tag ops">مؤكد ومجدول</span>
+        <span class="status-tag ops">تعيين الفريق</span>
+        <span class="status-tag ops">قيد التنفيذ</span>
+        <span class="status-tag ops">مكتمل</span>
+        <span class="status-tag ops">مغلق</span>
+        <span class="status-tag ops">ملغي</span>
+      </div>
+      <div class="status-tags">
+        <span class="status-tag payment">فواتير: لم تصدر فاتورة</span>
+        <span class="status-tag payment">تم إرسال الفاتورة</span>
+        <span class="status-tag payment">مدفوع جزئياً</span>
+        <span class="status-tag payment">مدفوع بالكامل</span>
+        <span class="status-tag payment">متأخر</span>
+        <span class="status-tag payment">مسترجع</span>
+      </div>
+      <ul>
+        <li>تسجيل الطوابع الزمنية (التاريخ والوقت) آلياً لكل تغيير حالة في سجل تتبع تاريخي.</li>
+        <li>إلزام إدخال سبب الرفض عند خسارة العرض: (السعر مرتفع، اختيار منافس، الموعد غير متاح، إلغاء خطط العميل، عدم الرد، أخرى).</li>
+      </ul>
+
+      <div class="section-subtitle">د. صفحة تفاصيل النقلة الشاملة والماليات:</div>
+      <ul>
+        <li><strong>بيانات العميل:</strong> الاسم، الهاتف، البريد، تصنيف العميل (فردي / شركات)، وسجل طلباته السابقة وملاحظاته.</li>
+        <li><strong>تفاصيل النقلة:</strong> العناوين، الطوابق، المصاعد، شروط المواقف والوصول، وقائمة الأثاث والأحجام بالمتر المكعب.</li>
+        <li><strong>بيانات العرض والتسعير:</strong> السعر الأولي، السعر المعدل، السعر المقبول بدون ضريبة، قيمة الضريبة، والإجمالي.</li>
+        <li><strong>سجل مصاريف النقلة المباشرة:</strong> إمكانية إضافة وحذف وتعديل بنود المصاريف (أجور عمال، وقود، إيجار شاحنات، بوابات، مواقف، كراتين ومواد تغليف، ومصاريف أخرى).</li>
+        <li><strong>الحساب المالي الآلي للنقلة:</strong> حساب فوري دقيق لـ:
+          <ul>
+            <li>صافي الإيراد = القيمة النهائية المعتمدة بدون ضريبة.</li>
+            <li>التكاليف المباشرة = مجموع كافة بنود المصاريف المسجلة للنقلة.</li>
+            <li>صافي إسهام النقلة = صافي الإيراد - التكاليف المباشرة.</li>
+            <li>نسبة هامش الربح = (صافي الإسهام ÷ صافي الإيراد) × 100 (بدقة رقمين عشريين).</li>
+          </ul>
+        </li>
+      </ul>
+
+      <div class="section-subtitle">هـ. سجل المستندات الأساسي:</div>
+      <ul>
+        <li>جدول مبدئي بنمط إكسيل يربط كل نقلة بمستنداتها (عروض الأسعار والفواتير) موضحاً رقم المرجع، النوع، التاريخ، القيمة، وحالة السداد.</li>
+      </ul>
+
+    </div>
+  </div>
+
+  <div class="page-break"></div>
+
+  <!-- مخرجات الاستلام المحددة - معايير القبول على أبورك -->
+  <div class="deliverables-box">
+    <div class="deliverables-title">2. مخرجات الاستلام ومعايير القبول لفك الدفعة على منصة أبورك (1,000 دولار)</div>
+    <ul class="deliverables-list">
+      <li>لوحة تحكم محدثة ومتناسقة بالهوية المعتمدة، مع قائمة جانبية متجاوبة للشاشات والموبايل.</li>
+      <li>فصل جداول النقلات بنمط إكسيل إلى 3 عروض تخصصية (فرص، نقلات مؤكدة، نقلات منتهية) مع البحث والفرز والفلترة والتصدير.</li>
+      <li>تشغيل مسارات الحالات الثلاثية المستقلة (مبيعات، تشغيل، فواتير) مع تسجيل التواريخ وأسباب الرفض.</li>
+      <li>صفحة متكاملة لكل نقلة تجمع بيانات العميل وتفاصيل العفش والتعيين المبدئي ومحرك المصاريف والأرباح التلقائي.</li>
+      <li>سجل المستندات الأساسي لحصر ومتابعة الفواتير وعروض الأسعار المرتبطة بالنقلات.</li>
+      <li>إجراء مراجعة شاملة لقاعدة البيانات في سوبابيز والتأكيد الموثق على سلامة السجلات التاريخية بنسبة 100%.</li>
+    </ul>
+  </div>
+
+  <!-- جدول خطة التنفيذ لـ 8 أيام -->
+  <div class="card" style="margin-top: 12px;">
+    <div class="card-header blue">
+      <div class="card-title">3. الخطة الزمنية لتنفيذ المرحلة الأولى (8 أيام عمل)</div>
+    </div>
+    <div class="card-body">
+      <table class="timeline-table">
+        <thead>
+          <tr>
+            <th>اليوم</th>
+            <th>المهام والإنجاز اليومي</th>
+            <th>المخرجات اليومية</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>اليوم 1</td>
+            <td>فحص ومراجعة مخطط قاعدة بيانات سوبابيز، عمل نسخة احتياطية كاملة، وإعداد جداول الحالات والمصاريف الجديدة دون المساس بالسجلات الحالية.</td>
+            <td>قاعدة بيانات جاهزة ومحمية مع تأكيد النسخ الاحتياطي.</td>
+          </tr>
+          <tr>
+            <td>اليوم 2</td>
+            <td>بناء القائمة الجانبية وإعادة تنظيم شريط التنقل، وتجهيز الهيكل العام للوحة التحكم المتجاوبة للمكتبي والموبايل.</td>
+            <td>نظام تنقل جديد وموحد بالهوية البصرية.</td>
+          </tr>
+          <tr>
+            <td>اليوم 3</td>
+            <td>تطوير جداول البيانات بنمط إكسيل وفصل العروض الثلاثة (الفرص، النقلات المؤكدة، النقلات المكتملة) وربطها مع قاعدة البيانات.</td>
+            <td>جداول منفصلة وشاشات عرض سريعة التجاوب.</td>
+          </tr>
+          <tr>
+            <td>اليوم 4</td>
+            <td>إضافة الفلاتر المتقدمة، الفرز المتعدد، محرك البحث، نظام احتساب الأولويات التلقائي، وتصدير إكسيل.</td>
+            <td>جداول تفاعلية متكاملة بالأولويات والفلاتر.</td>
+          </tr>
+          <tr>
+            <td>اليوم 5</td>
+            <td>برمجة نظام الحالات الثلاثي المنفصل (مبيعات / تشغيل / فواتير) مع حفظ الطوابع الزمنية وأسباب الرفض.</td>
+            <td>مسارات حالات مستقلة وسجل تتبع للتواريخ.</td>
+          </tr>
+          <tr>
+            <td>اليوم 6</td>
+            <td>بناء صفحة تفاصيل النقلة الشاملة (بطاقة العميل، العناوين، طاقم العمل، والتسعير).</td>
+            <td>صفحة ملف نقلة احترافية كاملة البيانات.</td>
+          </tr>
+          <tr>
+            <td>اليوم 7</td>
+            <td>تطوير محرك مصاريف النقلة وحساب التكاليف المباشرة وصافي المساهمة وهامش الربحية آلياً بدقة عشرية، وإعداد سجل المستندات.</td>
+            <td>محاسبة فورية لهوامش الربح وسجل المستندات.</td>
+          </tr>
+          <tr>
+            <td>اليوم 8</td>
+            <td>اختبار شامل لجميع السيناريوهات، التأكد من تجاوب الموبايل، مراجعة سلامة البيانات مع العميل، وتسليم المرحلة على أبورك.</td>
+            <td>تسليم نهائي معتمد ومطابق لجميع المعايير.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- الضمانات وشروط التعاقد على أبورك -->
+  <div class="card">
+    <div class="card-header green">
+      <div class="card-title">4. الضمانات وشروط التعاقد عبر أبورك</div>
+    </div>
+    <div class="card-body">
+      <ul>
+        <li><strong>نظام السداد:</strong> يتم إنشاء عقد على منصة أبورك بقيمة <strong>1,000 دولار أمريكي</strong>، ويتم تفعيل وإيداع المبلغ في الإسكرو كـ (مرحلة أولى) عند بدء العمل، ويتم فك المبلغ والاعتماد فور استيفاء مخرجات الاستلام الموضحة أعلاه.</li>
+        <li><strong>ضمان سلامة البيانات:</strong> يلتزم المطور بالحفاظ بنسبة 100% على كافة بيانات العملاء، أرقام الهواتف، العناوين، والتسعيرات التاريخية في سوبابيز دون أي حذف أو استبدال عشوائي.</li>
+        <li><strong>الدعم وضمان الجودة المجاني:</strong> يلتزم المطور بتقديم فترة دعم فني وضمان مجاني لمدة <strong>14 يوماً</strong> بعد التسليم لإصلاح أي ملاحظات أو أخطاء برمجية غير متوقعة دون أي تكلفة إضافية.</li>
+        <li><strong>التجهيز للمراحل القادمة:</strong> تم تصميم بنية المرحلة الأولى لتتكامل بسلاسة تامة مع المرحلة الثانية (محرك الفواتير والـ بي دي إف والتقويم المتقدم) والمرحلة الثالثة (الأتمتة والتحليلات).</li>
+      </ul>
+    </div>
+  </div>
+
+</body>
+</html>

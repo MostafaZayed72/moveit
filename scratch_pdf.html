@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>خطة العمل ومخرجات الاستلام — نظام MoveIt CRM 2.0</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap');
+
+    @page {
+      size: A4;
+      margin: 8mm 12mm 8mm 12mm;
+      @bottom-right {
+        content: "صفحة " counter(page);
+        font-family: 'Cairo', sans-serif;
+        font-size: 7.5pt;
+        color: #64748b;
+      }
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+
+    body {
+      font-family: 'Cairo', 'Segoe UI', Tahoma, Arial, sans-serif;
+      color: #1e293b;
+      background-color: #ffffff;
+      line-height: 1.35;
+      font-size: 8.4pt;
+      margin: 0;
+      padding: 0;
+    }
+
+    .header-box {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: white;
+      padding: 10px 18px;
+      border-radius: 8px;
+      margin-bottom: 8px;
+      border-right: 5px solid #e11d48;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+    }
+
+    .header-title {
+      font-size: 15pt;
+      font-weight: 900;
+      margin: 0 0 2px 0;
+      color: #ffffff;
+      letter-spacing: -0.5px;
+    }
+
+    .header-subtitle {
+      font-size: 9pt;
+      color: #cbd5e1;
+      margin: 0;
+      font-weight: 600;
+    }
+
+    .badge {
+      display: inline-block;
+      background: #e11d48;
+      color: white;
+      font-size: 7.5pt;
+      font-weight: 700;
+      padding: 1px 7px;
+      border-radius: 20px;
+      margin-top: 3px;
+      text-transform: uppercase;
+    }
+
+    .intro-card {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 8px 12px;
+      margin-bottom: 8px;
+      font-size: 8.4pt;
+      color: #334155;
+      line-height: 1.45;
+    }
+
+    .phase-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      margin-bottom: 8px;
+      overflow: hidden;
+      page-break-inside: auto;
+    }
+
+    .page-break-before {
+      page-break-before: always;
+    }
+
+    .phase-header {
+      padding: 8px 14px;
+      border-bottom: 2px solid #e2e8f0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .phase-1-header {
+      border-right: 5px solid #e11d48;
+      background: #fff1f2;
+    }
+
+    .phase-2-header {
+      border-right: 5px solid #2563eb;
+      background: #eff6ff;
+    }
+
+    .phase-3-header {
+      border-right: 5px solid #059669;
+      background: #ecfdf5;
+    }
+
+    .phase-title {
+      font-size: 11pt;
+      font-weight: 800;
+      margin: 0;
+      color: #0f172a;
+    }
+
+    .phase-content {
+      padding: 10px 14px;
+    }
+
+    .section-subtitle {
+      font-size: 9pt;
+      font-weight: 800;
+      color: #0f172a;
+      margin: 6px 0 3px 0;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    ul {
+      margin: 2px 0 6px 0;
+      padding-right: 18px;
+    }
+
+    li {
+      margin-bottom: 2px;
+      color: #334155;
+    }
+
+    li strong {
+      color: #0f172a;
+    }
+
+    .deliverables-box {
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      border-right: 4px solid #10b981;
+      border-radius: 6px;
+      padding: 8px 12px;
+      margin-top: 8px;
+      page-break-inside: avoid;
+    }
+
+    .deliverables-title {
+      font-size: 9.2pt;
+      font-weight: 800;
+      color: #065f46;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .deliverables-list {
+      list-style-type: none;
+      padding-right: 0;
+      margin: 0;
+    }
+
+    .deliverables-list li {
+      position: relative;
+      padding-right: 18px;
+      margin-bottom: 2px;
+      color: #1e293b;
+      font-weight: 600;
+      font-size: 8.4pt;
+    }
+
+    .deliverables-list li::before {
+      content: "✓";
+      position: absolute;
+      right: 0;
+      color: #10b981;
+      font-weight: 900;
+      font-size: 9.5pt;
+    }
+
+    .guarantees-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .guarantee-item {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-size: 9pt;
+    }
+
+    .guarantee-item strong {
+      display: block;
+      color: #0f172a;
+      margin-bottom: 2px;
+      font-size: 9.5pt;
+    }
+
+    .footer-note {
+      text-align: center;
+      font-size: 8pt;
+      color: #94a3b8;
+      margin-top: 16px;
+      padding-top: 8px;
+      border-top: 1px solid #e2e8f0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- رأس المستند -->
+  <div class="header-box">
+    <h1 class="header-title">خطة العمل ومخرجات الاستلام</h1>
+    <p class="header-subtitle">نظام إدارة العمليات والعملاء المتقدم — النسخة الثانية (CRM Dashboard v2.0)</p>
+    <span class="badge">شركة موف إت ماستريخت | MoveIt Maastricht</span>
+  </div>
+
+  <!-- المقدمة -->
+  <div class="intro-card">
+    <strong>الهدف الاستراتيجي للمشروع:</strong>
+    تطوير وترقية نظام إدارة العمليات والعملاء الحالي إلى منصة متكاملة وذكية تشمل دورة حياة النقلة بالكامل (من أول استفسار وحتى اكتمال النقل وتقييم العميل)، مع ربط مؤشرات الأرباح والمصاريف وتتبع الفرق والشاحنات، مع <strong>الحفاظ الكامل والتام بنسبة 100%</strong> على جميع السجلات وقواعد البيانات الحالية دون أي مساس أو فقدان للمعلومات.
+  </div>
+
+  <!-- المرحلة الأولى -->
+  <div class="phase-card">
+    <div class="phase-header phase-1-header">
+      <h2 class="phase-title">المرحلة الأولى: إعادة الهيكلة، مسار العمليات، وإدارة النقلات والماليات الأساسية</h2>
+    </div>
+    <div class="phase-content">
+      
+      <div class="section-subtitle">1. إعادة هيكلة القوائم والتنقل الذكي:</div>
+      <ul>
+        <li>تنظيم القائمة الجانبية بنظام تبويبات مخصص (نظرة عامة، الفرص وعروض الأسعار، النقلات المؤكدة والنشطة، تقويم النقل، العملاء، المالية، التحليلات، الإعدادات).</li>
+        <li>دعم كامل لجميع مقاسات الشاشات (أجهزة الكمبيوتر المكتبية، الأجهزة اللوحية، والهواتف المحمولة).</li>
+      </ul>
+
+      <div class="section-subtitle">2. إعادة تصميم جداول الطلبات والفرص مع الفصل الذكي:</div>
+      <ul>
+        <li>فصل البيانات إلى ثلاثة طرق عرض مخصصة ومستقلة لنفس قاعدة البيانات:
+          <ul>
+            <li><strong>عرض الفرص وعروض الأسعار:</strong> لمتابعة الطلبات الجديدة والعروض قيد التفاوض.</li>
+            <li><strong>عرض النقلات المؤكدة والنشطة:</strong> للنقلات المجدولة، المقبولة، والتي قيد التنفيذ حالياً.</li>
+            <li><strong>عرض النقلات المكتملة والمغلقة:</strong> لأرشيف العمليات المكتملة أو الملغاة.</li>
+          </ul>
+        </li>
+        <li>أعمدة بيانات تفصيلية: (رقم المرجع، العميل، تاريخ الطلب، تاريخ النقل، مسار الرحلة، التصنيف، الإيراد المتوقع، الإسهام المالي المتوقع، الحالة، المسؤول، وأقرب موعد متابعة).</li>
+        <li>نظام تحديد الأولويات التلقائي حسب قيمة العرض المالي مع إمكانية التعديل اليدوي من الإدارة.</li>
+        <li>أدوات تصفية وبحث متقدمة (النطاق الزمني، نطاق الأسعار، نوع الخدمة، حالة الحجز، وتصدير إكسيل).</li>
+      </ul>
+
+      <div class="section-subtitle">3. نظام الحالات الثلاثي المستقل:</div>
+      <ul>
+        <li><strong>حالات المبيعات:</strong> (فرصة جديدة، قيد المراجعة، طلب معلومات، تجهيز العرض، إرسال العرض، طلب تعديل، قبول العرض، فرصة مرفوضة مع ذكر السبب).</li>
+        <li><strong>حالات التشغيل:</strong> (في انتظار الحجز، مؤكد ومجدول، تعيين الفريق، قيد التنفيذ، مكتمل، مغلق، ملغي).</li>
+        <li><strong>حالات الدفع والفواتير:</strong> (لم تصدر فاتورة، تم إرسال الفاتورة، مدفوع جزئياً، مدفوع بالكامل، متأخر، مسترجع).</li>
+        <li>تسجيل الطوابع الزمنية لكل تغيير حالة في سجل مراجعة مخصص للأمان والشفافية.</li>
+      </ul>
+
+      <div class="section-subtitle">4. صفحة الملف التفصيلي الشامل لكل نقلة:</div>
+      <ul>
+        <li>بطاقات منظمة تشمل: بيانات العميل، عناوين التحميل والتنزيل، الطوابق، توفر المصاعد، ظروف المواقف وقائمة الأثاث والأحجام بالمتر المكعب.</li>
+        <li>سجل تفصيلي لعروض الأسعار وتاريخ التعديلات والمبالغ الصافية وقيمة الضريبة.</li>
+        <li>طاقم النقل الميداني، أرقام الشاحنات المسندة، والمشرف المسؤول.</li>
+        <li><strong>سجل مصاريف النقلة:</strong> إدخال بنود التكاليف (أجور العمال، الوقود، إيجار الشاحنات، الرسوم، مواد التغليف).</li>
+        <li><strong>الحساب التلقائي للربحية:</strong> احتساب صافي الإيراد، التكاليف المباشرة، صافي إسهام النقلة، ونسبة هامش الربح بدقة عشرية.</li>
+      </ul>
+
+      <!-- مخرجات الاستلام المرحلة 1 -->
+      <div class="deliverables-box">
+        <div class="deliverables-title">مخرجات الاستلام الفعلية للعميل (المرحلة الأولى):</div>
+        <ul class="deliverables-list">
+          <li>لوحة تحكم كاملة بتصميم عصري بالهوية البصرية الرسمية للشركة (الأحمر والرمادي الداكن).</li>
+          <li>جداول منفصلة ومنظمة للفرص، النقلات المؤكدة، والمنتهية مع بحث وفلاتر وتصدير إكسيل.</li>
+          <li>نظام مسار الحالات الثلاثي المنفصل لكل نقلة مع حفظ تواريخ التغيير وأسباب الرفض.</li>
+          <li>صفحة ملف تفصيلي شامل لكل عملية نقل تجمع بيانات العميل، النقل، الفريق، والمالية.</li>
+          <li>نظام احتساب المصاريف التشغيلية وصافي هامش الربح التلقائي لكل عملية نقل.</li>
+          <li>ضمان حفظ وحماية كافة بيانات العملاء والطلبات السابقة بنسبة 100%.</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- المرحلة الثانية -->
+  <div class="phase-card page-break-before">
+    <div class="phase-header phase-2-header">
+      <h2 class="phase-title">المرحلة الثانية: التقويم والعمليات الميدانية والتحليلات ومؤشرات الأداء</h2>
+    </div>
+    <div class="phase-content">
+      
+      <div class="section-subtitle">1. تطوير التقويم التشغيلي التفاعلي ومنع التعارضات:</div>
+      <ul>
+        <li>عرض جدول النقلات بحسب اليوم، الأسبوع، والشهر مع التصفية بالموظف أو الشاحنة.</li>
+        <li><strong>نظام كشف التعارضات الذكي:</strong> إطلاق تنبيه فوري ومرئي عند محاولة تعيين عامل أو شاحنة في أكثر من نقلة متداخلة أو تجاوز الطاقة المتاحة.</li>
+        <li>الربط المباشر بين أحداث التقويم وصفحة تفاصيل النقلة بضغطة واحدة.</li>
+      </ul>
+
+      <div class="section-subtitle">2. نظام تتبع الوقت الميداني التشغيلي (مخصص للموبايل):</div>
+      <ul>
+        <li>تسجيل أوقات الأنشطة: (الوصول، التحميل، القيادة، التنزيل، الفك والتركيب، وفترات الاستراحة).</li>
+        <li>واجهة مخصصة وسريعة للهواتف الذكية بأزرار (بدء / إيقاف) سهلة الاستخدام للفرق الميدانية.</li>
+        <li>احتساب المدد المستغرقة تلقائياً مع إمكانية المراجعة والتعديل اليدوي للمديرين.</li>
+      </ul>
+
+      <div class="section-subtitle">3. لوحة التحليلات ومؤشرات الأداء الرئيسية (KPIs Dashboard):</div>
+      <ul>
+        <li>لوحة تحكم إحصائية تفاعلية مع فلاتر زمنية (اليوم، هذا الأسبوع، هذا الشهر، هذا الربع، هذه السنة، ونطاق مخصص) مع مقارنة تلقائية مع الفترة السابقة.</li>
+        <li><strong>مؤشرات الإيرادات والنمو:</strong> إجمالي الإيراد، معدل النمو، عدد النقلات، متوسط قيمة النقلة، إجمالي الأرباح، ونسبة هامش الربح.</li>
+        <li><strong>أداء المبيعات والتحويل:</strong> عدد الفرص الجديدة، العروض المرسلة، نسبة قبول العروض، ومتوسط وقت إعداد العرض وإرساله.</li>
+        <li><strong>الأداء التشغيلي:</strong> نسبة الالتزام بمواعيد الوصول، متوسط مدد التحميل والتنزيل والقيادة، وإنتاجية ساعات العمل.</li>
+        <li><strong>مؤشر اكتمال البيانات:</strong> قياس جودة ونسبة استكمال البيانات والمدخلات المالية للنقلات.</li>
+      </ul>
+
+      <div class="section-subtitle">4. لوحة النظرة العامة الرئيسية للإدارة (Overview Page):</div>
+      <ul>
+        <li>شاشة قيادة يومية تجمع: بطاقات الأداء المالي، أعلى 5 فرص ذات قيمة مالية عالية تتطلب تدخلاً، جدول النقلات القادمة، والتنبيهات والمتابعات المتأخرة.</li>
+      </ul>
+
+      <div class="section-subtitle">5. إدخال وتحديث البيانات التاريخية:</div>
+      <ul>
+        <li>أدوات لتغذية وتحديث السجلات القديمة وإدخال مصاريفها وأوقاتها بأثر رجعي مع دعم الاستيراد والتعديل من ملفات إكسيل.</li>
+      </ul>
+
+      <!-- مخرجات الاستلام المرحلة 2 -->
+      <div class="deliverables-box">
+        <div class="deliverables-title">مخرجات الاستلام الفعلية للعميل (المرحلة الثانية):</div>
+        <ul class="deliverables-list">
+          <li>لوحة تحكم إحصائية تفاعلية متكاملة بالرسوم البيانية لمؤشرات الأداء والأرباح.</li>
+          <li>تقويم تشغيلي تفاعلي مع كشف وتنبيه آلي ضد تضارب الشاحنات والعمال.</li>
+          <li>شاشة النظرة العامة الرئيسية للمديرين لمتابعة ملخص كل شيء من مكان واحد.</li>
+          <li>واجهة موبايل سريعة لتسجيل أوقات العمل الميداني (أزرار بدء وتوقف).</li>
+          <li>نظام أرشفة وتحديث البيانات التاريخية مع تصدير واستيراد التقارير.</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- المرحلة الثالثة -->
+  <div class="phase-card page-break-before">
+    <div class="phase-header phase-3-header">
+      <h2 class="phase-title">المرحلة الثالثة: تطويرات وأتمتة مستقبلية لاحقة (اختيارية)</h2>
+    </div>
+    <div class="phase-content">
+      <ul>
+        <li>نظام المتابعة التلقائية لعروض الأسعار غير المردود عليها عبر البريد الإلكتروني.</li>
+        <li>إشعارات وتذكيرات تلقائية للعملاء قبل موعد النقل.</li>
+        <li>نظام الإرسال التلقائي لطلب التقييمات عبر جوجل وترست بايلوت بعد اكتمال النقل.</li>
+        <li>تقارير التنبؤ الذكي بالمواسم واحتياجات الموارد والشاحنات.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- الضمانات والمعايير الفنية -->
+  <div class="phase-card">
+    <div class="phase-header">
+      <h2 class="phase-title">الضمانات والمعايير الفنية للتسليم</h2>
+    </div>
+    <div class="phase-content">
+      <div class="guarantees-grid">
+        <div class="guarantee-item">
+          <strong>سلامة البيانات بنسبة 100%</strong>
+          ضمان الحفاظ الكامل على كافة العملاء وسجلات النقل السابقة دون أي فقدان.
+        </div>
+        <div class="guarantee-item">
+          <strong>التوافق والاستجابة الكاملة</strong>
+          تصميم متجاوب وسريع على الشاشات المكتبية، الأجهزة اللوحية، والهواتف.
+        </div>
+        <div class="guarantee-item">
+          <strong>السرعة والأداء اللحظي</strong>
+          تحديث مباشر وفوري للإحصائيات والجداول والرسوم البيانية دون بطء.
+        </div>
+        <div class="guarantee-item">
+          <strong>التنسيق المالي الأوروبي</strong>
+          اعتماد العملات والتواريخ والتنسيقات الرقمية الأوروبية المريحة للمستخدم.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-note">
+    تم إعداد هذه الوثيقة لمشروع تطوير وتحديث نظام MoveIt Maastricht CRM — الإصدار 2.0
+  </div>
+
+</body>
+</html>
