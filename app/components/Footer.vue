@@ -81,7 +81,14 @@
 
       <div :class="['border-t pt-12 flex flex-col md:flex-row justify-between items-center text-sm', isDark ? 'border-slate-900 text-slate-600' : 'border-slate-200 text-slate-400']">
         <p>{{ $t('footer.rights', { year: currentYear }) }}</p>
-        <div class="flex space-x-6 mt-4 md:mt-0">
+        <div class="flex items-center space-x-6 mt-4 md:mt-0">
+          <button
+            type="button"
+            @click="openCookieSettings"
+            class="hover:text-red-500 transition-colors cursor-pointer underline underline-offset-4"
+          >
+            Cookie Settings
+          </button>
           <span>{{ $t('footer.handcrafted') }}</span>
         </div>
       </div>
@@ -92,6 +99,12 @@
 <script setup>
 const localePath = useLocalePath()
 const currentYear = new Date().getFullYear()
+
+const openCookieSettings = () => {
+  if (import.meta.client) {
+    window.dispatchEvent(new CustomEvent('open-cookie-settings'))
+  }
+}
 
 const isDark = useDark({
   selector: 'html',

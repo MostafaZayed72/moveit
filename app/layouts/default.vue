@@ -6,6 +6,7 @@
     </main>
     <Footer />
     <FloatingActions />
+    <CookieConsent />
   </div>
 </template>
 

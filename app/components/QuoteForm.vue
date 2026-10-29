@@ -111,12 +111,22 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, watch, onMounted } from 'vue'
 
-const movingFrom = ref('')
-const movingTo = ref('')
-const moveDate = ref('')
-const moveType = ref('')
+const quoteDraftCookie = useCookie('moveit_quote_draft', {
+  maxAge: 60 * 60 * 24 * 14, // 14 days
+  sameSite: 'lax',
+  path: '/'
+})
+
+const movingFrom = ref(quoteDraftCookie.value?.from || '')
+const movingTo = ref(quoteDraftCookie.value?.to || '')
+const moveDate = ref(quoteDraftCookie.value?.date || '')
+const moveType = ref(quoteDraftCookie.value?.type || '')
+
+watch([movingFrom, movingTo, moveDate, moveType], ([from, to, date, type]) => {
+  quoteDraftCookie.value = { from, to, date, type }
+})
 
 const isDateFocused = ref(false)
 const isDropdownOpen = ref(false)

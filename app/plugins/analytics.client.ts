@@ -1,11 +1,74 @@
 export default defineNuxtPlugin((nuxtApp) => {
   if (import.meta.client) {
-    // 1. Initialize dataLayer
-    window.dataLayer = window.dataLayer || []
-    
-    // Define gtag helper
-    window.gtag = window.gtag || function () {
-      window.dataLayer.push(arguments)
+    // 1. Initialize dataLayer & gtag helper
+    ;(window as any).dataLayer = (window as any).dataLayer || []
+    ;(window as any).gtag = (window as any).gtag || function () {
+      ;(window as any).dataLayer.push(arguments)
+    }
+
+    // Read existing cookie consent if user already decided
+    const consentCookie = useCookie<{
+      decided?: boolean
+      functional?: boolean
+      analytics?: boolean
+      marketing?: boolean
+    } | null>('moveit_cookie_consent')
+
+    const hasAnalyticsConsent = consentCookie.value?.decided ? !!consentCookie.value.analytics : true
+    const hasMarketingConsent = consentCookie.value?.decided ? !!consentCookie.value.marketing : false
+
+    // Configure Google Consent Mode v2 (EU / GDPR compliant)
+    ;(window as any).gtag('consent', 'default', {
+      analytics_storage: hasAnalyticsConsent ? 'granted' : 'denied',
+      ad_storage: hasMarketingConsent ? 'granted' : 'denied',
+      ad_user_data: hasMarketingConsent ? 'granted' : 'denied',
+      ad_personalization: hasMarketingConsent ? 'granted' : 'denied',
+      functionality_storage: 'granted',
+      security_storage: 'granted',
+      wait_for_update: 500
+    })
+
+    // Capture Marketing & Lead Source Attribution Cookie (UTM / Referrer / Referral)
+    const attributionCookie = useCookie<{
+      utm_source?: string
+      utm_medium?: string
+      utm_campaign?: string
+      gclid?: string
+      fbclid?: string
+      ref?: string
+      referrer?: string
+      landing_page?: string
+      first_visit?: string
+    } | null>('moveit_attribution', {
+      maxAge: 60 * 60 * 24 * 90, // 90 days attribution window
+      sameSite: 'lax',
+      path: '/'
+    })
+
+    try {
+      const urlParams = new URLSearchParams(window.location.search)
+      const utmSource = urlParams.get('utm_source')
+      const utmMedium = urlParams.get('utm_medium')
+      const utmCampaign = urlParams.get('utm_campaign')
+      const gclid = urlParams.get('gclid')
+      const fbclid = urlParams.get('fbclid')
+      const refCode = urlParams.get('ref')
+
+      if (!attributionCookie.value || utmSource || gclid || fbclid || refCode) {
+        attributionCookie.value = {
+          utm_source: utmSource || attributionCookie.value?.utm_source || (gclid ? 'google_ads' : fbclid ? 'facebook_ads' : 'direct_or_organic'),
+          utm_medium: utmMedium || attributionCookie.value?.utm_medium || '',
+          utm_campaign: utmCampaign || attributionCookie.value?.utm_campaign || '',
+          gclid: gclid || attributionCookie.value?.gclid || '',
+          fbclid: fbclid || attributionCookie.value?.fbclid || '',
+          ref: refCode || attributionCookie.value?.ref || '',
+          referrer: document.referrer || attributionCookie.value?.referrer || 'direct',
+          landing_page: window.location.pathname,
+          first_visit: attributionCookie.value?.first_visit || new Date().toISOString()
+        }
+      }
+    } catch (e) {
+      // Ignore URL parsing errors
     }
 
     // 2. Load Google Tag Manager
@@ -15,7 +78,7 @@ export default defineNuxtPlugin((nuxtApp) => {
     gtmScript.src = `https://www.googletagmanager.com/gtm.js?id=${gtmId}`
     document.head.appendChild(gtmScript)
     
-    window.dataLayer.push({
+    ;(window as any).dataLayer.push({
       'gtm.start': new Date().getTime(),
       event: 'gtm.js'
     })
@@ -27,8 +90,8 @@ export default defineNuxtPlugin((nuxtApp) => {
     gaScript.src = `https://www.googletagmanager.com/gtag/js?id=${gaId}`
     document.head.appendChild(gaScript)
 
-    window.gtag('js', new Date())
-    window.gtag('config', gaId)
+    ;(window as any).gtag('js', new Date())
+    ;(window as any).gtag('config', gaId)
 
     // 4. Inject GTM noscript in body
     const noscript = document.createElement('noscript')
@@ -43,13 +106,11 @@ export default defineNuxtPlugin((nuxtApp) => {
 
     // Helper to push to GTM and GA4
     const trackEvent = (eventName: string, params: Record<string, any> = {}) => {
-      // Send to GA4
-      if (typeof window.gtag === 'function') {
-        window.gtag('event', eventName, params)
+      if (typeof (window as any).gtag === 'function') {
+        ;(window as any).gtag('event', eventName, params)
       }
-      // Send to GTM (dataLayer)
-      if (window.dataLayer) {
-        window.dataLayer.push({
+      if ((window as any).dataLayer) {
+        ;(window as any).dataLayer.push({
           event: eventName,
           ...params
         })
