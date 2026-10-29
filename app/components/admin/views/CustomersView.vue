@@ -1,7 +1,7 @@
 <template>
   <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
     <!-- LEFT MAIN AREA: Customers Header, 4 KPIs, Filters & Table (8 Cols - Exact match to "5 Customers.png") -->
-    <div class="lg:col-span-8 space-y-4">
+    <div class="lg:col-span-8 space-y-4 min-w-0">
       <!-- Page Title -->
       <div>
         <h1 class="text-2xl font-black text-slate-900 tracking-tight font-sans">Customers</h1>

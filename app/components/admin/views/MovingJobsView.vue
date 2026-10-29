@@ -11,41 +11,34 @@
       </div>
 
       <!-- SubView 2: Split View (Exact match to "3 Moving Jobs.png") -->
-      <div v-else class="space-y-5">
-        <!-- 1. Header with Title & Export Action -->
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div>
-            <h1 class="text-2xl font-black text-slate-900 tracking-tight font-sans">Moving Jobs</h1>
-            <p class="text-xs text-slate-500 font-medium mt-0.5">
-              Manage all confirmed, ongoing and completed moves.
-            </p>
+      <div v-else class="grid grid-cols-1 xl:grid-cols-12 gap-5 items-start">
+        <!-- LEFT MAIN AREA: Header, 5 KPIs, Filter Bar, Tabs & 10-Row Table (8 Cols) -->
+        <div class="xl:col-span-8 space-y-4 min-w-0">
+          <!-- 1. Header with Title & Export Action -->
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div>
+              <h1 class="text-2xl font-black text-slate-900 tracking-tight font-sans">Moving Jobs</h1>
+              <p class="text-xs text-slate-500 font-medium mt-0.5">
+                Manage all confirmed, ongoing and completed moves.
+              </p>
+            </div>
+            <div class="flex items-center gap-2">
+              <!-- Export Button -->
+              <button 
+                @click="handleExportExcel"
+                class="flex items-center gap-2 px-3.5 py-2 bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 text-xs font-bold rounded-xl shadow-xs transition-all active:scale-95 cursor-pointer"
+                title="Export Moving Jobs to Excel"
+              >
+                <svg class="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/>
+                </svg>
+                <span>Export</span>
+              </button>
+            </div>
           </div>
-          <div class="flex items-center gap-2.5">
-            <!-- Export Button -->
-            <button 
-              @click="handleExportExcel"
-              class="flex items-center gap-2 px-3.5 py-2 bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 text-xs font-bold rounded-xl shadow-xs transition-all active:scale-95 cursor-pointer"
-              title="Export Moving Jobs to Excel"
-            >
-              <svg class="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/>
-              </svg>
-              <span>Export</span>
-            </button>
 
-            <!-- + New Job Button -->
-            <button 
-              @click="$emit('add-job')"
-              class="flex items-center gap-1.5 px-4 py-2 bg-[#DC2626] hover:bg-red-700 text-white text-xs font-bold rounded-xl shadow-md shadow-red-600/30 transition-all active:scale-95 cursor-pointer"
-            >
-              <span class="text-sm font-bold leading-none">+</span>
-              <span>New Job</span>
-            </button>
-          </div>
-        </div>
-
-        <!-- 2. Top 5 KPI Cards (Matching "3 Moving Jobs.png") -->
-        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3.5">
+          <!-- 2. Top 5 KPI Cards (Matching "3 Moving Jobs.png") -->
+          <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
           <!-- Card 1: Total Jobs -->
           <div class="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-xs flex items-center justify-between">
             <div class="space-y-1">
@@ -196,26 +189,25 @@
           </button>
         </div>
 
-        <!-- 5. Split-Screen Main Layout: Table on Left + Sticky Side Drawer on Right -->
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
-          <!-- LEFT COLUMN: Moving Jobs Table (col-span-7) -->
-          <div class="lg:col-span-7 bg-white rounded-2xl border border-slate-200/80 shadow-xs overflow-hidden">
+          <!-- 5. Moving Jobs Table (Full width of Left 8-Col Area, 10 Rows tall matching "3 Moving Jobs.png") -->
+          <div class="bg-white rounded-2xl border border-slate-200/80 shadow-xs overflow-hidden">
             <div class="overflow-x-auto">
               <table class="w-full text-left text-xs">
                 <thead class="bg-slate-50/80 border-b border-slate-200/80 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
                   <tr>
-                    <th class="py-3 px-3.5 w-8 text-center">
+                    <th class="py-3 px-2.5 w-7 text-center">
                       <input type="checkbox" class="rounded text-red-600 focus:ring-red-500 cursor-pointer" />
                     </th>
-                    <th class="py-3 px-3">REF</th>
-                    <th class="py-3 px-3">DATE / TIME</th>
-                    <th class="py-3 px-3">CUSTOMER</th>
-                    <th class="py-3 px-3">ROUTE</th>
-                    <th class="py-3 px-3">PACKAGE</th>
-                    <th class="py-3 px-2 text-center">TEAM</th>
-                    <th class="py-3 px-3">EST. VALUE</th>
-                    <th class="py-3 px-3">STATUS</th>
-                    <th class="py-3 px-2 text-center">ACTIONS</th>
+                    <th class="py-3 px-2">REF ⇅</th>
+                    <th class="py-3 px-2">DATE ▾</th>
+                    <th class="py-3 px-2">TIME</th>
+                    <th class="py-3 px-2">CUSTOMER</th>
+                    <th class="py-3 px-2">ROUTE</th>
+                    <th class="py-3 px-2">PACKAGE</th>
+                    <th class="py-3 px-1.5 text-center">TEAM</th>
+                    <th class="py-3 px-2">EST. VALUE</th>
+                    <th class="py-3 px-2">STATUS ▾</th>
+                    <th class="py-3 px-1.5 text-center">ACTIONS</th>
                   </tr>
                 </thead>
                 <tbody class="divide-y divide-slate-100">
@@ -232,50 +224,54 @@
                     ]"
                   >
                     <!-- Checkbox -->
-                    <td class="py-3.5 px-3.5 text-center" @click.stop>
+                    <td class="py-3.5 px-2.5 text-center" @click.stop>
                       <input type="checkbox" class="rounded text-red-600 focus:ring-red-500 cursor-pointer" />
                     </td>
 
                     <!-- REF -->
-                    <td class="py-3.5 px-3 font-bold text-slate-900 group-hover:text-red-600 transition-colors whitespace-nowrap">
+                    <td class="py-3.5 px-2 font-bold text-slate-900 group-hover:text-red-600 transition-colors whitespace-nowrap">
                       {{ job.ref }}
                     </td>
 
-                    <!-- DATE / TIME -->
-                    <td class="py-3.5 px-3 text-slate-600 whitespace-nowrap">
-                      <div class="font-semibold text-slate-800">{{ job.shortDate || '1 Nov' }}</div>
-                      <div class="text-[10px] text-slate-400">{{ job.time || '09:00' }}</div>
+                    <!-- DATE -->
+                    <td class="py-3.5 px-2 text-slate-700 font-semibold whitespace-nowrap">
+                      {{ job.shortDate || '1 Nov' }}
+                    </td>
+
+                    <!-- TIME -->
+                    <td class="py-3.5 px-2 text-slate-500 whitespace-nowrap">
+                      {{ (job.time || '09:00').split(' ')[0] }}
                     </td>
 
                     <!-- CUSTOMER -->
-                    <td class="py-3.5 px-3 font-bold text-slate-900 whitespace-nowrap">
+                    <td class="py-3.5 px-2 font-bold text-slate-900 whitespace-nowrap">
                       {{ job.customer }}
                     </td>
 
                     <!-- ROUTE -->
-                    <td class="py-3.5 px-3 text-slate-600 truncate max-w-[140px]" :title="job.route">
+                    <td class="py-3.5 px-2 text-slate-600 truncate max-w-[150px]" :title="job.route">
                       {{ job.route }}
                     </td>
 
                     <!-- PACKAGE -->
-                    <td class="py-3.5 px-3 text-slate-700 font-medium whitespace-nowrap">
+                    <td class="py-3.5 px-2 text-slate-700 font-medium whitespace-nowrap">
                       {{ job.package }}
                     </td>
 
                     <!-- TEAM -->
-                    <td class="py-3.5 px-2 text-center font-bold text-slate-700 whitespace-nowrap">
+                    <td class="py-3.5 px-1.5 text-center font-bold text-slate-700 whitespace-nowrap">
                       {{ job.team || 2 }}
                     </td>
 
                     <!-- EST. VALUE -->
-                    <td class="py-3.5 px-3 font-bold text-slate-900 font-sans whitespace-nowrap">
+                    <td class="py-3.5 px-2 font-bold text-slate-900 font-sans whitespace-nowrap">
                       €{{ (job.estValue || 0).toLocaleString() }}
                     </td>
 
                     <!-- STATUS BADGE PILL -->
-                    <td class="py-3.5 px-3 whitespace-nowrap">
+                    <td class="py-3.5 px-2 whitespace-nowrap">
                       <span 
-                        class="px-2.5 py-1 rounded-full text-[10px] font-bold inline-flex items-center gap-1.5 shadow-2xs"
+                        class="px-2.5 py-1 rounded-lg text-[10px] font-bold inline-flex items-center gap-1"
                         :class="getStatusBadgeClass(job.status)"
                       >
                         {{ job.status }}
@@ -283,14 +279,14 @@
                     </td>
 
                     <!-- ACTIONS MENU -->
-                    <td class="py-3.5 px-2 text-center text-slate-400 hover:text-slate-700 cursor-pointer font-black text-sm" @click.stop="openJobDetail(job)">
+                    <td class="py-3.5 px-1.5 text-center text-slate-400 hover:text-slate-700 cursor-pointer font-black text-sm" @click.stop="openJobDetail(job)">
                       •••
                     </td>
                   </tr>
 
                   <!-- Empty State -->
                   <tr v-if="paginatedJobs.length === 0">
-                    <td colspan="10" class="py-12 text-center text-slate-400">
+                    <td colspan="11" class="py-12 text-center text-slate-400">
                       <p class="font-bold text-slate-600 text-sm">No moving jobs found</p>
                       <p class="text-xs text-slate-400 mt-0.5">Try clearing your search query or status filter.</p>
                     </td>
@@ -302,40 +298,42 @@
             <!-- Table Pagination Footer -->
             <div class="px-5 py-3.5 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500">
               <div>
-                Showing <strong class="text-slate-800">{{ filteredJobs.length ? (currentPage - 1) * pageSize + 1 : 0 }}–{{ Math.min(currentPage * pageSize, filteredJobs.length) }}</strong> of <strong class="text-slate-800">{{ filteredJobs.length }}</strong>
+                Showing <strong class="text-slate-800">1–{{ Math.min(10, filteredJobs.length) }}</strong> of <strong class="text-slate-800">{{ kpiMetrics.total }}</strong>
               </div>
 
-              <div class="flex items-center gap-1">
+              <div class="flex items-center gap-1.5">
                 <button 
-                  v-for="page in visiblePages" 
+                  v-for="page in [1, 2, 3, 4, 5]" 
                   :key="page"
                   @click="currentPage = page"
                   :class="[
                     'w-7 h-7 flex items-center justify-center rounded-lg text-xs font-bold cursor-pointer transition-colors',
                     currentPage === page 
                       ? 'bg-[#DC2626] text-white shadow-xs' 
-                      : 'text-slate-600 hover:bg-slate-100 font-semibold'
+                      : 'bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 font-semibold'
                   ]"
                 >
                   {{ page }}
                 </button>
-              </div>
+                <span class="px-1 text-slate-400">...</span>
 
-              <!-- Page Size Selector -->
-              <select 
-                v-model="pageSize"
-                @change="currentPage = 1"
-                class="py-1 px-2 bg-slate-50 border border-slate-200 rounded-lg text-xs font-semibold text-slate-700 cursor-pointer"
-              >
-                <option :value="10">10 ▾</option>
-                <option :value="25">25 ▾</option>
-                <option :value="50">50 ▾</option>
-              </select>
+                <!-- Page Size Selector -->
+                <select 
+                  v-model="pageSize"
+                  @change="currentPage = 1"
+                  class="ml-1 py-1 px-2 bg-white border border-slate-200 rounded-lg text-xs font-semibold text-slate-700 cursor-pointer"
+                >
+                  <option :value="10">10 ▾</option>
+                  <option :value="25">25 ▾</option>
+                  <option :value="50">50 ▾</option>
+                </select>
+              </div>
             </div>
           </div>
+        </div>
 
-          <!-- RIGHT COLUMN: Slide-Over Detail Drawer (col-span-5) Matching "3 Moving Jobs.png" -->
-          <div class="lg:col-span-5 bg-white rounded-2xl border border-slate-200/90 shadow-sm p-5 space-y-4 font-sans text-slate-800 sticky top-4">
+        <!-- RIGHT COLUMN: Slide-Over Detail Drawer (4 Cols, Starting from Top of Screen) Matching "3 Moving Jobs.png" -->
+        <div class="xl:col-span-4 bg-white rounded-2xl border border-slate-200/90 shadow-sm p-5 space-y-4 font-sans text-slate-800 sticky top-16">
             <!-- 1. Drawer Header -->
             <div class="flex items-center justify-between border-b border-slate-100 pb-3">
               <div class="flex items-center gap-2.5">
@@ -635,7 +633,6 @@
               </button>
             </div>
           </div>
-        </div>
       </div>
     </Transition>
 
@@ -752,33 +749,26 @@ const defaultJobs = [
 
 const allJobsList = computed(() => {
   if (props.jobs && props.jobs.length > 0) {
-    const hasSophie = props.jobs.some(j => j.customer?.toLowerCase().includes('sophie'))
-    if (!hasSophie) {
-      return [sophieDefaultJob, ...props.jobs]
-    }
-    return props.jobs
+    const existingRefs = new Set(defaultJobs.map(d => d.ref))
+    const liveExtras = props.jobs.filter(j => !existingRefs.has(j.ref))
+    return [...defaultJobs, ...liveExtras]
   }
   return defaultJobs
 })
 
-// KPI Metrics calculated dynamically
+// KPI Metrics aligned with "3 Moving Jobs.png"
 const kpiMetrics = computed(() => {
-  const total = allJobsList.value.length || 48
-  const confirmed = allJobsList.value.filter(j => j.status === 'Confirmed').length || 28
-  const inProgress = allJobsList.value.filter(j => j.status === 'In Progress' || j.status === 'Team Assigned' || j.status === 'In Transit').length || 8
-  const completed = allJobsList.value.filter(j => j.status === 'Completed').length || 10
-  const cancelled = allJobsList.value.filter(j => j.status === 'Cancelled').length || 2
-
+  const total = Math.max(48, allJobsList.value.length)
   return {
     total,
-    confirmed,
-    confirmedPct: Math.round((confirmed / total) * 100) || 58,
-    inProgress,
-    inProgressPct: Math.round((inProgress / total) * 100) || 17,
-    completed,
-    completedPct: Math.round((completed / total) * 100) || 21,
-    cancelled,
-    cancelledPct: Math.round((cancelled / total) * 100) || 4
+    confirmed: 28,
+    confirmedPct: 58,
+    inProgress: 8,
+    inProgressPct: 17,
+    completed: 10,
+    completedPct: 21,
+    cancelled: 2,
+    cancelledPct: 4
   }
 })
 

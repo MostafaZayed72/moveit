@@ -1,7 +1,7 @@
 <template>
   <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
     <!-- LEFT MAIN AREA: Automation Header, 4 KPIs, Filters & Workflows Table (8 Cols - Exact match to "11 Automation.png") -->
-    <div class="lg:col-span-8 space-y-4">
+    <div class="lg:col-span-8 space-y-4 min-w-0">
       <!-- Header -->
       <div>
         <h1 class="text-2xl font-black text-slate-900 tracking-tight font-sans">Automation</h1>

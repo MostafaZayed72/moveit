@@ -1,7 +1,7 @@
 <template>
   <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
     <!-- LEFT MAIN AREA: Inventory Header, 5 KPIs, Filters & Table (8 Cols - Exact match to "6 Inventory.png") -->
-    <div class="lg:col-span-8 space-y-4">
+    <div class="lg:col-span-8 space-y-4 min-w-0">
       <!-- Header -->
       <div class="flex items-center justify-between">
         <div>

@@ -39,80 +39,80 @@
       </div>
     </div>
 
-    <!-- 2. Top 4 KPI Cards (Exact match to "2 Leads & Quotations.png") -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-      <!-- Total Leads -->
-      <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200/80 shadow-xs flex items-center justify-between">
-        <div class="space-y-1">
-          <p class="text-xs font-medium text-slate-500">Total Leads</p>
-          <p class="text-2xl sm:text-3xl font-black text-slate-900 font-sans">{{ kpiStats.total }}</p>
-          <p class="text-[11px] font-bold text-emerald-600 flex items-center gap-1">
-            <span>↗ +18%</span>
-            <span class="text-slate-400 font-normal">vs. last month</span>
-          </p>
-        </div>
-        <div class="w-11 h-11 rounded-2xl bg-rose-50 text-rose-500 flex items-center justify-center">
-          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-            <path d="M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6zM16 7a1 1 0 10-2 0v1h-1a1 1 0 100 2h1v1a1 1 0 102 0v-1h1a1 1 0 100-2h-1V7z"/>
-          </svg>
-        </div>
-      </div>
-
-      <!-- Pending Review -->
-      <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200/80 shadow-xs flex items-center justify-between">
-        <div class="space-y-1">
-          <p class="text-xs font-medium text-slate-500">Pending Review</p>
-          <p class="text-2xl sm:text-3xl font-black text-slate-900 font-sans">{{ kpiStats.pendingReview }}</p>
-          <p class="text-[11px] font-bold text-amber-600 flex items-center gap-1">
-            <span>↗ 3 overdue</span>
-          </p>
-        </div>
-        <div class="w-11 h-11 rounded-2xl bg-amber-50 text-amber-500 flex items-center justify-center">
-          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
-          </svg>
-        </div>
-      </div>
-
-      <!-- Quotes Sent -->
-      <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200/80 shadow-xs flex items-center justify-between">
-        <div class="space-y-1">
-          <p class="text-xs font-medium text-slate-500">Quotes Sent</p>
-          <p class="text-2xl sm:text-3xl font-black text-slate-900 font-sans">{{ kpiStats.quotesSent }}</p>
-          <p class="text-[11px] font-bold text-emerald-600 flex items-center gap-1">
-            <span>↗ +12%</span>
-            <span class="text-slate-400 font-normal">vs. last month</span>
-          </p>
-        </div>
-        <div class="w-11 h-11 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center">
-          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-            <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
-            <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
-          </svg>
-        </div>
-      </div>
-
-      <!-- Converted to Job -->
-      <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200/80 shadow-xs flex items-center justify-between">
-        <div class="space-y-1">
-          <p class="text-xs font-medium text-slate-500">Converted to Job</p>
-          <p class="text-2xl sm:text-3xl font-black text-slate-900 font-sans">{{ kpiStats.converted }}</p>
-          <p class="text-[11px] font-bold text-emerald-600 flex items-center gap-1">
-            <span>68% conversion rate</span>
-          </p>
-        </div>
-        <div class="w-11 h-11 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
-          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-          </svg>
-        </div>
-      </div>
-    </div>
-
-    <!-- 3. Split-Screen Main Layout: Left Filter/Table + Right Lead Drawer -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
+    <!-- 2. Split-Screen Main Layout: Left (4 KPIs + Filters + Tabs + 10-Row Table) + Right Lead Drawer -->
+    <div class="grid grid-cols-1 xl:grid-cols-12 gap-5 items-start">
       <!-- LEFT COLUMN (8 Cols) -->
-      <div class="lg:col-span-8 space-y-4">
+      <div class="xl:col-span-8 space-y-4 min-w-0">
+        <!-- Top 4 KPI Cards (Exact match to "2 Leads & Quotations.png") -->
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-3.5">
+          <!-- Total Leads -->
+          <div class="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-xs flex items-center justify-between">
+            <div class="space-y-1">
+              <p class="text-xs font-medium text-slate-500">Total Leads</p>
+              <p class="text-2xl font-black text-slate-900 font-sans">{{ kpiStats.total }}</p>
+              <p class="text-[11px] font-bold text-emerald-600 flex items-center gap-1">
+                <span>↗ +18%</span>
+                <span class="text-slate-400 font-normal">vs. last month</span>
+              </p>
+            </div>
+            <div class="w-10 h-10 rounded-2xl bg-rose-50 text-rose-500 flex items-center justify-center flex-shrink-0">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6zM16 7a1 1 0 10-2 0v1h-1a1 1 0 100 2h1v1a1 1 0 102 0v-1h1a1 1 0 100-2h-1V7z"/>
+              </svg>
+            </div>
+          </div>
+
+          <!-- Pending Review -->
+          <div class="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-xs flex items-center justify-between">
+            <div class="space-y-1">
+              <p class="text-xs font-medium text-slate-500">Pending Review</p>
+              <p class="text-2xl font-black text-slate-900 font-sans">{{ kpiStats.pendingReview }}</p>
+              <p class="text-[11px] font-bold text-amber-600 flex items-center gap-1">
+                <span>↗ 3 overdue</span>
+              </p>
+            </div>
+            <div class="w-10 h-10 rounded-2xl bg-amber-50 text-amber-500 flex items-center justify-center flex-shrink-0">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
+              </svg>
+            </div>
+          </div>
+
+          <!-- Quotes Sent -->
+          <div class="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-xs flex items-center justify-between">
+            <div class="space-y-1">
+              <p class="text-xs font-medium text-slate-500">Quotes Sent</p>
+              <p class="text-2xl font-black text-slate-900 font-sans">{{ kpiStats.quotesSent }}</p>
+              <p class="text-[11px] font-bold text-emerald-600 flex items-center gap-1">
+                <span>↗ +12%</span>
+                <span class="text-slate-400 font-normal">vs. last month</span>
+              </p>
+            </div>
+            <div class="w-10 h-10 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center flex-shrink-0">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
+                <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
+              </svg>
+            </div>
+          </div>
+
+          <!-- Converted to Job -->
+          <div class="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-xs flex items-center justify-between">
+            <div class="space-y-1">
+              <p class="text-xs font-medium text-slate-500">Converted to Job</p>
+              <p class="text-2xl font-black text-slate-900 font-sans">{{ kpiStats.converted }}</p>
+              <p class="text-[11px] font-bold text-emerald-600 flex items-center gap-1">
+                <span>68% conversion rate</span>
+              </p>
+            </div>
+            <div class="w-10 h-10 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center flex-shrink-0">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+
         <!-- Search & Filter Toolbar -->
         <div class="bg-white p-3 rounded-2xl border border-slate-200/80 shadow-xs flex flex-wrap items-center gap-2.5">
           <div class="relative flex-1 min-w-[200px]">
@@ -302,7 +302,7 @@
       </div>
 
       <!-- RIGHT COLUMN: Sticky Lead Detail Drawer (4 Cols - Exact match to "2 Leads & Quotations.png") -->
-      <div class="lg:col-span-4 bg-white rounded-2xl border border-slate-200/80 shadow-sm p-5 sticky top-20 space-y-5">
+      <div class="xl:col-span-4 bg-white rounded-2xl border border-slate-200/80 shadow-sm p-5 sticky top-16 space-y-5">
         <!-- Drawer Top Header -->
         <div class="flex items-start justify-between">
           <div class="space-y-1.5">

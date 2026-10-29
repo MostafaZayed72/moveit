@@ -6,11 +6,13 @@
       :active-view="currentView"
       :leads-count="formattedOrders.length || 12"
       :jobs-count="confirmedJobsCount || 15"
+      :is-open="isSidebarOpen"
+      @close="isSidebarOpen = false"
       @select-view="handleViewSelect"
     />
 
     <!-- 2. Main Content Area -->
-    <div class="flex-1 flex flex-col min-w-0 overflow-y-auto max-h-screen print:overflow-visible print:max-h-none print:w-full">
+    <div class="flex-1 flex flex-col min-w-0 overflow-y-auto overflow-x-hidden max-h-screen print:overflow-visible print:max-h-none print:w-full">
       <!-- Top Sticky Header (Visible across all 12 CRM views) -->
       <AdminHeader 
         class="print:hidden"
@@ -18,10 +20,11 @@
         :subtitle="viewMeta.subtitle"
         :action-button-text="viewMeta.actionText"
         @primary-action="handlePrimaryAction"
+        @toggle-sidebar="isSidebarOpen = !isSidebarOpen"
       />
 
       <!-- Content Views Body -->
-      <main class="flex-1 p-5 sm:p-7 max-w-[1750px] w-full mx-auto print:p-0 print:m-0 print:max-w-none">
+      <main class="flex-1 p-3 sm:p-5 lg:p-6 max-w-[1750px] w-full mx-auto print:p-0 print:m-0 print:max-w-none">
         <Transition name="fade" mode="out-in">
           <!-- Screen 1: Overview Dashboard (1 Dashboard.png) -->
           <OverviewView 
@@ -238,6 +241,7 @@ const previousView = ref('overview')
 const selectedJob = ref(null)
 const showNewModal = ref(false)
 const isSubmitting = ref(false)
+const isSidebarOpen = ref(false)
 
 const newForm = ref({
   customer: '',

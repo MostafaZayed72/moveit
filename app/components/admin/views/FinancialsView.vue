@@ -1,7 +1,7 @@
 <template>
   <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
     <!-- LEFT MAIN AREA: Finances Header, 4 KPIs, 3 Charts & Transactions Table (8 Cols - Exact match to "9 Finances.png") -->
-    <div class="lg:col-span-8 space-y-4">
+    <div class="lg:col-span-8 space-y-4 min-w-0">
       <!-- Header -->
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
