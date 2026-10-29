@@ -1,5 +1,5 @@
 <template>
-  <aside class="w-64 bg-[#0F141F] text-slate-300 flex flex-col justify-between h-screen sticky top-0 border-r border-slate-800/80 z-30 select-none flex-shrink-0 overflow-y-auto">
+  <aside class="w-64 bg-[#0F141F] text-slate-300 flex flex-col justify-between h-screen sticky top-0 border-r border-slate-800/80 z-30 select-none flex-shrink-0 overflow-y-auto print:hidden">
     <!-- Top Brand & Navigation -->
     <div class="p-4 space-y-4">
       <!-- Logo -->
@@ -55,7 +55,7 @@
           @click="$emit('select-view', 'jobs')"
           :class="[
             'w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold tracking-wide transition-all text-left cursor-pointer',
-            activeView === 'jobs' 
+            (activeView === 'jobs' || activeView === 'move_detail') 
               ? 'bg-[#DC2626] text-white shadow-lg shadow-red-600/25 font-bold' 
               : 'text-slate-400 hover:text-white hover:bg-slate-800/60'
           ]"
@@ -65,7 +65,7 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0"/>
           </svg>
           <span class="flex-1">Moving Jobs</span>
-          <span v-if="jobsCount" class="text-[10px] px-1.5 py-0.2 rounded-full font-bold" :class="activeView === 'jobs' ? 'bg-white/20 text-white' : 'bg-slate-800 text-slate-400'">
+          <span v-if="jobsCount" class="text-[10px] px-1.5 py-0.2 rounded-full font-bold" :class="(activeView === 'jobs' || activeView === 'move_detail') ? 'bg-white/20 text-white' : 'bg-slate-800 text-slate-400'">
             {{ jobsCount }}
           </span>
         </button>

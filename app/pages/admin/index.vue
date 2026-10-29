@@ -1,18 +1,19 @@
 <template>
-  <div class="min-h-screen bg-[#F8FAFC] text-slate-900 font-sans flex antialiased selection:bg-red-500 selection:text-white">
+  <div class="min-h-screen bg-[#F8FAFC] text-slate-900 font-sans flex antialiased selection:bg-red-500 selection:text-white print:block print:bg-white print:min-h-0 print:h-auto print:overflow-visible">
     <!-- 1. Left Sidebar Navigation (Dark Slate & Vibrant Red) -->
     <AdminSidebar 
+      class="print:hidden"
       :active-view="currentView"
-      :leads-count="formattedOrders.length || 70"
+      :leads-count="formattedOrders.length || 12"
       :jobs-count="confirmedJobsCount || 15"
       @select-view="handleViewSelect"
     />
 
     <!-- 2. Main Content Area -->
-    <div class="flex-1 flex flex-col min-w-0 overflow-y-auto max-h-screen">
-      <!-- Top Sticky Header (Shown on Overview Dashboard) -->
+    <div class="flex-1 flex flex-col min-w-0 overflow-y-auto max-h-screen print:overflow-visible print:max-h-none print:w-full">
+      <!-- Top Sticky Header (Visible across all 12 CRM views) -->
       <AdminHeader 
-        v-if="currentView === 'overview'"
+        class="print:hidden"
         :title="viewMeta.title"
         :subtitle="viewMeta.subtitle"
         :action-button-text="viewMeta.actionText"
@@ -20,9 +21,9 @@
       />
 
       <!-- Content Views Body -->
-      <main class="flex-1 p-6 sm:p-8 max-w-[1700px] w-full mx-auto">
+      <main class="flex-1 p-5 sm:p-7 max-w-[1750px] w-full mx-auto print:p-0 print:m-0 print:max-w-none">
         <Transition name="fade" mode="out-in">
-          <!-- Screen 1: Overview Dashboard -->
+          <!-- Screen 1: Overview Dashboard (1 Dashboard.png) -->
           <OverviewView 
             v-if="currentView === 'overview'" 
             :total-revenue="totalRevenue"
@@ -39,45 +40,53 @@
             @view-all-leads="currentView = 'leads'"
           />
 
-          <!-- Screen 2: Leads & Quotations Grid -->
+          <!-- Screen 2: Leads & Quotations Split View (2 Leads & Quotations.png) -->
           <LeadsView 
             v-else-if="currentView === 'leads'" 
-            :orders="formattedOrders"
+            :orders="leadsOrders"
             @select-lead="openMoveDetail"
             @add-lead="showNewModal = true"
           />
 
-          <!-- Screen 3: Move Detail Full View -->
-          <MoveDetailView 
-            v-else-if="currentView === 'move_detail'" 
-            :job="selectedJob || formattedOrders[0]"
-            @back="currentView = previousView || 'jobs'"
-            @update-status="handleUpdateStatus"
-          />
-
-          <!-- Screen 4: Moving Jobs Grid -->
+          <!-- Screen 3: Moving Jobs Split View (3 Moving Jobs.png) -->
           <MovingJobsView 
             v-else-if="currentView === 'jobs'" 
-            :jobs="formattedOrders"
+            :jobs="movingJobsOrders"
             @select-job="openMoveDetail"
+            @update-status="handleUpdateStatus"
             @add-job="showNewModal = true"
           />
 
-          <!-- Screen 5: Moving Calendar -->
+          <!-- Screen 4: Moving Calendar (4 Moving Calendar.png) -->
           <CalendarView 
             v-else-if="currentView === 'calendar'" 
             :orders="formattedOrders"
             @add-job="showNewModal = true"
           />
 
-          <!-- Screen 6: Customers Excel List -->
+          <!-- Screen 5: Customers Split View (5 Customers.png) -->
           <CustomersView 
             v-else-if="currentView === 'customers'" 
             :customers="realCustomers"
             @add-customer="showNewModal = true"
           />
 
-          <!-- Screen 7: Financials & Profit & Loss -->
+          <!-- Screen 6: Inventory Split View (6 Inventory.png) -->
+          <InventoryView 
+            v-else-if="currentView === 'inventory'" 
+          />
+
+          <!-- Screen 7: Vehicles Split View (7 Vehicles.png) -->
+          <VehiclesView 
+            v-else-if="currentView === 'vehicles'" 
+          />
+
+          <!-- Screen 8: Team & Crew Split View (8 Team & Crew.png) -->
+          <TeamView 
+            v-else-if="currentView === 'team'" 
+          />
+
+          <!-- Screen 9: Finances (9 Finances.png) -->
           <FinancialsView 
             v-else-if="currentView === 'financials'" 
             :total-revenue="totalRevenue"
@@ -86,24 +95,28 @@
             :profit-margin="profitMargin"
           />
 
-          <!-- Screen 8: Analytics & KPIs -->
+          <!-- Screen 10: Reports, Analytics & KPIs (10 Reports, Analytics & KPIs.png) -->
           <AnalyticsView 
-            v-else-if="currentView === 'analytics'" 
+            v-else-if="currentView === 'reports' || currentView === 'analytics'" 
           />
 
-          <!-- Screen 9: Reports -->
-          <FinancialsView 
-            v-else-if="currentView === 'reports'" 
-            :total-revenue="totalRevenue"
-            :total-expenses="totalExpenses"
-            :net-profit="netProfit"
-            :profit-margin="profitMargin"
+          <!-- Screen 11: Automation (11 Automation.png) -->
+          <AutomationView 
+            v-else-if="currentView === 'automation'" 
           />
 
-          <!-- Screen 10: Settings -->
+          <!-- Screen 12: Settings (12 Settings.png) -->
           <SettingsView 
             v-else-if="currentView === 'settings'" 
             @add-member="showNewModal = true"
+          />
+
+          <!-- Full Move Detail & Official Quotation A4 Print Workspace -->
+          <MoveDetailView 
+            v-else-if="currentView === 'move_detail'" 
+            :job="selectedJob || formattedOrders[0]"
+            @back="currentView = previousView || 'jobs'"
+            @update-status="handleUpdateStatus"
           />
         </Transition>
       </main>
@@ -187,14 +200,20 @@ import MoveDetailView from '~/components/admin/views/MoveDetailView.vue'
 import MovingJobsView from '~/components/admin/views/MovingJobsView.vue'
 import CalendarView from '~/components/admin/views/CalendarView.vue'
 import CustomersView from '~/components/admin/views/CustomersView.vue'
+import InventoryView from '~/components/admin/views/InventoryView.vue'
+import VehiclesView from '~/components/admin/views/VehiclesView.vue'
+import TeamView from '~/components/admin/views/TeamView.vue'
 import FinancialsView from '~/components/admin/views/FinancialsView.vue'
 import AnalyticsView from '~/components/admin/views/AnalyticsView.vue'
+import AutomationView from '~/components/admin/views/AutomationView.vue'
 import SettingsView from '~/components/admin/views/SettingsView.vue'
 
 const {
   formattedOrders,
+  leadsOrders,
+  movingJobsOrders,
   fetchOrders,
-  updateOrderStatus,
+  updateThreeTrackStatus,
   createOrder,
   totalRevenue,
   jobContribution,
@@ -245,11 +264,15 @@ const handlePrimaryAction = () => {
   showNewModal.value = true
 }
 
-const handleUpdateStatus = async ({ id, status }) => {
-  const res = await updateOrderStatus(id, status)
+const handleUpdateStatus = async (payload) => {
+  if (!payload || !payload.id) return
+  const res = await updateThreeTrackStatus(payload.id, payload)
   if (res.success) {
-    if (selectedJob.value && selectedJob.value.id === id) {
-      selectedJob.value.status = status
+    if (selectedJob.value && selectedJob.value.id === payload.id) {
+      if (payload.operationalStatus) selectedJob.value.operationalStatus = payload.operationalStatus
+      if (payload.operationalStatus) selectedJob.value.status = payload.operationalStatus
+      if (payload.paymentStatus) selectedJob.value.paymentStatus = payload.paymentStatus
+      if (payload.priority) selectedJob.value.priority = payload.priority
     }
   }
 }
@@ -270,71 +293,32 @@ const saveNewEntry = async () => {
 const viewMeta = computed(() => {
   switch (currentView.value) {
     case 'overview':
-      return {
-        title: 'Good morning, Sherif!',
-        subtitle: "Here's an overview of MoveIt Maastricht.",
-        actionText: 'New Lead'
-      }
+      return { title: 'Dashboard', subtitle: '', actionText: 'New' }
     case 'leads':
-      return {
-        title: 'Leads & Quotations',
-        subtitle: 'Manage all incoming leads, quotations and follow-ups.',
-        actionText: 'Add Lead'
-      }
+      return { title: 'Leads & Quotations', subtitle: '', actionText: 'New Lead' }
     case 'jobs':
-      return {
-        title: 'Moving Jobs',
-        subtitle: 'Manage all confirmed, ongoing and completed moves.',
-        actionText: 'Add Job'
-      }
-    case 'move_detail':
-      return {
-        title: 'Move Details & Operations',
-        subtitle: 'Complete breakdown of job progress, route and financials.',
-        actionText: 'Update Status'
-      }
+      return { title: 'Moving Jobs', subtitle: '', actionText: 'New Job' }
     case 'calendar':
-      return {
-        title: 'Moving Calendar',
-        subtitle: 'Schedule and manage all moving jobs, team members and vehicles.',
-        actionText: 'Add Job'
-      }
+      return { title: 'Moving Calendar', subtitle: '', actionText: 'New Job' }
     case 'customers':
-      return {
-        title: 'Customers',
-        subtitle: 'Manage your customer database and view booking history.',
-        actionText: 'Add Customer'
-      }
+      return { title: 'Customers', subtitle: '', actionText: 'New Customer' }
+    case 'inventory':
+      return { title: 'Inventory', subtitle: '', actionText: 'New Item' }
+    case 'vehicles':
+      return { title: 'Vehicles', subtitle: '', actionText: 'Add Vehicle' }
+    case 'team':
+      return { title: 'Team & Crew', subtitle: '', actionText: 'Add Team Member' }
     case 'financials':
-      return {
-        title: 'Financials & Profit & Loss',
-        subtitle: 'Track all income, expenses and job profitability.',
-        actionText: 'Export Report'
-      }
-    case 'analytics':
-      return {
-        title: 'Analytics & KPIs',
-        subtitle: 'Track performance and business growth.',
-        actionText: 'Export KPIs'
-      }
+      return { title: 'Finances', subtitle: '', actionText: 'Add Expense' }
     case 'reports':
-      return {
-        title: 'Reports & Export',
-        subtitle: 'Audit logs, tax summaries and business performance sheets.',
-        actionText: 'New Report'
-      }
+    case 'analytics':
+      return { title: 'Reports', subtitle: '', actionText: 'Generate Report' }
+    case 'automation':
+      return { title: 'Automation', subtitle: '', actionText: 'New Automation' }
     case 'settings':
-      return {
-        title: 'Settings',
-        subtitle: 'Manage team members, vehicles, categories and system settings.',
-        actionText: 'Add Team Member'
-      }
+      return { title: 'Settings', subtitle: '', actionText: 'Save Settings' }
     default:
-      return {
-        title: 'MoveIt Dashboard',
-        subtitle: 'Operations & Management Platform',
-        actionText: 'Action'
-      }
+      return { title: 'MoveIt Dashboard', subtitle: '', actionText: 'New' }
   }
 })
 </script>

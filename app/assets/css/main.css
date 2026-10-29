@@ -103,3 +103,81 @@
 /* AOS Tweaks */
 [data-aos] { pointer-events: none; }
 .aos-animate { pointer-events: auto; }
+
+/* ============================================================
+   BULLETPROOF PRINT STYLES FOR OFFICIAL A4 QUOTATIONS & INVOICES
+   ============================================================ */
+@media print {
+  /* 1. Reset Root and Canvas */
+  html, body {
+    background: #ffffff !important;
+    background-color: #ffffff !important;
+    color: #0f172a !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    min-height: auto !important;
+    height: auto !important;
+    overflow: visible !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    font-size: 10.5pt !important;
+  }
+
+  /* 2. Hide all app navigation chrome, sidebars, headers, floating widgets, buttons */
+  aside,
+  header,
+  nav,
+  footer,
+  button,
+  select,
+  input,
+  .print\:hidden,
+  .no-print,
+  #admin-sidebar,
+  .admin-header,
+  .modal-overlay,
+  .quick-actions,
+  .floating-actions {
+    display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    overflow: hidden !important;
+  }
+
+  /* 3. A4 Page Settings */
+  @page {
+    size: A4 portrait;
+    margin: 8mm 10mm 10mm 10mm;
+  }
+
+  /* 4. Force printable quote sheet to occupy full print sheet cleanly */
+  .printable-quote-sheet {
+    display: block !important;
+    visibility: visible !important;
+    position: static !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+    background: #ffffff !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  /* Ensure text colors and borders print sharply */
+  .printable-quote-sheet * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Hide shadows and rounded corners on print sheet container */
+  .printable-quote-sheet,
+  .printable-quote-sheet .rounded-3xl,
+  .printable-quote-sheet .rounded-2xl {
+    box-shadow: none !important;
+  }
+}
+
