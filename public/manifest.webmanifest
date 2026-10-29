@@ -1,0 +1,32 @@
+{
+  "name": "MoveIt Maastricht CRM",
+  "short_name": "MoveIt CRM",
+  "description": "MoveIt Maastricht Operations, Leads, Quotations & Fleet Management CRM",
+  "start_url": "/admin",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#0F141F",
+  "theme_color": "#DC2626",
+  "icons": [
+    {
+      "src": "/Logos_definitivos_def/icon_red_pixel.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/Logos_definitivos_def/icon_red_pixel.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/Logos_definitivos_def/icon_vector.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
+

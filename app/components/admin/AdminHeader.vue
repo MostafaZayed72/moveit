@@ -26,8 +26,21 @@
       </div>
     </div>
 
-    <!-- Right: Actions, Notifications, Avatar & Profile -->
+    <!-- Right: Install App PWA Button, + New Action, Notifications, Avatar & Profile -->
     <div class="flex items-center gap-2 sm:gap-3 flex-shrink-0">
+      <!-- Install App (PWA) Button -->
+      <button 
+        v-if="!isStandalone"
+        @click="handleInstallClick"
+        class="flex items-center gap-1.5 px-2.5 sm:px-3.5 py-2 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold rounded-xl shadow-sm transition-all active:scale-95 cursor-pointer whitespace-nowrap border border-slate-800"
+        title="Install MoveIt CRM as a Mobile App (iPhone & Android)"
+      >
+        <svg class="w-3.5 h-3.5 text-[#DC2626] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/>
+        </svg>
+        <span>Install App</span>
+      </button>
+
       <!-- + New Dropdown Button (Red Pill) -->
       <button 
         @click="$emit('primary-action')"
@@ -51,7 +64,7 @@
       </button>
 
       <!-- Message Bubble Icon with Badge '5' -->
-      <button class="relative p-1.5 sm:p-2 text-slate-500 hover:text-slate-800 hover:bg-slate-100 rounded-xl transition-colors cursor-pointer hidden xs:inline-flex">
+      <button class="relative p-1.5 sm:p-2 text-slate-500 hover:text-slate-800 hover:bg-slate-100 rounded-xl transition-colors cursor-pointer hidden sm:inline-flex">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/>
         </svg>
@@ -73,10 +86,114 @@
         </div>
       </div>
     </div>
+
+    <!-- iPhone / iOS & PWA Install Modal -->
+    <div 
+      v-if="showInstallModal" 
+      class="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-3 sm:p-4 bg-slate-900/70 backdrop-blur-xs"
+      @click="showInstallModal = false"
+    >
+      <div 
+        class="bg-white rounded-3xl p-6 max-w-md w-full border border-slate-200 shadow-2xl space-y-5 relative animate-in fade-in zoom-in-95 duration-200"
+        @click.stop
+      >
+        <!-- Close Button -->
+        <button 
+          @click="showInstallModal = false"
+          class="absolute top-4 right-4 w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 flex items-center justify-center text-xs font-bold cursor-pointer"
+        >
+          ✕
+        </button>
+
+        <!-- App Icon & Title -->
+        <div class="flex items-center gap-4">
+          <div class="w-14 h-14 rounded-2xl bg-[#0F141F] border border-slate-800 flex items-center justify-center shadow-lg flex-shrink-0">
+            <div class="w-9 h-9 rounded-xl bg-[#DC2626] text-white font-black text-xl flex items-center justify-center shadow-md shadow-red-600/40">
+              m
+            </div>
+          </div>
+          <div>
+            <span class="px-2 py-0.5 rounded-full bg-red-50 text-[#DC2626] text-[10px] font-bold uppercase tracking-wider">MoveIt Mobile App</span>
+            <h3 class="text-lg font-black text-slate-900 font-sans mt-0.5">Install MoveIt CRM</h3>
+            <p class="text-xs text-slate-500">Add to your iPhone or Android Home Screen for full-screen access.</p>
+          </div>
+        </div>
+
+        <!-- iPhone / iPad Visual Step-by-Step Guide -->
+        <div class="bg-slate-50 rounded-2xl p-4 border border-slate-200/80 space-y-3.5 text-xs">
+          <div class="flex items-center justify-between border-b border-slate-200/70 pb-2">
+            <span class="font-black text-slate-900 flex items-center gap-1.5">
+              <span>🍎</span>
+              <span>iPhone & iPad (Safari / Chrome)</span>
+            </span>
+            <span class="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-md">iOS Ready</span>
+          </div>
+
+          <!-- Step 1 -->
+          <div class="flex items-center gap-3">
+            <span class="w-7 h-7 rounded-full bg-[#DC2626] text-white font-black text-xs flex items-center justify-center flex-shrink-0">1</span>
+            <div class="flex-1">
+              <p class="font-bold text-slate-900">Tap the <span class="text-blue-600">Share</span> button in Safari</p>
+              <p class="text-[11px] text-slate-500">اضغط على أيقونة المشاركة في أسفل متصفح سفاري</p>
+            </div>
+            <!-- iOS Share Icon -->
+            <div class="w-9 h-9 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-blue-600 shadow-2xs flex-shrink-0">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/>
+              </svg>
+            </div>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="flex items-center gap-3">
+            <span class="w-7 h-7 rounded-full bg-[#DC2626] text-white font-black text-xs flex items-center justify-center flex-shrink-0">2</span>
+            <div class="flex-1">
+              <p class="font-bold text-slate-900">Select <span class="text-slate-900 underline">"Add to Home Screen"</span></p>
+              <p class="text-[11px] text-slate-500">اختر "إضافة إلى الشاشة الرئيسية" من القائمة</p>
+            </div>
+            <!-- iOS Add to Home Screen Icon -->
+            <div class="w-9 h-9 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-slate-800 shadow-2xs flex-shrink-0 font-black text-base">
+              ⊞
+            </div>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="flex items-center gap-3">
+            <span class="w-7 h-7 rounded-full bg-[#DC2626] text-white font-black text-xs flex items-center justify-center flex-shrink-0">3</span>
+            <div class="flex-1">
+              <p class="font-bold text-slate-900">Tap <span class="text-blue-600">"Add"</span> in the top right corner</p>
+              <p class="text-[11px] text-slate-500">اضغط "إضافة" بالأعلى ليظهر التطبيق على شاشة الأيفون</p>
+            </div>
+            <div class="px-2.5 py-1 rounded-lg bg-blue-600 text-white font-bold text-[11px] flex-shrink-0">
+              Add
+            </div>
+          </div>
+        </div>
+
+        <!-- Direct Prompt Button if Browser Supports It -->
+        <div class="flex items-center justify-end gap-2.5 pt-1">
+          <button 
+            v-if="deferredPrompt"
+            @click="triggerNativeInstall"
+            class="flex-1 py-2.5 px-4 bg-[#DC2626] hover:bg-red-700 text-white text-xs font-bold rounded-xl shadow-md shadow-red-600/25 cursor-pointer"
+          >
+            Install Directly Now
+          </button>
+          <button 
+            @click="showInstallModal = false"
+            class="w-full sm:w-auto px-5 py-2.5 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold rounded-xl cursor-pointer"
+          >
+            Got It
+          </button>
+        </div>
+      </div>
+    </div>
   </header>
 </template>
 
 <script setup>
+import { ref, onMounted } from 'vue'
+
 defineProps({
   title: {
     type: String,
@@ -93,4 +210,57 @@ defineProps({
 })
 
 defineEmits(['primary-action', 'toggle-sidebar'])
+
+const deferredPrompt = ref(null)
+const showInstallModal = ref(false)
+const isStandalone = ref(false)
+
+onMounted(() => {
+  if (typeof window === 'undefined') return
+
+  // Check if already running as installed standalone app on iOS or Android/Desktop
+  isStandalone.value =
+    window.matchMedia('(display-mode: standalone)').matches ||
+    window.navigator.standalone === true
+
+  // Register PWA Service Worker
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js').catch(() => {})
+  }
+
+  // Listen for native Chrome/Android/Desktop install prompt
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault()
+    deferredPrompt.value = e
+  })
+
+  window.addEventListener('appinstalled', () => {
+    isStandalone.value = true
+    deferredPrompt.value = null
+    showInstallModal.value = false
+  })
+})
+
+const handleInstallClick = async () => {
+  if (deferredPrompt.value) {
+    deferredPrompt.value.prompt()
+    const { outcome } = await deferredPrompt.value.userChoice
+    if (outcome === 'accepted') {
+      deferredPrompt.value = null
+    }
+  } else {
+    // On iPhone / iPad (iOS) or browsers where native prompt is manual, open the visual iOS Install Modal
+    showInstallModal.value = true
+  }
+}
+
+const triggerNativeInstall = async () => {
+  if (!deferredPrompt.value) return
+  deferredPrompt.value.prompt()
+  const { outcome } = await deferredPrompt.value.userChoice
+  if (outcome === 'accepted') {
+    deferredPrompt.value = null
+    showInstallModal.value = false
+  }
+}
 </script>
