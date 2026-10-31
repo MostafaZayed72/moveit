@@ -64,7 +64,12 @@ export const useAdminData = () => {
         coordinator: payload.coordinator || existing?.coordinator || existingFormData.coordinator,
         assigned_team: payload.team || existing?.assigned_team || existingFormData.assigned_team,
         assigned_vehicle: payload.vehicle || existing?.assigned_vehicle || existingFormData.assigned_vehicle,
-        job_costs: payload.costs || existingFormData.job_costs
+        job_costs: payload.costs || existingFormData.job_costs,
+        time_logs: (payload as any).timeLogs || existingFormData.time_logs,
+        actual_hours: (payload as any).actualHours ?? existing?.actual_hours ?? existingFormData.actual_hours,
+        scheduled_time_slot: (payload as any).scheduledTimeSlot || existing?.scheduled_time_slot || existingFormData.scheduled_time_slot,
+        invoice_number: (payload as any).invoiceNumber || existing?.invoice_number || existingFormData.invoice_number,
+        date: (payload as any).movingDate || existingFormData.date
       }
 
       // Primary update payload: try top-level columns and fallback safely

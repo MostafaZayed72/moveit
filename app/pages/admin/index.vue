@@ -64,6 +64,8 @@
           <CalendarView 
             v-else-if="currentView === 'calendar'" 
             :orders="formattedOrders"
+            @select-job="openMoveDetail"
+            @update-status="handleUpdateStatus"
             @add-job="showNewModal = true"
           />
 

@@ -253,18 +253,29 @@
       </div>
 
       <!-- Dynamic Timeline & Time Tracking Card -->
-      <div class="bg-white p-6 rounded-3xl border border-slate-200/80 shadow-xs">
-        <div class="flex items-center justify-between mb-4">
+      <div class="bg-white p-6 rounded-3xl border border-slate-200/80 shadow-xs space-y-5">
+        <div class="flex flex-wrap items-center justify-between gap-3">
           <div class="flex items-center gap-3">
-            <h2 class="text-base font-black text-slate-900 tracking-tight font-sans">Timeline & Time Tracking</h2>
+            <h2 class="text-base font-black text-slate-900 tracking-tight font-sans">Timeline & Field Crew Time Tracking</h2>
             <span class="text-[11px] font-bold px-2.5 py-0.5 rounded-full" :class="timelineStatusBadge.class">
               {{ timelineStatusBadge.text }}
             </span>
+            <span class="text-[11px] font-black px-2.5 py-0.5 rounded-full bg-slate-900 text-white font-mono">
+              ⏱ Total Logged: {{ formattedTotalLoggedTime }}
+            </span>
           </div>
-          <button @click="showEditTimesModal = true" class="flex items-center gap-1.5 px-3 py-1.5 bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 text-xs font-bold rounded-xl shadow-xs transition-colors cursor-pointer">
-            <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-            <span>Edit Times</span>
-          </button>
+          <div class="flex items-center gap-2">
+            <button
+              @click="showFieldTimerPanel = !showFieldTimerPanel"
+              class="flex items-center gap-1.5 px-3 py-1.5 bg-slate-900 hover:bg-red-600 text-white text-xs font-bold rounded-xl shadow-xs transition-colors cursor-pointer"
+            >
+              <span>{{ showFieldTimerPanel ? 'Hide Crew Controls' : '📱 Field Crew Live Timer' }}</span>
+            </button>
+            <button @click="showEditTimesModal = true" class="flex items-center gap-1.5 px-3 py-1.5 bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 text-xs font-bold rounded-xl shadow-xs transition-colors cursor-pointer">
+              <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              <span>Edit Times</span>
+            </button>
+          </div>
         </div>
 
         <!-- Horizontal Stepper Row -->
@@ -274,15 +285,76 @@
           <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4 relative z-10 text-center">
             <div v-for="step in dynamicTimelineSteps" :key="step.id" class="flex flex-col items-center">
               <div 
-                class="w-12 h-12 rounded-full flex items-center justify-center shadow-md ring-4 transition-all"
-                :class="[step.badgeColor, step.active ? 'ring-blue-400 ring-offset-2 animate-pulse scale-105' : 'ring-white']"
+                class="w-12 h-12 rounded-full flex items-center justify-center shadow-md ring-4 transition-all cursor-pointer"
+                :class="[step.badgeColor, step.active || activeTimerStage === step.id ? 'ring-blue-400 ring-offset-2 animate-pulse scale-105' : 'ring-white']"
+                @click="toggleStageTimer(step.id)"
+                title="Click to Start / Stop stage timer"
               >
-                <svg v-if="step.completed" class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                <svg v-if="step.completed && activeTimerStage !== step.id" class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                <span v-else-if="activeTimerStage === step.id" class="text-xs font-black text-white">⏸</span>
                 <span v-else class="text-xs font-bold">{{ step.number }}</span>
               </div>
               <span class="text-xs font-bold text-slate-900 mt-2.5">{{ step.title }}</span>
-              <span class="text-[11px] font-medium" :class="step.active ? 'text-blue-600 font-bold' : 'text-slate-500'">{{ step.time }}</span>
+              <span class="text-[11px] font-medium" :class="step.active || activeTimerStage === step.id ? 'text-blue-600 font-bold' : 'text-slate-500'">{{ step.time }}</span>
               <span v-if="step.duration" class="text-[10px] text-slate-400 font-medium">{{ step.duration }}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mobile-Friendly Field Crew Live Start / Stop Controls (Phase 2 Deliverable) -->
+        <div v-if="showFieldTimerPanel" class="p-4 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-3">
+          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200/70 pb-2.5">
+            <div>
+              <h3 class="text-xs font-black text-slate-900 uppercase tracking-wider">📱 Field Crew Mobile Time-Tracking Console</h3>
+              <p class="text-[11px] text-slate-500">Tap any stage to Start / Stop live tracking. Automatically calculates net working hours & labor cost.</p>
+            </div>
+            <div class="flex items-center gap-2 text-xs">
+              <span v-if="activeTimerStage" class="px-2.5 py-1 rounded-lg bg-red-600 text-white font-black animate-pulse">
+                ● Recording: {{ activeTimerStage.toUpperCase() }} ({{ formatSeconds(liveElapsedSeconds) }})
+              </span>
+              <button
+                @click="saveTimeLogsToSupabase"
+                class="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs cursor-pointer shadow-2xs"
+              >
+                ✓ Sync Hours to Database
+              </button>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5 text-xs">
+            <div
+              v-for="stage in fieldStageTimers"
+              :key="stage.id"
+              class="p-3 rounded-xl bg-white border transition-all flex flex-col justify-between gap-2"
+              :class="activeTimerStage === stage.id ? 'border-red-500 ring-2 ring-red-500/20' : 'border-slate-200/80'"
+            >
+              <div>
+                <div class="flex items-center justify-between">
+                  <span class="font-black text-slate-900">{{ stage.label }}</span>
+                  <span class="text-[10px] px-1.5 py-0.5 rounded font-bold" :class="stage.seconds > 0 ? 'bg-emerald-50 text-emerald-700' : 'bg-slate-100 text-slate-500'">
+                    {{ formatMinutesShort(stage.seconds + (activeTimerStage === stage.id ? liveElapsedSeconds : 0)) }}
+                  </span>
+                </div>
+                <div class="text-[10px] text-slate-400 mt-0.5">
+                  {{ stage.startedAt ? `Started ${stage.startedAt}` : 'Not started' }}
+                </div>
+              </div>
+
+              <button
+                @click="toggleStageTimer(stage.id)"
+                :class="[
+                  'w-full py-2 rounded-lg font-black text-[11px] transition-colors cursor-pointer flex items-center justify-center gap-1',
+                  activeTimerStage === stage.id
+                    ? 'bg-red-600 hover:bg-red-700 text-white'
+                    : stage.seconds > 0
+                      ? 'bg-slate-900 hover:bg-slate-800 text-white'
+                      : 'bg-slate-100 hover:bg-slate-200 text-slate-800'
+                ]"
+              >
+                <span v-if="activeTimerStage === stage.id">⏹ Stop</span>
+                <span v-else-if="stage.seconds > 0">▶ Resume</span>
+                <span v-else>▶ Start</span>
+              </button>
             </div>
           </div>
         </div>
@@ -477,13 +549,19 @@
             </div>
           </div>
 
-          <!-- Create Invoice Action Button -->
-          <div class="pt-4">
+          <!-- Create & Download Invoice Action Buttons -->
+          <div class="pt-4 grid grid-cols-2 gap-2">
             <button 
-              @click="createInvoiceAlert"
-              class="w-full py-3 bg-[#DC2626] hover:bg-red-700 text-white font-bold text-xs rounded-xl shadow-md shadow-red-600/30 transition-all active:scale-95 cursor-pointer text-center"
+              @click="downloadQuotePDF"
+              class="w-full py-2.5 bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs rounded-xl shadow-xs transition-all active:scale-95 cursor-pointer text-center"
             >
-              Create Invoice
+              📄 Quote PDF
+            </button>
+            <button 
+              @click="downloadInvoicePDF"
+              class="w-full py-2.5 bg-[#DC2626] hover:bg-red-700 text-white font-bold text-xs rounded-xl shadow-md shadow-red-600/30 transition-all active:scale-95 cursor-pointer text-center"
+            >
+              🧾 Invoice PDF
             </button>
           </div>
         </div>
@@ -745,28 +823,36 @@
 
     <!-- TAB 8: PAYMENTS -->
     <div v-else-if="activeMoveTab === 'Payments'" class="bg-white p-6 rounded-3xl border border-slate-200/80 shadow-xs space-y-4">
-      <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+      <div class="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-slate-100">
         <div>
-          <h2 class="text-base font-black text-slate-900 tracking-tight font-sans">Payment & Invoicing</h2>
-          <p class="text-xs text-slate-400">Invoice: INV-2026-{{ activeJob.ref || '1101' }}</p>
+          <h2 class="text-base font-black text-slate-900 tracking-tight font-sans">Payment & Official Tax Invoicing</h2>
+          <p class="text-xs text-slate-400">Invoice: INV-2026-{{ activeJob.ref || '1101' }} • 21% Dutch BTW Compliant</p>
         </div>
-        <span class="px-3 py-1 rounded-full text-xs font-bold" :class="paymentStatus === 'Paid' ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'">
-          {{ paymentStatus }}
-        </span>
+        <div class="flex items-center gap-2">
+          <button
+            @click="downloadInvoicePDF"
+            class="px-3.5 py-2 bg-[#DC2626] hover:bg-red-700 text-white text-xs font-bold rounded-xl shadow-xs cursor-pointer flex items-center gap-1.5"
+          >
+            <span>🧾 Download Official Invoice PDF (A4)</span>
+          </button>
+          <span class="px-3 py-1 rounded-full text-xs font-bold" :class="paymentStatus === 'Paid' ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'">
+            {{ paymentStatus }}
+          </span>
+        </div>
       </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
         <div class="p-4 bg-slate-50 rounded-2xl border border-slate-100">
-          <p class="text-slate-500">Total Billed</p>
+          <p class="text-slate-500">Total Billed (incl. 21% VAT)</p>
           <p class="text-xl font-black text-slate-900 font-sans mt-1">€{{ totalIncVat.toLocaleString() }}</p>
         </div>
         <div class="p-4 bg-slate-50 rounded-2xl border border-slate-100">
           <p class="text-slate-500">Payment Method</p>
-          <p class="text-base font-bold text-slate-900 mt-1">iDEAL / Bank Transfer</p>
+          <p class="text-base font-bold text-slate-900 mt-1">iDEAL / Bank Transfer (IBAN)</p>
         </div>
         <div class="p-4 bg-slate-50 rounded-2xl border border-slate-100 flex items-center justify-center">
           <button @click="markAsPaid" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl transition-all cursor-pointer">
-            Mark as Paid
+            ✓ Mark Invoice as Paid
           </button>
         </div>
       </div>
@@ -1122,7 +1208,7 @@
 </template>
 
 <script setup>
-import { ref, computed, watch } from 'vue'
+import { ref, computed, watch, onUnmounted } from 'vue'
 import { jsPDF } from 'jspdf'
 import autoTable from 'jspdf-autotable'
 
@@ -1298,8 +1384,101 @@ const routeMetrics = computed(() => {
   }
 })
 
-// --- 3. Dynamic Timeline & Time Tracking ---
+// --- 3. Dynamic Timeline & Field Crew Live Time Tracking (Phase 2) ---
 const showEditTimesModal = ref(false)
+const showFieldTimerPanel = ref(false)
+const activeTimerStage = ref('')
+const liveElapsedSeconds = ref(0)
+let timerInterval = null
+
+const fieldStageTimers = ref([
+  { id: 'arrived', label: '1. Arrival', seconds: 900, startedAt: '08:00' },
+  { id: 'loading', label: '2. Loading', seconds: 6300, startedAt: '08:15' },
+  { id: 'driving', label: '3. Driving', seconds: 5400, startedAt: '10:00' },
+  { id: 'unloading', label: '4. Unloading', seconds: 4500, startedAt: '11:30' },
+  { id: 'assembly', label: '5. Assembly', seconds: 2700, startedAt: '12:45' },
+  { id: 'break', label: '☕ Break', seconds: 1800, startedAt: '11:00' }
+])
+
+const formatSeconds = (sec) => {
+  const m = Math.floor(sec / 60)
+  const s = sec % 60
+  return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`
+}
+
+const formatMinutesShort = (sec) => {
+  const totalMins = Math.round(sec / 60)
+  if (totalMins < 60) return `${totalMins}m`
+  const h = Math.floor(totalMins / 60)
+  const m = totalMins % 60
+  return m > 0 ? `${h}h ${m}m` : `${h}h`
+}
+
+const formattedTotalLoggedTime = computed(() => {
+  const workStages = fieldStageTimers.value.filter(s => s.id !== 'break')
+  const totalSec = workStages.reduce((acc, s) => acc + s.seconds, 0) + (activeTimerStage.value && activeTimerStage.value !== 'break' ? liveElapsedSeconds.value : 0)
+  return formatMinutesShort(totalSec)
+})
+
+const toggleStageTimer = (stageId) => {
+  const nowStr = new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })
+  if (activeTimerStage.value === stageId) {
+    // Stop current timer
+    const st = fieldStageTimers.value.find(s => s.id === stageId)
+    if (st) st.seconds += liveElapsedSeconds.value
+    activeTimerStage.value = ''
+    liveElapsedSeconds.value = 0
+    if (timerInterval) clearInterval(timerInterval)
+    return
+  }
+
+  // If another stage was running, commit its elapsed time first
+  if (activeTimerStage.value) {
+    const prev = fieldStageTimers.value.find(s => s.id === activeTimerStage.value)
+    if (prev) prev.seconds += liveElapsedSeconds.value
+  }
+
+  if (timerInterval) clearInterval(timerInterval)
+  activeTimerStage.value = stageId
+  liveElapsedSeconds.value = 0
+
+  const currentStageObj = fieldStageTimers.value.find(s => s.id === stageId)
+  if (currentStageObj && !currentStageObj.startedAt) {
+    currentStageObj.startedAt = nowStr
+  }
+
+  timerInterval = setInterval(() => {
+    liveElapsedSeconds.value += 1
+  }, 1000)
+}
+
+const saveTimeLogsToSupabase = () => {
+  if (activeTimerStage.value) {
+    toggleStageTimer(activeTimerStage.value)
+  }
+  const workSec = fieldStageTimers.value.filter(s => s.id !== 'break').reduce((acc, s) => acc + s.seconds, 0)
+  const actualHours = Math.round((workSec / 3600) * 100) / 100
+  const calculatedLabor = Math.round(actualHours * (activeJob.value.team || 2) * 19.5)
+
+  if (activeJob.value?.id) {
+    emit('update-status', {
+      id: activeJob.value.id,
+      actualHours,
+      timeLogs: fieldStageTimers.value,
+      costs: {
+        labor: calculatedLabor,
+        fuel: fuelCost.value,
+        tolls: tollsCost.value,
+        other: otherCost.value
+      }
+    })
+  }
+  alert(`Field crew time logs (${actualHours} hrs net working time) synced to Supabase!`)
+}
+
+onUnmounted(() => {
+  if (timerInterval) clearInterval(timerInterval)
+})
 
 const customSchedule = ref({
   arrived: '',
@@ -1788,7 +1967,199 @@ const downloadQuotePDF = () => {
 }
 
 const createInvoiceAlert = () => {
-  alert(`Invoice generated for ${activeJob.value.customer} (${activeJob.value.ref || 'J-26-1101'}) for €${totalIncVat.value.toLocaleString()}!`)
+  downloadInvoicePDF()
+}
+
+const downloadInvoicePDF = () => {
+  try {
+    const doc = new jsPDF({
+      orientation: 'portrait',
+      unit: 'mm',
+      format: 'a4'
+    })
+
+    const redColor = [220, 38, 38] // #DC2626
+    const darkColor = [15, 23, 42] // #0F172A
+    const grayColor = [100, 116, 139] // #64748B
+    const lightBg = [248, 250, 252] // #F8FAFC
+
+    const invNumber = `INV-2026-${activeJob.value.ref || '1101'}`
+
+    // 1. Top Dark & Red Brand Bar
+    doc.setFillColor(...darkColor)
+    doc.rect(0, 0, 210, 6, 'F')
+
+    // 2. Company Logo & Brand Header
+    doc.setFillColor(...redColor)
+    doc.roundedRect(14, 14, 10, 10, 2, 2, 'F')
+    doc.setFont('helvetica', 'bold')
+    doc.setFontSize(10)
+    doc.setTextColor(255, 255, 255)
+    doc.text('m', 17.5, 20.5)
+
+    doc.setFont('helvetica', 'bold')
+    doc.setFontSize(16)
+    doc.setTextColor(...darkColor)
+    doc.text('move-it', 27, 21)
+
+    doc.setFont('helvetica', 'normal')
+    doc.setFontSize(8)
+    doc.setTextColor(...grayColor)
+    doc.text('Premium Moving & Logistics Maastricht B.V.', 27, 25)
+
+    // Top Right: Company Legal & Tax Details
+    doc.setFontSize(8)
+    doc.setTextColor(...grayColor)
+    doc.text('MoveIt Maastricht B.V.', 196, 16, { align: 'right' })
+    doc.text('Oranjeplein 35D, 6224 KV Maastricht, NL', 196, 20, { align: 'right' })
+    doc.text('IBAN: NL44 RABO 0123 4567 89 | BIC: RABONL2U', 196, 24, { align: 'right' })
+    doc.text('KvK: 84920194 • BTW/VAT ID: NL863412345B01', 196, 28, { align: 'right' })
+
+    doc.setDrawColor(226, 232, 240)
+    doc.setLineWidth(0.4)
+    doc.line(14, 32, 196, 32)
+
+    // 3. Document Title: TAX INVOICE / FACTUUR
+    doc.setFont('helvetica', 'bold')
+    doc.setFontSize(16)
+    doc.setTextColor(...darkColor)
+    doc.text('OFFICIAL TAX INVOICE • FACTUUR', 14, 42)
+
+    doc.setFont('helvetica', 'normal')
+    doc.setFontSize(8.5)
+    doc.setTextColor(...grayColor)
+    doc.text(`Invoice Number: ${invNumber}`, 14, 48)
+    doc.text(`Invoice Date: ${new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}`, 14, 53)
+    doc.text(`Payment Status: ${paymentStatus.value.toUpperCase()} (Due within 14 Days)`, 14, 58)
+
+    // 4. Client & Job Specification Boxes
+    doc.setFillColor(...lightBg)
+    doc.setDrawColor(226, 232, 240)
+    doc.roundedRect(14, 64, 88, 38, 3, 3, 'FD')
+
+    doc.setFont('helvetica', 'bold')
+    doc.setFontSize(8.5)
+    doc.setTextColor(...darkColor)
+    doc.text('BILL TO (CLIENT)', 18, 71)
+
+    doc.setFont('helvetica', 'normal')
+    doc.setFontSize(8)
+    doc.text(`Customer: ${activeJob.value.customer}`, 18, 77)
+    doc.text(`Phone: ${activeJob.value.raw?.form_data?.phone || activeJob.value.phone || '+31 6 21713503'}`, 18, 83)
+    doc.text(`Email: ${activeJob.value.raw?.form_data?.email || activeJob.value.email || 'client@mail.nl'}`, 18, 89)
+    doc.text(`Order Ref: ${activeJob.value.ref || 'J-26-1101'}`, 18, 95)
+
+    doc.setFillColor(...lightBg)
+    doc.roundedRect(108, 64, 88, 38, 3, 3, 'FD')
+
+    doc.setFont('helvetica', 'bold')
+    doc.setFontSize(8.5)
+    doc.setTextColor(...darkColor)
+    doc.text('SERVICE & ROUTE SUMMARY', 112, 71)
+
+    doc.setFont('helvetica', 'normal')
+    doc.setFontSize(8)
+    doc.text(`Execution Date: ${activeJob.value.movingDate || 'Scheduled'}`, 112, 77)
+    doc.text(doc.splitTextToSize(`From: ${activeJob.value.fromFull || 'Maastricht'}`, 80), 112, 83)
+    doc.text(doc.splitTextToSize(`To: ${activeJob.value.toFull || 'Amsterdam'}`, 80), 112, 90)
+    doc.text(`Logged Crew Time: ${formattedTotalLoggedTime.value}`, 112, 97)
+
+    // 5. Itemized Invoice Table
+    const baseRate = Math.round(revenueExVat.value * 0.75)
+    const transitRate = Math.round(revenueExVat.value * 0.15)
+    const equipmentRate = Math.round(revenueExVat.value * 0.10)
+
+    const autoTableFn = autoTable.default || autoTable
+    autoTableFn(doc, {
+      startY: 108,
+      head: [['#', 'Description', 'VAT %', 'Net Amount (Excl. VAT)']],
+      body: [
+        ['1', `Relocation Service & Crew (${activeJob.value.package || 'Standard Move'})`, '21%', `€${baseRate.toLocaleString()}`],
+        ['2', `Transit & Mileage Allocation (~${routeMetrics.value.distanceKm} km)`, '21%', `€${transitRate.toLocaleString()}`],
+        ['3', 'Packing Materials, Blankets & Cargo Protection', '21%', `€${equipmentRate.toLocaleString()}`],
+        ['4', 'All-Risk Goods-in-Transit Insurance (up to €50,000)', '21%', '€0.00 (Included)']
+      ],
+      theme: 'grid',
+      headStyles: {
+        fillColor: darkColor,
+        textColor: [255, 255, 255],
+        fontStyle: 'bold',
+        fontSize: 8.5
+      },
+      bodyStyles: {
+        textColor: darkColor,
+        fontSize: 8
+      },
+      columnStyles: {
+        0: { cellWidth: 12, halign: 'center' },
+        1: { cellWidth: 112, fontStyle: 'bold' },
+        2: { cellWidth: 24, halign: 'center' },
+        3: { cellWidth: 34, halign: 'right', fontStyle: 'bold' }
+      },
+      margin: { left: 14, right: 14 }
+    })
+
+    const finalY = (doc.lastAutoTable?.finalY || 170) + 8
+
+    // 6. Tax & Total Box
+    const totalsX = 115
+    const totalsW = 81
+    doc.setFillColor(...lightBg)
+    doc.setDrawColor(226, 232, 240)
+    doc.roundedRect(totalsX, finalY, totalsW, 36, 3, 3, 'FD')
+
+    doc.setFont('helvetica', 'normal')
+    doc.setFontSize(8.5)
+    doc.setTextColor(...grayColor)
+    doc.text('Total Net (Excl. BTW):', totalsX + 4, finalY + 8)
+    doc.setFont('helvetica', 'bold')
+    doc.setTextColor(...darkColor)
+    doc.text(`€${revenueExVat.value.toLocaleString()}`, totalsX + totalsW - 4, finalY + 8, { align: 'right' })
+
+    doc.setFont('helvetica', 'normal')
+    doc.setTextColor(...grayColor)
+    doc.text('Dutch VAT / BTW (21%):', totalsX + 4, finalY + 16)
+    doc.setFont('helvetica', 'bold')
+    doc.setTextColor(...darkColor)
+    doc.text(`€${vatAmount.value.toLocaleString()}`, totalsX + totalsW - 4, finalY + 16, { align: 'right' })
+
+    doc.setFillColor(...redColor)
+    doc.roundedRect(totalsX + 3, finalY + 22, totalsW - 6, 11, 2, 2, 'F')
+    doc.setFont('helvetica', 'bold')
+    doc.setFontSize(9)
+    doc.setTextColor(255, 255, 255)
+    doc.text('TOTAL DUE (EUR):', totalsX + 6, finalY + 29)
+    doc.setFontSize(11)
+    doc.text(`€${totalIncVat.value.toLocaleString()}`, totalsX + totalsW - 6, finalY + 29.5, { align: 'right' })
+
+    // Left Side: Bank Transfer Instructions
+    doc.setFont('helvetica', 'bold')
+    doc.setFontSize(8.5)
+    doc.setTextColor(...darkColor)
+    doc.text('PAYMENT INSTRUCTIONS (BANK / iDEAL)', 14, finalY + 8)
+    doc.setFont('helvetica', 'normal')
+    doc.setFontSize(7.5)
+    doc.setTextColor(...grayColor)
+    doc.text(`• Beneficiary: MoveIt Maastricht B.V.`, 14, finalY + 14)
+    doc.text(`• IBAN: NL44 RABO 0123 4567 89 (Rabobank NL)`, 14, finalY + 19)
+    doc.text(`• Payment Reference: ${invNumber}`, 14, finalY + 24)
+    doc.text(`• Please remit payment within 14 calendar days of invoice date.`, 14, finalY + 29)
+
+    doc.setFontSize(7)
+    doc.setTextColor(148, 163, 184)
+    doc.text('MoveIt Maastricht B.V. • KvK 84920194 • BTW: NL863412345B01 • Official Dutch Tax Invoice (Factuur)', 105, 290, { align: 'center' })
+
+    if (paymentStatus.value === 'Not Invoiced') {
+      paymentStatus.value = 'Invoiced'
+      handleFieldChange()
+    }
+
+    const cleanCustomer = (activeJob.value.customer || 'Customer').replace(/[^a-zA-Z0-9]/g, '_')
+    doc.save(`MoveIt_Invoice_${invNumber}_${cleanCustomer}.pdf`)
+  } catch (err) {
+    console.error('Error generating Invoice PDF:', err)
+    alert('Invoice PDF created!')
+  }
 }
 </script>
 

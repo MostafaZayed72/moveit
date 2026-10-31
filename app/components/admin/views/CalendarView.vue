@@ -1,32 +1,55 @@
 <template>
   <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
-    <!-- LEFT MAIN AREA: Moving Calendar Schedule (8 Cols - Exact match to "4 Moving Calendar.png") -->
+    <!-- LEFT MAIN AREA: Moving Calendar Schedule (8/9 Cols - Exact match to "4 Moving Calendar.png") -->
     <div class="lg:col-span-8 xl:col-span-9 space-y-4">
-      <!-- Page Title -->
-      <div>
-        <h1 class="text-2xl font-black text-slate-900 tracking-tight font-sans">Moving Calendar</h1>
-        <p class="text-xs text-slate-500 font-medium mt-0.5">
-          Schedule and manage all moving jobs, teams, and vehicles.
-        </p>
+      <!-- Page Title & Conflict Alert Banner -->
+      <div class="flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <h1 class="text-2xl font-black text-slate-900 tracking-tight font-sans">Moving Calendar</h1>
+          <p class="text-xs text-slate-500 font-medium mt-0.5">
+            Schedule and manage all moving jobs, teams, and vehicles.
+          </p>
+        </div>
+
+        <!-- Smart Conflict Detection Pill -->
+        <div class="flex items-center gap-2">
+          <div
+            v-if="detectedConflicts.length > 0"
+            @click="showConflictModal = true"
+            class="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs font-bold cursor-pointer hover:bg-rose-100 transition-colors animate-pulse"
+          >
+            <span>⚠️ {{ detectedConflicts.length }} Resource Conflict{{ detectedConflicts.length > 1 ? 's' : '' }} Detected</span>
+            <span class="underline text-[10px] font-black">Resolve</span>
+          </div>
+          <div
+            v-else
+            class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-700 text-[11px] font-bold"
+          >
+            <span>✓ No Schedule Conflicts</span>
+          </div>
+        </div>
       </div>
 
       <!-- Calendar Controls Toolbar -->
       <div class="flex flex-wrap items-center justify-between gap-3">
         <div class="flex items-center gap-2">
-          <button class="px-3.5 py-2 bg-white hover:bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-700 shadow-2xs cursor-pointer">
+          <button
+            @click="resetToToday"
+            class="px-3.5 py-2 bg-white hover:bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-700 shadow-2xs cursor-pointer"
+          >
             Today
           </button>
           <div class="flex items-center bg-white border border-slate-200 rounded-xl shadow-2xs">
-            <button class="px-2.5 py-2 text-slate-500 hover:text-slate-900 cursor-pointer">‹</button>
-            <button class="px-2.5 py-2 text-slate-500 hover:text-slate-900 border-l border-slate-200 cursor-pointer">›</button>
+            <button @click="prevPeriod" class="px-2.5 py-2 text-slate-500 hover:text-slate-900 cursor-pointer">‹</button>
+            <button @click="nextPeriod" class="px-2.5 py-2 text-slate-500 hover:text-slate-900 border-l border-slate-200 cursor-pointer">›</button>
           </div>
           <div class="px-3.5 py-2 bg-white border border-slate-200 rounded-xl text-xs font-black text-slate-900 flex items-center gap-2 shadow-2xs">
-            <span>November 2025</span>
+            <span>{{ currentMonthLabel }}</span>
             <span class="text-slate-400 text-[10px]">▼</span>
           </div>
         </div>
 
-        <div class="flex items-center gap-2.5">
+        <div class="flex flex-wrap items-center gap-2">
           <!-- Month | Week | Day | List Switcher -->
           <div class="flex items-center bg-white border border-slate-200 rounded-xl p-1 shadow-2xs text-xs font-bold">
             <button 
@@ -44,6 +67,22 @@
             </button>
           </div>
 
+          <!-- Team Filter -->
+          <select v-model="teamFilter" class="px-2.5 py-2 bg-white border border-slate-200 rounded-xl text-xs font-bold text-slate-700 shadow-2xs focus:outline-none cursor-pointer">
+            <option value="all">👥 All Teams</option>
+            <option value="Team 1">Team 1</option>
+            <option value="Team 2">Team 2</option>
+            <option value="Team 3">Team 3</option>
+          </select>
+
+          <!-- Vehicle Filter -->
+          <select v-model="vanFilter" class="px-2.5 py-2 bg-white border border-slate-200 rounded-xl text-xs font-bold text-slate-700 shadow-2xs focus:outline-none cursor-pointer">
+            <option value="all">🚐 All Vehicles</option>
+            <option value="Van 1">Van 1</option>
+            <option value="Van 2">Van 2</option>
+            <option value="Van 3">Van 3</option>
+          </select>
+
           <!-- Status Filter -->
           <select v-model="statusFilter" class="px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs font-bold text-slate-700 shadow-2xs focus:outline-none cursor-pointer">
             <option value="all">▽ All Statuses</option>
@@ -56,16 +95,17 @@
       </div>
 
       <!-- WEEK SCHEDULE GRID (Default View matching "4 Moving Calendar.png") -->
-      <div v-if="viewMode === 'Week' || viewMode === 'Day'" class="bg-white rounded-2xl border border-slate-200/80 shadow-xs overflow-hidden">
+      <div v-if="viewMode === 'Week'" class="bg-white rounded-2xl border border-slate-200/80 shadow-xs overflow-hidden">
         <div class="overflow-x-auto">
           <div class="min-w-[820px]">
             <!-- Header Row: Time + 7 Days -->
             <div class="grid grid-cols-8 border-b border-slate-200 bg-slate-50/50 text-center">
               <div class="py-3 px-2 border-r border-slate-100 text-[10px] font-bold text-slate-400"></div>
               <div 
-                v-for="day in weekDays" 
+                v-for="day in filteredWeekDays" 
                 :key="day.date"
-                class="py-2.5 px-2 border-r border-slate-100 last:border-r-0"
+                @click="selectDayView(day)"
+                class="py-2.5 px-2 border-r border-slate-100 last:border-r-0 cursor-pointer hover:bg-blue-50/40 transition-colors"
               >
                 <div class="text-xs font-black text-slate-800">{{ day.name }}</div>
                 <div class="text-[11px] font-semibold text-slate-500">{{ day.date }}</div>
@@ -93,28 +133,48 @@
 
               <!-- 7 Day Columns with Scheduled Cards -->
               <div 
-                v-for="day in weekDays" 
+                v-for="day in filteredWeekDays" 
                 :key="day.date"
                 class="p-1.5 space-y-2.5 bg-white relative"
               >
                 <div 
                   v-for="job in day.jobs" 
-                  :key="job.ref"
+                  :key="job.ref + job.time"
+                  @click="handleJobCardClick(job)"
                   :class="[
-                    'p-2.5 rounded-xl border-l-4 text-[11px] space-y-1.5 shadow-2xs transition-transform hover:scale-[1.01] cursor-pointer',
-                    job.cardClass
+                    'p-2.5 rounded-xl border-l-4 text-[11px] space-y-1.5 shadow-2xs transition-all hover:scale-[1.02] hover:shadow-md cursor-pointer relative group',
+                    job.cardClass,
+                    hasConflict(day.date, job) ? 'ring-2 ring-rose-500 ring-offset-1' : ''
                   ]"
                 >
-                  <div class="flex items-center gap-1 font-black text-slate-900">
-                    <span>🏠</span>
-                    <span>{{ job.ref }}</span>
+                  <!-- Conflict Indicator Badge -->
+                  <div
+                    v-if="hasConflict(day.date, job)"
+                    class="px-1.5 py-0.5 rounded bg-rose-600 text-white text-[9px] font-black flex items-center justify-between"
+                  >
+                    <span>⚠️ DOUBLE BOOKED</span>
+                  </div>
+
+                  <div class="flex items-center justify-between gap-1">
+                    <div class="flex items-center gap-1 font-black text-slate-900">
+                      <span>🏠</span>
+                      <span>{{ job.ref }}</span>
+                    </div>
+                    <button
+                      v-if="job.ref !== 'Unavailable'"
+                      @click.stop="openRescheduleModal(day.date, job)"
+                      class="opacity-0 group-hover:opacity-100 text-[9px] px-1.5 py-0.5 rounded bg-white/90 text-slate-700 font-bold shadow-2xs hover:bg-slate-900 hover:text-white transition-all"
+                      title="Edit Time / Resource"
+                    >
+                      ✎ Edit
+                    </button>
                   </div>
                   <div class="font-bold text-slate-900 leading-tight">{{ job.customer }}</div>
                   <div class="text-[10px] text-slate-600 leading-tight">{{ job.route }}</div>
                   <div class="text-[10px] font-bold text-slate-700 pt-1">{{ job.time }}</div>
                   <div v-if="job.van" class="flex items-center justify-between pt-1">
-                    <div class="flex -space-x-1.5">
-                      <span class="w-5 h-5 rounded-full bg-slate-800 text-white text-[9px] font-bold flex items-center justify-center ring-1 ring-white">A</span>
+                    <div class="flex -space-x-1.5" :title="job.team || 'Team 1'">
+                      <span class="w-5 h-5 rounded-full bg-slate-800 text-white text-[9px] font-bold flex items-center justify-center ring-1 ring-white">R</span>
                       <span class="w-5 h-5 rounded-full bg-red-600 text-white text-[9px] font-bold flex items-center justify-center ring-1 ring-white">T</span>
                     </div>
                     <span class="text-[10px] font-semibold text-slate-600">{{ job.van }}</span>
@@ -137,31 +197,148 @@
         </div>
       </div>
 
-      <!-- MONTH VIEW FALLBACK -->
+      <!-- DAY VIEW (Focused Hourly Dispatch Board + Field Timer Quick View) -->
+      <div v-else-if="viewMode === 'Day'" class="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-5 space-y-4">
+        <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+          <div>
+            <h3 class="text-sm font-black text-slate-900">Daily Dispatch Schedule — {{ activeDayObj.name }}, {{ activeDayObj.date }} 2025</h3>
+            <p class="text-[11px] text-slate-500">{{ activeDayObj.jobs.length }} scheduled moves • Click any move to open full file or edit slot</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <select v-model="selectedDayDate" class="px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-800">
+              <option v-for="d in weekDays" :key="d.date" :value="d.date">{{ d.name }} {{ d.date }}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="space-y-3">
+          <div
+            v-for="job in activeDayObj.jobs"
+            :key="job.ref + job.time"
+            @click="handleJobCardClick(job)"
+            :class="[
+              'p-4 rounded-2xl border-l-4 flex flex-wrap items-center justify-between gap-4 cursor-pointer hover:shadow-md transition-all',
+              job.cardClass
+            ]"
+          >
+            <div class="space-y-1">
+              <div class="flex items-center gap-2">
+                <span class="text-xs font-black text-slate-900">{{ job.ref }}</span>
+                <span class="px-2 py-0.5 rounded-md bg-white/80 text-[10px] font-bold text-slate-700">{{ job.status }}</span>
+                <span v-if="hasConflict(activeDayObj.date, job)" class="px-2 py-0.5 rounded bg-rose-600 text-white text-[10px] font-black">⚠️ Conflict</span>
+              </div>
+              <div class="text-sm font-black text-slate-900">{{ job.customer }}</div>
+              <div class="text-xs text-slate-600 font-medium">📍 {{ job.route }}</div>
+            </div>
+
+            <div class="flex items-center gap-4">
+              <div class="text-right">
+                <div class="text-xs font-black text-slate-900">🕒 {{ job.time }}</div>
+                <div class="text-[11px] text-slate-600 font-semibold">{{ job.team || 'Team 1' }} • {{ job.van || 'No Van' }}</div>
+              </div>
+              <button
+                v-if="job.ref !== 'Unavailable'"
+                @click.stop="openRescheduleModal(activeDayObj.date, job)"
+                class="px-3 py-1.5 rounded-xl bg-white border border-slate-200 text-xs font-bold text-slate-700 hover:bg-slate-900 hover:text-white transition-colors cursor-pointer"
+              >
+                Reschedule
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- LIST VIEW (Tabular Master Dispatch List) -->
+      <div v-else-if="viewMode === 'List'" class="bg-white rounded-2xl border border-slate-200/80 shadow-xs overflow-hidden">
+        <div class="px-5 py-3.5 border-b border-slate-100 flex items-center justify-between">
+          <h3 class="text-xs font-black text-slate-900 uppercase tracking-wider">Scheduled Moves List ({{ allScheduledFlat.length }})</h3>
+          <span class="text-[11px] text-slate-500 font-semibold">Click any row to open Move Detail</span>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse text-xs">
+            <thead>
+              <tr class="bg-slate-50/70 text-[10px] font-bold text-slate-400 uppercase border-b border-slate-100">
+                <th class="py-3 px-4">Date & Time</th>
+                <th class="py-3 px-3">Ref</th>
+                <th class="py-3 px-3">Customer</th>
+                <th class="py-3 px-3">Route</th>
+                <th class="py-3 px-3">Team & Van</th>
+                <th class="py-3 px-3">Status</th>
+                <th class="py-3 px-4 text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100">
+              <tr
+                v-for="item in allScheduledFlat"
+                :key="item.ref + item.date"
+                @click="handleJobCardClick(item)"
+                class="hover:bg-slate-50/90 cursor-pointer transition-colors"
+              >
+                <td class="py-3 px-4 font-bold text-slate-800">{{ item.dayName }}, {{ item.date }} • <span class="text-blue-600">{{ item.time }}</span></td>
+                <td class="py-3 px-3 font-black text-slate-900">{{ item.ref }}</td>
+                <td class="py-3 px-3 font-bold text-slate-800">{{ item.customer }}</td>
+                <td class="py-3 px-3 text-slate-600">{{ item.route }}</td>
+                <td class="py-3 px-3 font-semibold text-slate-700">{{ item.team || 'Team 1' }} • {{ item.van || '—' }}</td>
+                <td class="py-3 px-3">
+                  <span class="px-2 py-0.5 rounded-md text-[10px] font-bold bg-emerald-50 text-emerald-700">{{ item.status || 'Confirmed' }}</span>
+                </td>
+                <td class="py-3 px-4 text-right">
+                  <button
+                    @click.stop="openRescheduleModal(item.date, item)"
+                    class="px-2.5 py-1 rounded-lg border border-slate-200 text-[11px] font-bold text-slate-700 hover:bg-slate-100"
+                  >
+                    Edit Slot
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- MONTH VIEW -->
       <div v-else class="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-5">
         <div class="grid grid-cols-7 gap-2 text-center text-xs font-bold text-slate-500 pb-3 border-b border-slate-100">
           <div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div><div>Sun</div>
         </div>
         <div class="grid grid-cols-7 gap-2 pt-3">
-          <div v-for="n in 30" :key="n" class="min-h-[85px] p-2 rounded-xl border border-slate-100 hover:bg-slate-50 text-xs">
-            <div class="font-bold text-slate-700">{{ n }} Nov</div>
-            <div v-if="n === 3" class="mt-1 px-1.5 py-0.5 bg-emerald-50 text-emerald-700 rounded text-[10px] font-bold truncate">J-26-1098 De Vries</div>
-            <div v-if="n === 4" class="mt-1 px-1.5 py-0.5 bg-amber-50 text-amber-700 rounded text-[10px] font-bold truncate">J-26-1101 Sophie</div>
-            <div v-if="n === 5" class="mt-1 px-1.5 py-0.5 bg-purple-50 text-purple-700 rounded text-[10px] font-bold truncate">J-26-1096 Meijer</div>
+          <div
+            v-for="n in 30"
+            :key="n"
+            @click="selectMonthDay(n)"
+            class="min-h-[92px] p-2 rounded-xl border border-slate-100 hover:border-blue-300 hover:bg-slate-50/70 text-xs transition-all cursor-pointer"
+          >
+            <div class="flex items-center justify-between">
+              <span class="font-bold text-slate-700">{{ n }} Nov</span>
+              <span v-if="getJobsForMonthDay(n).length" class="text-[9px] font-black px-1.5 py-0.2 rounded bg-slate-100 text-slate-600">
+                {{ getJobsForMonthDay(n).length }}
+              </span>
+            </div>
+            <div class="space-y-1 mt-1.5">
+              <div
+                v-for="mJob in getJobsForMonthDay(n)"
+                :key="mJob.ref"
+                @click.stop="handleJobCardClick(mJob)"
+                class="px-1.5 py-0.5 rounded text-[10px] font-bold truncate border-l-2"
+                :class="mJob.cardClass"
+              >
+                {{ mJob.ref }} {{ mJob.customer }}
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- RIGHT SIDEBAR: Mini Calendar + Teams & Vehicles + Unscheduled Jobs (4 Cols) -->
+    <!-- RIGHT SIDEBAR: Mini Calendar + Teams & Vehicles + Unscheduled Jobs (4/3 Cols) -->
     <div class="lg:col-span-4 xl:col-span-3 space-y-4">
       <!-- 1. Mini Month Calendar Card -->
       <div class="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-4 space-y-3">
         <div class="flex items-center justify-between">
-          <span class="text-xs font-black text-slate-900">‹ November 2025</span>
+          <span class="text-xs font-black text-slate-900">‹ {{ currentMonthLabel }}</span>
           <div class="flex items-center gap-1">
-            <button class="w-6 h-6 rounded-lg border border-slate-200 text-xs text-slate-500 hover:bg-slate-50">‹</button>
-            <button class="w-6 h-6 rounded-lg border border-slate-200 text-xs text-slate-500 hover:bg-slate-50">›</button>
+            <button @click="prevPeriod" class="w-6 h-6 rounded-lg border border-slate-200 text-xs text-slate-500 hover:bg-slate-50 cursor-pointer">‹</button>
+            <button @click="nextPeriod" class="w-6 h-6 rounded-lg border border-slate-200 text-xs text-slate-500 hover:bg-slate-50 cursor-pointer">›</button>
           </div>
         </div>
         <div class="grid grid-cols-7 text-center text-[10px] font-bold text-slate-400">
@@ -169,10 +346,19 @@
         </div>
         <div class="grid grid-cols-7 gap-1 text-center text-xs font-semibold">
           <span v-for="d in [27,28,29,30,31]" :key="'p'+d" class="py-1 text-slate-300">{{ d }}</span>
-          <span class="py-1 text-slate-700">1</span>
-          <span class="py-1 text-slate-700">2</span>
-          <span class="py-1 bg-blue-600 text-white font-black rounded-lg shadow-2xs">3</span>
-          <span v-for="d in [4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30]" :key="d" class="py-1 text-slate-700 hover:bg-slate-100 rounded-lg cursor-pointer">{{ d }}</span>
+          <span
+            v-for="d in 30"
+            :key="d"
+            @click="selectMiniCalendarDay(d)"
+            :class="[
+              'py-1 rounded-lg cursor-pointer transition-colors',
+              activeMiniDay === d
+                ? 'bg-blue-600 text-white font-black shadow-2xs'
+                : 'text-slate-700 hover:bg-slate-100'
+            ]"
+          >
+            {{ d }}
+          </span>
         </div>
       </div>
 
@@ -180,7 +366,12 @@
       <div class="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-4 space-y-3">
         <div class="flex items-center justify-between">
           <h3 class="text-xs font-black text-slate-900">Teams & Vehicles</h3>
-          <button class="text-[11px] font-bold text-blue-600 hover:underline cursor-pointer">Manage</button>
+          <button
+            @click="teamFilter = 'all'; vanFilter = 'all'"
+            class="text-[11px] font-bold text-blue-600 hover:underline cursor-pointer"
+          >
+            {{ teamFilter !== 'all' || vanFilter !== 'all' ? 'Reset Filter' : 'Manage' }}
+          </button>
         </div>
 
         <div class="flex items-center gap-4 border-b border-slate-200 text-xs font-bold">
@@ -201,34 +392,43 @@
         </div>
 
         <div v-if="activeResourceTab === 'teams'" class="space-y-2.5 pt-1 text-xs">
-          <div class="flex items-center justify-between">
+          <div
+            @click="teamFilter = teamFilter === 'Team 1' ? 'all' : 'Team 1'"
+            :class="['flex items-center justify-between p-1.5 rounded-lg cursor-pointer transition-colors', teamFilter === 'Team 1' ? 'bg-slate-100' : 'hover:bg-slate-50']"
+          >
             <div class="flex items-center gap-2">
               <span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span>
               <div>
-                <div class="font-bold text-slate-900">Team 1</div>
-                <div class="text-[10px] text-slate-400">2 movers</div>
+                <div class="font-bold text-slate-900">Team 1 (Rico & Tariq)</div>
+                <div class="text-[10px] text-slate-400">2 movers • €42.50/hr</div>
               </div>
             </div>
             <span class="px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-700 text-[10px] font-bold">Available</span>
           </div>
 
-          <div class="flex items-center justify-between">
+          <div
+            @click="teamFilter = teamFilter === 'Team 2' ? 'all' : 'Team 2'"
+            :class="['flex items-center justify-between p-1.5 rounded-lg cursor-pointer transition-colors', teamFilter === 'Team 2' ? 'bg-slate-100' : 'hover:bg-slate-50']"
+          >
             <div class="flex items-center gap-2">
               <span class="w-2.5 h-2.5 rounded-full bg-blue-600"></span>
               <div>
-                <div class="font-bold text-slate-900">Team 2</div>
-                <div class="text-[10px] text-slate-400">2 movers</div>
+                <div class="font-bold text-slate-900">Team 2 (Sami & Youssef)</div>
+                <div class="text-[10px] text-slate-400">2 movers • €34.50/hr</div>
               </div>
             </div>
             <span class="px-2 py-0.5 rounded-md bg-blue-50 text-blue-600 text-[10px] font-bold">In Job</span>
           </div>
 
-          <div class="flex items-center justify-between">
+          <div
+            @click="teamFilter = teamFilter === 'Team 3' ? 'all' : 'Team 3'"
+            :class="['flex items-center justify-between p-1.5 rounded-lg cursor-pointer transition-colors', teamFilter === 'Team 3' ? 'bg-slate-100' : 'hover:bg-slate-50']"
+          >
             <div class="flex items-center gap-2">
               <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
               <div>
-                <div class="font-bold text-slate-900">Team 3</div>
-                <div class="text-[10px] text-slate-400">3 movers</div>
+                <div class="font-bold text-slate-900">Team 3 (Full Crew)</div>
+                <div class="text-[10px] text-slate-400">3 movers • €58.00/hr</div>
               </div>
             </div>
             <span class="px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-700 text-[10px] font-bold">Available</span>
@@ -236,43 +436,198 @@
         </div>
 
         <div v-else class="space-y-2.5 pt-1 text-xs">
-          <div class="flex items-center justify-between">
-            <span class="font-bold text-slate-800">🚐 Van 1 (SHEK 23)</span>
+          <div
+            @click="vanFilter = vanFilter === 'Van 1' ? 'all' : 'Van 1'"
+            :class="['flex items-center justify-between p-1.5 rounded-lg cursor-pointer', vanFilter === 'Van 1' ? 'bg-slate-100' : 'hover:bg-slate-50']"
+          >
+            <span class="font-bold text-slate-800">🚐 Van 1 (SHEK 23 • 22m³)</span>
             <span class="px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-700 text-[10px] font-bold">Available</span>
           </div>
-          <div class="flex items-center justify-between">
-            <span class="font-bold text-slate-800">🚐 Van 2 (V-482-BK)</span>
+          <div
+            @click="vanFilter = vanFilter === 'Van 2' ? 'all' : 'Van 2'"
+            :class="['flex items-center justify-between p-1.5 rounded-lg cursor-pointer', vanFilter === 'Van 2' ? 'bg-slate-100' : 'hover:bg-slate-50']"
+          >
+            <span class="font-bold text-slate-800">🚐 Van 2 (V-482-BK • 20m³)</span>
             <span class="px-2 py-0.5 rounded-md bg-blue-50 text-blue-600 text-[10px] font-bold">In Use</span>
+          </div>
+          <div
+            @click="vanFilter = vanFilter === 'Van 3' ? 'all' : 'Van 3'"
+            :class="['flex items-center justify-between p-1.5 rounded-lg cursor-pointer', vanFilter === 'Van 3' ? 'bg-slate-100' : 'hover:bg-slate-50']"
+          >
+            <span class="font-bold text-slate-800">🚐 Van 3 (City Van • 12m³)</span>
+            <span class="px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-700 text-[10px] font-bold">Available</span>
+          </div>
+          <div class="flex items-center justify-between p-1.5 rounded-lg">
+            <span class="font-bold text-slate-800">🏗️ Moving Lift (27m)</span>
+            <span class="px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-700 text-[10px] font-bold">Standby</span>
           </div>
         </div>
       </div>
 
-      <!-- 3. Pending / Unscheduled Jobs (5) -->
+      <!-- 3. Pending / Unscheduled Jobs -->
       <div class="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-4 space-y-3">
         <div class="flex items-center justify-between">
-          <h3 class="text-xs font-black text-slate-900">Pending / Unscheduled Jobs (5)</h3>
-          <button class="text-[11px] font-bold text-blue-600 hover:underline cursor-pointer">View all</button>
+          <h3 class="text-xs font-black text-slate-900">Pending / Unscheduled Jobs ({{ unscheduledJobs.length }})</h3>
+          <button @click="$emit('add-job')" class="text-[11px] font-bold text-blue-600 hover:underline cursor-pointer">+ Add</button>
         </div>
 
         <div class="space-y-2.5 text-xs">
           <div 
             v-for="uJob in unscheduledJobs" 
             :key="uJob.ref"
-            class="flex items-center justify-between p-2 rounded-xl hover:bg-slate-50 transition-colors border border-slate-100"
+            class="flex items-center justify-between p-2 rounded-xl hover:bg-slate-50 transition-colors border border-slate-100 group"
           >
-            <div class="flex items-start gap-2.5">
+            <div @click="handleJobCardClick(uJob)" class="flex items-start gap-2.5 cursor-pointer">
               <span class="w-7 h-7 rounded-lg flex items-center justify-center text-xs" :class="uJob.iconBg">🏠</span>
               <div>
-                <div class="font-black text-slate-900 text-[11px]">{{ uJob.ref }}</div>
+                <div class="font-black text-slate-900 text-[11px] group-hover:text-blue-600">{{ uJob.ref }}</div>
                 <div class="font-semibold text-slate-700 text-[11px]">{{ uJob.customer }}</div>
                 <div class="text-[10px] text-slate-400">{{ uJob.route }}</div>
               </div>
             </div>
             <div class="text-right space-y-1">
               <div class="text-[10px] text-slate-500 font-semibold">📅 {{ uJob.date }}</div>
-              <span class="px-2 py-0.5 rounded text-[9px] font-bold inline-block" :class="uJob.priorityBadge">
-                {{ uJob.priority }}
-              </span>
+              <div class="flex items-center justify-end gap-1">
+                <span class="px-2 py-0.5 rounded text-[9px] font-bold inline-block" :class="uJob.priorityBadge">
+                  {{ uJob.priority }}
+                </span>
+                <button
+                  @click.stop="openScheduleUnscheduledModal(uJob)"
+                  class="px-2 py-0.5 rounded bg-slate-900 hover:bg-red-600 text-white text-[9px] font-bold cursor-pointer transition-colors"
+                  title="Assign to Calendar Slot"
+                >
+                  Schedule
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL: Schedule / Reschedule & Smart Conflict Checker -->
+    <div v-if="showScheduleModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs">
+      <div class="bg-white rounded-3xl p-6 max-w-md w-full border border-slate-200 shadow-2xl space-y-4">
+        <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+          <div>
+            <h3 class="text-base font-black text-slate-900">Schedule & Resource Assignment</h3>
+            <p class="text-[11px] text-slate-500">{{ scheduleForm.ref }} — {{ scheduleForm.customer }} ({{ scheduleForm.route }})</p>
+          </div>
+          <button @click="showScheduleModal = false" class="w-7 h-7 rounded-full hover:bg-slate-100 text-slate-400 hover:text-slate-700 cursor-pointer">✕</button>
+        </div>
+
+        <div class="space-y-3 text-xs">
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block font-bold text-slate-700 mb-1">Day of Week</label>
+              <select v-model="scheduleForm.dayDate" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl font-bold text-slate-800">
+                <option v-for="d in weekDays" :key="d.date" :value="d.date">{{ d.name }} ({{ d.date }})</option>
+              </select>
+            </div>
+            <div>
+              <label class="block font-bold text-slate-700 mb-1">Time Slot</label>
+              <select v-model="scheduleForm.time" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl font-bold text-slate-800">
+                <option value="08:00 – 12:00">08:00 – 12:00 (Morning)</option>
+                <option value="09:00 – 13:00">09:00 – 13:00 (Mid-Morning)</option>
+                <option value="12:00 – 15:00">12:00 – 15:00 (Afternoon)</option>
+                <option value="13:00 – 17:00">13:00 – 17:00 (Late Shift)</option>
+                <option value="16:00 – 19:00">16:00 – 19:00 (Evening)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block font-bold text-slate-700 mb-1">Assigned Crew</label>
+              <select v-model="scheduleForm.team" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl font-bold text-slate-800">
+                <option value="Team 1">Team 1 (Rico & Tariq)</option>
+                <option value="Team 2">Team 2 (Sami & Youssef)</option>
+                <option value="Team 3">Team 3 (3 Movers)</option>
+              </select>
+            </div>
+            <div>
+              <label class="block font-bold text-slate-700 mb-1">Assigned Vehicle</label>
+              <select v-model="scheduleForm.van" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl font-bold text-slate-800">
+                <option value="Van 1">Van 1 (22m³ Box)</option>
+                <option value="Van 2">Van 2 (20m³ Sprinter)</option>
+                <option value="Van 3">Van 3 (12m³ City)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Live Conflict Warning Preview inside Modal -->
+          <div
+            v-if="modalConflictWarning"
+            class="p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 space-y-1"
+          >
+            <div class="font-black text-xs flex items-center gap-1.5">
+              <span>⚠️ Scheduling Conflict Detected!</span>
+            </div>
+            <p class="text-[11px] font-medium leading-relaxed">{{ modalConflictWarning }}</p>
+          </div>
+          <div
+            v-else
+            class="p-2.5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-700 text-[11px] font-bold flex items-center gap-1.5"
+          >
+            <span>✓ Slot & resources ({{ scheduleForm.team }} / {{ scheduleForm.van }}) are free on {{ scheduleForm.dayDate }}.</span>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-end gap-2 pt-3 border-t border-slate-100">
+          <button @click="showScheduleModal = false" class="px-4 py-2 rounded-xl border border-slate-200 text-xs font-bold text-slate-600 hover:bg-slate-50 cursor-pointer">
+            Cancel
+          </button>
+          <button
+            @click="confirmScheduleAssignment"
+            class="px-4 py-2 rounded-xl bg-[#DC2626] hover:bg-red-700 text-white text-xs font-bold shadow-sm cursor-pointer"
+          >
+            {{ modalConflictWarning ? 'Override & Save Anyway' : 'Save Schedule' }}
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL: Conflict Resolution Center -->
+    <div v-if="showConflictModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs">
+      <div class="bg-white rounded-3xl p-6 max-w-lg w-full border border-slate-200 shadow-2xl space-y-4">
+        <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+          <div>
+            <h3 class="text-base font-black text-slate-900">⚠️ Resource Conflict Resolution</h3>
+            <p class="text-xs text-slate-500">Overlapping vehicle or team assignments detected on the same time slot.</p>
+          </div>
+          <button @click="showConflictModal = false" class="w-7 h-7 rounded-full hover:bg-slate-100 text-slate-400 cursor-pointer">✕</button>
+        </div>
+
+        <div v-if="detectedConflicts.length === 0" class="p-4 rounded-2xl bg-emerald-50 text-emerald-800 text-xs font-bold text-center">
+          ✓ All conflicts have been resolved!
+        </div>
+
+        <div v-else class="space-y-3 max-h-[320px] overflow-y-auto">
+          <div
+            v-for="(conf, idx) in detectedConflicts"
+            :key="idx"
+            class="p-3.5 rounded-2xl bg-rose-50/70 border border-rose-200 space-y-2 text-xs"
+          >
+            <div class="flex items-center justify-between">
+              <span class="font-black text-rose-700">{{ conf.dayDate }} • {{ conf.resource }} Double-Booked</span>
+              <span class="px-2 py-0.5 rounded bg-rose-600 text-white text-[10px] font-bold">{{ conf.overlapTime }}</span>
+            </div>
+            <div class="text-slate-700 font-medium">
+              <strong>{{ conf.jobA.ref }} ({{ conf.jobA.customer }})</strong> and <strong>{{ conf.jobB.ref }} ({{ conf.jobB.customer }})</strong> share <strong>{{ conf.resource }}</strong> during overlapping hours.
+            </div>
+            <div class="flex items-center gap-2 pt-1">
+              <button
+                @click="autoResolveConflict(conf)"
+                class="px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-emerald-600 text-white text-[11px] font-bold cursor-pointer transition-colors"
+              >
+                ✨ Auto-Assign Free Van/Team to {{ conf.jobB.ref }}
+              </button>
+              <button
+                @click="showConflictModal = false; openRescheduleModal(conf.dayDate, conf.jobB)"
+                class="px-3 py-1.5 rounded-xl bg-white border border-slate-200 text-slate-700 text-[11px] font-bold hover:bg-slate-100 cursor-pointer"
+              >
+                Manual Edit
+              </button>
             </div>
           </div>
         </div>
@@ -282,83 +637,377 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 
-defineProps({
+const props = defineProps({
   orders: {
     type: Array,
     default: () => []
   }
 })
 
-defineEmits(['add-job'])
+const emit = defineEmits(['add-job', 'select-job', 'update-status'])
 
 const viewMode = ref('Week')
 const statusFilter = ref('all')
+const teamFilter = ref('all')
+const vanFilter = ref('all')
 const activeResourceTab = ref('teams')
+const currentMonthLabel = ref('November 2025')
+const activeMiniDay = ref(3)
+const selectedDayDate = ref('3 Nov')
 
-const weekDays = [
+const showScheduleModal = ref(false)
+const showConflictModal = ref(false)
+
+const scheduleForm = ref({
+  isFromUnscheduled: false,
+  originalDayDate: '3 Nov',
+  ref: '',
+  customer: '',
+  route: '',
+  dayDate: '3 Nov',
+  time: '08:00 – 12:00',
+  team: 'Team 1',
+  van: 'Van 1',
+  status: 'Confirmed'
+})
+
+const weekDays = ref([
   {
     name: 'Mon',
     date: '3 Nov',
+    dayNum: 3,
     jobs: [
-      { ref: 'J-26-1098', customer: 'De Vries', route: 'Maastricht → Amsterdam', time: '08:00 – 12:00', van: 'Van 1', cardClass: 'bg-emerald-50/90 border-l-emerald-500' },
-      { ref: 'J-26-1101', customer: 'Jansen Family', route: 'Maastricht → Heerlen', time: '13:00 – 16:00', van: 'Van 2', cardClass: 'bg-rose-50/90 border-l-rose-500 mt-12' }
+      { ref: 'J-26-1098', customer: 'De Vries', route: 'Maastricht → Amsterdam', time: '08:00 – 12:00', van: 'Van 1', team: 'Team 1', status: 'Confirmed', cardClass: 'bg-emerald-50/90 border-l-emerald-500' },
+      { ref: 'J-26-1101', customer: 'Jansen Family', route: 'Maastricht → Heerlen', time: '13:00 – 16:00', van: 'Van 2', team: 'Team 2', status: 'Confirmed', cardClass: 'bg-rose-50/90 border-l-rose-500 mt-12' }
     ]
   },
   {
     name: 'Tue',
     date: '4 Nov',
+    dayNum: 4,
     jobs: [
-      { ref: 'J-26-1099', customer: 'UM Student', route: 'Maastricht → Eindhoven', time: '08:30 – 11:30', van: 'Van 3', cardClass: 'bg-blue-50/90 border-l-blue-600 mt-3' },
-      { ref: 'J-26-1101', customer: 'Sophie de Jong', route: 'Maastricht → Maastricht', time: '12:00 – 15:00', van: 'Van 1', cardClass: 'bg-amber-50/90 border-l-amber-500 mt-6' }
+      { ref: 'J-26-1099', customer: 'UM Student', route: 'Maastricht → Eindhoven', time: '08:30 – 11:30', van: 'Van 3', team: 'Team 2', status: 'In Progress', cardClass: 'bg-blue-50/90 border-l-blue-600 mt-3' },
+      { ref: 'J-26-1100', customer: 'Sophie de Jong', route: 'Maastricht → Maastricht', time: '12:00 – 15:00', van: 'Van 1', team: 'Team 1', status: 'Team Assigned', cardClass: 'bg-amber-50/90 border-l-amber-500 mt-6' }
     ]
   },
   {
     name: 'Wed',
     date: '5 Nov',
+    dayNum: 5,
     jobs: [
-      { ref: 'J-26-1096', customer: 'Meijer Family', route: 'Maastricht → Den Haag', time: '09:00 – 15:00', van: 'Van 2', cardClass: 'bg-purple-50/90 border-l-purple-500 mt-6 py-4' },
-      { ref: 'J-26-1097', customer: 'TechSolutions BV', route: 'Maastricht → Amsterdam', time: '16:00 – 19:00', van: 'Van 3', cardClass: 'bg-emerald-50/90 border-l-emerald-500 mt-8' }
+      { ref: 'J-26-1096', customer: 'Meijer Family', route: 'Maastricht → Den Haag', time: '09:00 – 15:00', van: 'Van 2', team: 'Team 3', status: 'Quotation Sent', cardClass: 'bg-purple-50/90 border-l-purple-500 mt-6 py-4' },
+      { ref: 'J-26-1097', customer: 'TechSolutions BV', route: 'Maastricht → Amsterdam', time: '16:00 – 19:00', van: 'Van 3', team: 'Team 1', status: 'Confirmed', cardClass: 'bg-emerald-50/90 border-l-emerald-500 mt-8' }
     ]
   },
   {
     name: 'Thu',
     date: '6 Nov',
+    dayNum: 6,
     jobs: [
-      { ref: 'J-26-1094', customer: 'Martine Peters', route: 'Maastricht → Maastricht', time: '08:00 – 12:00', van: 'Van 1', cardClass: 'bg-amber-50/90 border-l-amber-500' },
-      { ref: 'J-26-1095', customer: 'GlobalRelocate BV', route: 'Maastricht → Brussels', time: '13:00 – 17:00', van: 'Van 1', cardClass: 'bg-blue-50/90 border-l-blue-600 mt-10' }
+      { ref: 'J-26-1094', customer: 'Martine Peters', route: 'Maastricht → Maastricht', time: '08:00 – 12:00', van: 'Van 1', team: 'Team 1', status: 'Team Assigned', cardClass: 'bg-amber-50/90 border-l-amber-500' },
+      { ref: 'J-26-1095', customer: 'GlobalRelocate BV', route: 'Maastricht → Brussels', time: '13:00 – 17:00', van: 'Van 1', team: 'Team 2', status: 'In Progress', cardClass: 'bg-blue-50/90 border-l-blue-600 mt-10' }
     ]
   },
   {
     name: 'Fri',
     date: '7 Nov',
+    dayNum: 7,
     jobs: [
-      { ref: 'J-26-1093', customer: 'Scott Raab', route: 'Lanaken → Storage', time: '09:00 – 13:00', van: 'Van 1', cardClass: 'bg-rose-50/90 border-l-rose-500 mt-6' },
-      { ref: 'J-26-1092', customer: 'Paris Group', route: 'Maastricht → Paris', time: '12:00 – 18:00', van: 'Van 3', cardClass: 'bg-purple-50/90 border-l-purple-500 mt-4 py-4' }
+      { ref: 'J-26-1093', customer: 'Scott Raab', route: 'Lanaken → Storage', time: '09:00 – 13:00', van: 'Van 1', team: 'Team 1', status: 'Confirmed', cardClass: 'bg-rose-50/90 border-l-rose-500 mt-6' },
+      { ref: 'J-26-1092', customer: 'Paris Group', route: 'Maastricht → Paris', time: '12:00 – 18:00', van: 'Van 3', team: 'Team 3', status: 'Quotation Sent', cardClass: 'bg-purple-50/90 border-l-purple-500 mt-4 py-4' }
     ]
   },
   {
     name: 'Sat',
     date: '8 Nov',
+    dayNum: 8,
     jobs: [
-      { ref: 'J-26-1091', customer: 'Laurie Keller', route: 'Maastricht → Rotterdam', time: '08:30 – 12:00', van: 'Van 2', cardClass: 'bg-emerald-50/90 border-l-emerald-500 mt-4' }
+      { ref: 'J-26-1091', customer: 'Laurie Keller', route: 'Maastricht → Rotterdam', time: '08:30 – 12:00', van: 'Van 2', team: 'Team 2', status: 'Confirmed', cardClass: 'bg-emerald-50/90 border-l-emerald-500 mt-4' }
     ]
   },
   {
     name: 'Sun',
     date: '9 Nov',
+    dayNum: 9,
     jobs: [
-      { ref: 'Unavailable', customer: 'Team off', route: 'Weekend rest', time: 'All Day', van: '', cardClass: 'bg-slate-100 border-l-slate-400 mt-8 opacity-80' }
+      { ref: 'Unavailable', customer: 'Team off', route: 'Weekend rest', time: 'All Day', van: '', team: '', status: 'Unavailable', cardClass: 'bg-slate-100 border-l-slate-400 mt-8 opacity-80' }
     ]
   }
-]
+])
 
-const unscheduledJobs = [
+const unscheduledJobs = ref([
   { ref: 'J-26-1102', customer: 'Van Loon', route: 'Maastricht → Antwerp', date: '10 Nov', priority: 'High', priorityBadge: 'bg-rose-50 text-rose-600', iconBg: 'bg-rose-50 text-rose-500' },
   { ref: 'J-26-1103', customer: 'Seda Syrink', route: 'Maastricht → Düsseldorf', date: '11 Nov', priority: 'Medium', priorityBadge: 'bg-amber-50 text-amber-700', iconBg: 'bg-amber-50 text-amber-500' },
   { ref: 'J-26-1104', customer: 'Lavinia Bonanno', route: 'Maastricht → Zurich', date: '12 Nov', priority: 'Medium', priorityBadge: 'bg-amber-50 text-amber-700', iconBg: 'bg-rose-50 text-rose-500' },
   { ref: 'J-26-1105', customer: 'Emeline Roche', route: 'Maastricht → Geneva', date: '14 Nov', priority: 'Low', priorityBadge: 'bg-slate-100 text-slate-600', iconBg: 'bg-blue-50 text-blue-500' },
   { ref: 'J-26-1106', customer: 'Nigel', route: 'Maastricht → Maastricht', date: '15 Nov', priority: 'Low', priorityBadge: 'bg-slate-100 text-slate-600', iconBg: 'bg-purple-50 text-purple-500' }
-]
+])
+
+// Parse time range "08:00 – 12:00" into minutes [480, 720]
+const parseTimeRange = (timeStr) => {
+  if (!timeStr || timeStr === 'All Day') return null
+  const parts = timeStr.split(/[-–]/)
+  if (parts.length !== 2) return null
+  const toMins = (s) => {
+    const [h, m] = s.trim().split(':').map(Number)
+    return (h || 0) * 60 + (m || 0)
+  }
+  return [toMins(parts[0]), toMins(parts[1])]
+}
+
+const rangesOverlap = (r1, r2) => {
+  if (!r1 || !r2) return false
+  return r1[0] < r2[1] && r2[0] < r1[1]
+}
+
+// Smart Conflict Detection across all days
+const detectedConflicts = computed(() => {
+  const conflicts = []
+  for (const day of weekDays.value) {
+    const jobs = day.jobs.filter(j => j.ref !== 'Unavailable')
+    for (let i = 0; i < jobs.length; i++) {
+      for (let k = i + 1; k < jobs.length; k++) {
+        const a = jobs[i]
+        const b = jobs[k]
+        const rA = parseTimeRange(a.time)
+        const rB = parseTimeRange(b.time)
+        if (rangesOverlap(rA, rB)) {
+          if (a.van && b.van && a.van === b.van) {
+            conflicts.push({
+              dayDate: day.date,
+              resource: a.van,
+              overlapTime: `${a.time} & ${b.time}`,
+              jobA: a,
+              jobB: b
+            })
+          } else if (a.team && b.team && a.team === b.team) {
+            conflicts.push({
+              dayDate: day.date,
+              resource: a.team,
+              overlapTime: `${a.time} & ${b.time}`,
+              jobA: a,
+              jobB: b
+            })
+          }
+        }
+      }
+    }
+  }
+  return conflicts
+})
+
+const hasConflict = (dayDate, job) => {
+  return detectedConflicts.value.some(
+    c => c.dayDate === dayDate && (c.jobA.ref === job.ref || c.jobB.ref === job.ref)
+  )
+}
+
+// Modal Live Conflict Checker
+const modalConflictWarning = computed(() => {
+  const targetDay = weekDays.value.find(d => d.date === scheduleForm.value.dayDate)
+  if (!targetDay) return ''
+  const newRange = parseTimeRange(scheduleForm.value.time)
+  for (const existing of targetDay.jobs) {
+    if (existing.ref === scheduleForm.value.ref || existing.ref === 'Unavailable') continue
+    const exRange = parseTimeRange(existing.time)
+    if (rangesOverlap(newRange, exRange)) {
+      if (existing.van === scheduleForm.value.van) {
+        return `${scheduleForm.value.van} is already assigned to ${existing.ref} (${existing.customer}) during ${existing.time}.`
+      }
+      if (existing.team === scheduleForm.value.team) {
+        return `${scheduleForm.value.team} is already assigned to ${existing.ref} (${existing.customer}) during ${existing.time}.`
+      }
+    }
+  }
+  return ''
+})
+
+// Filtered Week Days based on Status, Team, and Vehicle
+const filteredWeekDays = computed(() => {
+  return weekDays.value.map(day => ({
+    ...day,
+    jobs: day.jobs.filter(job => {
+      if (statusFilter.value !== 'all' && job.status !== statusFilter.value) return false
+      if (teamFilter.value !== 'all' && job.team !== teamFilter.value) return false
+      if (vanFilter.value !== 'all' && job.van !== vanFilter.value) return false
+      return true
+    })
+  }))
+})
+
+const activeDayObj = computed(() => {
+  return filteredWeekDays.value.find(d => d.date === selectedDayDate.value) || filteredWeekDays.value[0]
+})
+
+const allScheduledFlat = computed(() => {
+  const list = []
+  for (const d of filteredWeekDays.value) {
+    for (const j of d.jobs) {
+      if (j.ref !== 'Unavailable') {
+        list.push({ ...j, date: d.date, dayName: d.name })
+      }
+    }
+  }
+  return list
+})
+
+const getJobsForMonthDay = (dayNum) => {
+  const found = weekDays.value.find(d => d.dayNum === dayNum)
+  return found ? found.jobs.filter(j => j.ref !== 'Unavailable') : []
+}
+
+const selectDayView = (day) => {
+  selectedDayDate.value = day.date
+  viewMode.value = 'Day'
+}
+
+const selectMonthDay = (dayNum) => {
+  activeMiniDay.value = dayNum
+  const found = weekDays.value.find(d => d.dayNum === dayNum)
+  if (found) {
+    selectedDayDate.value = found.date
+    viewMode.value = 'Day'
+  }
+}
+
+const selectMiniCalendarDay = (dayNum) => {
+  activeMiniDay.value = dayNum
+  const found = weekDays.value.find(d => d.dayNum === dayNum)
+  if (found) {
+    selectedDayDate.value = found.date
+  }
+}
+
+const resetToToday = () => {
+  activeMiniDay.value = 3
+  selectedDayDate.value = '3 Nov'
+  currentMonthLabel.value = 'November 2025'
+}
+
+const prevPeriod = () => {
+  const idx = weekDays.value.findIndex(d => d.date === selectedDayDate.value)
+  if (idx > 0) selectedDayDate.value = weekDays.value[idx - 1].date
+}
+
+const nextPeriod = () => {
+  const idx = weekDays.value.findIndex(d => d.date === selectedDayDate.value)
+  if (idx < weekDays.value.length - 1) selectedDayDate.value = weekDays.value[idx + 1].date
+}
+
+// Click on a Calendar Job Card -> Open MoveDetailView
+const handleJobCardClick = (calJob) => {
+  if (!calJob || calJob.ref === 'Unavailable') return
+  const matchedOrder = props.orders.find(
+    o => o.ref === calJob.ref || o.customer?.toLowerCase() === calJob.customer?.toLowerCase()
+  )
+  if (matchedOrder) {
+    emit('select-job', matchedOrder)
+  } else {
+    emit('select-job', {
+      id: calJob.ref,
+      ref: calJob.ref,
+      customer: calJob.customer,
+      email: `${calJob.customer.toLowerCase().replace(/\s+/g, '.')}@mail.nl`,
+      phone: '+31 6 4123 8910',
+      movingDate: `2025-11-0${calJob.dayNum || 4}`,
+      shortDate: calJob.date || '4 Nov',
+      time: calJob.time || '08:00 – 12:00',
+      route: calJob.route,
+      fromFull: calJob.route.split('→')[0]?.trim() || 'Maastricht',
+      toFull: calJob.route.split('→')[1]?.trim() || 'Amsterdam',
+      package: 'Full Service',
+      team: 2,
+      estValue: 1350,
+      status: calJob.status || 'Confirmed',
+      operationalStatus: calJob.status || 'Confirmed',
+      salesStatus: 'Won / Confirmed',
+      paymentStatus: 'Invoiced',
+      priority: 'High',
+      coordinator: 'Sherif Eliwa',
+      vehicle: calJob.van || 'Van 1 (SHEK 23)'
+    })
+  }
+}
+
+const openRescheduleModal = (dayDate, job) => {
+  scheduleForm.value = {
+    isFromUnscheduled: false,
+    originalDayDate: dayDate,
+    ref: job.ref,
+    customer: job.customer,
+    route: job.route,
+    dayDate: dayDate,
+    time: job.time || '08:00 – 12:00',
+    team: job.team || 'Team 1',
+    van: job.van || 'Van 1',
+    status: job.status || 'Confirmed'
+  }
+  showScheduleModal.value = true
+}
+
+const openScheduleUnscheduledModal = (uJob) => {
+  scheduleForm.value = {
+    isFromUnscheduled: true,
+    originalDayDate: '',
+    ref: uJob.ref,
+    customer: uJob.customer,
+    route: uJob.route,
+    dayDate: '4 Nov',
+    time: '09:00 – 13:00',
+    team: 'Team 1',
+    van: 'Van 1',
+    status: 'Confirmed'
+  }
+  showScheduleModal.value = true
+}
+
+const confirmScheduleAssignment = () => {
+  const f = scheduleForm.value
+  if (f.isFromUnscheduled) {
+    unscheduledJobs.value = unscheduledJobs.value.filter(u => u.ref !== f.ref)
+  } else {
+    const oldDay = weekDays.value.find(d => d.date === f.originalDayDate)
+    if (oldDay) {
+      oldDay.jobs = oldDay.jobs.filter(j => j.ref !== f.ref)
+    }
+  }
+
+  const targetDay = weekDays.value.find(d => d.date === f.dayDate)
+  if (targetDay) {
+    targetDay.jobs.push({
+      ref: f.ref,
+      customer: f.customer,
+      route: f.route,
+      time: f.time,
+      team: f.team,
+      van: f.van,
+      status: f.status,
+      cardClass: 'bg-emerald-50/90 border-l-emerald-500 mt-4'
+    })
+  }
+
+  const matchedOrder = props.orders.find(o => o.ref === f.ref)
+  if (matchedOrder) {
+    emit('update-status', {
+      id: matchedOrder.id,
+      operationalStatus: 'Confirmed',
+      vehicle: f.van,
+      scheduledTimeSlot: f.time
+    })
+  }
+
+  showScheduleModal.value = false
+}
+
+const autoResolveConflict = (conf) => {
+  const usedVans = ['Van 1', 'Van 2', 'Van 3']
+  const freeVan = usedVans.find(v => v !== conf.jobA.van && v !== conf.jobB.van) || 'Van 3'
+  const usedTeams = ['Team 1', 'Team 2', 'Team 3']
+  const freeTeam = usedTeams.find(t => t !== conf.jobA.team && t !== conf.jobB.team) || 'Team 3'
+
+  conf.jobB.van = freeVan
+  conf.jobB.team = freeTeam
+}
 </script>
