@@ -1,59 +1,71 @@
 -- =============================================================================
 -- MoveIt Maastricht CRM — Phase 2 Idempotent Database Migration
 -- File: supabase/migration_phase2_crm.sql
--- Safe to run multiple times without "policy already exists" or "column exists" errors.
+-- Safe to run multiple times even when tables already exist from earlier versions!
 -- =============================================================================
 
 -- 1. Movers Table (Labor & Payroll tracking)
 CREATE TABLE IF NOT EXISTS public.movers (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   name TEXT NOT NULL,
-  role TEXT DEFAULT 'Mover', -- 'Lead Mover', 'Driver', 'Packer', 'Helper'
-  hourly_rate NUMERIC NOT NULL DEFAULT 18.00,
-  phone TEXT,
-  email TEXT,
-  active BOOLEAN DEFAULT true,
   created_at TIMESTAMPTZ DEFAULT now()
 );
+
+-- Ensure all Phase 2 columns exist on public.movers even if table was created earlier
+ALTER TABLE public.movers
+  ADD COLUMN IF NOT EXISTS name TEXT,
+  ADD COLUMN IF NOT EXISTS role TEXT DEFAULT 'Mover',
+  ADD COLUMN IF NOT EXISTS hourly_rate NUMERIC NOT NULL DEFAULT 18.00,
+  ADD COLUMN IF NOT EXISTS phone TEXT,
+  ADD COLUMN IF NOT EXISTS email TEXT,
+  ADD COLUMN IF NOT EXISTS active BOOLEAN DEFAULT true;
 
 -- 2. Order Movers Junction Table (Tracks hours worked per mover per order + field stages)
 CREATE TABLE IF NOT EXISTS public.order_movers (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   order_id UUID REFERENCES public.orders(id) ON DELETE CASCADE,
   mover_id UUID REFERENCES public.movers(id) ON DELETE CASCADE,
-  mover_name TEXT,
-  role_in_job TEXT DEFAULT 'Mover',
-  hourly_rate_snapshot NUMERIC NOT NULL DEFAULT 18.00,
-  hours_worked NUMERIC NOT NULL DEFAULT 0,
-  stages_worked TEXT[] DEFAULT ARRAY['Loading', 'Driving', 'Unloading'],
-  notes TEXT,
   created_at TIMESTAMPTZ DEFAULT now()
 );
+
+ALTER TABLE public.order_movers
+  ADD COLUMN IF NOT EXISTS mover_name TEXT,
+  ADD COLUMN IF NOT EXISTS role_in_job TEXT DEFAULT 'Mover',
+  ADD COLUMN IF NOT EXISTS hourly_rate_snapshot NUMERIC NOT NULL DEFAULT 18.00,
+  ADD COLUMN IF NOT EXISTS hours_worked NUMERIC NOT NULL DEFAULT 0,
+  ADD COLUMN IF NOT EXISTS stages_worked TEXT[] DEFAULT ARRAY['Loading', 'Driving', 'Unloading'],
+  ADD COLUMN IF NOT EXISTS notes TEXT;
 
 -- 3. Vehicles & Fleet Management
 CREATE TABLE IF NOT EXISTS public.vehicles (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   name TEXT NOT NULL,
-  license_plate TEXT,
-  capacity_m3 NUMERIC DEFAULT 20,
-  hourly_cost NUMERIC DEFAULT 15.00,
-  km_cost NUMERIC DEFAULT 0.35,
-  active BOOLEAN DEFAULT true,
   created_at TIMESTAMPTZ DEFAULT now()
 );
+
+ALTER TABLE public.vehicles
+  ADD COLUMN IF NOT EXISTS name TEXT,
+  ADD COLUMN IF NOT EXISTS license_plate TEXT,
+  ADD COLUMN IF NOT EXISTS capacity_m3 NUMERIC DEFAULT 20,
+  ADD COLUMN IF NOT EXISTS hourly_cost NUMERIC DEFAULT 15.00,
+  ADD COLUMN IF NOT EXISTS km_cost NUMERIC DEFAULT 0.35,
+  ADD COLUMN IF NOT EXISTS active BOOLEAN DEFAULT true;
 
 -- 4. Claims & Damages Tracking
 CREATE TABLE IF NOT EXISTS public.claims (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   order_id UUID REFERENCES public.orders(id) ON DELETE CASCADE,
-  item_damaged TEXT NOT NULL,
-  description TEXT,
-  claim_amount NUMERIC DEFAULT 0,
-  settled_amount NUMERIC DEFAULT 0,
-  status TEXT DEFAULT 'open', -- 'open', 'investigating', 'settled', 'rejected'
-  blame_mover_id UUID REFERENCES public.movers(id) ON DELETE SET NULL,
+  item_damaged TEXT NOT NULL DEFAULT 'General Item',
   created_at TIMESTAMPTZ DEFAULT now()
 );
+
+ALTER TABLE public.claims
+  ADD COLUMN IF NOT EXISTS item_damaged TEXT,
+  ADD COLUMN IF NOT EXISTS description TEXT,
+  ADD COLUMN IF NOT EXISTS claim_amount NUMERIC DEFAULT 0,
+  ADD COLUMN IF NOT EXISTS settled_amount NUMERIC DEFAULT 0,
+  ADD COLUMN IF NOT EXISTS status TEXT DEFAULT 'open',
+  ADD COLUMN IF NOT EXISTS blame_mover_id UUID REFERENCES public.movers(id) ON DELETE SET NULL;
 
 -- 5. Enhance Expenses Table with Direct Order Linking & Phase 2 Categories
 ALTER TABLE public.expenses 
@@ -73,12 +85,12 @@ ALTER TABLE public.orders
   ADD COLUMN IF NOT EXISTS external_equipment_cost NUMERIC DEFAULT 0,
   ADD COLUMN IF NOT EXISTS discount_amount NUMERIC DEFAULT 0,
   ADD COLUMN IF NOT EXISTS vat_rate NUMERIC DEFAULT 21,
-  ADD COLUMN IF NOT EXISTS payment_status TEXT DEFAULT 'unpaid', -- 'unpaid', 'partial', 'paid'
-  ADD COLUMN IF NOT EXISTS payment_method TEXT, -- 'iDEAL', 'Bank Transfer', 'Cash', 'Pin'
+  ADD COLUMN IF NOT EXISTS payment_status TEXT DEFAULT 'unpaid',
+  ADD COLUMN IF NOT EXISTS payment_method TEXT,
   ADD COLUMN IF NOT EXISTS invoice_number TEXT,
-  ADD COLUMN IF NOT EXISTS lead_source TEXT DEFAULT 'Website', -- 'Website', 'WhatsApp', 'Phone', 'Referral', 'Partner'
-  ADD COLUMN IF NOT EXISTS move_type TEXT DEFAULT 'Residential', -- 'Residential', 'Student', 'Office', 'International', 'Transport Only'
-  ADD COLUMN IF NOT EXISTS customer_rating INTEGER, -- 1 to 5
+  ADD COLUMN IF NOT EXISTS lead_source TEXT DEFAULT 'Website',
+  ADD COLUMN IF NOT EXISTS move_type TEXT DEFAULT 'Residential',
+  ADD COLUMN IF NOT EXISTS customer_rating INTEGER,
   ADD COLUMN IF NOT EXISTS scheduled_time_slot TEXT DEFAULT '08:00 - 12:00',
   ADD COLUMN IF NOT EXISTS assigned_team TEXT DEFAULT 'Team 1',
   ADD COLUMN IF NOT EXISTS assigned_van TEXT DEFAULT 'Van 1',
@@ -125,4 +137,3 @@ SELECT * FROM (VALUES
   ('Moving Lift (Geda / Böcker 27m)', 'LIFT-01', 0, 45.00, 0.20, true)
 ) AS v(name, license_plate, capacity_m3, hourly_cost, km_cost, active)
 WHERE NOT EXISTS (SELECT 1 FROM public.vehicles LIMIT 1);
-
