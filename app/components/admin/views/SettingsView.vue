@@ -1281,19 +1281,19 @@ const openEditMember = (member) => {
   showEditMemberModal.value = true
 }
 
-const saveEditMember = () => {
+const saveEditMember = async () => {
   if (!editingMember.value || !editingMember.value.name) return
   const index = teamMembers.value.findIndex(m => m.id === editingMember.value.id)
   if (index !== -1) {
     teamMembers.value[index] = { ...editingMember.value }
     triggerToast(`Updated ${editingMember.value.name} successfully!`)
-    saveToStorage()
+    await saveAllSettings()
   }
   showEditMemberModal.value = false
   editingMember.value = null
 }
 
-const saveNewMember = () => {
+const saveNewMember = async () => {
   if (!newMember.value.name) return
   teamMembers.value.push({
     id: String(Date.now()),
@@ -1303,13 +1303,13 @@ const saveNewMember = () => {
   showAddMemberModal.value = false
   newMember.value = { name: '', email: '', phone: '', role: 'Mover', hourlyRate: 18.00 }
   triggerToast('Staff member added successfully!')
-  saveToStorage()
+  await saveAllSettings()
 }
 
-const removeMember = (id) => {
+const removeMember = async (id) => {
   teamMembers.value = teamMembers.value.filter(m => m.id !== id)
   triggerToast('Staff member removed.')
-  saveToStorage()
+  await saveAllSettings()
 }
 
 // 4. Service Packages State
@@ -1354,7 +1354,7 @@ const openEditPackageModal = (pkg, index) => {
   showPackageModal.value = true
 }
 
-const savePackage = () => {
+const savePackage = async () => {
   if (!packageForm.value.name.trim()) {
     triggerToast('Please provide a package name')
     return
@@ -1369,15 +1369,15 @@ const savePackage = () => {
   }
 
   showPackageModal.value = false
-  saveToStorage()
+  await saveAllSettings()
 }
 
-const deletePackage = (index) => {
+const deletePackage = async (index) => {
   if (index < 0 || index >= servicePackages.value.length) return
   const pkgName = servicePackages.value[index]?.name || 'Package'
   servicePackages.value.splice(index, 1)
   triggerToast(`Package "${pkgName}" deleted.`)
-  saveToStorage()
+  await saveAllSettings()
 }
 
 // 5. Communication & Notifications State

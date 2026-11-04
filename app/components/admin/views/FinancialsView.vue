@@ -29,10 +29,19 @@
           </button>
 
           <button
-            @click="showAddTxModal = true"
-            class="px-3.5 py-2 bg-[#DC2626] hover:bg-red-700 text-white rounded-xl text-xs font-bold shadow-2xs cursor-pointer"
+            @click="openCreateInvoiceModal"
+            class="px-3.5 py-2 bg-[#DC2626] hover:bg-red-700 text-white rounded-xl text-xs font-bold shadow-2xs cursor-pointer flex items-center gap-1.5"
+            title="Create and issue a new Customer Invoice"
           >
-            + Record Entry
+            <span>+</span> Create Invoice
+          </button>
+
+          <button
+            @click="showAddTxModal = true; newTx.type = 'Expense'"
+            class="px-3.5 py-2 bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 rounded-xl text-xs font-bold shadow-2xs cursor-pointer"
+            title="Log an operational expense"
+          >
+            + Add Expense
           </button>
         </div>
       </div>
@@ -574,6 +583,18 @@ const newTx = ref({
   method: 'Bank Transfer'
 })
 
+const openCreateInvoiceModal = () => {
+  newTx.value = {
+    type: 'Income',
+    category: 'Moving Service',
+    customer: '',
+    desc: 'MoveIt Professional Relocation',
+    amount: '',
+    method: 'Bank Transfer'
+  }
+  showAddTxModal.value = true
+}
+
 const computedKpis = computed(() => {
   const rev = props.totalRevenue > 0 ? props.totalRevenue : 53672.50
   const exp = props.totalExpenses > 0 ? props.totalExpenses : Math.round(rev * 0.44)
@@ -649,8 +670,10 @@ const outstandingInvoices = computed(() => {
     }))
 })
 
+const manualTransactions = ref([])
+
 const transactions = computed(() => {
-  return (props.orders || []).slice(0, 12).map((o, idx) => ({
+  const fromOrders = (props.orders || []).slice(0, 15).map((o, idx) => ({
     date: o.shortDate || 'Recent',
     type: 'Income',
     ref: `INV-26-${String(o.id).slice(0, 4).toUpperCase()}`,
@@ -661,6 +684,7 @@ const transactions = computed(() => {
     status: o.operationalStatus === 'Completed' ? 'Paid' : 'Pending',
     method: idx % 2 === 0 ? 'Bank Transfer' : 'Tikkie'
   }))
+  return [...manualTransactions.value, ...fromOrders]
 })
 
 const filteredTransactions = computed(() => {
@@ -689,7 +713,7 @@ const saveNewTransaction = () => {
   if (!newTx.value.customer || !newTx.value.amount) return
   const prefix = newTx.value.type === 'Income' ? 'INV-2026-' : 'EXP-2026-'
   const num = Math.floor(1000 + Math.random() * 9000)
-  transactions.value.unshift({
+  manualTransactions.value.unshift({
     date: new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }),
     type: newTx.value.type,
     ref: `${prefix}${num}`,
