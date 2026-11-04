@@ -1,13 +1,28 @@
 <template>
   <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
     <!-- LEFT MAIN AREA: Customers Header, 4 KPIs, Filters & Table -->
-    <div class="lg:col-span-8 space-y-4 min-w-0">
+    <div :class="[isDrawerOpen && activeSelectedCustomer ? 'lg:col-span-8' : 'lg:col-span-12', 'space-y-4 min-w-0 transition-all duration-300']">
       <!-- Page Title -->
-      <div>
-        <h1 class="text-2xl font-black text-slate-900 tracking-tight font-sans">Customers</h1>
-        <p class="text-xs text-slate-500 font-medium mt-0.5">
-          Manage your customer database, view history and bookings.
-        </p>
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div>
+          <h1 class="text-2xl font-black text-slate-900 tracking-tight font-sans">Customers</h1>
+          <p class="text-xs text-slate-500 font-medium mt-0.5">
+            Manage your customer database, view history and bookings.
+          </p>
+        </div>
+        <button 
+          @click="isDrawerOpen = !isDrawerOpen"
+          :class="[
+            'flex items-center gap-1.5 px-3.5 py-2 border text-xs font-bold rounded-xl shadow-xs transition-all cursor-pointer self-start sm:self-auto',
+            isDrawerOpen ? 'bg-white hover:bg-slate-50 text-slate-700 border-slate-200' : 'bg-red-50 text-red-700 border-red-200 hover:bg-red-100'
+          ]"
+          :title="isDrawerOpen ? 'Collapse side panel' : 'Expand side panel'"
+        >
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"/>
+          </svg>
+          <span>{{ isDrawerOpen ? 'Hide Panel' : 'Show Panel' }}</span>
+        </button>
       </div>
 
       <!-- 4 KPI Cards Row (Real Database Aggregations) -->
@@ -96,6 +111,12 @@
         >
           Clear
         </button>
+
+        <!-- Selection Badge -->
+        <div v-if="selectedCustomers.length > 0" class="flex items-center gap-2 bg-red-50 text-red-700 px-3 py-1.5 rounded-xl border border-red-200 text-xs font-bold ml-auto">
+          <span>✓ {{ selectedCustomers.length }} selected</span>
+          <button @click="selectedCustomers = []" class="ml-1 text-[10px] underline text-slate-500 hover:text-slate-800 cursor-pointer">Deselect</button>
+        </div>
       </div>
 
       <!-- Customers Data Table -->
@@ -104,8 +125,15 @@
           <table class="w-full text-left text-xs border-collapse">
             <thead>
               <tr class="bg-slate-50/80 text-[10px] font-bold text-slate-400 uppercase tracking-wider border-b border-slate-200/80">
-                <th class="py-3 px-3.5 w-8 text-center">
-                  <input type="checkbox" class="rounded text-red-600 focus:ring-red-500 cursor-pointer" />
+                <th class="py-3 px-3.5 w-8 text-center" @click.stop>
+                  <input 
+                    type="checkbox" 
+                    :checked="isAllSelected"
+                    :indeterminate.prop="isSomeSelected"
+                    @change="toggleSelectAll"
+                    class="w-4 h-4 rounded text-red-600 focus:ring-red-500 cursor-pointer accent-[#DC2626]" 
+                    title="Select All"
+                  />
                 </th>
                 <th class="py-3 px-3 font-bold">NAME</th>
                 <th class="py-3 px-3 font-bold">PHONE</th>
@@ -123,16 +151,21 @@
                 v-for="c in paginatedCustomers" 
                 :key="c.id || c.name"
                 @mouseenter="activeSelectedCustomer = c"
-                @click="activeSelectedCustomer = c"
+                @click="activeSelectedCustomer = c; isDrawerOpen = true"
                 :class="[
                   'transition-colors cursor-pointer group',
                   activeSelectedCustomer?.name === c.name 
                     ? 'bg-red-50/40 border-l-4 border-l-[#DC2626]' 
-                    : 'hover:bg-slate-50/80'
+                    : (selectedCustomers.includes(c.name) ? 'bg-red-50/20' : 'hover:bg-slate-50/80')
                 ]"
               >
                 <td class="py-3 px-3.5 text-center" @click.stop>
-                  <input type="checkbox" class="rounded text-red-600 focus:ring-red-500 cursor-pointer" />
+                  <input 
+                    type="checkbox" 
+                    :checked="selectedCustomers.includes(c.name)"
+                    @change="toggleSelectCustomer(c.name)"
+                    class="w-4 h-4 rounded text-red-600 focus:ring-red-500 cursor-pointer accent-[#DC2626]" 
+                  />
                 </td>
                 <td class="py-3 px-3 whitespace-nowrap">
                   <div class="flex items-center gap-2.5">
@@ -191,7 +224,7 @@
     </div>
 
     <!-- RIGHT SIDEBAR: Customer Profile Detail Drawer (Live Customer Data) -->
-    <div v-if="activeSelectedCustomer" class="lg:col-span-4 bg-white rounded-2xl border border-slate-200/80 shadow-sm p-5 sticky top-20 space-y-5">
+    <div v-if="isDrawerOpen && activeSelectedCustomer" class="lg:col-span-4 bg-white rounded-2xl border border-slate-200/80 shadow-sm p-5 sticky top-20 space-y-5 transition-all duration-300">
       <!-- Customer Header -->
       <div class="flex items-center justify-between">
         <div class="flex items-center gap-3">
@@ -207,6 +240,15 @@
           <span class="px-2.5 py-0.5 rounded-md bg-emerald-50 text-emerald-700 text-[11px] font-bold">
             {{ activeSelectedCustomer.status || 'Active' }}
           </span>
+          <button 
+            @click="isDrawerOpen = false" 
+            class="w-7 h-7 flex items-center justify-center rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors cursor-pointer"
+            title="Close Panel"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+          </button>
         </div>
       </div>
 
@@ -296,6 +338,7 @@ const activeCustomersList = computed(() => {
 })
 
 const activeSelectedCustomer = ref(null)
+const isDrawerOpen = ref(true)
 
 watch(activeCustomersList, (newCusts) => {
   if (!activeSelectedCustomer.value && newCusts.length > 0) {
@@ -333,4 +376,36 @@ const paginatedCustomers = computed(() => {
   const start = (currentPage.value - 1) * pageSize
   return filteredCustomers.value.slice(start, start + pageSize)
 })
+
+// Checkbox selection state
+const selectedCustomers = ref([])
+
+const isAllSelected = computed(() => {
+  if (paginatedCustomers.value.length === 0) return false
+  return paginatedCustomers.value.every(c => selectedCustomers.value.includes(c.name))
+})
+
+const isSomeSelected = computed(() => {
+  return !isAllSelected.value && paginatedCustomers.value.some(c => selectedCustomers.value.includes(c.name))
+})
+
+const toggleSelectAll = () => {
+  if (isAllSelected.value) {
+    const pageNames = new Set(paginatedCustomers.value.map(c => c.name))
+    selectedCustomers.value = selectedCustomers.value.filter(name => !pageNames.has(name))
+  } else {
+    const set = new Set(selectedCustomers.value)
+    paginatedCustomers.value.forEach(c => set.add(c.name))
+    selectedCustomers.value = Array.from(set)
+  }
+}
+
+const toggleSelectCustomer = (name) => {
+  const index = selectedCustomers.value.indexOf(name)
+  if (index > -1) {
+    selectedCustomers.value.splice(index, 1)
+  } else {
+    selectedCustomers.value.push(name)
+  }
+}
 </script>

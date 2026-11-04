@@ -1,7 +1,7 @@
 <template>
   <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
-    <!-- LEFT MAIN AREA: Vehicles Header, 5 KPIs, Table & Bottom Widgets (8 Cols - Exact match to "7 Vehicles.png") -->
-    <div class="lg:col-span-8 space-y-4 min-w-0">
+    <!-- LEFT MAIN AREA: Vehicles Header, 5 KPIs, Table & Bottom Widgets (8 or 12 Cols) -->
+    <div :class="[isDrawerOpen && selectedVehicle ? 'lg:col-span-8' : 'lg:col-span-12', 'space-y-4 min-w-0 transition-all duration-300']">
       <!-- Header -->
       <div class="flex items-center justify-between">
         <div>
@@ -18,6 +18,19 @@
           <button class="flex items-center gap-1.5 px-3.5 py-2 bg-white hover:bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-700 shadow-2xs cursor-pointer">
             <span>📍</span>
             <span>View on Map</span>
+          </button>
+          <button 
+            @click="isDrawerOpen = !isDrawerOpen"
+            :class="[
+              'flex items-center gap-1.5 px-3.5 py-2 border text-xs font-bold rounded-xl shadow-xs transition-all cursor-pointer',
+              isDrawerOpen ? 'bg-white hover:bg-slate-50 text-slate-700 border-slate-200' : 'bg-red-50 text-red-700 border-red-200 hover:bg-red-100'
+            ]"
+            :title="isDrawerOpen ? 'Collapse side panel' : 'Expand side panel'"
+          >
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"/>
+            </svg>
+            <span>{{ isDrawerOpen ? 'Hide Panel' : 'Show Panel' }}</span>
           </button>
         </div>
       </div>
@@ -100,6 +113,15 @@
         <button @click="searchQuery = ''; statusFilter = 'all'" class="px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs font-bold text-slate-700 cursor-pointer">
           Clear
         </button>
+
+        <div v-if="selectedPlates.length > 0" class="flex items-center gap-2 pl-2 border-l border-slate-200">
+          <span class="text-xs font-bold text-red-600 bg-red-50 px-2 py-1 rounded-lg">
+            {{ selectedPlates.length }} selected
+          </span>
+          <button @click="selectedPlates = []" class="text-xs text-slate-500 hover:text-slate-800 underline">
+            Deselect
+          </button>
+        </div>
       </div>
 
       <!-- Vehicles Table -->
@@ -108,7 +130,16 @@
           <table class="w-full text-left text-xs border-collapse">
             <thead>
               <tr class="bg-slate-50/80 text-[10px] font-bold text-slate-400 uppercase tracking-wider border-b border-slate-200/80">
-                <th class="py-3 px-3.5 w-8 text-center"><input type="checkbox" class="rounded text-red-600" /></th>
+                <th class="py-3 px-3.5 w-8 text-center">
+                  <input 
+                    type="checkbox" 
+                    class="rounded text-red-600 focus:ring-red-500 cursor-pointer"
+                    :checked="isAllSelected"
+                    :indeterminate.prop="isSomeSelected"
+                    @change="toggleSelectAll"
+                    title="Select all"
+                  />
+                </th>
                 <th class="py-3 px-3 font-bold">VEHICLE</th>
                 <th class="py-3 px-2.5 font-bold">TYPE</th>
                 <th class="py-3 px-2.5 font-bold">LICENSE PLATE</th>
@@ -124,7 +155,7 @@
                 v-for="v in filteredVehicles" 
                 :key="v.plate"
                 @mouseenter="selectedVehicle = v"
-                @click="selectedVehicle = v"
+                @click="selectedVehicle = v; isDrawerOpen = true"
                 :class="[
                   'transition-colors cursor-pointer group',
                   selectedVehicle?.plate === v.plate 
@@ -132,7 +163,14 @@
                     : 'hover:bg-slate-50/80'
                 ]"
               >
-                <td class="py-3.5 px-3.5 text-center" @click.stop><input type="checkbox" class="rounded text-red-600" /></td>
+                <td class="py-3.5 px-3.5 text-center" @click.stop>
+                  <input 
+                    type="checkbox" 
+                    class="rounded text-red-600 focus:ring-red-500 cursor-pointer"
+                    :checked="selectedPlates.includes(v.plate)"
+                    @change="toggleSelectVehicle(v.plate)"
+                  />
+                </td>
                 <td class="py-3.5 px-3">
                   <div class="flex items-center gap-3">
                     <div class="w-12 h-8 rounded-lg bg-slate-100 border border-slate-200 flex items-center justify-center text-lg">🚐</div>
@@ -284,7 +322,7 @@
     </div>
 
     <!-- RIGHT SIDEBAR: Vehicle Detail Drawer (4 Cols - Exact match to "7 Vehicles.png") -->
-    <div class="lg:col-span-4 bg-white rounded-2xl border border-slate-200/80 shadow-sm p-5 sticky top-20 space-y-4">
+    <div v-if="isDrawerOpen && selectedVehicle" class="lg:col-span-4 bg-white rounded-2xl border border-slate-200/80 shadow-sm p-5 sticky top-20 space-y-4 transition-all duration-300">
       <div class="flex items-start justify-between">
         <div>
           <div class="flex items-center gap-2.5">
@@ -298,7 +336,15 @@
           </div>
           <p class="text-xs text-slate-400 mt-0.5">{{ selectedVehicle.vanLabel }} – Main moving van</p>
         </div>
-        <button class="text-slate-400 hover:text-slate-700 text-sm">✕</button>
+        <button 
+          @click="isDrawerOpen = false" 
+          class="w-7 h-7 flex items-center justify-center rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors cursor-pointer"
+          title="Close Panel"
+        >
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
       </div>
 
       <!-- Vehicle Hero Photo & Thumbnails -->
@@ -383,6 +429,8 @@ import { ref, computed } from 'vue'
 const searchQuery = ref('')
 const statusFilter = ref('all')
 const activeDrawerTab = ref('Overview')
+const isDrawerOpen = ref(true)
+const selectedPlates = ref([])
 
 const vehiclesList = [
   { name: 'Ford Transit', vanLabel: 'Van 1', type: 'Van (L3H2)', plate: 'SHEK 23', volume: '12 m³', payload: '1,200 kg', seats: '3 seats', fuel: 'Diesel', status: 'Available', nextService: '12 Dec 2025', nextServiceDays: 'in 45 days' },
@@ -404,5 +452,32 @@ const filteredVehicles = computed(() => {
     return true
   })
 })
+
+const isAllSelected = computed(() => {
+  return filteredVehicles.value.length > 0 && filteredVehicles.value.every(v => selectedPlates.value.includes(v.plate))
+})
+
+const isSomeSelected = computed(() => {
+  const selectedCount = filteredVehicles.value.filter(v => selectedPlates.value.includes(v.plate)).length
+  return selectedCount > 0 && selectedCount < filteredVehicles.value.length
+})
+
+const toggleSelectAll = () => {
+  if (isAllSelected.value) {
+    const displayedPlates = filteredVehicles.value.map(v => v.plate)
+    selectedPlates.value = selectedPlates.value.filter(p => !displayedPlates.includes(p))
+  } else {
+    const displayedPlates = filteredVehicles.value.map(v => v.plate)
+    selectedPlates.value = Array.from(new Set([...selectedPlates.value, ...displayedPlates]))
+  }
+}
+
+const toggleSelectVehicle = (plate) => {
+  if (selectedPlates.value.includes(plate)) {
+    selectedPlates.value = selectedPlates.value.filter(p => p !== plate)
+  } else {
+    selectedPlates.value.push(plate)
+  }
+}
 </script>
 

@@ -545,9 +545,22 @@
                 </button>
               </td>
               <td class="py-3 px-3 text-right">
-                <button @click="removeMember(u.id)" class="text-red-600 hover:text-red-800 font-bold text-xs cursor-pointer">
-                  Remove
-                </button>
+                <div class="inline-flex items-center gap-1.5">
+                  <button 
+                    @click="openEditMember(u)" 
+                    class="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-lg transition-colors cursor-pointer flex items-center gap-1"
+                    title="Edit Member Details"
+                  >
+                    <span>✎</span>
+                    <span>Edit</span>
+                  </button>
+                  <button 
+                    @click="removeMember(u.id)" 
+                    class="px-2.5 py-1 bg-red-50 hover:bg-red-100 text-red-600 hover:text-red-800 font-bold text-xs rounded-lg transition-colors cursor-pointer"
+                  >
+                    Remove
+                  </button>
+                </div>
               </td>
             </tr>
           </tbody>
@@ -559,32 +572,56 @@
     <!-- TAB 4: 📦 SERVICE PACKAGES (Exact match to 12.4 Service Packages)  -->
     <!-- ================================================================= -->
     <div v-else-if="activeTab === 'Service Packages'" class="bg-white rounded-3xl border border-slate-200/80 shadow-xs p-6 space-y-6">
-      <div class="flex items-center justify-between border-b border-slate-100 pb-4">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-4">
         <div>
           <h2 class="text-lg font-black text-slate-900 font-sans">📦 Moving Service Packages & Tariffs</h2>
           <p class="text-xs text-slate-500">Configure customer packages, included movers, vans, and hourly rates.</p>
         </div>
-        <button @click="saveAllSettings" class="px-4 py-2 bg-[#DC2626] hover:bg-red-700 text-white font-bold text-xs rounded-xl shadow-xs cursor-pointer">
-          Save Tariff Changes
-        </button>
+        <div class="flex items-center gap-2">
+          <button 
+            @click="openAddPackageModal" 
+            class="px-4 py-2 bg-[#DC2626] hover:bg-red-700 text-white font-bold text-xs rounded-xl shadow-xs cursor-pointer flex items-center gap-1.5"
+          >
+            <span>+</span> Add Package
+          </button>
+          <button @click="saveAllSettings" class="px-4 py-2 bg-white hover:bg-slate-50 border border-slate-200 text-slate-800 font-bold text-xs rounded-xl shadow-xs cursor-pointer">
+            Save Tariff Changes
+          </button>
+        </div>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-xs">
         <div 
-          v-for="pkg in servicePackages" 
-          :key="pkg.name"
-          class="p-4 rounded-2xl border border-slate-200 bg-slate-50/50 space-y-3 flex flex-col justify-between"
+          v-for="(pkg, idx) in servicePackages" 
+          :key="pkg.name + idx"
+          class="p-4 rounded-2xl border border-slate-200 bg-slate-50/50 space-y-3 flex flex-col justify-between hover:shadow-xs transition-shadow"
         >
           <div class="space-y-2">
-            <div class="flex items-center justify-between">
-              <span class="font-black text-sm text-slate-900">{{ pkg.name }}</span>
-              <button 
-                @click="pkg.active = !pkg.active"
-                class="px-2 py-0.5 rounded text-[10px] font-bold cursor-pointer"
-                :class="pkg.active ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-200 text-slate-600'"
-              >
-                {{ pkg.active ? 'Active' : 'Disabled' }}
-              </button>
+            <div class="flex items-center justify-between gap-2">
+              <span class="font-black text-sm text-slate-900 truncate">{{ pkg.name }}</span>
+              <div class="flex items-center gap-1.5 flex-shrink-0">
+                <button 
+                  @click="pkg.active = !pkg.active; saveToStorage()"
+                  class="px-2 py-0.5 rounded text-[10px] font-bold cursor-pointer transition-colors"
+                  :class="pkg.active ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-200 text-slate-600'"
+                >
+                  {{ pkg.active ? 'Active' : 'Disabled' }}
+                </button>
+                <button 
+                  @click="openEditPackageModal(pkg, idx)" 
+                  class="p-1 text-slate-400 hover:text-slate-800 hover:bg-white rounded-lg transition-colors cursor-pointer"
+                  title="Edit Package"
+                >
+                  ✎
+                </button>
+                <button 
+                  @click="deletePackage(idx)" 
+                  class="p-1 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors cursor-pointer"
+                  title="Delete Package"
+                >
+                  🗑
+                </button>
+              </div>
             </div>
             <p class="text-[11px] text-slate-500 leading-relaxed">{{ pkg.desc }}</p>
           </div>
@@ -598,7 +635,8 @@
                   type="number" 
                   step="0.01" 
                   v-model.number="pkg.rate" 
-                  class="w-20 p-1 font-black text-sm text-right bg-white border border-slate-300 rounded-lg"
+                  @change="saveToStorage"
+                  class="w-20 p-1 font-black text-sm text-right bg-white border border-slate-300 rounded-lg focus:border-red-500 focus:outline-none"
                 />
               </div>
             </div>
@@ -609,6 +647,22 @@
             <div class="flex items-center justify-between text-[11px] text-slate-600">
               <span>Minimum Booking:</span>
               <span class="font-bold">{{ pkg.minHours }} Hours</span>
+            </div>
+
+            <!-- Card Bottom Action Row -->
+            <div class="pt-2 border-t border-slate-200/40 flex items-center justify-end gap-2">
+              <button 
+                @click="openEditPackageModal(pkg, idx)"
+                class="px-2.5 py-1 bg-white hover:bg-slate-100 border border-slate-200 text-slate-700 font-bold text-[11px] rounded-lg transition-colors cursor-pointer flex items-center gap-1"
+              >
+                <span>✎</span> Edit
+              </button>
+              <button 
+                @click="deletePackage(idx)"
+                class="px-2.5 py-1 bg-white hover:bg-red-50 border border-slate-200 hover:border-red-200 text-red-600 font-bold text-[11px] rounded-lg transition-colors cursor-pointer flex items-center gap-1"
+              >
+                <span>🗑</span> Delete
+              </button>
             </div>
           </div>
         </div>
@@ -946,6 +1000,180 @@
         </div>
       </div>
     </div>
+
+    <!-- EDIT TEAM MEMBER MODAL -->
+    <div 
+      v-if="showEditMemberModal && editingMember"
+      class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4"
+      @click.self="showEditMemberModal = false"
+    >
+      <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-200 space-y-4">
+        <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+          <div class="flex items-center gap-2">
+            <span class="w-8 h-8 rounded-full bg-red-100 text-[#DC2626] flex items-center justify-center font-bold text-sm">✎</span>
+            <div>
+              <h3 class="text-base font-black text-slate-900">Edit Team Member</h3>
+              <p class="text-[10px] text-slate-400">Modify personal details, permissions, and hourly wage</p>
+            </div>
+          </div>
+          <button @click="showEditMemberModal = false" class="text-slate-400 hover:text-slate-600 text-lg cursor-pointer">✕</button>
+        </div>
+
+        <div class="space-y-3 text-xs">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Full Name</label>
+            <input v-model="editingMember.name" type="text" placeholder="Full name" class="w-full p-2.5 border border-slate-300 rounded-xl font-bold focus:border-red-500 focus:outline-none" />
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Email Address</label>
+            <input v-model="editingMember.email" type="email" placeholder="email@moveit-maastricht.nl" class="w-full p-2.5 border border-slate-300 rounded-xl focus:border-red-500 focus:outline-none" />
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Phone Number</label>
+            <input v-model="editingMember.phone" type="text" placeholder="+31 6 ..." class="w-full p-2.5 border border-slate-300 rounded-xl font-bold focus:border-red-500 focus:outline-none" />
+          </div>
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block font-bold text-slate-700 mb-1">Role / Position</label>
+              <select v-model="editingMember.role" class="w-full p-2.5 border border-slate-300 rounded-xl font-bold focus:border-red-500 focus:outline-none">
+                <option value="Admin">Admin</option>
+                <option value="Move Coordinator">Move Coordinator</option>
+                <option value="Lead Mover">Lead Mover</option>
+                <option value="Mover">Mover</option>
+                <option value="Driver">Driver</option>
+                <option value="Office Manager">Office Manager</option>
+              </select>
+            </div>
+            <div>
+              <label class="block font-bold text-slate-700 mb-1">Hourly Rate (€)</label>
+              <input type="number" step="0.5" v-model.number="editingMember.hourlyRate" class="w-full p-2.5 border border-slate-300 rounded-xl font-bold focus:border-red-500 focus:outline-none" />
+            </div>
+          </div>
+          <div class="pt-2">
+            <label class="flex items-center gap-2 cursor-pointer select-none">
+              <input type="checkbox" v-model="editingMember.active" class="rounded text-red-600 focus:ring-red-500 cursor-pointer" />
+              <span class="text-xs font-bold text-slate-700">Account Active (Permitted to accept moves & login)</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-between pt-3 border-t border-slate-100">
+          <button @click="showEditMemberModal = false" class="px-4 py-2 text-xs font-bold text-slate-500 hover:text-slate-800 cursor-pointer">
+            Cancel
+          </button>
+          <button @click="saveEditMember" class="px-5 py-2 bg-[#DC2626] hover:bg-red-700 text-white text-xs font-bold rounded-xl shadow-xs cursor-pointer flex items-center gap-1.5">
+            <span>💾</span> Save Changes
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ADD / EDIT SERVICE PACKAGE MODAL -->
+    <div 
+      v-if="showPackageModal"
+      class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4"
+      @click.self="showPackageModal = false"
+    >
+      <div class="bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 space-y-4">
+        <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+          <div class="flex items-center gap-2.5">
+            <span class="w-8 h-8 rounded-full bg-red-100 text-[#DC2626] flex items-center justify-center font-bold text-sm">📦</span>
+            <div>
+              <h3 class="text-base font-black text-slate-900">
+                {{ packageModalMode === 'add' ? 'Add New Service Package' : 'Edit Service Package' }}
+              </h3>
+              <p class="text-[10px] text-slate-400">Configure customer tariffs, included movers, and minimum booking</p>
+            </div>
+          </div>
+          <button @click="showPackageModal = false" class="text-slate-400 hover:text-slate-600 text-lg cursor-pointer">✕</button>
+        </div>
+
+        <div class="space-y-3 text-xs">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Package Name</label>
+            <input 
+              v-model="packageForm.name" 
+              type="text" 
+              placeholder="e.g. Van + 3 Movers / Executive Move" 
+              class="w-full p-2.5 border border-slate-300 rounded-xl font-bold focus:border-red-500 focus:outline-none" 
+            />
+          </div>
+
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Description & Included Items</label>
+            <textarea 
+              v-model="packageForm.desc" 
+              rows="3" 
+              placeholder="e.g. Complete moving solution including 3 expert movers, large 22m³ van, furniture disassembly and transit blankets..." 
+              class="w-full p-2.5 border border-slate-300 rounded-xl font-medium focus:border-red-500 focus:outline-none leading-relaxed"
+            ></textarea>
+          </div>
+
+          <div class="grid grid-cols-3 gap-3">
+            <div>
+              <label class="block font-bold text-slate-700 mb-1">Hourly Rate (€)</label>
+              <input 
+                v-model.number="packageForm.rate" 
+                type="number" 
+                step="0.01" 
+                class="w-full p-2.5 border border-slate-300 rounded-xl font-black text-slate-900 focus:border-red-500 focus:outline-none" 
+              />
+            </div>
+            <div>
+              <label class="block font-bold text-slate-700 mb-1">Crew Included</label>
+              <select 
+                v-model.number="packageForm.movers" 
+                class="w-full p-2.5 border border-slate-300 rounded-xl font-bold text-slate-800 focus:border-red-500 focus:outline-none"
+              >
+                <option :value="0">0 Movers (DIY)</option>
+                <option :value="1">1 Mover</option>
+                <option :value="2">2 Movers</option>
+                <option :value="3">3 Movers</option>
+                <option :value="4">4 Movers</option>
+                <option :value="5">5 Movers</option>
+              </select>
+            </div>
+            <div>
+              <label class="block font-bold text-slate-700 mb-1">Min. Booking</label>
+              <select 
+                v-model.number="packageForm.minHours" 
+                class="w-full p-2.5 border border-slate-300 rounded-xl font-bold text-slate-800 focus:border-red-500 focus:outline-none"
+              >
+                <option :value="1">1 Hour</option>
+                <option :value="2">2 Hours</option>
+                <option :value="3">3 Hours</option>
+                <option :value="4">4 Hours</option>
+                <option :value="5">5 Hours</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="pt-2">
+            <label class="flex items-center gap-2 cursor-pointer select-none">
+              <input 
+                type="checkbox" 
+                v-model="packageForm.active" 
+                class="rounded text-red-600 focus:ring-red-500 cursor-pointer" 
+              />
+              <span class="text-xs font-bold text-slate-700">Package Active (Visible in booking calculators and quotes)</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-between pt-3 border-t border-slate-100">
+          <button @click="showPackageModal = false" class="px-4 py-2 text-xs font-bold text-slate-500 hover:text-slate-800 cursor-pointer">
+            Cancel
+          </button>
+          <button 
+            @click="savePackage" 
+            class="px-5 py-2 bg-[#DC2626] hover:bg-red-700 text-white text-xs font-bold rounded-xl shadow-xs cursor-pointer flex items-center gap-1.5"
+          >
+            <span>💾</span>
+            <span>{{ packageModalMode === 'add' ? 'Create Package' : 'Save Package Changes' }}</span>
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -1037,6 +1265,9 @@ const teamMembers = ref([
 ])
 
 const showAddMemberModal = ref(false)
+const showEditMemberModal = ref(false)
+const editingMember = ref(null)
+
 const newMember = ref({
   name: '',
   email: '',
@@ -1044,6 +1275,23 @@ const newMember = ref({
   role: 'Mover',
   hourlyRate: 18.00
 })
+
+const openEditMember = (member) => {
+  editingMember.value = { ...member }
+  showEditMemberModal.value = true
+}
+
+const saveEditMember = () => {
+  if (!editingMember.value || !editingMember.value.name) return
+  const index = teamMembers.value.findIndex(m => m.id === editingMember.value.id)
+  if (index !== -1) {
+    teamMembers.value[index] = { ...editingMember.value }
+    triggerToast(`Updated ${editingMember.value.name} successfully!`)
+    saveToStorage()
+  }
+  showEditMemberModal.value = false
+  editingMember.value = null
+}
 
 const saveNewMember = () => {
   if (!newMember.value.name) return
@@ -1072,6 +1320,65 @@ const servicePackages = ref([
   { name: 'Full-Service / White-Glove', rate: 149.00, movers: 3, minHours: 4, active: true, desc: 'Complete packing materials, box packing, unpacking, wardrobe boxes & furniture reassembly.' },
   { name: 'Moving Lift Service (27m)', rate: 65.00, movers: 1, minHours: 1, active: true, desc: 'Outdoor electric ladder lift reaching up to the 8th floor with certified lift operator.' }
 ])
+
+const showPackageModal = ref(false)
+const packageModalMode = ref('add')
+const editingPackageIndex = ref(-1)
+const packageForm = ref({
+  name: '',
+  desc: '',
+  rate: 89.99,
+  movers: 2,
+  minHours: 2,
+  active: true
+})
+
+const openAddPackageModal = () => {
+  packageModalMode.value = 'add'
+  editingPackageIndex.value = -1
+  packageForm.value = {
+    name: '',
+    desc: '',
+    rate: 89.99,
+    movers: 2,
+    minHours: 2,
+    active: true
+  }
+  showPackageModal.value = true
+}
+
+const openEditPackageModal = (pkg, index) => {
+  packageModalMode.value = 'edit'
+  editingPackageIndex.value = index
+  packageForm.value = { ...pkg }
+  showPackageModal.value = true
+}
+
+const savePackage = () => {
+  if (!packageForm.value.name.trim()) {
+    triggerToast('Please provide a package name')
+    return
+  }
+
+  if (packageModalMode.value === 'add') {
+    servicePackages.value.push({ ...packageForm.value })
+    triggerToast(`Package "${packageForm.value.name}" added successfully!`)
+  } else if (editingPackageIndex.value >= 0 && editingPackageIndex.value < servicePackages.value.length) {
+    servicePackages.value[editingPackageIndex.value] = { ...packageForm.value }
+    triggerToast(`Package "${packageForm.value.name}" updated!`)
+  }
+
+  showPackageModal.value = false
+  saveToStorage()
+}
+
+const deletePackage = (index) => {
+  if (index < 0 || index >= servicePackages.value.length) return
+  const pkgName = servicePackages.value[index]?.name || 'Package'
+  servicePackages.value.splice(index, 1)
+  triggerToast(`Package "${pkgName}" deleted.`)
+  saveToStorage()
+}
 
 // 5. Communication & Notifications State
 const notifPrefs = ref([

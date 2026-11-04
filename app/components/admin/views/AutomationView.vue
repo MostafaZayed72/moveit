@@ -1,7 +1,7 @@
 <template>
   <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
-    <!-- LEFT MAIN AREA: Automation Header, 4 KPIs, Filters & Workflows Table (8 Cols - Exact match to "11 Automation.png") -->
-    <div class="lg:col-span-8 space-y-4 min-w-0">
+    <!-- LEFT MAIN AREA: Automation Header, 4 KPIs, Filters & Workflows Table (8 or 12 Cols) -->
+    <div :class="[isDrawerOpen ? 'lg:col-span-8' : 'lg:col-span-12', 'space-y-4 min-w-0 transition-all duration-300']">
       <!-- Header -->
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
@@ -11,6 +11,19 @@
           </p>
         </div>
         <div class="flex items-center gap-2">
+          <button 
+            @click="isDrawerOpen = !isDrawerOpen"
+            :class="[
+              'flex items-center gap-1.5 px-3.5 py-2 border text-xs font-bold rounded-xl shadow-xs transition-all cursor-pointer',
+              isDrawerOpen ? 'bg-white hover:bg-slate-50 text-slate-700 border-slate-200' : 'bg-red-50 text-red-700 border-red-200 hover:bg-red-100'
+            ]"
+            :title="isDrawerOpen ? 'Collapse side panel' : 'Expand side panel'"
+          >
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"/>
+            </svg>
+            <span>{{ isDrawerOpen ? 'Hide Panel' : 'Show Panel' }}</span>
+          </button>
           <button 
             @click="openRunModal(automationsList[2])" 
             class="px-3.5 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-bold shadow-2xs cursor-pointer flex items-center gap-1.5"
@@ -165,12 +178,21 @@
     </div>
 
     <!-- RIGHT SIDEBAR: Automation Templates & Recent Activity (4 Cols - Exact match to "11 Automation.png") -->
-    <div class="lg:col-span-4 space-y-4">
+    <div v-if="isDrawerOpen" class="lg:col-span-4 space-y-4 transition-all duration-300">
       <!-- 1. Automation Templates -->
       <div class="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-5 space-y-3.5">
         <div class="flex items-center justify-between">
           <h3 class="text-sm font-black text-slate-900">Automation Templates</h3>
-          <button @click="showNewWorkflowModal = true" class="text-[11px] font-bold text-blue-600 hover:underline cursor-pointer">View all →</button>
+          <div class="flex items-center gap-2">
+            <button @click="showNewWorkflowModal = true" class="text-[11px] font-bold text-blue-600 hover:underline cursor-pointer">View all →</button>
+            <button 
+              @click="isDrawerOpen = false" 
+              class="w-6 h-6 rounded-lg border border-slate-200 text-xs text-slate-400 hover:text-slate-700 hover:bg-slate-50 cursor-pointer flex items-center justify-center"
+              title="Close Panel"
+            >
+              ✕
+            </button>
+          </div>
         </div>
 
         <div class="space-y-2.5 text-xs">
@@ -403,6 +425,7 @@ const emit = defineEmits(['trigger-automation', 'select-job'])
 const activeTabId = ref('all')
 const searchQuery = ref('')
 const categoryFilter = ref('all')
+const isDrawerOpen = ref(true)
 
 const showRunModal = ref(false)
 const showNewWorkflowModal = ref(false)

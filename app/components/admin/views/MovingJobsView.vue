@@ -12,8 +12,8 @@
 
       <!-- SubView 2: Split View (Exact match to "3 Moving Jobs.png") -->
       <div v-else class="grid grid-cols-1 xl:grid-cols-12 gap-5 items-start">
-        <!-- LEFT MAIN AREA: Header, 5 KPIs, Filter Bar, Tabs & 10-Row Table (8 Cols) -->
-        <div class="xl:col-span-8 space-y-4 min-w-0">
+        <!-- LEFT MAIN AREA: Header, 5 KPIs, Filter Bar, Tabs & 10-Row Table (8 or 12 Cols) -->
+        <div :class="[isDrawerOpen && activeSelectedJob ? 'xl:col-span-8' : 'xl:col-span-12', 'space-y-4 min-w-0 transition-all duration-300']">
           <!-- 1. Header with Title & Export Action -->
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div>
@@ -33,6 +33,19 @@
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/>
                 </svg>
                 <span>Export</span>
+              </button>
+              <button 
+                @click="isDrawerOpen = !isDrawerOpen"
+                :class="[
+                  'flex items-center gap-1.5 px-3.5 py-2 border text-xs font-bold rounded-xl shadow-xs transition-all cursor-pointer',
+                  isDrawerOpen ? 'bg-white hover:bg-slate-50 text-slate-700 border-slate-200' : 'bg-red-50 text-red-700 border-red-200 hover:bg-red-100'
+                ]"
+                :title="isDrawerOpen ? 'Collapse side panel' : 'Expand side panel'"
+              >
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"/>
+                </svg>
+                <span>{{ isDrawerOpen ? 'Hide Panel' : 'Show Panel' }}</span>
               </button>
             </div>
           </div>
@@ -195,8 +208,15 @@
               <table class="w-full text-left text-xs">
                 <thead class="bg-slate-50/80 border-b border-slate-200/80 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
                   <tr>
-                    <th class="py-3 px-2.5 w-7 text-center">
-                      <input type="checkbox" class="rounded text-red-600 focus:ring-red-500 cursor-pointer" />
+                    <th class="py-3 px-2.5 w-7 text-center" @click.stop>
+                      <input 
+                        type="checkbox" 
+                        :checked="isAllSelected"
+                        :indeterminate.prop="isSomeSelected"
+                        @change="toggleSelectAll"
+                        class="w-4 h-4 rounded text-red-600 focus:ring-red-500 cursor-pointer accent-[#DC2626]" 
+                        title="Select All"
+                      />
                     </th>
                     <th class="py-3 px-2">REF ⇅</th>
                     <th class="py-3 px-2">DATE ▾</th>
@@ -220,12 +240,17 @@
                       'transition-colors cursor-pointer group',
                       activeSelectedJob?.ref === job.ref || activeSelectedJob?.id === job.id
                         ? 'bg-red-50/40 border-l-4 border-l-[#DC2626]' 
-                        : 'hover:bg-slate-50/80'
+                        : (selectedJobKeys.includes(job.ref || job.id) ? 'bg-red-50/20' : 'hover:bg-slate-50/80')
                     ]"
                   >
                     <!-- Checkbox -->
                     <td class="py-3.5 px-2.5 text-center" @click.stop>
-                      <input type="checkbox" class="rounded text-red-600 focus:ring-red-500 cursor-pointer" />
+                      <input 
+                        type="checkbox" 
+                        :checked="selectedJobKeys.includes(job.ref || job.id)"
+                        @change="toggleSelectJob(job.ref || job.id)"
+                        class="w-4 h-4 rounded text-red-600 focus:ring-red-500 cursor-pointer accent-[#DC2626]" 
+                      />
                     </td>
 
                     <!-- REF -->
@@ -333,7 +358,7 @@
         </div>
 
         <!-- RIGHT COLUMN: Slide-Over Detail Drawer (4 Cols, Starting from Top of Screen) Matching "3 Moving Jobs.png" -->
-        <div class="xl:col-span-4 bg-white rounded-2xl border border-slate-200/90 shadow-sm p-5 space-y-4 font-sans text-slate-800 sticky top-16">
+        <div v-if="isDrawerOpen && activeSelectedJob" class="xl:col-span-4 bg-white rounded-2xl border border-slate-200/90 shadow-sm p-5 space-y-4 font-sans text-slate-800 sticky top-16 transition-all duration-300">
             <!-- 1. Drawer Header -->
             <div class="flex items-center justify-between border-b border-slate-100 pb-3">
               <div class="flex items-center gap-2.5">
@@ -347,13 +372,24 @@
                   {{ activeSelectedJob.status || 'Confirmed' }}
                 </span>
               </div>
-              <button 
-                @click="openJobDetail(activeSelectedJob)" 
-                class="text-slate-400 hover:text-slate-700 text-xs font-bold flex items-center gap-1 cursor-pointer"
-                title="Open Full Page View"
-              >
-                <span>Full View ↗</span>
-              </button>
+              <div class="flex items-center gap-1.5">
+                <button 
+                  @click="openJobDetail(activeSelectedJob)" 
+                  class="text-slate-400 hover:text-slate-700 text-xs font-bold flex items-center gap-1 cursor-pointer p-1 rounded-lg hover:bg-slate-100"
+                  title="Open Full Page View"
+                >
+                  <span>Full View ↗</span>
+                </button>
+                <button 
+                  @click="isDrawerOpen = false" 
+                  class="w-7 h-7 flex items-center justify-center rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors cursor-pointer"
+                  title="Close Panel"
+                >
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                  </svg>
+                </button>
+              </div>
             </div>
 
             <!-- 2. Drawer Navigation Tabs -->
@@ -628,9 +664,34 @@
 
             <!-- TAB 5: FILES -->
             <div v-else-if="activeDrawerTab === 'Files'" class="space-y-3 text-xs">
-              <button @click="openJobDetail(activeSelectedJob)" class="w-full p-3 bg-slate-50 hover:bg-slate-100 rounded-xl border border-slate-200 flex items-center justify-between font-bold cursor-pointer">
-                <span>📄 MoveIt_Quotation_QT-2026.pdf</span>
-                <span class="text-red-600">Download</span>
+              <button 
+                @click="downloadJobQuotePDF(activeSelectedJob)" 
+                class="w-full p-3 bg-slate-50 hover:bg-slate-100 rounded-xl border border-slate-200 flex items-center justify-between font-bold cursor-pointer transition-colors"
+                title="Download Quotation PDF"
+              >
+                <div class="flex items-center gap-2">
+                  <span class="text-base">📄</span>
+                  <div class="text-left">
+                    <p class="text-slate-800">MoveIt_Quotation_{{ activeSelectedJob?.ref || 'QT-2026' }}.pdf</p>
+                    <p class="text-[10px] text-slate-400 font-normal">Official MoveIt Quotation with real branding</p>
+                  </div>
+                </div>
+                <span class="text-red-600 bg-red-50 hover:bg-red-100 px-2.5 py-1 rounded-lg text-xs font-bold">Download</span>
+              </button>
+
+              <button 
+                @click="downloadJobInvoicePDF(activeSelectedJob)" 
+                class="w-full p-3 bg-slate-50 hover:bg-slate-100 rounded-xl border border-slate-200 flex items-center justify-between font-bold cursor-pointer transition-colors"
+                title="Download Tax Invoice PDF"
+              >
+                <div class="flex items-center gap-2">
+                  <span class="text-base">📑</span>
+                  <div class="text-left">
+                    <p class="text-slate-800">MoveIt_Invoice_INV-{{ activeSelectedJob?.ref || '2026' }}.pdf</p>
+                    <p class="text-[10px] text-slate-400 font-normal">Official Dutch Tax Invoice (Factuur)</p>
+                  </div>
+                </div>
+                <span class="text-red-600 bg-red-50 hover:bg-red-100 px-2.5 py-1 rounded-lg text-xs font-bold">Download</span>
               </button>
             </div>
           </div>
@@ -660,6 +721,7 @@
 import { ref, computed } from 'vue'
 import MoveDetailView from './MoveDetailView.vue'
 import { useAdminData } from '~/composables/useAdminData'
+import { generateMoveItQuotationPDF, generateMoveItInvoicePDF } from '~/utils/pdfBranding'
 
 const props = defineProps({
   jobs: {
@@ -675,9 +737,20 @@ const handleExportExcel = () => {
   exportToExcel('jobs')
 }
 
+const downloadJobQuotePDF = (job) => {
+  if (!job) return
+  generateMoveItQuotationPDF(job)
+}
+
+const downloadJobInvoicePDF = (job) => {
+  if (!job) return
+  generateMoveItInvoicePDF(job)
+}
+
 // Split view is the DEFAULT mode, matching "3 Moving Jobs.png"!
 const currentSubView = ref('split')
 const activeDrawerTab = ref('Overview')
+const isDrawerOpen = ref(true)
 const drawerTabs = ['Overview', 'Inventory', 'Team & Vehicle', 'Notes', 'Files']
 const lightboxImage = ref(null)
 const showMoreActions = ref(false)
@@ -705,6 +778,7 @@ const hoverSelectJob = (job) => {
 const selectJob = (job) => {
   if (job) {
     activeSelectedJob.value = job
+    isDrawerOpen.value = true
   }
 }
 
@@ -819,6 +893,38 @@ const paginatedJobs = computed(() => {
   const start = (currentPage.value - 1) * pageSize.value
   return filteredJobs.value.slice(start, start + pageSize.value)
 })
+
+// Checkbox selection state
+const selectedJobKeys = ref([])
+
+const isAllSelected = computed(() => {
+  if (paginatedJobs.value.length === 0) return false
+  return paginatedJobs.value.every(j => selectedJobKeys.value.includes(j.ref || j.id))
+})
+
+const isSomeSelected = computed(() => {
+  return !isAllSelected.value && paginatedJobs.value.some(j => selectedJobKeys.value.includes(j.ref || j.id))
+})
+
+const toggleSelectAll = () => {
+  if (isAllSelected.value) {
+    const pageKeys = new Set(paginatedJobs.value.map(j => j.ref || j.id))
+    selectedJobKeys.value = selectedJobKeys.value.filter(key => !pageKeys.has(key))
+  } else {
+    const set = new Set(selectedJobKeys.value)
+    paginatedJobs.value.forEach(j => set.add(j.ref || j.id))
+    selectedJobKeys.value = Array.from(set)
+  }
+}
+
+const toggleSelectJob = (key) => {
+  const index = selectedJobKeys.value.indexOf(key)
+  if (index > -1) {
+    selectedJobKeys.value.splice(index, 1)
+  } else {
+    selectedJobKeys.value.push(key)
+  }
+}
 
 const visiblePages = computed(() => {
   const pages = []

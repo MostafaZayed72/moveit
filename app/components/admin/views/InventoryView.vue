@@ -1,7 +1,7 @@
 <template>
   <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
-    <!-- LEFT MAIN AREA: Inventory Header, 5 KPIs, Filters & Table (8 Cols - Exact match to "6 Inventory.png") -->
-    <div class="lg:col-span-8 space-y-4 min-w-0">
+    <!-- LEFT MAIN AREA: Inventory Header, 5 KPIs, Filters & Table (8 or 12 Cols) -->
+    <div :class="[isDrawerOpen && selectedItem ? 'lg:col-span-8' : 'lg:col-span-12', 'space-y-4 min-w-0 transition-all duration-300']">
       <!-- Header -->
       <div class="flex items-center justify-between">
         <div>
@@ -10,10 +10,25 @@
             Manage all moving boxes, equipment and supplies.
           </p>
         </div>
-        <button class="flex items-center gap-1.5 px-3.5 py-2 bg-white hover:bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-700 shadow-2xs cursor-pointer">
-          <span>📥</span>
-          <span>Export</span>
-        </button>
+        <div class="flex items-center gap-2">
+          <button class="flex items-center gap-1.5 px-3.5 py-2 bg-white hover:bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-700 shadow-2xs cursor-pointer">
+            <span>📥</span>
+            <span>Export</span>
+          </button>
+          <button 
+            @click="isDrawerOpen = !isDrawerOpen"
+            :class="[
+              'flex items-center gap-1.5 px-3.5 py-2 border text-xs font-bold rounded-xl shadow-xs transition-all cursor-pointer',
+              isDrawerOpen ? 'bg-white hover:bg-slate-50 text-slate-700 border-slate-200' : 'bg-red-50 text-red-700 border-red-200 hover:bg-red-100'
+            ]"
+            :title="isDrawerOpen ? 'Collapse side panel' : 'Expand side panel'"
+          >
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"/>
+            </svg>
+            <span>{{ isDrawerOpen ? 'Hide Panel' : 'Show Panel' }}</span>
+          </button>
+        </div>
       </div>
 
       <!-- 5 KPI Cards Row -->
@@ -107,7 +122,16 @@
           <table class="w-full text-left text-xs border-collapse">
             <thead>
               <tr class="bg-slate-50/80 text-[10px] font-bold text-slate-400 uppercase tracking-wider border-b border-slate-200/80">
-                <th class="py-3 px-3.5 w-8 text-center"><input type="checkbox" class="rounded text-red-600" /></th>
+                <th class="py-3 px-3.5 w-8 text-center" @click.stop>
+                  <input 
+                    type="checkbox" 
+                    :checked="isAllSelected"
+                    :indeterminate.prop="isSomeSelected"
+                    @change="toggleSelectAll"
+                    class="w-4 h-4 rounded text-red-600 focus:ring-red-500 cursor-pointer accent-[#DC2626]" 
+                    title="Select All"
+                  />
+                </th>
                 <th class="py-3 px-2 font-bold">IMAGE</th>
                 <th class="py-3 px-3 font-bold">NAME</th>
                 <th class="py-3 px-2.5 font-bold">SKU</th>
@@ -125,15 +149,22 @@
                 v-for="item in filteredItems" 
                 :key="item.sku"
                 @mouseenter="selectedItem = item"
-                @click="selectedItem = item"
+                @click="selectedItem = item; isDrawerOpen = true"
                 :class="[
                   'transition-colors cursor-pointer group',
                   selectedItem?.sku === item.sku 
                     ? 'bg-red-50/40 border-l-4 border-l-[#DC2626]' 
-                    : 'hover:bg-slate-50/80'
+                    : (selectedSkus.includes(item.sku) ? 'bg-red-50/20' : 'hover:bg-slate-50/80')
                 ]"
               >
-                <td class="py-3 px-3.5 text-center" @click.stop><input type="checkbox" class="rounded text-red-600" /></td>
+                <td class="py-3 px-3.5 text-center" @click.stop>
+                  <input 
+                    type="checkbox" 
+                    :checked="selectedSkus.includes(item.sku)"
+                    @change="toggleSelectItem(item.sku)"
+                    class="w-4 h-4 rounded text-red-600 focus:ring-red-500 cursor-pointer accent-[#DC2626]" 
+                  />
+                </td>
                 <td class="py-3 px-2">
                   <div class="w-9 h-9 rounded-lg bg-amber-50/70 border border-slate-200/70 flex items-center justify-center text-lg">
                     {{ item.icon }}
@@ -183,7 +214,7 @@
     </div>
 
     <!-- RIGHT SIDEBAR: Inventory Item Detail Drawer (4 Cols - Exact match to "6 Inventory.png") -->
-    <div class="lg:col-span-4 bg-white rounded-2xl border border-slate-200/80 shadow-sm p-5 sticky top-20 space-y-5">
+    <div v-if="isDrawerOpen && selectedItem" class="lg:col-span-4 bg-white rounded-2xl border border-slate-200/80 shadow-sm p-5 sticky top-20 space-y-5 transition-all duration-300">
       <!-- Top Title -->
       <div class="flex items-start justify-between">
         <div>
@@ -198,7 +229,15 @@
           </div>
           <p class="text-xs text-slate-400 mt-0.5">{{ selectedItem.subtitle }}</p>
         </div>
-        <button class="text-slate-400 hover:text-slate-700 text-sm">✕</button>
+        <button 
+          @click="isDrawerOpen = false" 
+          class="w-7 h-7 flex items-center justify-center rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors cursor-pointer"
+          title="Close Panel"
+        >
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
       </div>
 
       <!-- Product Visual Gallery -->
@@ -342,6 +381,7 @@ import { ref, computed } from 'vue'
 const searchQuery = ref('')
 const categoryFilter = ref('all')
 const activeDrawerTab = ref('Overview')
+const isDrawerOpen = ref(true)
 
 const inventoryItems = [
   { icon: '📦', name: 'Moving Box 60L', subtitle: 'Standard strong box', sku: 'BOX-60L', category: 'Moving Boxes', categoryClass: 'bg-blue-50 text-blue-600', stock: 250, minStock: 50, unit: 'pcs', status: 'In Stock', location: 'Warehouse' },
@@ -370,5 +410,36 @@ const filteredItems = computed(() => {
     return true
   })
 })
+// Checkbox selection state
+const selectedSkus = ref([])
+
+const isAllSelected = computed(() => {
+  if (filteredItems.value.length === 0) return false
+  return filteredItems.value.every(item => selectedSkus.value.includes(item.sku))
+})
+
+const isSomeSelected = computed(() => {
+  return !isAllSelected.value && filteredItems.value.some(item => selectedSkus.value.includes(item.sku))
+})
+
+const toggleSelectAll = () => {
+  if (isAllSelected.value) {
+    const visibleSkus = new Set(filteredItems.value.map(item => item.sku))
+    selectedSkus.value = selectedSkus.value.filter(sku => !visibleSkus.has(sku))
+  } else {
+    const set = new Set(selectedSkus.value)
+    filteredItems.value.forEach(item => set.add(item.sku))
+    selectedSkus.value = Array.from(set)
+  }
+}
+
+const toggleSelectItem = (sku) => {
+  const index = selectedSkus.value.indexOf(sku)
+  if (index > -1) {
+    selectedSkus.value.splice(index, 1)
+  } else {
+    selectedSkus.value.push(sku)
+  }
+}
 </script>
 

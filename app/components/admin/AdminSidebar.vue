@@ -258,6 +258,14 @@
       </button>
 
       <button 
+        @click="selectAndClose('financials')"
+        class="w-full flex items-center gap-2.5 px-3 py-2 bg-slate-900/90 hover:bg-slate-800 text-slate-300 hover:text-white rounded-xl text-xs font-medium border border-slate-800 transition-all cursor-pointer"
+      >
+        <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 14l6-6m-5.5.5h.01m4.99 5h.01M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16l3.5-2 3.5 2 3.5-2 3.5 2z"/></svg>
+        <span>Create Invoice</span>
+      </button>
+
+      <button 
         @click="selectAndClose('customers')"
         class="w-full flex items-center gap-2.5 px-3 py-2 bg-slate-900/90 hover:bg-slate-800 text-slate-300 hover:text-white rounded-xl text-xs font-medium border border-slate-800 transition-all cursor-pointer"
       >

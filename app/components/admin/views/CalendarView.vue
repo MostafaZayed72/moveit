@@ -1,7 +1,7 @@
 <template>
   <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
-    <!-- LEFT MAIN AREA: Moving Calendar Schedule (8/9 Cols - Exact match to "4 Moving Calendar.png") -->
-    <div class="lg:col-span-8 xl:col-span-9 space-y-4">
+    <!-- LEFT MAIN AREA: Moving Calendar Schedule (8/9 or 12 Cols) -->
+    <div :class="[isDrawerOpen ? 'lg:col-span-8 xl:col-span-9' : 'lg:col-span-12 xl:col-span-12', 'space-y-4 transition-all duration-300']">
       <!-- Page Title & Conflict Alert Banner -->
       <div class="flex flex-wrap items-center justify-between gap-3">
         <div>
@@ -91,6 +91,21 @@
             <option value="Team Assigned">Team Assigned</option>
             <option value="Quotation Sent">Quotation Sent</option>
           </select>
+
+          <!-- Toggle Sidebar -->
+          <button 
+            @click="isDrawerOpen = !isDrawerOpen"
+            :class="[
+              'flex items-center gap-1.5 px-3 py-2 border text-xs font-bold rounded-xl shadow-2xs transition-all cursor-pointer',
+              isDrawerOpen ? 'bg-white hover:bg-slate-50 text-slate-700 border-slate-200' : 'bg-red-50 text-red-700 border-red-200 hover:bg-red-100'
+            ]"
+            :title="isDrawerOpen ? 'Collapse side panel' : 'Expand side panel'"
+          >
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"/>
+            </svg>
+            <span>{{ isDrawerOpen ? 'Hide Panel' : 'Show Panel' }}</span>
+          </button>
         </div>
       </div>
 
@@ -331,7 +346,7 @@
     </div>
 
     <!-- RIGHT SIDEBAR: Mini Calendar + Teams & Vehicles + Unscheduled Jobs (4/3 Cols) -->
-    <div class="lg:col-span-4 xl:col-span-3 space-y-4">
+    <div v-if="isDrawerOpen" class="lg:col-span-4 xl:col-span-3 space-y-4 transition-all duration-300">
       <!-- 1. Mini Month Calendar Card -->
       <div class="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-4 space-y-3">
         <div class="flex items-center justify-between">
@@ -339,6 +354,13 @@
           <div class="flex items-center gap-1">
             <button @click="prevPeriod" class="w-6 h-6 rounded-lg border border-slate-200 text-xs text-slate-500 hover:bg-slate-50 cursor-pointer">‹</button>
             <button @click="nextPeriod" class="w-6 h-6 rounded-lg border border-slate-200 text-xs text-slate-500 hover:bg-slate-50 cursor-pointer">›</button>
+            <button 
+              @click="isDrawerOpen = false" 
+              class="w-6 h-6 rounded-lg border border-slate-200 text-xs text-slate-400 hover:text-slate-700 hover:bg-slate-50 cursor-pointer flex items-center justify-center ml-1"
+              title="Close Panel"
+            >
+              ✕
+            </button>
           </div>
         </div>
         <div class="grid grid-cols-7 text-center text-[10px] font-bold text-slate-400">
@@ -652,6 +674,7 @@ const viewMode = ref('Week')
 const statusFilter = ref('all')
 const teamFilter = ref('all')
 const vanFilter = ref('all')
+const isDrawerOpen = ref(true)
 const activeResourceTab = ref('teams')
 const currentMonthLabel = ref('November 2025')
 const activeMiniDay = ref(3)

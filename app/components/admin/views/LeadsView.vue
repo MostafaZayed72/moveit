@@ -28,21 +28,35 @@
           <span>Export Excel</span>
         </button>
         <button 
-          @click="activeSelectedLead && $emit('select-lead', activeSelectedLead.raw || activeSelectedLead)"
+          @click="activeSelectedLead && exportLeadPdf(activeSelectedLead)"
           class="flex items-center gap-1.5 px-3.5 py-2 bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 text-xs font-bold rounded-xl shadow-xs transition-all cursor-pointer"
+          title="Download Official MoveIt Quotation PDF"
         >
           <svg class="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
           </svg>
           <span>Export PDF</span>
         </button>
+        <button 
+          @click="isDrawerOpen = !isDrawerOpen"
+          :class="[
+            'flex items-center gap-1.5 px-3.5 py-2 border text-xs font-bold rounded-xl shadow-xs transition-all cursor-pointer',
+            isDrawerOpen ? 'bg-white hover:bg-slate-50 text-slate-700 border-slate-200' : 'bg-red-50 text-red-700 border-red-200 hover:bg-red-100'
+          ]"
+          :title="isDrawerOpen ? 'Collapse side panel' : 'Expand side panel'"
+        >
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"/>
+          </svg>
+          <span>{{ isDrawerOpen ? 'Hide Panel' : 'Show Panel' }}</span>
+        </button>
       </div>
     </div>
 
     <!-- 2. Split-Screen Main Layout: Left (4 KPIs + Filters + Tabs + Table) + Right Lead Drawer -->
     <div class="grid grid-cols-1 xl:grid-cols-12 gap-5 items-start">
-      <!-- LEFT COLUMN (8 Cols) -->
-      <div class="xl:col-span-8 space-y-4 min-w-0">
+      <!-- LEFT COLUMN (8 or 12 Cols depending on drawer) -->
+      <div :class="[isDrawerOpen && activeSelectedLead ? 'xl:col-span-8' : 'xl:col-span-12', 'space-y-4 min-w-0 transition-all duration-300']">
         <!-- Top 4 KPI Cards (Live Database Metrics) -->
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-3.5">
           <!-- Total Leads -->
@@ -186,8 +200,15 @@
             <table class="w-full text-left text-xs border-collapse">
               <thead>
                 <tr class="bg-slate-50/80 text-[10px] font-bold text-slate-400 uppercase tracking-wider border-b border-slate-200/80">
-                  <th class="py-3 px-3.5 w-8 text-center">
-                    <input type="checkbox" class="rounded text-red-600 focus:ring-red-500 cursor-pointer" />
+                  <th class="py-3 px-3.5 w-8 text-center" @click.stop>
+                    <input 
+                      type="checkbox" 
+                      :checked="isAllSelected"
+                      :indeterminate.prop="isSomeSelected"
+                      @change="toggleSelectAll"
+                      class="w-4 h-4 rounded text-red-600 focus:ring-red-500 cursor-pointer accent-[#DC2626]" 
+                      title="Select All"
+                    />
                   </th>
                   <th class="py-3 px-2.5 font-bold">REF</th>
                   <th class="py-3 px-2.5 font-bold">CUSTOMER</th>
@@ -206,16 +227,21 @@
                   v-for="lead in paginatedLeads" 
                   :key="lead.id || lead.ref"
                   @mouseenter="activeSelectedLead = lead"
-                  @click="activeSelectedLead = lead"
+                  @click="activeSelectedLead = lead; isDrawerOpen = true"
                   :class="[
                     'transition-colors cursor-pointer group',
                     activeSelectedLead?.id === lead.id 
                       ? 'bg-red-50/40 border-l-4 border-l-[#DC2626]' 
-                      : 'hover:bg-slate-50/80'
+                      : (selectedLeadIds.includes(lead.id) ? 'bg-red-50/20' : 'hover:bg-slate-50/80')
                   ]"
                 >
                   <td class="py-3.5 px-3.5 text-center" @click.stop>
-                    <input type="checkbox" class="rounded text-red-600 focus:ring-red-500 cursor-pointer" />
+                    <input 
+                      type="checkbox" 
+                      :checked="selectedLeadIds.includes(lead.id)"
+                      @change="toggleSelectLead(lead.id)"
+                      class="w-4 h-4 rounded text-red-600 focus:ring-red-500 cursor-pointer accent-[#DC2626]" 
+                    />
                   </td>
                   <td class="py-3.5 px-2.5 font-bold text-slate-800 group-hover:text-red-600 whitespace-nowrap">{{ lead.ref }}</td>
                   <td class="py-3.5 px-2.5 font-bold text-slate-900 whitespace-nowrap max-w-[150px] truncate" :title="lead.customer">{{ lead.customer }}</td>
@@ -291,7 +317,7 @@
       </div>
 
       <!-- RIGHT COLUMN: Sticky Lead Detail Drawer (Live Customer Data) -->
-      <div v-if="activeSelectedLead" class="xl:col-span-4 bg-white rounded-2xl border border-slate-200/80 shadow-sm p-5 sticky top-16 space-y-5">
+      <div v-if="isDrawerOpen && activeSelectedLead" class="xl:col-span-4 bg-white rounded-2xl border border-slate-200/80 shadow-sm p-5 sticky top-16 space-y-5 transition-all duration-300">
         <!-- Drawer Top Header -->
         <div class="flex items-start justify-between">
           <div class="space-y-1.5">
@@ -307,9 +333,24 @@
             </div>
             <p class="text-[11px] text-slate-400">Created {{ activeSelectedLead.createdAt }}</p>
           </div>
-          <button @click="$emit('select-lead', activeSelectedLead.raw || activeSelectedLead)" class="text-slate-400 hover:text-slate-700 p-1 text-xs font-bold cursor-pointer">
-            Open Details ↗
-          </button>
+          <div class="flex items-center gap-1">
+            <button 
+              @click="$emit('select-lead', activeSelectedLead.raw || activeSelectedLead)" 
+              class="text-slate-400 hover:text-slate-700 p-1.5 text-xs font-bold cursor-pointer rounded-lg hover:bg-slate-100"
+              title="Open Full Details"
+            >
+              ↗
+            </button>
+            <button 
+              @click="isDrawerOpen = false" 
+              class="w-7 h-7 flex items-center justify-center rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors cursor-pointer"
+              title="Close Panel"
+            >
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+              </svg>
+            </button>
+          </div>
         </div>
 
         <!-- Drawer Tabs -->
@@ -464,6 +505,7 @@
 <script setup>
 import { ref, computed, watch } from 'vue'
 import { useAdminData } from '~/composables/useAdminData'
+import { generateMoveItQuotationPDF } from '~/utils/pdfBranding'
 
 const props = defineProps({
   orders: {
@@ -475,6 +517,11 @@ const props = defineProps({
 const emit = defineEmits(['select-lead', 'add-lead'])
 const { exportToExcel } = useAdminData()
 
+const exportLeadPdf = (lead) => {
+  if (!lead) return
+  generateMoveItQuotationPDF(lead)
+}
+
 const searchQuery = ref('')
 const activeLeadTab = ref('all')
 const statusFilter = ref('all')
@@ -483,6 +530,7 @@ const priorityFilter = ref('all')
 const currentPage = ref(1)
 const pageSize = 10
 const activeDrawerTab = ref('Overview')
+const isDrawerOpen = ref(true)
 
 // Map 100% real Supabase orders into rich lead objects
 const activeLeadsSource = computed(() => {
@@ -613,6 +661,38 @@ const paginatedLeads = computed(() => {
   const start = (currentPage.value - 1) * pageSize
   return filteredLeads.value.slice(start, start + pageSize)
 })
+
+// Checkbox selection state
+const selectedLeadIds = ref([])
+
+const isAllSelected = computed(() => {
+  if (paginatedLeads.value.length === 0) return false
+  return paginatedLeads.value.every(l => selectedLeadIds.value.includes(l.id))
+})
+
+const isSomeSelected = computed(() => {
+  return !isAllSelected.value && paginatedLeads.value.some(l => selectedLeadIds.value.includes(l.id))
+})
+
+const toggleSelectAll = () => {
+  if (isAllSelected.value) {
+    const pageIds = new Set(paginatedLeads.value.map(l => l.id))
+    selectedLeadIds.value = selectedLeadIds.value.filter(id => !pageIds.has(id))
+  } else {
+    const set = new Set(selectedLeadIds.value)
+    paginatedLeads.value.forEach(l => set.add(l.id))
+    selectedLeadIds.value = Array.from(set)
+  }
+}
+
+const toggleSelectLead = (id) => {
+  const index = selectedLeadIds.value.indexOf(id)
+  if (index > -1) {
+    selectedLeadIds.value.splice(index, 1)
+  } else {
+    selectedLeadIds.value.push(id)
+  }
+}
 
 const markActionComplete = () => {
   if (activeSelectedLead.value) {

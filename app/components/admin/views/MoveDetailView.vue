@@ -1333,6 +1333,7 @@
 import { ref, computed, watch, onUnmounted } from 'vue'
 import { jsPDF } from 'jspdf'
 import autoTable from 'jspdf-autotable'
+import { MOVEIT_LOGO_BASE64 } from '~/utils/pdfBranding'
 
 const props = defineProps({
   job: {
@@ -1925,23 +1926,20 @@ const downloadQuotePDF = () => {
     doc.setFillColor(...redColor)
     doc.rect(0, 0, 210, 6, 'F')
 
-    // 2. Company Logo & Brand Header
-    doc.setFillColor(...redColor)
-    doc.roundedRect(14, 14, 10, 10, 2, 2, 'F')
-    doc.setFont('helvetica', 'bold')
-    doc.setFontSize(10)
-    doc.setTextColor(255, 255, 255)
-    doc.text('m', 17.5, 20.5)
-
-    doc.setFont('helvetica', 'bold')
-    doc.setFontSize(16)
-    doc.setTextColor(...darkColor)
-    doc.text('move-it', 27, 21)
+    // 2. Company Logo & Brand Header (Official MoveIt High-Res Logo)
+    try {
+      doc.addImage(MOVEIT_LOGO_BASE64, 'PNG', 14, 11, 46, 10.24)
+    } catch (e) {
+      doc.setFont('helvetica', 'bold')
+      doc.setFontSize(16)
+      doc.setTextColor(...redColor)
+      doc.text('move-it', 14, 20)
+    }
 
     doc.setFont('helvetica', 'normal')
-    doc.setFontSize(8)
+    doc.setFontSize(7.5)
     doc.setTextColor(...grayColor)
-    doc.text('Premium Moving & Logistics Maastricht', 27, 25)
+    doc.text('Premium Moving & Logistics Maastricht B.V.', 14, 26)
 
     // Top Right: Company Legal & Contact Details
     doc.setFontSize(8)
@@ -2176,23 +2174,20 @@ const downloadInvoicePDF = () => {
     doc.setFillColor(...darkColor)
     doc.rect(0, 0, 210, 6, 'F')
 
-    // 2. Company Logo & Brand Header
-    doc.setFillColor(...redColor)
-    doc.roundedRect(14, 14, 10, 10, 2, 2, 'F')
-    doc.setFont('helvetica', 'bold')
-    doc.setFontSize(10)
-    doc.setTextColor(255, 255, 255)
-    doc.text('m', 17.5, 20.5)
-
-    doc.setFont('helvetica', 'bold')
-    doc.setFontSize(16)
-    doc.setTextColor(...darkColor)
-    doc.text('move-it', 27, 21)
+    // 2. Company Logo & Brand Header (Official MoveIt High-Res Logo)
+    try {
+      doc.addImage(MOVEIT_LOGO_BASE64, 'PNG', 14, 11, 46, 10.24)
+    } catch (e) {
+      doc.setFont('helvetica', 'bold')
+      doc.setFontSize(16)
+      doc.setTextColor(...redColor)
+      doc.text('move-it', 14, 20)
+    }
 
     doc.setFont('helvetica', 'normal')
-    doc.setFontSize(8)
+    doc.setFontSize(7.5)
     doc.setTextColor(...grayColor)
-    doc.text('Premium Moving & Logistics Maastricht B.V.', 27, 25)
+    doc.text('Premium Moving & Logistics Maastricht B.V.', 14, 26)
 
     // Top Right: Company Legal & Tax Details
     doc.setFontSize(8)

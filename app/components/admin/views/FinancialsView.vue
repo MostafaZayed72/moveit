@@ -545,6 +545,7 @@
 import { ref, computed } from 'vue'
 import { jsPDF } from 'jspdf'
 import autoTable from 'jspdf-autotable'
+import { MOVEIT_LOGO_BASE64 } from '~/utils/pdfBranding'
 
 const props = defineProps({
   orders: { type: Array, default: () => [] },
@@ -782,15 +783,24 @@ const downloadTxInvoicePDF = (tx) => {
     doc.setFillColor(...redColor)
     doc.rect(0, 0, 210, 6, 'F')
 
+    try {
+      doc.addImage(MOVEIT_LOGO_BASE64, 'PNG', 14, 11, 46, 10.24)
+    } catch (e) {
+      doc.setFont('helvetica', 'bold')
+      doc.setFontSize(16)
+      doc.setTextColor(...darkColor)
+      doc.text('move-it', 14, 20)
+    }
+
     doc.setFont('helvetica', 'bold')
-    doc.setFontSize(16)
+    doc.setFontSize(13)
     doc.setTextColor(...darkColor)
-    doc.text('MoveIt Maastricht B.V. — Official Tax Document', 14, 20)
+    doc.text('MoveIt Maastricht B.V. — Official Tax Document', 66, 18)
 
     doc.setFont('helvetica', 'normal')
-    doc.setFontSize(8.5)
+    doc.setFontSize(8)
     doc.setTextColor(...grayColor)
-    doc.text('Oranjeplein 35D, 6224 KV Maastricht • KvK: 84920194 • BTW: NL863412345B01 • IBAN: NL44 RABO 0123 4567 89', 14, 26)
+    doc.text('Oranjeplein 35D, 6224 KV Maastricht • KvK: 84920194 • BTW: NL863412345B01', 66, 23)
 
     doc.setDrawColor(226, 232, 240)
     doc.line(14, 30, 196, 30)

@@ -852,6 +852,7 @@
 import { ref, computed } from 'vue'
 import { jsPDF } from 'jspdf'
 import autoTable from 'jspdf-autotable'
+import { MOVEIT_LOGO_BASE64 } from '~/utils/pdfBranding'
 
 const props = defineProps({
   orders: { type: Array, default: () => [] },
@@ -1129,18 +1130,31 @@ const exportAnalyticsPdf = () => {
     const m = periodMetrics.value
     doc.setFillColor(220, 38, 38)
     doc.rect(0, 0, 210, 6, 'F')
+
+    try {
+      doc.addImage(MOVEIT_LOGO_BASE64, 'PNG', 14, 11, 46, 10.24)
+    } catch (e) {
+      doc.setFont('helvetica', 'bold')
+      doc.setFontSize(16)
+      doc.setTextColor(15, 23, 42)
+      doc.text('move-it', 14, 20)
+    }
+
     doc.setFont('helvetica', 'bold')
-    doc.setFontSize(16)
+    doc.setFontSize(13)
     doc.setTextColor(15, 23, 42)
-    doc.text(`MoveIt Maastricht — Executive KPI Report (${activeReportTab.value})`, 14, 20)
+    doc.text(`MoveIt Maastricht — Executive KPI Report (${activeReportTab.value})`, 66, 18)
     doc.setFont('helvetica', 'normal')
-    doc.setFontSize(9)
+    doc.setFontSize(8)
     doc.setTextColor(100, 116, 139)
-    doc.text(`Period: ${selectedPeriod.value.toUpperCase()} • Data Completeness Score: ${m.completeness}% • Generated: ${new Date().toLocaleDateString('en-GB')}`, 14, 27)
+    doc.text(`Period: ${selectedPeriod.value.toUpperCase()} • Data Completeness: ${m.completeness}% • Generated: ${new Date().toLocaleDateString('en-GB')}`, 66, 23)
+
+    doc.setDrawColor(226, 232, 240)
+    doc.line(14, 30, 196, 30)
 
     const autoTableFn = autoTable.default || autoTable
     autoTableFn(doc, {
-      startY: 34,
+      startY: 36,
       head: [['KPI Indicator', 'Current Value', 'Period Comparison']],
       body: [
         ['Total Revenue', `€${m.revenue}`, `↗ +${m.revGrowth} vs previous period`],

@@ -1,7 +1,7 @@
 <template>
   <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
-    <!-- LEFT MAIN AREA: Team & Crew Header, 6 KPIs, Table & Bottom Widgets (8 Cols - Exact match to "8 Team & Crew.png") -->
-    <div class="lg:col-span-8 space-y-4 min-w-0">
+    <!-- LEFT MAIN AREA: Team & Crew Header, 6 KPIs, Table & Bottom Widgets (8 or 12 Cols) -->
+    <div :class="[isDrawerOpen && selectedMember ? 'lg:col-span-8' : 'lg:col-span-12', 'space-y-4 min-w-0 transition-all duration-300']">
       <!-- Header -->
       <div class="flex items-center justify-between">
         <div>
@@ -10,10 +10,25 @@
             Manage your movers, drivers and team members. Assign teams, track availability and performance.
           </p>
         </div>
-        <button class="flex items-center gap-1.5 px-3.5 py-2 bg-white hover:bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-700 shadow-2xs cursor-pointer">
-          <span>📥</span>
-          <span>Export</span>
-        </button>
+        <div class="flex items-center gap-2">
+          <button class="flex items-center gap-1.5 px-3.5 py-2 bg-white hover:bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-700 shadow-2xs cursor-pointer">
+            <span>📥</span>
+            <span>Export</span>
+          </button>
+          <button 
+            @click="isDrawerOpen = !isDrawerOpen"
+            :class="[
+              'flex items-center gap-1.5 px-3.5 py-2 border text-xs font-bold rounded-xl shadow-xs transition-all cursor-pointer',
+              isDrawerOpen ? 'bg-white hover:bg-slate-50 text-slate-700 border-slate-200' : 'bg-red-50 text-red-700 border-red-200 hover:bg-red-100'
+            ]"
+            :title="isDrawerOpen ? 'Collapse side panel' : 'Expand side panel'"
+          >
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"/>
+            </svg>
+            <span>{{ isDrawerOpen ? 'Hide Panel' : 'Show Panel' }}</span>
+          </button>
+        </div>
       </div>
 
       <!-- 6 KPI Cards Row -->
@@ -103,6 +118,15 @@
         <button @click="searchQuery = ''; roleFilter = 'all'" class="px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs font-bold text-slate-700 cursor-pointer">
           Clear
         </button>
+
+        <div v-if="selectedMembers.length > 0" class="flex items-center gap-2 pl-2 border-l border-slate-200">
+          <span class="text-xs font-bold text-red-600 bg-red-50 px-2 py-1 rounded-lg">
+            {{ selectedMembers.length }} selected
+          </span>
+          <button @click="selectedMembers = []" class="text-xs text-slate-500 hover:text-slate-800 underline">
+            Deselect
+          </button>
+        </div>
       </div>
 
       <!-- Team Table -->
@@ -111,7 +135,16 @@
           <table class="w-full text-left text-xs border-collapse">
             <thead>
               <tr class="bg-slate-50/80 text-[10px] font-bold text-slate-400 uppercase tracking-wider border-b border-slate-200/80">
-                <th class="py-3 px-3.5 w-8 text-center"><input type="checkbox" class="rounded text-red-600" /></th>
+                <th class="py-3 px-3.5 w-8 text-center">
+                  <input 
+                    type="checkbox" 
+                    class="rounded text-red-600 focus:ring-red-500 cursor-pointer"
+                    :checked="isAllSelected"
+                    :indeterminate.prop="isSomeSelected"
+                    @change="toggleSelectAll"
+                    title="Select all"
+                  />
+                </th>
                 <th class="py-3 px-3 font-bold">NAME</th>
                 <th class="py-3 px-2.5 font-bold">ROLE & SKILLS</th>
                 <th class="py-3 px-2.5 font-bold">PHONE</th>
@@ -126,7 +159,7 @@
                 v-for="m in filteredMembers" 
                 :key="m.name"
                 @mouseenter="selectedMember = m"
-                @click="selectedMember = m"
+                @click="selectedMember = m; isDrawerOpen = true"
                 :class="[
                   'transition-colors cursor-pointer group',
                   selectedMember?.name === m.name 
@@ -134,7 +167,14 @@
                     : 'hover:bg-slate-50/80'
                 ]"
               >
-                <td class="py-3 px-3.5 text-center" @click.stop><input type="checkbox" class="rounded text-red-600" /></td>
+                <td class="py-3 px-3.5 text-center" @click.stop>
+                  <input 
+                    type="checkbox" 
+                    class="rounded text-red-600 focus:ring-red-500 cursor-pointer"
+                    :checked="selectedMembers.includes(m.name)"
+                    @change="toggleSelectMember(m.name)"
+                  />
+                </td>
                 <td class="py-3 px-3">
                   <div class="flex items-center gap-2.5">
                     <span class="w-8 h-8 rounded-full text-white text-xs font-black flex items-center justify-center flex-shrink-0" :class="m.avatarBg">
@@ -174,7 +214,16 @@
                   <div v-if="m.currentJobTime" class="text-[10px] text-slate-400">{{ m.currentJobTime }}</div>
                   <span v-else class="text-slate-400">-</span>
                 </td>
-                <td class="py-3 px-2 text-center text-slate-400">•••</td>
+                <td class="py-3 px-2 text-center" @click.stop>
+                  <button 
+                    @click="openEditMember(m)" 
+                    class="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-lg transition-colors cursor-pointer flex items-center gap-1 mx-auto"
+                    title="Edit Member"
+                  >
+                    <span>✎</span>
+                    <span>Edit</span>
+                  </button>
+                </td>
               </tr>
             </tbody>
           </table>
@@ -273,7 +322,7 @@
     </div>
 
     <!-- RIGHT SIDEBAR: Team Member Detail Drawer (4 Cols - Exact match to "8 Team & Crew.png") -->
-    <div class="lg:col-span-4 bg-white rounded-2xl border border-slate-200/80 shadow-sm p-5 sticky top-20 space-y-5">
+    <div v-if="isDrawerOpen && selectedMember" class="lg:col-span-4 bg-white rounded-2xl border border-slate-200/80 shadow-sm p-5 sticky top-20 space-y-5 transition-all duration-300">
       <!-- Member Header -->
       <div class="flex items-center justify-between">
         <div class="flex items-center gap-3">
@@ -289,7 +338,15 @@
           <span class="px-2.5 py-0.5 rounded-md text-[11px] font-bold" :class="selectedMember.statusClass">
             {{ selectedMember.status }}
           </span>
-          <button class="text-slate-400 text-sm">✕</button>
+          <button 
+            @click="isDrawerOpen = false" 
+            class="w-7 h-7 flex items-center justify-center rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors cursor-pointer"
+            title="Close Panel"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+          </button>
         </div>
       </div>
 
@@ -397,9 +454,85 @@
         <button class="py-2.5 px-3 bg-white hover:bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-800 cursor-pointer">
           💬 Send Message
         </button>
-        <button class="py-2.5 px-3 bg-white hover:bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-800 cursor-pointer">
-          ✎ Edit Details
+        <button 
+          @click="openEditMember(selectedMember)"
+          class="py-2.5 px-3 bg-white hover:bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-800 cursor-pointer flex items-center justify-center gap-1.5"
+        >
+          <span>✎</span> Edit Details
         </button>
+      </div>
+    </div>
+
+    <!-- EDIT MEMBER MODAL -->
+    <div 
+      v-if="showEditModal && editingMember"
+      class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4"
+      @click.self="showEditModal = false"
+    >
+      <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-200 space-y-4">
+        <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+          <div class="flex items-center gap-2.5">
+            <span class="w-8 h-8 rounded-full bg-red-100 text-[#DC2626] flex items-center justify-center font-bold text-sm">✎</span>
+            <div>
+              <h3 class="text-base font-black text-slate-900">Edit Crew Member</h3>
+              <p class="text-[10px] text-slate-400">Update role, contact details, status, and skills</p>
+            </div>
+          </div>
+          <button @click="showEditModal = false" class="text-slate-400 hover:text-slate-600 text-lg cursor-pointer">✕</button>
+        </div>
+
+        <div class="space-y-3 text-xs">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Full Name</label>
+            <input v-model="editingMember.name" type="text" class="w-full p-2.5 border border-slate-300 rounded-xl font-bold focus:border-red-500 focus:outline-none" />
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Email Address</label>
+            <input v-model="editingMember.email" type="email" class="w-full p-2.5 border border-slate-300 rounded-xl focus:border-red-500 focus:outline-none" />
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Phone Number</label>
+            <input v-model="editingMember.phone" type="text" class="w-full p-2.5 border border-slate-300 rounded-xl font-bold focus:border-red-500 focus:outline-none" />
+          </div>
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block font-bold text-slate-700 mb-1">Role</label>
+              <select v-model="editingMember.role" class="w-full p-2.5 border border-slate-300 rounded-xl font-bold focus:border-red-500 focus:outline-none">
+                <option value="Senior Mover">Senior Mover</option>
+                <option value="Driver & Mover">Driver & Mover</option>
+                <option value="Driver">Driver</option>
+                <option value="Mover">Mover</option>
+                <option value="Office Manager">Office Manager</option>
+                <option value="Move Coordinator">Move Coordinator</option>
+              </select>
+            </div>
+            <div>
+              <label class="block font-bold text-slate-700 mb-1">Status</label>
+              <select v-model="editingMember.status" class="w-full p-2.5 border border-slate-300 rounded-xl font-bold focus:border-red-500 focus:outline-none">
+                <option value="On Duty">On Duty</option>
+                <option value="Off Duty">Off Duty</option>
+                <option value="On Leave">On Leave</option>
+              </select>
+            </div>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Availability</label>
+            <select v-model="editingMember.availability" class="w-full p-2.5 border border-slate-300 rounded-xl font-bold focus:border-red-500 focus:outline-none">
+              <option value="Available">Available</option>
+              <option value="Busy">Busy</option>
+              <option value="Unavailable">Unavailable</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-between pt-3 border-t border-slate-100">
+          <button @click="showEditModal = false" class="px-4 py-2 text-xs font-bold text-slate-500 hover:text-slate-800 cursor-pointer">
+            Cancel
+          </button>
+          <button @click="saveEditMember" class="px-5 py-2 bg-[#DC2626] hover:bg-red-700 text-white text-xs font-bold rounded-xl shadow-xs cursor-pointer flex items-center gap-1.5">
+            <span>💾</span> Save Changes
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -419,8 +552,12 @@ const latestActiveJob = computed(() => {
 const searchQuery = ref('')
 const roleFilter = ref('all')
 const activeDrawerTab = ref('Overview')
+const isDrawerOpen = ref(true)
+const selectedMembers = ref([])
+const showEditModal = ref(false)
+const editingMember = ref(null)
 
-const teamList = [
+const teamList = ref([
   { initials: 'AA', avatarBg: 'bg-rose-600', name: 'Ahmed Ali', role: 'Senior Mover', email: 'ahmed.ali@move-it.nl', phone: '+31 6 12 34 56 78', availability: 'Available', availabilityClass: 'bg-emerald-50 text-emerald-700', status: 'On Duty', statusClass: 'bg-emerald-50 text-emerald-700', currentJob: 'J-26-1101', currentJobTime: '09:00 – 13:00', skills: [{ label: 'Moving', badgeClass: 'bg-blue-50 text-blue-600' }, { label: 'Assembly', badgeClass: 'bg-purple-50 text-purple-600' }, { label: 'Packing', badgeClass: 'bg-amber-50 text-amber-700' }] },
   { initials: 'TK', avatarBg: 'bg-blue-600', name: 'Tomas Kovac', role: 'Driver & Mover', email: 'tomas.kovac@move-it.nl', phone: '+31 6 23 45 67 89', availability: 'Available', availabilityClass: 'bg-emerald-50 text-emerald-700', status: 'On Duty', statusClass: 'bg-emerald-50 text-emerald-700', currentJob: 'J-26-1101', currentJobTime: '09:00 – 13:00', skills: [{ label: 'Driving (B)', badgeClass: 'bg-sky-50 text-sky-600' }, { label: 'Moving', badgeClass: 'bg-blue-50 text-blue-600' }, { label: 'Assembly', badgeClass: 'bg-purple-50 text-purple-600' }] },
   { initials: 'OH', avatarBg: 'bg-slate-800', name: 'Omar Hassan', role: 'Mover', email: 'omar.hassan@move-it.nl', phone: '+31 6 44 11 22 33', availability: 'Busy', availabilityClass: 'bg-amber-50 text-amber-700', status: 'On Duty', statusClass: 'bg-emerald-50 text-emerald-700', currentJob: 'J-26-1099', currentJobTime: '08:30 – 15:00', skills: [{ label: 'Moving', badgeClass: 'bg-blue-50 text-blue-600' }, { label: 'Packing', badgeClass: 'bg-amber-50 text-amber-700' }, { label: 'Furniture', badgeClass: 'bg-purple-50 text-purple-600' }] },
@@ -429,12 +566,46 @@ const teamList = [
   { initials: 'DC', avatarBg: 'bg-amber-600', name: 'David Chen', role: 'Mover', email: 'david.chen@move-it.nl', phone: '+31 6 11 22 33 44', availability: 'Available', availabilityClass: 'bg-blue-50 text-blue-600', status: 'Off Duty', statusClass: 'bg-slate-100 text-slate-600', currentJob: '', currentJobTime: '', skills: [{ label: 'Moving', badgeClass: 'bg-blue-50 text-blue-600' }, { label: 'Assembly', badgeClass: 'bg-purple-50 text-purple-600' }, { label: 'IKEA', badgeClass: 'bg-amber-50 text-amber-700' }] },
   { initials: 'MJ', avatarBg: 'bg-blue-800', name: 'Maria Jansen', role: 'Office Manager', email: 'maria.jansen@move-it.nl', phone: '+31 6 98 76 54 32', availability: 'Available', availabilityClass: 'bg-blue-50 text-blue-600', status: 'Off Duty', statusClass: 'bg-slate-100 text-slate-600', currentJob: '', currentJobTime: '', skills: [{ label: 'Customer Service', badgeClass: 'bg-sky-50 text-sky-600' }, { label: 'Planning', badgeClass: 'bg-purple-50 text-purple-600' }, { label: 'Admin', badgeClass: 'bg-rose-50 text-rose-600' }] },
   { initials: 'RB', avatarBg: 'bg-purple-800', name: 'Rachid Bouzid', role: 'Mover (Part-time)', email: 'rachid.bouzid@move-it.nl', phone: '+31 6 22 33 44 55', availability: 'Unavailable', availabilityClass: 'bg-rose-50 text-rose-600', status: 'On Leave', statusClass: 'bg-rose-50 text-rose-600', currentJob: '', currentJobTime: '', skills: [{ label: 'Moving', badgeClass: 'bg-blue-50 text-blue-600' }, { label: 'Packing', badgeClass: 'bg-rose-50 text-rose-600' }, { label: 'Loading', badgeClass: 'bg-amber-50 text-amber-700' }] }
-]
+])
 
-const selectedMember = ref(teamList[0])
+const selectedMember = ref(teamList.value[0])
+
+const openEditMember = (member) => {
+  if (!member) return
+  editingMember.value = { ...member }
+  showEditModal.value = true
+}
+
+const saveEditMember = () => {
+  if (!editingMember.value || !editingMember.value.name) return
+  const idx = teamList.value.findIndex(m => m.name === editingMember.value.name || m.email === editingMember.value.email)
+  if (idx !== -1) {
+    // update status class
+    const st = editingMember.value.status
+    let statusClass = 'bg-slate-100 text-slate-600'
+    if (st === 'On Duty') statusClass = 'bg-emerald-50 text-emerald-700'
+    else if (st === 'On Leave') statusClass = 'bg-rose-50 text-rose-600'
+
+    const av = editingMember.value.availability
+    let availabilityClass = 'bg-blue-50 text-blue-600'
+    if (av === 'Available') availabilityClass = 'bg-emerald-50 text-emerald-700'
+    else if (av === 'Busy') availabilityClass = 'bg-amber-50 text-amber-700'
+    else if (av === 'Unavailable') availabilityClass = 'bg-rose-50 text-rose-600'
+
+    teamList.value[idx] = {
+      ...teamList.value[idx],
+      ...editingMember.value,
+      statusClass,
+      availabilityClass
+    }
+    selectedMember.value = teamList.value[idx]
+  }
+  showEditModal.value = false
+  editingMember.value = null
+}
 
 const filteredMembers = computed(() => {
-  return teamList.filter(m => {
+  return teamList.value.filter(m => {
     if (roleFilter.value !== 'all' && !m.role.includes(roleFilter.value)) return false
     if (searchQuery.value) {
       const q = searchQuery.value.toLowerCase()
@@ -443,5 +614,32 @@ const filteredMembers = computed(() => {
     return true
   })
 })
+
+const isAllSelected = computed(() => {
+  return filteredMembers.value.length > 0 && filteredMembers.value.every(m => selectedMembers.value.includes(m.name))
+})
+
+const isSomeSelected = computed(() => {
+  const selectedCount = filteredMembers.value.filter(m => selectedMembers.value.includes(m.name)).length
+  return selectedCount > 0 && selectedCount < filteredMembers.value.length
+})
+
+const toggleSelectAll = () => {
+  if (isAllSelected.value) {
+    const displayedNames = filteredMembers.value.map(m => m.name)
+    selectedMembers.value = selectedMembers.value.filter(name => !displayedNames.includes(name))
+  } else {
+    const displayedNames = filteredMembers.value.map(m => m.name)
+    selectedMembers.value = Array.from(new Set([...selectedMembers.value, ...displayedNames]))
+  }
+}
+
+const toggleSelectMember = (name) => {
+  if (selectedMembers.value.includes(name)) {
+    selectedMembers.value = selectedMembers.value.filter(n => n !== name)
+  } else {
+    selectedMembers.value.push(name)
+  }
+}
 </script>
 
