@@ -380,14 +380,15 @@
                   <div class="w-6 h-6 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-xs">
                     👤
                   </div>
-                  <span>{{ activeSelectedJob.customer || 'Sophie de Jong' }}</span>
+                  <span>{{ activeSelectedJob?.customer || 'Customer' }}</span>
                 </div>
                 <div class="flex items-center gap-2 text-slate-600 pl-8">
                   <span class="text-slate-400">📞</span>
-                  <span class="font-semibold">{{ activeSelectedJob.phone || '+31 6 12 34 56 78' }}</span>
+                  <span class="font-semibold">{{ activeSelectedJob?.phone || 'Phone not provided' }}</span>
                   <!-- WhatsApp Direct Action Icon -->
                   <a 
-                    :href="`https://wa.me/${(activeSelectedJob.phone || '31612345678').replace(/[^0-9]/g, '')}`" 
+                    v-if="activeSelectedJob?.phone"
+                    :href="`https://wa.me/${activeSelectedJob.phone.replace(/[^0-9]/g, '')}`" 
                     target="_blank"
                     class="w-5 h-5 rounded-full bg-emerald-500 hover:bg-emerald-600 text-white flex items-center justify-center text-[10px] shadow-xs cursor-pointer ml-1"
                     title="Chat on WhatsApp"
@@ -397,7 +398,7 @@
                 </div>
                 <div class="flex items-center gap-2 text-slate-600 pl-8">
                   <span class="text-slate-400">✉️</span>
-                  <span>{{ activeSelectedJob.email || 'sophie.dejong@gmail.com' }}</span>
+                  <span>{{ activeSelectedJob?.email || 'Email not provided' }}</span>
                 </div>
               </div>
 
@@ -409,7 +410,7 @@
                     <span class="text-slate-400">📅</span>
                     <div>
                       <span class="text-[10px] text-slate-400 block font-medium">Moving Date</span>
-                      <strong class="text-slate-800">{{ activeSelectedJob.movingDate || '1 Nov 2025' }}</strong>
+                      <strong class="text-slate-800">{{ activeSelectedJob?.movingDate || 'TBD' }}</strong>
                     </div>
                   </div>
 
@@ -417,7 +418,7 @@
                     <span class="text-slate-400">🕒</span>
                     <div>
                       <span class="text-[10px] text-slate-400 block font-medium">Time</span>
-                      <strong class="text-slate-800">{{ activeSelectedJob.time || '09:00 - 13:00' }}</strong>
+                      <strong class="text-slate-800">{{ activeSelectedJob?.time || '09:00' }}</strong>
                     </div>
                   </div>
 
@@ -425,7 +426,7 @@
                     <span class="text-slate-400">📍</span>
                     <div>
                       <span class="text-[10px] text-slate-400 block font-medium">From</span>
-                      <p class="text-slate-800 font-bold leading-tight">{{ activeSelectedJob.fromFull || 'Maastricht, NL (12th floor)' }}</p>
+                      <p class="text-slate-800 font-bold leading-tight">{{ activeSelectedJob?.fromFull || activeSelectedJob?.route }}</p>
                     </div>
                   </div>
 
@@ -433,7 +434,7 @@
                     <span class="text-slate-400">➔</span>
                     <div>
                       <span class="text-[10px] text-slate-400 block font-medium">To</span>
-                      <p class="text-slate-800 font-bold leading-tight">{{ activeSelectedJob.toFull || 'Maastricht, NL (Ground floor)' }}</p>
+                      <p class="text-slate-800 font-bold leading-tight">{{ activeSelectedJob?.toFull || activeSelectedJob?.route }}</p>
                     </div>
                   </div>
 
@@ -441,7 +442,7 @@
                     <span class="text-slate-400">📦</span>
                     <div>
                       <span class="text-[10px] text-slate-400 block font-medium">Package</span>
-                      <strong class="text-slate-800">{{ activeSelectedJob.package || 'Full Service' }}</strong>
+                      <strong class="text-slate-800">{{ activeSelectedJob?.package || 'Standard Move' }}</strong>
                     </div>
                   </div>
 
@@ -681,32 +682,20 @@ const drawerTabs = ['Overview', 'Inventory', 'Team & Vehicle', 'Notes', 'Files']
 const lightboxImage = ref(null)
 const showMoreActions = ref(false)
 
-// Fallback Sophie de Jong default job for instant high-fidelity mockup alignment
-const sophieDefaultJob = {
-  ref: 'J-26-1101',
-  customer: 'Sophie de Jong',
-  movingDate: '1 Nov 2025',
-  shortDate: '1 Nov',
-  time: '09:00 - 13:00',
-  fromFull: 'Maastricht, NL (12th floor)',
-  toFull: 'Maastricht, NL (Ground floor)',
-  route: 'Maastricht → Maastricht',
-  package: 'Full Service',
-  moveType: 'Residential • Full Service',
-  team: 2,
-  estValue: 1350,
-  phone: '+31 6 12 34 56 78',
-  email: 'sophie.dejong@gmail.com',
-  coordinator: 'Sherif Eliwa',
-  status: 'Confirmed',
-  operationalStatus: 'Confirmed',
-  salesStatus: 'Won / Accepted',
-  paymentStatus: 'Not Invoiced',
-  priority: 'High',
-  nextAction: 'Review Status'
-}
+const allJobsList = computed(() => {
+  return props.jobs || []
+})
 
-const activeSelectedJob = ref(sophieDefaultJob)
+const activeSelectedJob = ref(null)
+
+watch(allJobsList, (newJobs) => {
+  if (!activeSelectedJob.value && newJobs.length > 0) {
+    activeSelectedJob.value = newJobs[0]
+  } else if (activeSelectedJob.value && newJobs.length > 0) {
+    const match = newJobs.find(j => j.id === activeSelectedJob.value.id)
+    if (match) activeSelectedJob.value = match
+  }
+}, { immediate: true })
 
 // Hover or click selection updates the right-side drawer in-place
 const hoverSelectJob = (job) => {
@@ -729,56 +718,44 @@ const handleStatusUpdate = (payload) => {
 }
 
 const sendUpdatePrompt = () => {
-  const phone = (activeSelectedJob.value.phone || '31612345678').replace(/[^0-9]/g, '')
-  window.open(`https://wa.me/${phone}?text=Hello%20${encodeURIComponent(activeSelectedJob.value.customer)},%20here%20is%20the%20update%20for%20your%20move%20${activeSelectedJob.value.ref}.`, '_blank')
+  if (!activeSelectedJob.value) return
+  const phone = (activeSelectedJob.value.phone || '').replace(/[^0-9]/g, '')
+  if (phone) {
+    window.open(`https://wa.me/${phone}?text=Hello%20${encodeURIComponent(activeSelectedJob.value.customer)},%20here%20is%20the%20update%20for%20your%20move%20${activeSelectedJob.value.ref}.`, '_blank')
+  }
 }
 
-// Combine real orders with default mock list if empty
-const defaultJobs = [
-  sophieDefaultJob,
-  { ref: 'J-26-1100', shortDate: '3 Nov', time: '08:30', customer: 'Jansen Family', route: 'Maastricht → Heerlen', package: 'Van + 2 Movers', team: 2, estValue: 950, status: 'In Progress', fromFull: 'Maastricht', toFull: 'Heerlen' },
-  { ref: 'J-26-1099', shortDate: '5 Nov', time: '13:00', customer: 'UM Student', route: 'Maastricht → Eindhoven', package: 'Student Move', team: 2, estValue: 420, status: 'Team Assigned', fromFull: 'Maastricht', toFull: 'Eindhoven' },
-  { ref: 'J-26-1098', shortDate: '6 Nov', time: '09:00', customer: 'De Vries', route: 'Maastricht → Amsterdam', package: 'Full Service', team: 3, estValue: 2100, status: 'Confirmed', fromFull: 'Maastricht', toFull: 'Amsterdam' },
-  { ref: 'J-26-1097', shortDate: '8 Nov', time: '10:00', customer: 'TechSolutions BV', route: 'Maastricht → Amsterdam', package: 'Van + 2 Movers', team: 2, estValue: 1200, status: 'Confirmed', fromFull: 'Maastricht', toFull: 'Amsterdam' },
-  { ref: 'J-26-1096', shortDate: '10 Nov', time: '08:00', customer: 'Meijer Family', route: 'Maastricht → Den Haag', package: 'Full Service', team: 3, estValue: 1850, status: 'Quote Sent', fromFull: 'Maastricht', toFull: 'Den Haag' },
-  { ref: 'J-26-1095', shortDate: '12 Nov', time: '09:00', customer: 'GlobalRelocate BV', route: 'Maastricht → Brussels', package: 'International', team: 3, estValue: 4300, status: 'Confirmed', fromFull: 'Maastricht', toFull: 'Brussels' },
-  { ref: 'J-26-1094', shortDate: '15 Nov', time: '09:00', customer: 'Martine Peters', route: 'Maastricht → Maastricht', package: 'Van + 2 Movers', team: 2, estValue: 750, status: 'In Progress', fromFull: 'Maastricht', toFull: 'Maastricht' },
-  { ref: 'J-26-1093', shortDate: '17 Nov', time: '08:30', customer: 'Scott Raab', route: 'Lanaken → Storage', package: 'Full Service', team: 3, estValue: 1600, status: 'Team Assigned', fromFull: 'Lanaken', toFull: 'Maastricht Storage' },
-  { ref: 'J-26-1092', shortDate: '19 Nov', time: '09:00', customer: 'Paris Group', route: 'Maastricht → Paris', package: 'International', team: 3, estValue: 3200, status: 'Confirmed', fromFull: 'Maastricht', toFull: 'Paris' }
-]
-
-const allJobsList = computed(() => {
-  if (props.jobs && props.jobs.length > 0) {
-    const existingRefs = new Set(defaultJobs.map(d => d.ref))
-    const liveExtras = props.jobs.filter(j => !existingRefs.has(j.ref))
-    return [...defaultJobs, ...liveExtras]
-  }
-  return defaultJobs
-})
-
-// KPI Metrics aligned with "3 Moving Jobs.png"
+// Real KPI Metrics calculated dynamically from real Supabase database
 const kpiMetrics = computed(() => {
-  const total = Math.max(48, allJobsList.value.length)
+  const all = allJobsList.value
+  const total = all.length
+  const confirmed = all.filter(j => j.operationalStatus === 'Confirmed').length
+  const inProgress = all.filter(j => j.operationalStatus === 'In Progress' || j.operationalStatus === 'Team Assigned' || j.operationalStatus === 'In Transit').length
+  const completed = all.filter(j => j.operationalStatus === 'Completed').length
+  const cancelled = all.filter(j => j.operationalStatus === 'Cancelled').length
+
+  const safeTotal = total > 0 ? total : 1
+
   return {
     total,
-    confirmed: 28,
-    confirmedPct: 58,
-    inProgress: 8,
-    inProgressPct: 17,
-    completed: 10,
-    completedPct: 21,
-    cancelled: 2,
-    cancelledPct: 4
+    confirmed,
+    confirmedPct: Math.round((confirmed / safeTotal) * 100),
+    inProgress,
+    inProgressPct: Math.round((inProgress / safeTotal) * 100),
+    completed,
+    completedPct: Math.round((completed / safeTotal) * 100),
+    cancelled,
+    cancelledPct: Math.round((cancelled / safeTotal) * 100)
   }
 })
 
-// Tab navigation for filtering
+// Tab navigation for filtering with real live counts
 const activeJobTab = ref('all')
 
 const dynamicJobTabs = computed(() => {
   return [
     { id: 'all', label: 'All Jobs', count: kpiMetrics.value.total },
-    { id: 'upcoming', label: 'Upcoming', count: 12 },
+    { id: 'upcoming', label: 'Upcoming', count: kpiMetrics.value.confirmed },
     { id: 'inprogress', label: 'In Progress', count: kpiMetrics.value.inProgress },
     { id: 'completed', label: 'Completed', count: kpiMetrics.value.completed },
     { id: 'cancelled', label: 'Cancelled', count: kpiMetrics.value.cancelled }

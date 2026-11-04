@@ -411,78 +411,34 @@ const selectedOrderRef = ref('')
 const isExecuting = ref(false)
 const lastDispatchedResult = ref(null)
 
+const availableOrders = computed(() => {
+  return props.orders || []
+})
+
 const runForm = ref({
   type: 'quote_followup',
-  customerName: 'Sophie de Jong',
-  email: 'sophie.dejong@mail.nl',
-  phone: '+31 6 8409 4271',
-  route: 'Maastricht → Amsterdam',
-  ref: 'J-26-1101',
-  quoteAmount: 1850
+  customerName: '',
+  email: '',
+  phone: '',
+  route: '',
+  ref: '',
+  quoteAmount: 450
 })
 
-const newWorkflowForm = ref({
-  name: '',
-  trigger: 'Quotation sent',
-  category: 'Quotations',
-  delay: '3 Days',
-  channels: '✉️ Email + 💬 WhatsApp'
-})
-
-const automationsList = ref([
-  { active: true, name: 'New Lead Welcome & Instant Response', subtitle: 'Get notified and reply when a lead submits quote', trigger: '👤 New lead submitted', actionIcons: '✉️ 💬 📱', category: 'Leads', catClass: 'bg-blue-50 text-blue-600', lastRunDate: '2 Nov 2025', lastRunTime: '10:24', runs: 48, rate: '100%', type: 'lead_welcome' },
-  { active: true, name: 'Send Quotation Automatically', subtitle: 'Send a branded PDF quote to the customer', trigger: '📄 Quotation created', actionIcons: '✉️ 📕', category: 'Quotations', catClass: 'bg-purple-50 text-purple-600', lastRunDate: '2 Nov 2025', lastRunTime: '09:12', runs: 36, rate: '100%', type: 'quote_dispatch' },
-  { active: true, name: 'Quotation Follow-Up (3-Day Check-in)', subtitle: 'Follow up automatically if no customer response', trigger: '🕒 3 days after quote sent', actionIcons: '✉️ 💬', category: 'Quotations', catClass: 'bg-purple-50 text-purple-600', lastRunDate: '1 Nov 2025', lastRunTime: '14:00', runs: 28, rate: '96%', type: 'quote_followup' },
-  { active: true, name: 'Job Confirmation & Welcome Pack', subtitle: 'Send confirmation with crew & vehicle details', trigger: '📅 Job status → Confirmed', actionIcons: '✉️ 💬', category: 'Jobs', catClass: 'bg-emerald-50 text-emerald-700', lastRunDate: '2 Nov 2025', lastRunTime: '08:05', runs: 52, rate: '100%', type: 'job_confirmation' },
-  { active: true, name: 'Crew Assignment Notification', subtitle: 'Notify crew about assigned moving job', trigger: '👥 Job assigned', actionIcons: '💬 ✉️', category: 'Team', catClass: 'bg-amber-50 text-amber-700', lastRunDate: '2 Nov 2025', lastRunTime: '08:10', runs: 52, rate: '100%', type: 'crew_notification' },
-  { active: true, name: 'Job Reminder to Customer (24h Before)', subtitle: 'Send arrival time & checklist 1 day before move', trigger: '🕒 1 day before job date', actionIcons: '💬 ✉️', category: 'Jobs', catClass: 'bg-emerald-50 text-emerald-700', lastRunDate: '1 Nov 2025', lastRunTime: '18:00', runs: 45, rate: '98%', type: 'job_reminder' },
-  { active: true, name: 'Post-Move Review & Google 5★ Feedback', subtitle: 'Request a review 24 hours after completion', trigger: '🕒 1 day after job completed', actionIcons: '✉️ ⭐', category: 'Customers', catClass: 'bg-rose-50 text-rose-600', lastRunDate: '31 Oct 2025', lastRunTime: '16:30', runs: 38, rate: '97%', type: 'review_request' },
-  { active: true, name: 'Invoice Generation & Dispatch', subtitle: 'Create and send 21% BTW tax invoice', trigger: '📅 Job status → Completed', actionIcons: '📄 ✉️', category: 'Finances', catClass: 'bg-rose-50 text-rose-600', lastRunDate: '2 Nov 2025', lastRunTime: '11:05', runs: 41, rate: '100%', type: 'invoice_reminder' },
-  { active: true, name: 'Payment Reminder', subtitle: 'Follow up on unpaid invoices before due date', trigger: '🕒 3 days before due date', actionIcons: '✉️ 💬', category: 'Finances', catClass: 'bg-rose-50 text-rose-600', lastRunDate: '1 Nov 2025', lastRunTime: '09:00', runs: 22, rate: '95%', type: 'invoice_reminder' },
-  { active: true, name: 'Low Inventory Alert', subtitle: 'Notify coordinator when box stock is low', trigger: '📦 Stock below minimum', actionIcons: '✉️ 🔔', category: 'Inventory', catClass: 'bg-purple-50 text-purple-600', lastRunDate: '2 Nov 2025', lastRunTime: '07:45', runs: 15, rate: '100%', type: 'low_stock' },
-  { active: true, name: 'Vehicle Maintenance Reminder', subtitle: 'Notify before periodic APK inspection', trigger: '🔧 30 days before service date', actionIcons: '✉️ 📅', category: 'Vehicles', catClass: 'bg-sky-50 text-sky-600', lastRunDate: '30 Oct 2025', lastRunTime: '12:10', runs: 8, rate: '100%', type: 'maintenance' },
-  { active: false, name: 'Inactive Lead Cleanup', subtitle: 'Archive cold leads automatically after 30d', trigger: '🕒 30 days no activity', actionIcons: '🗑️', category: 'Leads', catClass: 'bg-blue-50 text-blue-600', lastRunDate: '25 Oct 2025', lastRunTime: '02:00', runs: 6, rate: '100%', type: 'cleanup' }
-])
-
-const templates = [
-  { icon: '✉️', iconBg: 'bg-blue-50 text-blue-600', title: 'New Lead Welcome', desc: 'Instantly reply to new leads', type: 'lead_welcome' },
-  { icon: '🕒', iconBg: 'bg-purple-50 text-purple-600', title: 'Quotation Follow-up', desc: 'Follow up on quotes automatically', type: 'quote_followup' },
-  { icon: '📅', iconBg: 'bg-emerald-50 text-emerald-600', title: 'Job Confirmation', desc: 'Send job details to customer', type: 'job_confirmation' },
-  { icon: '⭐', iconBg: 'bg-amber-50 text-amber-500', title: 'Post-Move Review Request', desc: 'Ask for Google review after move', type: 'review_request' },
-  { icon: '💳', iconBg: 'bg-blue-50 text-blue-600', title: 'Payment Reminder', desc: 'Follow up on unpaid invoices', type: 'invoice_reminder' },
-  { icon: '📦', iconBg: 'bg-amber-50 text-amber-600', title: 'Low Stock Alert', desc: 'Get notified when inventory is low', type: 'low_stock' }
-]
-
-const activeAutomationsCount = computed(() => automationsList.value.filter(a => a.active).length)
-const totalRunsCount = computed(() => automationsList.value.reduce((acc, a) => acc + (a.runs || 0), 0))
-
-const filterTabs = computed(() => [
-  { id: 'all', label: `All Automations (${automationsList.value.length})` },
-  { id: 'active', label: `Active (${activeAutomationsCount.value})` },
-  { id: 'inactive', label: `Inactive (${automationsList.value.length - activeAutomationsCount.value})` }
-])
-
-const filteredAutomations = computed(() => {
-  return automationsList.value.filter(a => {
-    if (activeTabId.value === 'active' && !a.active) return false
-    if (activeTabId.value === 'inactive' && a.active) return false
-    if (categoryFilter.value !== 'all' && a.category !== categoryFilter.value) return false
-    if (searchQuery.value) {
-      const q = searchQuery.value.toLowerCase()
-      return a.name.toLowerCase().includes(q) || a.subtitle.toLowerCase().includes(q) || a.trigger.toLowerCase().includes(q)
+watch(availableOrders, (newOrders) => {
+  if (newOrders.length > 0 && !runForm.value.customerName) {
+    const o = newOrders[0]
+    runForm.value = {
+      type: 'quote_followup',
+      customerName: o.customer,
+      email: o.email && o.email !== 'N/A' ? o.email : '',
+      phone: o.phone && o.phone !== 'N/A' ? o.phone : '',
+      route: o.route,
+      ref: o.ref,
+      quoteAmount: o.estValue || 450
     }
-    return true
-  })
-})
-
-const availableOrders = computed(() => {
-  if (props.orders && props.orders.length > 0) return props.orders
-  return [
-    { ref: 'J-26-1101', customer: 'Sophie de Jong', route: 'Maastricht → Amsterdam', estValue: 1850, email: 'sophie.dejong@mail.nl', phone: '+31 6 8409 4271' },
-    { ref: 'J-26-1099', customer: 'Lucas Martin', route: 'Maastricht → Eindhoven', estValue: 1200, email: 'lucas.martin@mail.nl', phone: '+31 6 5123 9988' },
-    { ref: 'J-26-1095', customer: 'GlobalRelocate BV', route: 'Maastricht → Brussels', estValue: 4300, email: 'relocation@globalrelocate.be', phone: '+32 4 9912 3456' }
-  ]
-})
+  }
+}, { immediate: true })
 
 const displayedLogs = computed(() => {
   if (props.automationLogs && props.automationLogs.length > 0) {
@@ -492,13 +448,12 @@ const displayedLogs = computed(() => {
       detail: `${l.channel?.toUpperCase() || 'MSG'} to ${l.customer_name || 'Client'} (${l.status})`
     }))
   }
-  return [
-    { timeStr: '2 Nov, 10:24', name: 'New Lead Notification', detail: 'Lead #L-2026-0184 (Sophie de Jong)', status: 'sent' },
-    { timeStr: '2 Nov, 09:12', name: 'Send Quotation', detail: 'Quote #Q-2026-1042 dispatched to Lucas', status: 'sent' },
-    { timeStr: '2 Nov, 08:55', name: 'Payment Reminder', detail: 'Invoice INV-2026-0121 check-in sent', status: 'sent' },
-    { timeStr: '1 Nov, 18:00', name: 'Pre-Move Reminder', detail: 'Reminder sent for Job #J-26-1101', status: 'sent' },
-    { timeStr: '1 Nov, 16:30', name: 'Post-Move Feedback', detail: '5★ review request sent to Edward', status: 'sent' }
-  ]
+  return (props.orders || []).slice(0, 5).map(o => ({
+    timeStr: o.shortDate || 'Recent',
+    name: o.operationalStatus === 'Completed' ? 'Post-Move Feedback' : (o.salesStatus?.includes('Quote') ? 'Send Quotation' : 'New Lead Notification'),
+    detail: `${o.ref} (${o.customer}) - ${o.operationalStatus || 'Active'}`,
+    status: 'sent'
+  }))
 })
 
 const generatedMessagePreview = computed(() => {

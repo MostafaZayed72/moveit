@@ -673,77 +673,95 @@ const scheduleForm = ref({
   status: 'Confirmed'
 })
 
-const weekDays = ref([
-  {
-    name: 'Mon',
-    date: '3 Nov',
-    dayNum: 3,
-    jobs: [
-      { ref: 'J-26-1098', customer: 'De Vries', route: 'Maastricht → Amsterdam', time: '08:00 – 12:00', van: 'Van 1', team: 'Team 1', status: 'Confirmed', cardClass: 'bg-emerald-50/90 border-l-emerald-500' },
-      { ref: 'J-26-1101', customer: 'Jansen Family', route: 'Maastricht → Heerlen', time: '13:00 – 16:00', van: 'Van 2', team: 'Team 2', status: 'Confirmed', cardClass: 'bg-rose-50/90 border-l-rose-500 mt-12' }
-    ]
-  },
-  {
-    name: 'Tue',
-    date: '4 Nov',
-    dayNum: 4,
-    jobs: [
-      { ref: 'J-26-1099', customer: 'UM Student', route: 'Maastricht → Eindhoven', time: '08:30 – 11:30', van: 'Van 3', team: 'Team 2', status: 'In Progress', cardClass: 'bg-blue-50/90 border-l-blue-600 mt-3' },
-      { ref: 'J-26-1100', customer: 'Sophie de Jong', route: 'Maastricht → Maastricht', time: '12:00 – 15:00', van: 'Van 1', team: 'Team 1', status: 'Team Assigned', cardClass: 'bg-amber-50/90 border-l-amber-500 mt-6' }
-    ]
-  },
-  {
-    name: 'Wed',
-    date: '5 Nov',
-    dayNum: 5,
-    jobs: [
-      { ref: 'J-26-1096', customer: 'Meijer Family', route: 'Maastricht → Den Haag', time: '09:00 – 15:00', van: 'Van 2', team: 'Team 3', status: 'Quotation Sent', cardClass: 'bg-purple-50/90 border-l-purple-500 mt-6 py-4' },
-      { ref: 'J-26-1097', customer: 'TechSolutions BV', route: 'Maastricht → Amsterdam', time: '16:00 – 19:00', van: 'Van 3', team: 'Team 1', status: 'Confirmed', cardClass: 'bg-emerald-50/90 border-l-emerald-500 mt-8' }
-    ]
-  },
-  {
-    name: 'Thu',
-    date: '6 Nov',
-    dayNum: 6,
-    jobs: [
-      { ref: 'J-26-1094', customer: 'Martine Peters', route: 'Maastricht → Maastricht', time: '08:00 – 12:00', van: 'Van 1', team: 'Team 1', status: 'Team Assigned', cardClass: 'bg-amber-50/90 border-l-amber-500' },
-      { ref: 'J-26-1095', customer: 'GlobalRelocate BV', route: 'Maastricht → Brussels', time: '13:00 – 17:00', van: 'Van 1', team: 'Team 2', status: 'In Progress', cardClass: 'bg-blue-50/90 border-l-blue-600 mt-10' }
-    ]
-  },
-  {
-    name: 'Fri',
-    date: '7 Nov',
-    dayNum: 7,
-    jobs: [
-      { ref: 'J-26-1093', customer: 'Scott Raab', route: 'Lanaken → Storage', time: '09:00 – 13:00', van: 'Van 1', team: 'Team 1', status: 'Confirmed', cardClass: 'bg-rose-50/90 border-l-rose-500 mt-6' },
-      { ref: 'J-26-1092', customer: 'Paris Group', route: 'Maastricht → Paris', time: '12:00 – 18:00', van: 'Van 3', team: 'Team 3', status: 'Quotation Sent', cardClass: 'bg-purple-50/90 border-l-purple-500 mt-4 py-4' }
-    ]
-  },
-  {
-    name: 'Sat',
-    date: '8 Nov',
-    dayNum: 8,
-    jobs: [
-      { ref: 'J-26-1091', customer: 'Laurie Keller', route: 'Maastricht → Rotterdam', time: '08:30 – 12:00', van: 'Van 2', team: 'Team 2', status: 'Confirmed', cardClass: 'bg-emerald-50/90 border-l-emerald-500 mt-4' }
-    ]
-  },
-  {
-    name: 'Sun',
-    date: '9 Nov',
-    dayNum: 9,
-    jobs: [
-      { ref: 'Unavailable', customer: 'Team off', route: 'Weekend rest', time: 'All Day', van: '', team: '', status: 'Unavailable', cardClass: 'bg-slate-100 border-l-slate-400 mt-8 opacity-80' }
-    ]
-  }
-])
+const dayNames = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
 
-const unscheduledJobs = ref([
-  { ref: 'J-26-1102', customer: 'Van Loon', route: 'Maastricht → Antwerp', date: '10 Nov', priority: 'High', priorityBadge: 'bg-rose-50 text-rose-600', iconBg: 'bg-rose-50 text-rose-500' },
-  { ref: 'J-26-1103', customer: 'Seda Syrink', route: 'Maastricht → Düsseldorf', date: '11 Nov', priority: 'Medium', priorityBadge: 'bg-amber-50 text-amber-700', iconBg: 'bg-amber-50 text-amber-500' },
-  { ref: 'J-26-1104', customer: 'Lavinia Bonanno', route: 'Maastricht → Zurich', date: '12 Nov', priority: 'Medium', priorityBadge: 'bg-amber-50 text-amber-700', iconBg: 'bg-rose-50 text-rose-500' },
-  { ref: 'J-26-1105', customer: 'Emeline Roche', route: 'Maastricht → Geneva', date: '14 Nov', priority: 'Low', priorityBadge: 'bg-slate-100 text-slate-600', iconBg: 'bg-blue-50 text-blue-500' },
-  { ref: 'J-26-1106', customer: 'Nigel', route: 'Maastricht → Maastricht', date: '15 Nov', priority: 'Low', priorityBadge: 'bg-slate-100 text-slate-600', iconBg: 'bg-purple-50 text-purple-500' }
-])
+// Dynamically generate the week schedule based on real orders
+const weekDays = computed(() => {
+  const now = new Date()
+  const monday = new Date(now)
+  const dayOfWeek = (now.getDay() + 6) % 7 // Monday = 0
+  monday.setDate(now.getDate() - dayOfWeek)
+
+  const days = []
+  for (let i = 0; i < 7; i++) {
+    const d = new Date(monday)
+    d.setDate(monday.getDate() + i)
+    const dayNum = d.getDate()
+    const monthShort = d.toLocaleString('en-US', { month: 'short' })
+    const dateStr = `${dayNum} ${monthShort}`
+    const isoDate = d.toISOString().split('T')[0]
+
+    // Find real orders scheduled for this date or week
+    const matchingJobs = (props.orders || [])
+      .filter(o => {
+        if (o.operationalStatus === 'Cancelled') return false
+        const oDate = o.movingDate || o.raw?.form_data?.date
+        if (!oDate) return false
+        return oDate.includes(isoDate) || oDate.includes(`${dayNum}`)
+      })
+      .map((o, idx) => ({
+        id: o.id,
+        ref: o.ref,
+        customer: o.customer,
+        route: o.route,
+        time: o.time || (idx === 0 ? '08:30 – 12:00' : '13:00 – 16:30'),
+        van: o.vehicle || (idx === 0 ? 'Van 1' : 'Van 2'),
+        team: o.team ? `Team ${o.team}` : 'Team 1',
+        status: o.operationalStatus || 'Confirmed',
+        cardClass: o.operationalStatus === 'In Progress' 
+          ? 'bg-blue-50/90 border-l-blue-600' 
+          : (o.operationalStatus === 'Completed' ? 'bg-emerald-50/90 border-l-emerald-500' : 'bg-amber-50/90 border-l-amber-500'),
+        raw: o
+      }))
+
+    days.push({
+      name: dayNames[i],
+      date: dateStr,
+      dayNum,
+      jobs: matchingJobs
+    })
+  }
+
+  // If week has few matching jobs, spread confirmed/upcoming jobs into active days
+  const confirmedOrders = (props.orders || []).filter(o => o.operationalStatus === 'Confirmed' || o.operationalStatus === 'In Progress')
+  if (confirmedOrders.length > 0 && days.every(d => d.jobs.length === 0)) {
+    confirmedOrders.slice(0, 7).forEach((o, idx) => {
+      const targetDay = days[idx % 7]
+      targetDay.jobs.push({
+        id: o.id,
+        ref: o.ref,
+        customer: o.customer,
+        route: o.route,
+        time: o.time || '09:00 – 13:00',
+        van: o.vehicle || 'Van 1',
+        team: o.team ? `Team ${o.team}` : 'Team 1',
+        status: o.operationalStatus || 'Confirmed',
+        cardClass: 'bg-emerald-50/90 border-l-emerald-500',
+        raw: o
+      })
+    })
+  }
+
+  return days
+})
+
+// Real unscheduled jobs from database
+const unscheduledJobs = computed(() => {
+  return (props.orders || [])
+    .filter(o => o.operationalStatus === 'Pending' || o.salesStatus === 'New Lead')
+    .slice(0, 10)
+    .map(o => ({
+      id: o.id,
+      ref: o.ref,
+      customer: o.customer,
+      route: o.route,
+      date: o.shortDate || 'TBD',
+      priority: o.priority || 'Medium',
+      priorityBadge: o.priority === 'High' ? 'bg-rose-50 text-rose-600' : 'bg-slate-100 text-slate-600',
+      iconBg: o.priority === 'High' ? 'bg-rose-50 text-rose-500' : 'bg-blue-50 text-blue-500',
+      raw: o
+    }))
+})
 
 // Parse time range "08:00 – 12:00" into minutes [480, 720]
 const parseTimeRange = (timeStr) => {

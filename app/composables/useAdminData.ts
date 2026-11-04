@@ -199,7 +199,10 @@ export const useAdminData = () => {
   }
 
   // --- Helpers for individual orders ---
-  const getOrderName = (o: any) => o?.form_data?.name || o?.customers?.full_name || 'Guest Customer'
+  const getOrderName = (o: any) => {
+    const rawName = o?.form_data?.name || o?.customers?.full_name || 'Guest Customer'
+    return String(rawName).replace(/^\s+/, '').trim()
+  }
   const getOrderEmail = (o: any) => o?.form_data?.email || o?.customers?.email || 'N/A'
   const getOrderPhone = (o: any) => o?.form_data?.phone || o?.customers?.phone || 'N/A'
   const getOrderFrom = (o: any) => o?.form_data?.from || 'Maastricht'
@@ -410,15 +413,15 @@ export const useAdminData = () => {
   })
 
   const activeLeadsCount = computed(() => {
-    return leadsOrders.value.length || 24
+    return leadsOrders.value.length
   })
 
   const pendingQuotesCount = computed(() => {
-    return leadsOrders.value.filter(o => o.salesStatus?.includes('Quote') || o.operationalStatus === 'Pending').length || 8
+    return leadsOrders.value.filter(o => o.salesStatus?.includes('Quote') || o.operationalStatus === 'Pending' || o.salesStatus === 'New Lead').length
   })
 
   const confirmedJobsCount = computed(() => {
-    return movingJobsOrders.value.length || 15
+    return movingJobsOrders.value.length
   })
 
   // --- Real Status Breakdown for Donut Chart ---
@@ -446,7 +449,12 @@ export const useAdminData = () => {
 
   // --- Real Upcoming Jobs ---
   const upcomingJobs = computed(() => {
-    return movingJobsOrders.value.slice(0, 6)
+    if (movingJobsOrders.value.length > 0) {
+      return [...movingJobsOrders.value]
+        .sort((a, b) => new Date(a.movingDate).getTime() - new Date(b.movingDate).getTime())
+        .slice(0, 6)
+    }
+    return formattedOrders.value.filter(o => o.operationalStatus !== 'Cancelled').slice(0, 6)
   })
 
   // --- Real High Value Leads ---

@@ -4,8 +4,8 @@
     <AdminSidebar 
       class="print:hidden"
       :active-view="currentView"
-      :leads-count="formattedOrders.length || 12"
-      :jobs-count="confirmedJobsCount || 15"
+      :leads-count="leadsOrders.length"
+      :jobs-count="movingJobsOrders.length"
       :is-open="isSidebarOpen"
       @close="isSidebarOpen = false"
       @select-view="handleViewSelect"
@@ -29,6 +29,9 @@
           <!-- Screen 1: Overview Dashboard (1 Dashboard.png) -->
           <OverviewView 
             v-if="currentView === 'overview'" 
+            :orders="formattedOrders"
+            :leads="leadsOrders"
+            :moving-jobs="movingJobsOrders"
             :total-revenue="totalRevenue"
             :job-contribution="jobContribution"
             :active-leads-count="activeLeadsCount"
@@ -46,7 +49,7 @@
           <!-- Screen 2: Leads & Quotations Split View (2 Leads & Quotations.png) -->
           <LeadsView 
             v-else-if="currentView === 'leads'" 
-            :orders="leadsOrders"
+            :orders="formattedOrders"
             @select-lead="openMoveDetail"
             @add-lead="showNewModal = true"
           />
@@ -54,7 +57,7 @@
           <!-- Screen 3: Moving Jobs Split View (3 Moving Jobs.png) -->
           <MovingJobsView 
             v-else-if="currentView === 'jobs'" 
-            :jobs="movingJobsOrders"
+            :jobs="formattedOrders"
             @select-job="openMoveDetail"
             @update-status="handleUpdateStatus"
             @add-job="showNewModal = true"
@@ -89,11 +92,13 @@
           <!-- Screen 8: Team & Crew Split View (8 Team & Crew.png) -->
           <TeamView 
             v-else-if="currentView === 'team'" 
+            :orders="formattedOrders"
           />
 
           <!-- Screen 9: Finances (9 Finances.png) -->
           <FinancialsView 
             v-else-if="currentView === 'financials'" 
+            :orders="formattedOrders"
             :total-revenue="totalRevenue"
             :total-expenses="totalExpenses"
             :net-profit="netProfit"
@@ -103,6 +108,9 @@
           <!-- Screen 10: Reports, Analytics & KPIs (10 Reports, Analytics & KPIs.png) -->
           <AnalyticsView 
             v-else-if="currentView === 'reports' || currentView === 'analytics'" 
+            :orders="formattedOrders"
+            :customers="realCustomers"
+            :total-revenue="totalRevenue"
           />
 
           <!-- Screen 11: Automation (11 Automation.png) -->

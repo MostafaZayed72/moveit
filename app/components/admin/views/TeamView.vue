@@ -380,13 +380,13 @@
         </div>
         <div class="p-3 bg-slate-50 rounded-xl border border-slate-200/70 space-y-2">
           <div class="flex items-center justify-between">
-            <span class="font-black text-slate-900">💼 J-26-1101 – Sophie de Jong</span>
+            <span class="font-black text-slate-900">💼 {{ latestActiveJob?.ref || 'J-26-0001' }} – {{ latestActiveJob?.customer || 'Active Move' }}</span>
             <span class="px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 text-[10px] font-bold">On Duty</span>
           </div>
-          <p class="text-[11px] text-slate-500">Maastricht → Maastricht</p>
+          <p class="text-[11px] text-slate-500">{{ latestActiveJob?.route || 'Maastricht Route' }}</p>
           <div class="flex items-center justify-between text-[11px] text-slate-600 font-semibold">
-            <span>📅 1 Nov 2025</span>
-            <span>🕒 09:00 – 13:00</span>
+            <span>📅 {{ latestActiveJob?.movingDate || 'Active' }}</span>
+            <span>🕒 {{ latestActiveJob?.time || '09:00 – 13:00' }}</span>
           </div>
           <div class="text-[11px] text-slate-500 pt-1">👥 2 movers + 1 van</div>
         </div>
@@ -407,6 +407,14 @@
 
 <script setup>
 import { ref, computed } from 'vue'
+
+const props = defineProps({
+  orders: { type: Array, default: () => [] }
+})
+
+const latestActiveJob = computed(() => {
+  return (props.orders || []).find(o => o.operationalStatus === 'Confirmed' || o.operationalStatus === 'In Progress') || props.orders?.[0]
+})
 
 const searchQuery = ref('')
 const roleFilter = ref('all')

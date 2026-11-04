@@ -222,10 +222,15 @@
               <tr><th class="pb-2">#</th><th class="pb-2">CUSTOMER</th><th class="pb-2 text-center">JOBS</th><th class="pb-2 text-right">SPENT</th></tr>
             </thead>
             <tbody class="divide-y divide-slate-100 text-slate-700">
-              <tr><td class="py-2">1</td><td class="py-2 font-semibold">Paris Group</td><td class="py-2 text-center">3</td><td class="py-2 text-right font-black">€3,650</td></tr>
-              <tr><td class="py-2">2</td><td class="py-2 font-semibold">TechSolutions BV</td><td class="py-2 text-center">2</td><td class="py-2 text-right font-black">€2,850</td></tr>
-              <tr><td class="py-2">3</td><td class="py-2 font-semibold">GlobalRelocate BV</td><td class="py-2 text-center">2</td><td class="py-2 text-right font-black">€2,100</td></tr>
-              <tr><td class="py-2">4</td><td class="py-2 font-semibold">Sophie de Jong</td><td class="py-2 text-center">1</td><td class="py-2 text-right font-black">€1,850</td></tr>
+              <tr v-for="c in realTopCustomers" :key="c.name">
+                <td class="py-2">{{ c.rank }}</td>
+                <td class="py-2 font-semibold truncate max-w-[120px]">{{ c.name }}</td>
+                <td class="py-2 text-center">{{ c.moves }}</td>
+                <td class="py-2 text-right font-black">€{{ (c.spent || 0).toLocaleString() }}</td>
+              </tr>
+              <tr v-if="realTopCustomers.length === 0">
+                <td colspan="4" class="py-3 text-center text-slate-400">No customer data available</td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -238,10 +243,15 @@
               <tr><th class="pb-2">#</th><th class="pb-2">ROUTE</th><th class="pb-2 text-center">MOVES</th><th class="pb-2 text-right">REVENUE</th></tr>
             </thead>
             <tbody class="divide-y divide-slate-100 text-slate-700">
-              <tr><td class="py-2">1</td><td class="py-2 font-semibold">Maastricht → Amsterdam</td><td class="py-2 text-center">12</td><td class="py-2 text-right font-black">€6,240</td></tr>
-              <tr><td class="py-2">2</td><td class="py-2 font-semibold">Maastricht → Eindhoven</td><td class="py-2 text-center">8</td><td class="py-2 text-right font-black">€3,120</td></tr>
-              <tr><td class="py-2">3</td><td class="py-2 font-semibold">Maastricht → Den Haag</td><td class="py-2 text-center">6</td><td class="py-2 text-right font-black">€2,700</td></tr>
-              <tr><td class="py-2">4</td><td class="py-2 font-semibold">Maastricht → Rotterdam</td><td class="py-2 text-center">5</td><td class="py-2 text-right font-black">€2,150</td></tr>
+              <tr v-for="r in realTopRoutes" :key="r.route">
+                <td class="py-2">{{ r.rank }}</td>
+                <td class="py-2 font-semibold truncate max-w-[140px]">{{ r.route }}</td>
+                <td class="py-2 text-center">{{ r.moves }}</td>
+                <td class="py-2 text-right font-black">€{{ (r.revenue || 0).toLocaleString() }}</td>
+              </tr>
+              <tr v-if="realTopRoutes.length === 0">
+                <td colspan="4" class="py-3 text-center text-slate-400">No route data available</td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -842,6 +852,48 @@
 import { ref, computed } from 'vue'
 import { jsPDF } from 'jspdf'
 import autoTable from 'jspdf-autotable'
+
+const props = defineProps({
+  orders: { type: Array, default: () => [] },
+  customers: { type: Array, default: () => [] },
+  totalRevenue: { type: Number, default: 0 }
+})
+
+const realTopCustomers = computed(() => {
+  return [...(props.customers || [])]
+    .sort((a, b) => (b.totalRevenue || 0) - (a.totalRevenue || 0))
+    .slice(0, 4)
+    .map((c, idx) => ({
+      rank: idx + 1,
+      name: c.name,
+      moves: c.totalMoves,
+      spent: c.totalRevenue
+    }))
+})
+
+const realTopRoutes = computed(() => {
+  const routeMap = new Map()
+  ;(props.orders || []).forEach(o => {
+    const r = o.route || 'Local Move'
+    const rev = Number(o.estValue || 450)
+    if (!routeMap.has(r)) {
+      routeMap.set(r, { route: r, count: 1, revenue: rev })
+    } else {
+      const existing = routeMap.get(r)
+      existing.count++
+      existing.revenue += rev
+    }
+  })
+  return Array.from(routeMap.values())
+    .sort((a, b) => b.revenue - a.revenue)
+    .slice(0, 4)
+    .map((r, idx) => ({
+      rank: idx + 1,
+      route: r.route,
+      moves: r.count,
+      revenue: r.revenue
+    }))
+})
 
 const activeReportTab = ref('Overview')
 const selectedPeriod = ref('month')

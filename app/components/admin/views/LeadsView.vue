@@ -1,6 +1,6 @@
 <template>
   <div class="space-y-5">
-    <!-- 1. Top Header with Import / Export Actions (Exact match to "2 Leads & Quotations.png") -->
+    <!-- 1. Top Header with Import / Export Actions -->
     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
       <div>
         <h1 class="text-2xl font-black text-slate-900 tracking-tight font-sans">Leads & Quotations</h1>
@@ -28,7 +28,7 @@
           <span>Export Excel</span>
         </button>
         <button 
-          @click="$emit('select-lead', activeSelectedLead)"
+          @click="activeSelectedLead && $emit('select-lead', activeSelectedLead.raw || activeSelectedLead)"
           class="flex items-center gap-1.5 px-3.5 py-2 bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 text-xs font-bold rounded-xl shadow-xs transition-all cursor-pointer"
         >
           <svg class="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -39,11 +39,11 @@
       </div>
     </div>
 
-    <!-- 2. Split-Screen Main Layout: Left (4 KPIs + Filters + Tabs + 10-Row Table) + Right Lead Drawer -->
+    <!-- 2. Split-Screen Main Layout: Left (4 KPIs + Filters + Tabs + Table) + Right Lead Drawer -->
     <div class="grid grid-cols-1 xl:grid-cols-12 gap-5 items-start">
       <!-- LEFT COLUMN (8 Cols) -->
       <div class="xl:col-span-8 space-y-4 min-w-0">
-        <!-- Top 4 KPI Cards (Exact match to "2 Leads & Quotations.png") -->
+        <!-- Top 4 KPI Cards (Live Database Metrics) -->
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-3.5">
           <!-- Total Leads -->
           <div class="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-xs flex items-center justify-between">
@@ -51,8 +51,8 @@
               <p class="text-xs font-medium text-slate-500">Total Leads</p>
               <p class="text-2xl font-black text-slate-900 font-sans">{{ kpiStats.total }}</p>
               <p class="text-[11px] font-bold text-emerald-600 flex items-center gap-1">
-                <span>↗ +18%</span>
-                <span class="text-slate-400 font-normal">vs. last month</span>
+                <span>↗ Live</span>
+                <span class="text-slate-400 font-normal">from Supabase</span>
               </p>
             </div>
             <div class="w-10 h-10 rounded-2xl bg-rose-50 text-rose-500 flex items-center justify-center flex-shrink-0">
@@ -68,7 +68,7 @@
               <p class="text-xs font-medium text-slate-500">Pending Review</p>
               <p class="text-2xl font-black text-slate-900 font-sans">{{ kpiStats.pendingReview }}</p>
               <p class="text-[11px] font-bold text-amber-600 flex items-center gap-1">
-                <span>↗ 3 overdue</span>
+                <span>▲ {{ kpiStats.pendingReview }} require action</span>
               </p>
             </div>
             <div class="w-10 h-10 rounded-2xl bg-amber-50 text-amber-500 flex items-center justify-center flex-shrink-0">
@@ -84,8 +84,7 @@
               <p class="text-xs font-medium text-slate-500">Quotes Sent</p>
               <p class="text-2xl font-black text-slate-900 font-sans">{{ kpiStats.quotesSent }}</p>
               <p class="text-[11px] font-bold text-emerald-600 flex items-center gap-1">
-                <span>↗ +12%</span>
-                <span class="text-slate-400 font-normal">vs. last month</span>
+                <span>↗ {{ kpiStats.quotesSent }} active</span>
               </p>
             </div>
             <div class="w-10 h-10 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center flex-shrink-0">
@@ -102,7 +101,7 @@
               <p class="text-xs font-medium text-slate-500">Converted to Job</p>
               <p class="text-2xl font-black text-slate-900 font-sans">{{ kpiStats.converted }}</p>
               <p class="text-[11px] font-bold text-emerald-600 flex items-center gap-1">
-                <span>68% conversion rate</span>
+                <span>{{ kpiStats.conversionRate }}% conversion rate</span>
               </p>
             </div>
             <div class="w-10 h-10 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center flex-shrink-0">
@@ -133,8 +132,6 @@
             <option value="New Lead">New Lead</option>
             <option value="Pending Review">Pending Review</option>
             <option value="Quote Sent">Quote Sent</option>
-            <option value="Info Requested">Info Requested</option>
-            <option value="Quotation Prep">Quotation Prep</option>
             <option value="Converted">Converted</option>
             <option value="Lost">Lost</option>
           </select>
@@ -157,11 +154,11 @@
 
           <div class="flex items-center gap-1.5 px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-700 font-semibold">
             <span>📅</span>
-            <span>01/10/2025 – 30/11/2025</span>
+            <span>All Live Records</span>
           </div>
         </div>
 
-        <!-- Filter Tabs with Red Underline -->
+        <!-- Filter Tabs with Red Underline (Dynamic Counts from Real Orders) -->
         <div class="flex items-center gap-6 border-b border-slate-200/80 px-2 overflow-x-auto">
           <button 
             v-for="tab in dynamicLeadTabs" 
@@ -183,7 +180,7 @@
           </button>
         </div>
 
-        <!-- Leads Table -->
+        <!-- Leads Table (Live Real Customers from Supabase) -->
         <div class="bg-white rounded-2xl border border-slate-200/80 shadow-xs overflow-hidden">
           <div class="overflow-x-auto">
             <table class="w-full text-left text-xs border-collapse">
@@ -207,12 +204,12 @@
               <tbody class="divide-y divide-slate-100 text-slate-700 font-medium">
                 <tr 
                   v-for="lead in paginatedLeads" 
-                  :key="lead.ref || lead.id"
+                  :key="lead.id || lead.ref"
                   @mouseenter="activeSelectedLead = lead"
                   @click="activeSelectedLead = lead"
                   :class="[
                     'transition-colors cursor-pointer group',
-                    activeSelectedLead?.ref === lead.ref 
+                    activeSelectedLead?.id === lead.id 
                       ? 'bg-red-50/40 border-l-4 border-l-[#DC2626]' 
                       : 'hover:bg-slate-50/80'
                   ]"
@@ -221,9 +218,9 @@
                     <input type="checkbox" class="rounded text-red-600 focus:ring-red-500 cursor-pointer" />
                   </td>
                   <td class="py-3.5 px-2.5 font-bold text-slate-800 group-hover:text-red-600 whitespace-nowrap">{{ lead.ref }}</td>
-                  <td class="py-3.5 px-2.5 font-bold text-slate-900 whitespace-nowrap">{{ lead.customer }}</td>
+                  <td class="py-3.5 px-2.5 font-bold text-slate-900 whitespace-nowrap max-w-[150px] truncate" :title="lead.customer">{{ lead.customer }}</td>
                   <td class="py-3.5 px-2.5 text-slate-600 whitespace-nowrap">{{ lead.movingDate }}</td>
-                  <td class="py-3.5 px-2.5 text-slate-600 whitespace-nowrap">{{ lead.route }}</td>
+                  <td class="py-3.5 px-2.5 text-slate-600 whitespace-nowrap max-w-[160px] truncate" :title="lead.route">{{ lead.route }}</td>
                   <td class="py-3.5 px-2.5 font-bold text-slate-900 font-sans whitespace-nowrap">€{{ (lead.estValue || 0).toLocaleString() }}</td>
                   <td class="py-3.5 px-2.5 whitespace-nowrap">
                     <span 
@@ -243,29 +240,28 @@
                   </td>
                   <td class="py-3.5 px-2.5 whitespace-nowrap">
                     <div class="flex items-center gap-1.5 text-xs text-slate-700 font-semibold">
-                      <span v-if="(lead.source || 'Google') === 'Google'" class="w-4 h-4 rounded-full bg-blue-50 text-blue-600 font-black text-[10px] flex items-center justify-center">G</span>
-                      <span v-else-if="lead.source === 'Website'" class="text-slate-400">🌐</span>
-                      <span v-else-if="lead.source === 'Referral'" class="text-indigo-500">👥</span>
-                      <span v-else-if="lead.source === 'Corporate'" class="text-slate-600">🏢</span>
-                      <span v-else-if="lead.source === 'LinkedIn'" class="w-4 h-4 rounded bg-[#0A66C2] text-white font-bold text-[9px] flex items-center justify-center">in</span>
-                      <span v-else class="w-4 h-4 rounded-full bg-blue-50 text-blue-600 font-black text-[10px] flex items-center justify-center">G</span>
+                      <span class="w-4 h-4 rounded-full bg-blue-50 text-blue-600 font-black text-[10px] flex items-center justify-center">G</span>
                       <span>{{ lead.source || 'Google' }}</span>
                     </div>
                   </td>
                   <td class="py-3.5 px-2.5 whitespace-nowrap">
-                    <div class="text-xs font-semibold text-slate-800 leading-tight">{{ lead.nextAction || 'Call customer' }}</div>
+                    <div class="text-xs font-semibold text-slate-800 leading-tight">{{ lead.nextAction }}</div>
                     <div 
                       v-if="lead.nextActionSub" 
-                      class="text-[10px] font-bold mt-0.5"
-                      :class="lead.nextActionSub === 'Today' ? 'text-[#DC2626]' : 'text-slate-500'"
+                      class="text-[10px] font-bold mt-0.5 text-[#DC2626]"
                     >
                       {{ lead.nextActionSub }}
                     </div>
                   </td>
-                  <td class="py-3.5 px-2 text-center" @click.stop="$emit('select-lead', lead)">
-                    <button class="p-1 text-slate-400 hover:text-slate-700 rounded-lg hover:bg-slate-100 cursor-pointer" title="Open Full Quotation">
+                  <td class="py-3.5 px-2 text-center" @click.stop="$emit('select-lead', lead.raw || lead)">
+                    <button class="p-1 text-slate-400 hover:text-slate-700 rounded-lg hover:bg-slate-100 cursor-pointer" title="Open Full Move Detail">
                       •••
                     </button>
+                  </td>
+                </tr>
+                <tr v-if="filteredLeads.length === 0">
+                  <td colspan="11" class="py-8 text-center text-slate-400 text-xs font-semibold">
+                    No leads found matching your active filter.
                   </td>
                 </tr>
               </tbody>
@@ -275,11 +271,11 @@
           <!-- Pagination Footer -->
           <div class="px-5 py-3.5 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
             <div>
-              Showing <span class="font-bold text-slate-800">1–{{ Math.min(10, filteredLeads.length) }}</span> of <span class="font-bold text-slate-800">{{ kpiStats.total }}</span>
+              Showing <span class="font-bold text-slate-800">{{ ((currentPage - 1) * pageSize) + 1 }}–{{ Math.min(currentPage * pageSize, filteredLeads.length) }}</span> of <span class="font-bold text-slate-800">{{ filteredLeads.length }}</span>
             </div>
             <div class="flex items-center gap-1.5">
               <button 
-                v-for="p in [1, 2, 3, 4, 5]" 
+                v-for="p in totalPages" 
                 :key="p"
                 @click="currentPage = p"
                 :class="[
@@ -289,20 +285,13 @@
               >
                 {{ p }}
               </button>
-              <span class="px-1 text-slate-400">...</span>
-              <button class="w-7 h-7 rounded-lg text-xs font-bold bg-white border border-slate-200 text-slate-700">13</button>
-              <select class="ml-2 px-2 py-1 bg-white border border-slate-200 rounded-lg text-xs font-semibold text-slate-700">
-                <option>10</option>
-                <option>25</option>
-                <option>50</option>
-              </select>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- RIGHT COLUMN: Sticky Lead Detail Drawer (4 Cols - Exact match to "2 Leads & Quotations.png") -->
-      <div class="xl:col-span-4 bg-white rounded-2xl border border-slate-200/80 shadow-sm p-5 sticky top-16 space-y-5">
+      <!-- RIGHT COLUMN: Sticky Lead Detail Drawer (Live Customer Data) -->
+      <div v-if="activeSelectedLead" class="xl:col-span-4 bg-white rounded-2xl border border-slate-200/80 shadow-sm p-5 sticky top-16 space-y-5">
         <!-- Drawer Top Header -->
         <div class="flex items-start justify-between">
           <div class="space-y-1.5">
@@ -316,15 +305,17 @@
                 {{ activeSelectedLead.status }}
               </span>
             </div>
-            <p class="text-[11px] text-slate-400">Created {{ activeSelectedLead.createdAt || '1 Nov 2025, 10:24' }}</p>
+            <p class="text-[11px] text-slate-400">Created {{ activeSelectedLead.createdAt }}</p>
           </div>
-          <button class="text-slate-400 hover:text-slate-700 p-1 text-sm font-bold cursor-pointer">✕</button>
+          <button @click="$emit('select-lead', activeSelectedLead.raw || activeSelectedLead)" class="text-slate-400 hover:text-slate-700 p-1 text-xs font-bold cursor-pointer">
+            Open Details ↗
+          </button>
         </div>
 
         <!-- Drawer Tabs -->
         <div class="flex items-center gap-5 border-b border-slate-200/80 text-xs font-bold">
           <button 
-            v-for="dTab in ['Overview', 'Details', 'Notes', 'Files']" 
+            v-for="dTab in ['Overview', 'Details', 'Notes']" 
             :key="dTab"
             @click="activeDrawerTab = dTab"
             :class="[
@@ -347,9 +338,10 @@
             </div>
             <div class="flex items-center gap-2.5">
               <span class="text-slate-400">📞</span>
-              <span class="font-bold text-slate-800">{{ activeSelectedLead.phone || '+31 6 12 34 56 78' }}</span>
+              <span class="font-bold text-slate-800">{{ activeSelectedLead.phone || 'Phone not provided' }}</span>
               <a 
-                :href="`https://wa.me/${(activeSelectedLead.phone || '31612345678').replace(/[^0-9]/g, '')}`"
+                v-if="activeSelectedLead.phone"
+                :href="`https://wa.me/${activeSelectedLead.phone.replace(/[^0-9]/g, '')}`"
                 target="_blank"
                 class="w-5 h-5 rounded-full bg-emerald-500 hover:bg-emerald-600 text-white flex items-center justify-center text-[10px] shadow-xs transition-transform hover:scale-110"
                 title="WhatsApp Customer"
@@ -359,7 +351,7 @@
             </div>
             <div class="flex items-center gap-2.5">
               <span class="text-slate-400">✉️</span>
-              <span class="text-slate-600">{{ activeSelectedLead.email || 'sophie.dejong@gmail.com' }}</span>
+              <span class="text-slate-600 truncate">{{ activeSelectedLead.email || 'Email not provided' }}</span>
             </div>
           </div>
 
@@ -367,43 +359,43 @@
           <div class="space-y-2.5 text-xs border-b border-slate-100 pb-4">
             <div class="grid grid-cols-12 items-center">
               <span class="col-span-5 text-slate-400 flex items-center gap-2"><span>📅</span> Moving Date</span>
-              <span class="col-span-7 font-bold text-slate-900">{{ activeSelectedLead.movingDate || '12 Nov 2025' }}</span>
+              <span class="col-span-7 font-bold text-slate-900">{{ activeSelectedLead.movingDate }}</span>
             </div>
             <div class="grid grid-cols-12 items-center">
               <span class="col-span-5 text-slate-400 flex items-center gap-2"><span>📍</span> From</span>
-              <span class="col-span-7 font-semibold text-slate-800">{{ activeSelectedLead.fromCity || 'Maastricht' }}</span>
+              <span class="col-span-7 font-semibold text-slate-800 truncate" :title="activeSelectedLead.fromFull">{{ activeSelectedLead.fromCity }}</span>
             </div>
             <div class="grid grid-cols-12 items-center">
               <span class="col-span-5 text-slate-400 flex items-center gap-2"><span>➔</span> To</span>
-              <span class="col-span-7 font-semibold text-slate-800">{{ activeSelectedLead.toCity || 'Amsterdam' }}</span>
+              <span class="col-span-7 font-semibold text-slate-800 truncate" :title="activeSelectedLead.toFull">{{ activeSelectedLead.toCity }}</span>
             </div>
             <div class="grid grid-cols-12 items-center">
               <span class="col-span-5 text-slate-400 flex items-center gap-2"><span>📦</span> Move Size</span>
-              <span class="col-span-7 font-semibold text-slate-800">{{ activeSelectedLead.moveSize || '3-Bedroom House' }}</span>
+              <span class="col-span-7 font-semibold text-slate-800">{{ activeSelectedLead.moveSize }}</span>
             </div>
             <div class="grid grid-cols-12 items-center">
               <span class="col-span-5 text-slate-400 flex items-center gap-2"><span>🪜</span> Floors</span>
-              <span class="col-span-7 font-semibold text-slate-800">{{ activeSelectedLead.floors || '1st floor → 2nd floor' }}</span>
+              <span class="col-span-7 font-semibold text-slate-800">{{ activeSelectedLead.floors }}</span>
             </div>
             <div class="grid grid-cols-12 items-center">
               <span class="col-span-5 text-slate-400 flex items-center gap-2"><span>🛗</span> Elevator</span>
-              <span class="col-span-7 font-semibold text-slate-800">{{ activeSelectedLead.elevator || 'No' }}</span>
+              <span class="col-span-7 font-semibold text-slate-800">{{ activeSelectedLead.elevator }}</span>
             </div>
             <div class="grid grid-cols-12 items-center">
               <span class="col-span-5 text-slate-400 flex items-center gap-2"><span>🎁</span> Packing Service</span>
-              <span class="col-span-7 font-semibold text-slate-800">{{ activeSelectedLead.packing || 'Yes' }}</span>
+              <span class="col-span-7 font-semibold text-slate-800">{{ activeSelectedLead.packing }}</span>
             </div>
             <div class="grid grid-cols-12 items-center">
               <span class="col-span-5 text-slate-400 flex items-center gap-2"><span>🔧</span> Assembly</span>
-              <span class="col-span-7 font-semibold text-slate-800">{{ activeSelectedLead.assembly || 'Yes' }}</span>
+              <span class="col-span-7 font-semibold text-slate-800">{{ activeSelectedLead.assembly }}</span>
             </div>
             <div class="grid grid-cols-12 items-center">
               <span class="col-span-5 text-slate-400 flex items-center gap-2"><span>💬</span> Source</span>
-              <span class="col-span-7 font-semibold text-slate-800">{{ activeSelectedLead.source || 'Google' }}</span>
+              <span class="col-span-7 font-semibold text-slate-800">{{ activeSelectedLead.source }}</span>
             </div>
             <div class="grid grid-cols-12 items-center">
               <span class="col-span-5 text-slate-400 flex items-center gap-2"><span>🏷️</span> Estimated Value</span>
-              <span class="col-span-7 font-black text-slate-900 font-sans">€{{ (activeSelectedLead.estValue || 1850).toLocaleString() }}</span>
+              <span class="col-span-7 font-black text-slate-900 font-sans">€{{ (activeSelectedLead.estValue || 0).toLocaleString() }}</span>
             </div>
           </div>
 
@@ -414,35 +406,28 @@
               <div class="flex items-start gap-2.5 text-xs">
                 <span class="text-slate-600 mt-0.5">📞</span>
                 <div>
-                  <p class="font-bold text-slate-900">{{ activeSelectedLead.nextAction || 'Call customer' }}</p>
-                  <p class="text-[11px] font-bold text-[#DC2626]">{{ activeSelectedLead.nextActionTime || 'Today, 15:00' }}</p>
+                  <p class="font-bold text-slate-900">{{ activeSelectedLead.nextAction }}</p>
+                  <p class="text-[11px] font-bold text-[#DC2626]">Requires follow-up</p>
                 </div>
               </div>
               <button 
                 @click="markActionComplete"
                 class="px-3 py-1.5 bg-white hover:bg-slate-100 text-slate-800 border border-slate-200 rounded-lg text-[11px] font-bold shadow-2xs transition-colors cursor-pointer"
               >
-                Mark Complete
+                Mark Done
               </button>
             </div>
           </div>
 
-          <!-- Bottom 2 Full-Width CTA Buttons -->
+          <!-- Bottom Full-Width CTA Button -->
           <div class="space-y-2.5 pt-2">
             <button 
-              @click="$emit('select-lead', activeSelectedLead)"
+              @click="$emit('select-lead', activeSelectedLead.raw || activeSelectedLead)"
               class="w-full py-2.5 px-4 bg-[#DC2626] hover:bg-red-700 text-white text-xs font-bold rounded-xl shadow-md shadow-red-600/25 flex items-center justify-center gap-2 transition-all cursor-pointer"
             >
               <span>📄</span>
-              <span>Send Quotation</span>
-              <span class="ml-auto text-[10px] opacity-80">▼</span>
-            </button>
-            <button 
-              @click="convertLeadToJob"
-              class="w-full py-2.5 px-4 bg-white hover:bg-slate-50 text-slate-800 border border-slate-200 text-xs font-bold rounded-xl flex items-center justify-center gap-2 transition-all cursor-pointer"
-            >
-              <span>📅</span>
-              <span>Convert to Job</span>
+              <span>Open Move & Quotation Workspace</span>
+              <span class="ml-auto text-xs">→</span>
             </button>
           </div>
         </div>
@@ -451,14 +436,14 @@
         <div v-else-if="activeDrawerTab === 'Details'" class="space-y-3 text-xs text-slate-600">
           <div class="p-3 bg-slate-50 rounded-xl border border-slate-200/60 space-y-1.5">
             <p class="font-bold text-slate-900">Pickup Address</p>
-            <p>{{ activeSelectedLead.fromFull || 'Stationsstraat 18, 6221 BT Maastricht' }}</p>
+            <p class="text-slate-800 font-medium">{{ activeSelectedLead.fromFull || activeSelectedLead.fromCity }}</p>
           </div>
           <div class="p-3 bg-slate-50 rounded-xl border border-slate-200/60 space-y-1.5">
             <p class="font-bold text-slate-900">Delivery Address</p>
-            <p>{{ activeSelectedLead.toFull || 'Keizersgracht 240, 1016 DZ Amsterdam' }}</p>
+            <p class="text-slate-800 font-medium">{{ activeSelectedLead.toFull || activeSelectedLead.toCity }}</p>
           </div>
           <button 
-            @click="$emit('select-lead', activeSelectedLead)"
+            @click="$emit('select-lead', activeSelectedLead.raw || activeSelectedLead)"
             class="w-full py-2 bg-slate-900 text-white font-bold rounded-xl cursor-pointer"
           >
             Open Full Move & Quotation Workspace →
@@ -466,17 +451,9 @@
         </div>
 
         <!-- Tab 3: Notes -->
-        <div v-else-if="activeDrawerTab === 'Notes'" class="space-y-3 text-xs">
+        <div v-else class="space-y-3 text-xs">
           <div class="p-3 bg-amber-50/70 border border-amber-200/80 rounded-xl text-slate-700 leading-relaxed">
-            Customer requested fragile packing for living room mirrors and glass dining table. Parking permit needed in Amsterdam center.
-          </div>
-        </div>
-
-        <!-- Tab 4: Files -->
-        <div v-else class="space-y-2 text-xs">
-          <div class="flex items-center justify-between p-2.5 bg-slate-50 rounded-xl border border-slate-200/60">
-            <span class="font-semibold text-slate-700">📄 Quotation_{{ activeSelectedLead.ref }}.pdf</span>
-            <button @click="$emit('select-lead', activeSelectedLead)" class="text-[#DC2626] font-bold cursor-pointer">View</button>
+            {{ activeSelectedLead.notes || 'No special notes or instructions recorded for this customer.' }}
           </div>
         </div>
       </div>
@@ -485,7 +462,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { useAdminData } from '~/composables/useAdminData'
 
 const props = defineProps({
@@ -507,56 +484,114 @@ const currentPage = ref(1)
 const pageSize = 10
 const activeDrawerTab = ref('Overview')
 
-const defaultMockLeads = [
-  { ref: 'L-2025-1048', customer: 'Sophie de Jong', phone: '+31 6 12 34 56 78', email: 'sophie.dejong@gmail.com', movingDate: '12 Nov 2025', route: 'Maastricht → Amsterdam', fromCity: 'Maastricht', toCity: 'Amsterdam', estValue: 1850, status: 'New Lead', priority: 'High', source: 'Google', nextAction: 'Call customer', nextActionSub: 'Today', nextActionTime: 'Today, 15:00', moveSize: '3-Bedroom House', floors: '1st floor → 2nd floor', elevator: 'No', packing: 'Yes', assembly: 'Yes' },
-  { ref: 'L-2025-1047', customer: 'Bas van Dijk', phone: '+31 6 23 45 67 89', email: 'bas.vandijk@mail.nl', movingDate: '28 Nov 2025', route: 'Maastricht (lift)', fromCity: 'Maastricht', toCity: 'Maastricht', estValue: 450, status: 'Quote Sent', priority: 'Medium', source: 'Website', nextAction: 'Follow up', nextActionSub: 'Tomorrow', nextActionTime: 'Tomorrow, 10:00', moveSize: '1-Bedroom Apt', floors: '3rd floor → Ground', elevator: 'External Lift', packing: 'No', assembly: 'No' },
-  { ref: 'L-2025-1046', customer: 'UM Student', phone: '+31 6 34 56 78 90', email: 'student@maastrichtuniversity.nl', movingDate: '15 Nov 2025', route: 'Maastricht → Maastricht', fromCity: 'Maastricht', toCity: 'Maastricht', estValue: 300, status: 'Pending Review', priority: 'Low', source: 'Google', nextAction: 'Check details', nextActionSub: 'Today', nextActionTime: 'Today, 16:30', moveSize: 'Studio / Student Room', floors: 'Ground → 1st floor', elevator: 'Yes', packing: 'No', assembly: 'No' },
-  { ref: 'L-2025-1045', customer: 'Martine Peters', phone: '+31 6 44 55 66 77', email: 'martine.peters@mail.com', movingDate: '5 Dec 2025', route: 'Maastricht → Den Haag', fromCity: 'Maastricht', toCity: 'Den Haag', estValue: 2800, status: 'Info Requested', priority: 'High', source: 'Referral', nextAction: 'Send quote', nextActionSub: 'Today', nextActionTime: 'Today, 17:00', moveSize: '4-Bedroom Villa', floors: 'Ground → Ground', elevator: 'Yes', packing: 'Yes', assembly: 'Yes' },
-  { ref: 'L-2025-1044', customer: 'GlobalRelocate BV', phone: '+31 6 11 22 33 44', email: 'info@globalrelocate.com', movingDate: '20 Nov 2025', route: 'Maastricht → Brussels', fromCity: 'Maastricht', toCity: 'Brussels', estValue: 4200, status: 'Quotation Prep', priority: 'High', source: 'Corporate', nextAction: 'Prepare quote', nextActionSub: 'Today', nextActionTime: 'Today, 14:00', moveSize: 'Office (15 Desks)', floors: '2nd floor → 4th floor', elevator: 'Yes', packing: 'Yes', assembly: 'Yes' },
-  { ref: 'L-2025-1043', customer: 'Jansen Family', phone: '+31 6 23 45 67 89', email: 'jansen@gmail.com', movingDate: '7 Nov 2025', route: 'Maastricht → Maastricht', fromCity: 'Maastricht', toCity: 'Maastricht', estValue: 650, status: 'Converted', priority: 'Medium', source: 'Google', nextAction: 'Schedule job', nextActionSub: '', nextActionTime: 'Completed', moveSize: '2-Bedroom House', floors: 'Ground → Ground', elevator: 'No', packing: 'No', assembly: 'Yes' },
-  { ref: 'L-2025-1042', customer: 'De Vries', phone: '+31 6 77 88 99 00', email: 'devries@email.com', movingDate: '10 Nov 2025', route: 'Maastricht → Eindhoven', fromCity: 'Maastricht', toCity: 'Eindhoven', estValue: 950, status: 'Quote Sent', priority: 'Medium', source: 'Website', nextAction: 'Follow up', nextActionSub: '13 Nov', nextActionTime: '13 Nov, 11:00', moveSize: '2-Bedroom Apt', floors: '2nd floor → Ground', elevator: 'Yes', packing: 'Yes', assembly: 'No' },
-  { ref: 'L-2025-1041', customer: 'TechSolutions BV', phone: '+31 6 98 76 54 32', email: 'contact@techsolutions.nl', movingDate: '18 Nov 2025', route: 'Maastricht → Amsterdam', fromCity: 'Maastricht', toCity: 'Amsterdam', estValue: 2100, status: 'New Lead', priority: 'Low', source: 'LinkedIn', nextAction: 'Call customer', nextActionSub: 'Today', nextActionTime: 'Today, 16:00', moveSize: 'Commercial IT Move', floors: '1st floor → 3rd floor', elevator: 'Yes', packing: 'Yes', assembly: 'Yes' },
-  { ref: 'L-2025-1040', customer: 'Meijer Family', phone: '+31 6 55 33 22 11', email: 'meijer@gmail.com', movingDate: '22 Nov 2025', route: 'Maastricht → Heerlen', fromCity: 'Maastricht', toCity: 'Heerlen', estValue: 480, status: 'Lost', priority: 'Low', source: 'Google', nextAction: 'N/A', nextActionSub: '', nextActionTime: 'Closed', moveSize: '1-Bedroom Apt', floors: 'Ground → 1st floor', elevator: 'No', packing: 'No', assembly: 'No' },
-  { ref: 'L-2025-1039', customer: 'Paris Group', phone: '+31 6 44 67 88 99', email: 'contact@parisgroup.com', movingDate: '9 Dec 2025', route: 'Maastricht → Paris', fromCity: 'Maastricht', toCity: 'Paris', estValue: 3200, status: 'Pending Review', priority: 'High', source: 'Referral', nextAction: 'Send quote', nextActionSub: 'Tomorrow', nextActionTime: 'Tomorrow, 09:30', moveSize: 'International Relocation', floors: '2nd floor → 1st floor', elevator: 'Yes', packing: 'Yes', assembly: 'Yes' }
-]
-
-const activeSelectedLead = ref(defaultMockLeads[0])
-
+// Map 100% real Supabase orders into rich lead objects
 const activeLeadsSource = computed(() => {
-  if (props.orders && props.orders.length > 0) {
-    // Combine live orders with default leads so the table is rich and matches mockup
-    const liveMapped = props.orders.map(o => ({
-      ...o,
-      source: o.source || 'Google',
-      nextAction: o.nextAction || 'Call customer',
-      nextActionSub: 'Today'
-    }))
-    return [...defaultMockLeads, ...liveMapped]
-  }
-  return defaultMockLeads
+  return (props.orders || []).map(o => {
+    const rawStatus = (o.operationalStatus || o.status || 'Pending').trim()
+    const salesStatus = (o.salesStatus || '').trim()
+
+    let computedStatus = 'New Lead'
+    if (rawStatus === 'Completed' || rawStatus === 'Confirmed' || salesStatus.includes('Won')) {
+      computedStatus = 'Converted'
+    } else if (rawStatus === 'Cancelled' || salesStatus.includes('Lost')) {
+      computedStatus = 'Lost'
+    } else if (salesStatus.includes('Quote') || rawStatus === 'Estimate Sent' || rawStatus === 'Quote Sent') {
+      computedStatus = 'Quote Sent'
+    } else if (rawStatus === 'Pending') {
+      computedStatus = 'Pending Review'
+    }
+
+    const fromAddress = o.fromFull || o.raw?.form_data?.from || ''
+    const toAddress = o.toFull || o.raw?.form_data?.to || ''
+    const fromCity = fromAddress.split(',')[0].trim() || 'Maastricht'
+    const toCity = toAddress.split(',')[0].trim() || 'Destination'
+
+    const dateVal = o.shortDate || o.movingDate || (o.raw?.created_at ? o.raw.created_at.split('T')[0] : 'TBD')
+
+    const pFloor = o.raw?.form_data?.pickupFloor || ''
+    const dFloor = o.raw?.form_data?.deliveryFloor || ''
+    const floorsStr = pFloor ? `${pFloor} → ${dFloor || 'Ground Floor'}` : 'Ground Floor'
+
+    return {
+      id: o.id,
+      ref: o.ref || `L-${String(o.id).slice(0, 8)}`,
+      customer: o.customer || 'Customer',
+      phone: o.phone && o.phone !== 'N/A' ? o.phone : (o.raw?.form_data?.phone || ''),
+      email: o.email && o.email !== 'N/A' ? o.email : (o.raw?.form_data?.email || ''),
+      movingDate: dateVal,
+      route: o.route || `${fromCity} → ${toCity}`,
+      fromCity,
+      toCity,
+      fromFull: fromAddress,
+      toFull: toAddress,
+      estValue: Number(o.estValue || o.actual_revenue || o.est_revenue || 450),
+      status: computedStatus,
+      rawStatus,
+      priority: o.priority || (Number(o.estValue) >= 2000 ? 'High' : (Number(o.estValue) < 800 ? 'Low' : 'Medium')),
+      source: o.raw?.form_data?.hear ? (o.raw.form_data.hear.charAt(0).toUpperCase() + o.raw.form_data.hear.slice(1)) : 'Google',
+      nextAction: computedStatus === 'Converted' ? 'View Job' : (computedStatus === 'Lost' ? 'Archived' : (computedStatus === 'Quote Sent' ? 'Follow up quote' : 'Review Details')),
+      nextActionSub: computedStatus === 'Pending Review' || computedStatus === 'New Lead' ? 'Today' : '',
+      moveSize: o.raw?.form_data?.size || o.package || 'Residential Move',
+      floors: floorsStr,
+      elevator: o.raw?.form_data?.elevator || o.raw?.form_data?.lift || 'No',
+      packing: o.raw?.form_data?.packing === 'yes' ? 'Yes' : 'No',
+      assembly: o.raw?.form_data?.assembly === 'yes' ? 'Yes' : 'No',
+      notes: o.raw?.form_data?.notes || '',
+      createdAt: o.raw?.created_at ? new Date(o.raw.created_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) : 'Recent',
+      raw: o
+    }
+  })
 })
 
-const kpiStats = computed(() => ({
-  total: Math.max(124, activeLeadsSource.value.length),
-  pendingReview: 28,
-  quotesSent: 42,
-  converted: 19
-}))
+const activeSelectedLead = ref(null)
 
-const dynamicLeadTabs = computed(() => [
-  { id: 'all', label: 'All Leads', count: kpiStats.value.total },
-  { id: 'New Lead', label: 'New', count: 28 },
-  { id: 'Pending Review', label: 'Pending Review', count: 28 },
-  { id: 'Quote Sent', label: 'Quote Sent', count: 42 },
-  { id: 'Converted', label: 'Accepted', count: 35 },
-  { id: 'Lost', label: 'Lost', count: 19 },
-])
+// Initialize or keep selected lead synced
+watch(activeLeadsSource, (newLeads) => {
+  if (!activeSelectedLead.value && newLeads.length > 0) {
+    activeSelectedLead.value = newLeads[0]
+  } else if (activeSelectedLead.value && newLeads.length > 0) {
+    const match = newLeads.find(l => l.id === activeSelectedLead.value.id)
+    if (match) activeSelectedLead.value = match
+  }
+}, { immediate: true })
 
+// Dynamic Real KPI Statistics
+const kpiStats = computed(() => {
+  const all = activeLeadsSource.value
+  const total = all.length
+  const pendingReview = all.filter(l => l.status === 'Pending Review' || l.status === 'New Lead').length
+  const quotesSent = all.filter(l => l.status === 'Quote Sent').length
+  const converted = all.filter(l => l.status === 'Converted').length
+  const conversionRate = total > 0 ? Math.round((converted / total) * 100) : 0
+
+  return {
+    total,
+    pendingReview,
+    quotesSent,
+    converted,
+    conversionRate
+  }
+})
+
+// Dynamic Filter Tabs with True Counts from Database
+const dynamicLeadTabs = computed(() => {
+  const all = activeLeadsSource.value
+  return [
+    { id: 'all', label: 'All Leads', count: all.length },
+    { id: 'New Lead', label: 'New', count: all.filter(l => l.status === 'New Lead').length },
+    { id: 'Pending Review', label: 'Pending Review', count: all.filter(l => l.status === 'Pending Review').length },
+    { id: 'Quote Sent', label: 'Quote Sent', count: all.filter(l => l.status === 'Quote Sent').length },
+    { id: 'Converted', label: 'Accepted', count: all.filter(l => l.status === 'Converted').length },
+    { id: 'Lost', label: 'Lost', count: all.filter(l => l.status === 'Lost').length }
+  ]
+})
+
+// Filtered Leads
 const filteredLeads = computed(() => {
   return activeLeadsSource.value.filter(lead => {
     if (activeLeadTab.value !== 'all' && lead.status !== activeLeadTab.value) return false
     if (statusFilter.value !== 'all' && lead.status !== statusFilter.value) return false
-    if (sourceFilter.value !== 'all' && (lead.source || 'Google') !== sourceFilter.value) return false
+    if (sourceFilter.value !== 'all' && lead.source.toLowerCase() !== sourceFilter.value.toLowerCase()) return false
     if (priorityFilter.value !== 'all' && lead.priority !== priorityFilter.value) return false
     if (searchQuery.value) {
       const q = searchQuery.value.toLowerCase().trim()
@@ -570,6 +605,10 @@ const filteredLeads = computed(() => {
   })
 })
 
+const totalPages = computed(() => {
+  return Math.max(1, Math.ceil(filteredLeads.value.length / pageSize))
+})
+
 const paginatedLeads = computed(() => {
   const start = (currentPage.value - 1) * pageSize
   return filteredLeads.value.slice(start, start + pageSize)
@@ -577,14 +616,8 @@ const paginatedLeads = computed(() => {
 
 const markActionComplete = () => {
   if (activeSelectedLead.value) {
-    activeSelectedLead.value.nextAction = 'Completed ✓'
-    activeSelectedLead.value.nextActionSub = 'Done'
-  }
-}
-
-const convertLeadToJob = () => {
-  if (activeSelectedLead.value) {
-    activeSelectedLead.value.status = 'Converted'
+    activeSelectedLead.value.nextAction = 'Action Complete ✓'
+    activeSelectedLead.value.nextActionSub = ''
   }
 }
 
@@ -595,15 +628,12 @@ const exportToCSV = () => {
 const getStatusBadgeClass = (status) => {
   switch (status) {
     case 'New Lead':
-    case 'Quotation Prep':
       return 'bg-blue-50 text-blue-600 border border-blue-200/60'
     case 'Quote Sent':
       return 'bg-purple-50 text-purple-600 border border-purple-200/60'
     case 'Pending Review':
-    case 'Info Requested':
       return 'bg-amber-50 text-amber-700 border border-amber-200/60'
     case 'Converted':
-    case 'Confirmed':
       return 'bg-emerald-50 text-emerald-700 border border-emerald-200/60'
     case 'Lost':
       return 'bg-rose-50 text-rose-600 border border-rose-200/60'

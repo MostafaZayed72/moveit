@@ -17,7 +17,7 @@
         <!-- Title and Confirmed Pill Badge -->
         <div class="flex items-center flex-wrap gap-3">
           <h1 class="text-2xl font-black text-slate-900 tracking-tight font-sans">
-            {{ activeJob.ref || 'J-26-1101' }} – {{ activeJob.customer || 'Sophie de Jong' }}
+            {{ activeJob.ref || 'Job' }} – {{ activeJob.customer || 'Customer' }}
           </h1>
           <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold shadow-xs text-white" :class="statusBadgeColor">
             <span class="w-1.5 h-1.5 rounded-full bg-white"></span>
@@ -1415,19 +1415,19 @@ const moveTabs = [
 ]
 
 const fallbackJob = {
-  ref: 'J-26-1101',
-  customer: 'Sophie de Jong',
-  movingDate: '12 Nov 2025 (Wed)',
-  fromFull: 'Maastricht, NL (1st floor)',
-  toFull: 'Amsterdam, NL (2nd floor)',
-  package: 'Van + 2 movers',
-  moveType: 'Private • National • 2-Bedroom',
-  estValue: 1850,
+  ref: 'J-26-0000',
+  customer: 'Customer',
+  movingDate: 'TBD',
+  fromFull: 'Maastricht, NL',
+  toFull: 'Destination, NL',
+  package: 'Standard Move',
+  moveType: 'Private Move',
+  estValue: 450,
   coordinator: 'Sherif Eliwa',
   status: 'Confirmed',
   operationalStatus: 'Confirmed',
   paymentStatus: 'Not Invoiced',
-  priority: 'High',
+  priority: 'Medium',
   nextAction: 'Review Status'
 }
 

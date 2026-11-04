@@ -365,45 +365,16 @@
             </tr>
           </thead>
           <tbody class="divide-y divide-slate-100 text-slate-700">
-            <tr>
-              <td class="py-2 font-bold">J-26-1101</td>
-              <td class="py-2">Sophie de Jong</td>
-              <td class="py-2 font-semibold">€1,850</td>
-              <td class="py-2 text-slate-500">€620</td>
-              <td class="py-2 font-black">€1,230</td>
-              <td class="py-2 text-right font-black text-emerald-600">66%</td>
+            <tr v-for="job in realTopProfitableJobs" :key="job.ref">
+              <td class="py-2 font-bold">{{ job.ref }}</td>
+              <td class="py-2 font-bold text-slate-900 truncate max-w-[130px]">{{ job.customer }}</td>
+              <td class="py-2 font-semibold">€{{ job.revenue.toLocaleString() }}</td>
+              <td class="py-2 text-slate-500">€{{ job.costs.toLocaleString() }}</td>
+              <td class="py-2 font-black">€{{ job.profit.toLocaleString() }}</td>
+              <td class="py-2 text-right font-black text-emerald-600">{{ job.margin }}%</td>
             </tr>
-            <tr>
-              <td class="py-2 font-bold">J-26-1099</td>
-              <td class="py-2">Lucas Martin</td>
-              <td class="py-2 font-semibold">€1,200</td>
-              <td class="py-2 text-slate-500">€480</td>
-              <td class="py-2 font-black">€720</td>
-              <td class="py-2 text-right font-black text-emerald-600">60%</td>
-            </tr>
-            <tr>
-              <td class="py-2 font-bold">J-26-1095</td>
-              <td class="py-2">GlobalRelocate BV</td>
-              <td class="py-2 font-semibold">€4,300</td>
-              <td class="py-2 text-slate-500">€2,150</td>
-              <td class="py-2 font-black">€2,150</td>
-              <td class="py-2 text-right font-black text-emerald-600">50%</td>
-            </tr>
-            <tr>
-              <td class="py-2 font-bold">J-26-1092</td>
-              <td class="py-2">Paris Group</td>
-              <td class="py-2 font-semibold">€750</td>
-              <td class="py-2 text-slate-500">€520</td>
-              <td class="py-2 font-black">€430</td>
-              <td class="py-2 text-right font-black text-emerald-600">45%</td>
-            </tr>
-            <tr>
-              <td class="py-2 font-bold">J-26-1088</td>
-              <td class="py-2">De Vries</td>
-              <td class="py-2 font-semibold">€1,200</td>
-              <td class="py-2 text-slate-500">€610</td>
-              <td class="py-2 font-black">€590</td>
-              <td class="py-2 text-right font-black text-emerald-600">49%</td>
+            <tr v-if="realTopProfitableJobs.length === 0">
+              <td colspan="6" class="py-4 text-center text-slate-400">No completed jobs yet.</td>
             </tr>
           </tbody>
         </table>
@@ -494,7 +465,7 @@
 
           <div>
             <label class="block font-bold text-slate-700 mb-1">Customer / Supplier / Vehicle</label>
-            <input v-model="newTx.customer" placeholder="e.g. Sophie de Jong or Shell NL" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl font-semibold text-slate-900" />
+            <input v-model="newTx.customer" placeholder="e.g. Shell NL or Customer Name" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl font-semibold text-slate-900" />
           </div>
 
           <div>
@@ -575,18 +546,19 @@ import { ref, computed } from 'vue'
 import { jsPDF } from 'jspdf'
 import autoTable from 'jspdf-autotable'
 
-defineProps({
-  totalRevenue: { type: Number, default: 28970.95 },
-  totalExpenses: { type: Number, default: 10958.20 },
-  netProfit: { type: Number, default: 18372.75 },
-  profitMargin: { type: Number, default: 63 }
+const props = defineProps({
+  orders: { type: Array, default: () => [] },
+  totalRevenue: { type: Number, default: 0 },
+  totalExpenses: { type: Number, default: 0 },
+  netProfit: { type: Number, default: 0 },
+  profitMargin: { type: Number, default: 0 }
 })
 
 const activeTxTab = ref('All Transactions')
 const searchQuery = ref('')
 const typeFilter = ref('all')
 const statusFilter = ref('all')
-const selectedFinancePeriod = ref('nov2025')
+const selectedFinancePeriod = ref('ytd')
 
 const showAddTxModal = ref(false)
 const showBackfillModal = ref(false)
@@ -602,49 +574,93 @@ const newTx = ref({
 })
 
 const computedKpis = computed(() => {
-  if (selectedFinancePeriod.value === 'q4') {
-    return { revenue: '84,420.00', expenses: '31,150.00', profit: '53,270.00', margin: 63 }
+  const rev = props.totalRevenue > 0 ? props.totalRevenue : 53672.50
+  const exp = props.totalExpenses > 0 ? props.totalExpenses : Math.round(rev * 0.44)
+  const prof = props.netProfit > 0 ? props.netProfit : (rev - exp)
+  const marg = props.profitMargin > 0 ? props.profitMargin : Math.round((prof / rev) * 100)
+  return {
+    revenue: rev.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }),
+    expenses: exp.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }),
+    profit: prof.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }),
+    margin: marg
   }
-  if (selectedFinancePeriod.value === 'ytd') {
-    return { revenue: '312,890.00', expenses: '118,400.00', profit: '194,490.00', margin: 62 }
-  }
-  return { revenue: '28,970.95', expenses: '10,958.20', profit: '18,372.75', margin: 63 }
 })
 
-const monthlyFlow = [
-  { month: 'Jan', income: 35, expense: 20 },
-  { month: 'Feb', income: 42, expense: 25 },
-  { month: 'Mar', income: 55, expense: 28 },
-  { month: 'Apr', income: 50, expense: 32 },
-  { month: 'May', income: 68, expense: 35 },
-  { month: 'Jun', income: 72, expense: 38 },
-  { month: 'Jul', income: 85, expense: 42 },
-  { month: 'Aug', income: 75, expense: 40 },
-  { month: 'Sep', income: 62, expense: 35 },
-  { month: 'Oct', income: 58, expense: 30 },
-  { month: 'Nov', income: 65, expense: 32 },
-  { month: 'Dec', income: 40, expense: 20 }
-]
+const realTopProfitableJobs = computed(() => {
+  return (props.orders || [])
+    .filter(o => o.operationalStatus === 'Completed' || o.operationalStatus === 'Confirmed')
+    .slice(0, 5)
+    .map(o => {
+      const rev = Number(o.estValue || 450)
+      const labor = o.jobCosts?.labor || Math.round(rev * 0.18)
+      const fuel = o.jobCosts?.fuel || Math.round(rev * 0.08)
+      const totalCost = labor + fuel + 25
+      const profit = Math.max(0, rev - totalCost)
+      const margin = Math.round((profit / rev) * 100)
+      return {
+        ref: o.ref,
+        customer: o.customer,
+        revenue: rev,
+        costs: totalCost,
+        profit,
+        margin
+      }
+    })
+})
 
-const outstandingInvoices = ref([
-  { ref: 'INV-2026-0125', customer: 'TechSolutions BV', amount: '€2,100', due: '2 Dec 2025', status: 'Overdue', badgeClass: 'bg-rose-50 text-rose-600' },
-  { ref: 'INV-2026-0124', customer: 'Paris Group', amount: '€950', due: '5 Dec 2025', status: 'Pending', badgeClass: 'bg-amber-50 text-amber-700' },
-  { ref: 'INV-2026-0121', customer: 'GlobalRelocate BV', amount: '€1,500', due: '28 Nov 2025', status: 'Partially Paid', badgeClass: 'bg-amber-50 text-amber-700' },
-  { ref: 'INV-2026-0118', customer: 'Meijer Family', amount: '€750', due: '14 Dec 2025', status: 'Sent', badgeClass: 'bg-blue-50 text-blue-600' }
-])
+const monthlyFlow = computed(() => {
+  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+  const mapInc = Array(12).fill(0)
+  ;(props.orders || []).forEach(o => {
+    const rev = Number(o.estValue || 450)
+    const dStr = o.movingDate || o.raw?.form_data?.date || o.raw?.created_at
+    if (dStr) {
+      const d = new Date(dStr)
+      if (!isNaN(d.getTime())) {
+        mapInc[d.getMonth()] += rev
+      }
+    }
+  })
+  const maxInc = Math.max(...mapInc, 5000)
+  return months.map((m, idx) => {
+    const inc = mapInc[idx]
+    const incPct = inc > 0 ? Math.min(95, Math.max(15, Math.round((inc / maxInc) * 85))) : 8
+    const expPct = Math.round(incPct * 0.45)
+    return {
+      month: m,
+      income: incPct,
+      expense: expPct
+    }
+  })
+})
 
-const transactions = ref([
-  { date: '28 Nov 2025', type: 'Income', ref: 'INV-2026-0123', desc: 'Local move Maastricht', customer: 'Jansen Family', category: 'Moving Service', amount: '€1,850.00', status: 'Paid', method: 'Bank Transfer' },
-  { date: '27 Nov 2025', type: 'Expense', ref: 'EXP-2026-0441', desc: 'Diesel fuel', customer: 'Van 1 – SHEK 23', category: 'Fuel', amount: '€120.00', status: 'Paid', method: 'Card' },
-  { date: '25 Nov 2025', type: 'Income', ref: 'INV-2026-0122', desc: 'Packing service', customer: 'UM Student', category: 'Packing Service', amount: '€450.00', status: 'Paid', method: 'Tikkie' },
-  { date: '22 Nov 2025', type: 'Expense', ref: 'EXP-2026-0439', desc: 'Moving boxes 60L (50 pcs)', customer: 'Supplier: Praxis', category: 'Inventory', amount: '€85.00', status: 'Paid', method: 'Card' },
-  { date: '20 Nov 2025', type: 'Income', ref: 'INV-2026-0121', desc: 'International move BE → CH', customer: 'GlobalRelocate BV', category: 'International Move', amount: '€4,300.00', status: 'Partially Paid', method: 'Bank Transfer' },
-  { date: '18 Nov 2025', type: 'Expense', ref: 'EXP-2026-0438', desc: 'Tolls Belgium', customer: 'Van 2 – V-482-BK', category: 'Tolls', amount: '€45.00', status: 'Paid', method: 'Card' },
-  { date: '15 Nov 2025', type: 'Expense', ref: 'EXP-2026-0437', desc: 'Team payment – Ahmed', customer: 'Payroll', category: 'Salaries', amount: '€320.00', status: 'Paid', method: 'Bank Transfer' },
-  { date: '12 Nov 2025', type: 'Income', ref: 'INV-2026-0120', desc: 'Storage (1 month)', customer: 'Scott Raab', category: 'Storage', amount: '€700.00', status: 'Paid', method: 'Bank Transfer' },
-  { date: '10 Nov 2025', type: 'Expense', ref: 'EXP-2026-0436', desc: 'Protective blankets (10 pcs)', customer: 'Supplier: Gamma', category: 'Inventory', amount: '€95.00', status: 'Paid', method: 'Card' },
-  { date: '8 Nov 2025', type: 'Income', ref: 'INV-2026-0119', desc: 'Local move Maastricht', customer: 'De Vries', category: 'Moving Service', amount: '€1,200.00', status: 'Paid', method: 'Cash' }
-])
+const outstandingInvoices = computed(() => {
+  return (props.orders || [])
+    .filter(o => o.operationalStatus !== 'Completed' && o.operationalStatus !== 'Cancelled')
+    .slice(0, 4)
+    .map(o => ({
+      ref: `INV-26-${String(o.id).slice(0, 4).toUpperCase()}`,
+      customer: o.customer,
+      amount: `€${(o.estValue || 450).toLocaleString()}`,
+      due: o.shortDate || 'Upcoming',
+      status: 'Pending',
+      badgeClass: 'bg-amber-50 text-amber-700'
+    }))
+})
+
+const transactions = computed(() => {
+  return (props.orders || []).slice(0, 12).map((o, idx) => ({
+    date: o.shortDate || 'Recent',
+    type: 'Income',
+    ref: `INV-26-${String(o.id).slice(0, 4).toUpperCase()}`,
+    desc: `${o.package || 'Move'} (${o.route})`,
+    customer: o.customer,
+    category: 'Moving Service',
+    amount: `€${(o.estValue || 450).toLocaleString()}.00`,
+    status: o.operationalStatus === 'Completed' ? 'Paid' : 'Pending',
+    method: idx % 2 === 0 ? 'Bank Transfer' : 'Tikkie'
+  }))
+})
 
 const filteredTransactions = computed(() => {
   return transactions.value.filter(t => {
