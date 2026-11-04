@@ -295,6 +295,57 @@
             </div>
           </div>
         </div>
+
+        <!-- Phase 3 Automated Communication & Channels Configuration -->
+        <div class="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-5 space-y-3.5">
+          <div class="flex items-center justify-between">
+            <div>
+              <div class="flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                <h3 class="text-sm font-black text-slate-900">Automation & WhatsApp Engine</h3>
+              </div>
+              <p class="text-[10px] text-slate-400">Phase 3 customer lifecycle triggers</p>
+            </div>
+            <span class="px-2 py-0.5 bg-emerald-50 text-emerald-700 text-[10px] font-bold rounded-md border border-emerald-200/60">Live</span>
+          </div>
+
+          <div class="space-y-2.5 text-xs">
+            <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200/60 space-y-1">
+              <span class="text-[10px] font-bold text-slate-400 uppercase">Quote Follow-Up Delay</span>
+              <div class="flex items-center justify-between">
+                <span class="font-bold text-slate-800">48 Hours post-quote</span>
+                <span class="text-purple-600 font-bold text-[11px]">Email + WhatsApp</span>
+              </div>
+            </div>
+
+            <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200/60 space-y-1">
+              <span class="text-[10px] font-bold text-slate-400 uppercase">Pre-Move Arrival Alert</span>
+              <div class="flex items-center justify-between">
+                <span class="font-bold text-slate-800">24 Hours before job</span>
+                <span class="text-blue-600 font-bold text-[11px]">Van & Crew Time</span>
+              </div>
+            </div>
+
+            <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200/60 space-y-1">
+              <span class="text-[10px] font-bold text-slate-400 uppercase">Google 5★ Review Request</span>
+              <div class="flex items-center justify-between">
+                <span class="font-bold text-slate-800">2 Hours post-move</span>
+                <span class="text-amber-700 font-bold text-[11px]">NPS & Direct Link</span>
+              </div>
+            </div>
+
+            <div class="pt-2 border-t border-slate-100 space-y-1.5">
+              <div class="flex items-center justify-between text-[11px]">
+                <span class="text-slate-500">Official WhatsApp:</span>
+                <span class="font-bold text-slate-800">+31 6 21713503</span>
+              </div>
+              <div class="flex items-center justify-between text-[11px]">
+                <span class="text-slate-500">Email Gateway:</span>
+                <span class="font-bold text-emerald-700">Resend + Gmail SMTP</span>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

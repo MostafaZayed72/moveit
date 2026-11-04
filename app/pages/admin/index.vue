@@ -108,6 +108,10 @@
           <!-- Screen 11: Automation (11 Automation.png) -->
           <AutomationView 
             v-else-if="currentView === 'automation'" 
+            :orders="formattedOrders"
+            :automation-logs="automationLogs"
+            @trigger-automation="triggerAutomation"
+            @select-job="openMoveDetail"
           />
 
           <!-- Screen 12: Settings (12 Settings.png) -->
@@ -122,6 +126,7 @@
             :job="selectedJob || formattedOrders[0]"
             @back="currentView = previousView || 'jobs'"
             @update-status="handleUpdateStatus"
+            @trigger-automation="triggerAutomation"
           />
         </Transition>
       </main>
@@ -231,11 +236,15 @@ const {
   realCustomers,
   totalExpenses,
   netProfit,
-  profitMargin
+  profitMargin,
+  automationLogs,
+  triggerAutomation,
+  fetchAutomationLogs
 } = useAdminData()
 
 onMounted(() => {
   fetchOrders()
+  fetchAutomationLogs()
 })
 
 const currentView = ref('overview')

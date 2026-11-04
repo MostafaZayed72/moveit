@@ -571,6 +571,53 @@ export const useAdminData = () => {
     URL.revokeObjectURL(url)
   }
 
+  // --- Phase 3: Automation & Client Communication Engine ---
+  const automationLogs = ref<any[]>([])
+
+  const triggerAutomation = async (params: {
+    automationType: 'quote_followup' | 'job_reminder' | 'review_request' | 'invoice_reminder' | 'custom'
+    orderId?: string
+    customerName?: string
+    recipientEmail?: string
+    recipientPhone?: string
+    route?: string
+    ref?: string
+    quoteAmount?: number
+    customSubject?: string
+    customMessage?: string
+  }) => {
+    try {
+      const res: any = await $fetch('/api/admin/automation', {
+        method: 'POST',
+        body: {
+          action: 'trigger_automation',
+          ...params
+        }
+      })
+      if (res && res.log) {
+        automationLogs.value.unshift(res.log)
+      }
+      return res
+    } catch (err) {
+      console.error('Trigger automation error:', err)
+      return { success: false, error: err }
+    }
+  }
+
+  const fetchAutomationLogs = async () => {
+    try {
+      const res: any = await $fetch('/api/admin/automation', {
+        method: 'POST',
+        body: { action: 'get_logs' }
+      })
+      if (res && res.logs) {
+        automationLogs.value = res.logs
+      }
+    } catch (err) {
+      console.warn('Failed to fetch automation logs:', err)
+    }
+  }
+
   return {
     allOrders,
     formattedOrders,
@@ -584,6 +631,9 @@ export const useAdminData = () => {
     updateThreeTrackStatus,
     createOrder,
     exportToExcel,
+    automationLogs,
+    triggerAutomation,
+    fetchAutomationLogs,
     totalRevenue,
     jobContribution,
     activeLeadsCount,
