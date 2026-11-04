@@ -117,6 +117,7 @@
           <!-- Screen 12: Settings (12 Settings.png) -->
           <SettingsView 
             v-else-if="currentView === 'settings'" 
+            ref="settingsViewRef"
             @add-member="showNewModal = true"
           />
 
@@ -275,8 +276,16 @@ const openMoveDetail = (job) => {
   currentView.value = 'move_detail'
 }
 
+const settingsViewRef = ref(null)
+
 const handlePrimaryAction = () => {
-  showNewModal.value = true
+  if (currentView.value === 'settings') {
+    if (settingsViewRef.value && typeof settingsViewRef.value.saveAllSettings === 'function') {
+      settingsViewRef.value.saveAllSettings()
+    }
+  } else {
+    showNewModal.value = true
+  }
 }
 
 const handleUpdateStatus = async (payload) => {
