@@ -42,14 +42,16 @@
             :high-value-leads="highValueLeads"
             :total-orders-count="formattedOrders.length"
             @select-job="openMoveDetail"
-            @view-all-jobs="currentView = 'jobs'"
-            @view-all-leads="currentView = 'leads'"
+            @view-all-jobs="navigateWithFilter('jobs', 'active')"
+            @view-all-leads="navigateWithFilter('leads', 'all')"
+            @navigate="navigateWithFilter"
           />
 
           <!-- Screen 2: Leads & Quotations Split View (2 Leads & Quotations.png) -->
           <LeadsView 
             v-else-if="currentView === 'leads'" 
             :orders="formattedOrders"
+            :initial-tab="leadsInitialTab"
             @select-lead="openMoveDetail"
             @add-lead="showNewModal = true"
           />
@@ -58,6 +60,7 @@
           <MovingJobsView 
             v-else-if="currentView === 'jobs'" 
             :jobs="formattedOrders"
+            :initial-tab="jobsInitialTab"
             @select-job="openMoveDetail"
             @update-status="handleUpdateStatus"
             @add-job="showNewModal = true"
@@ -258,6 +261,14 @@ onMounted(() => {
 
 const currentView = ref('overview')
 const previousView = ref('overview')
+const jobsInitialTab = ref('all')
+const leadsInitialTab = ref('all')
+
+const navigateWithFilter = (view, tab = 'all') => {
+  if (view === 'jobs') jobsInitialTab.value = tab || 'all'
+  if (view === 'leads') leadsInitialTab.value = tab || 'all'
+  currentView.value = view
+}
 const selectedJob = ref(null)
 const showNewModal = ref(false)
 const isSubmitting = ref(false)

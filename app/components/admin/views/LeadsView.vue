@@ -511,6 +511,10 @@ const props = defineProps({
   orders: {
     type: Array,
     default: () => []
+  },
+  initialTab: {
+    type: String,
+    default: 'all'
   }
 })
 
@@ -523,7 +527,14 @@ const exportLeadPdf = (lead) => {
 }
 
 const searchQuery = ref('')
-const activeLeadTab = ref('all')
+const activeLeadTab = ref(props.initialTab || 'all')
+
+watch(() => props.initialTab, (val) => {
+  if (val) {
+    activeLeadTab.value = val
+    currentPage.value = 1
+  }
+}, { immediate: true })
 const statusFilter = ref('all')
 const sourceFilter = ref('all')
 const priorityFilter = ref('all')

@@ -718,7 +718,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import MoveDetailView from './MoveDetailView.vue'
 import { useAdminData } from '~/composables/useAdminData'
 import { generateMoveItQuotationPDF, generateMoveItInvoicePDF } from '~/utils/pdfBranding'
@@ -727,6 +727,10 @@ const props = defineProps({
   jobs: {
     type: Array,
     default: () => []
+  },
+  initialTab: {
+    type: String,
+    default: 'all'
   }
 })
 
@@ -824,11 +828,19 @@ const kpiMetrics = computed(() => {
 })
 
 // Tab navigation for filtering with real live counts
-const activeJobTab = ref('all')
+const activeJobTab = ref(props.initialTab || 'all')
+
+watch(() => props.initialTab, (val) => {
+  if (val) {
+    activeJobTab.value = val
+    currentPage.value = 1
+  }
+}, { immediate: true })
 
 const dynamicJobTabs = computed(() => {
   return [
     { id: 'all', label: 'All Jobs', count: kpiMetrics.value.total },
+    { id: 'active', label: 'Active Moves', count: kpiMetrics.value.confirmed + kpiMetrics.value.inProgress },
     { id: 'upcoming', label: 'Upcoming', count: kpiMetrics.value.confirmed },
     { id: 'inprogress', label: 'In Progress', count: kpiMetrics.value.inProgress },
     { id: 'completed', label: 'Completed', count: kpiMetrics.value.completed },
@@ -857,6 +869,7 @@ const clearFilters = () => {
 const filteredJobs = computed(() => {
   return allJobsList.value.filter(job => {
     // 1. Tab filter
+    if (activeJobTab.value === 'active' && job.status !== 'Confirmed' && job.status !== 'In Progress' && job.status !== 'Team Assigned' && job.status !== 'In Transit') return false
     if (activeJobTab.value === 'upcoming' && job.status !== 'Confirmed') return false
     if (activeJobTab.value === 'inprogress' && job.status !== 'In Progress' && job.status !== 'Team Assigned' && job.status !== 'In Transit') return false
     if (activeJobTab.value === 'completed' && job.status !== 'Completed') return false
