@@ -53,64 +53,94 @@
           <!-- 2. Top 5 KPI Cards (Matching "3 Moving Jobs.png") -->
           <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
           <!-- Card 1: Total Jobs -->
-          <div class="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-xs flex items-center justify-between">
+          <div 
+            @click="activeJobTab = 'all'; currentPage = 1"
+            :class="[
+              'bg-white p-3.5 rounded-2xl border shadow-xs flex items-center justify-between cursor-pointer transition-all hover:shadow-md',
+              activeJobTab === 'all' ? 'border-blue-300 ring-1 ring-blue-200' : 'border-slate-200/80'
+            ]"
+          >
             <div class="space-y-1">
-              <p class="text-xs font-medium text-slate-500">Total Jobs</p>
-              <p class="text-2xl font-black text-slate-900 font-sans">{{ kpiMetrics.total }}</p>
+              <p class="text-xs font-semibold text-slate-500">Total Jobs</p>
+              <p class="text-2xl sm:text-[26px] font-extrabold text-slate-900 font-sans leading-none">{{ kpiMetrics.total }}</p>
               <p class="text-[11px] font-bold text-emerald-600 flex items-center gap-0.5">
                 <span>↗ +14%</span>
-                <span class="text-slate-400 font-normal">vs. last month</span>
+                <span class="text-slate-400 font-normal">vs. last mo</span>
               </p>
             </div>
-            <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-lg">
+            <div class="w-9 h-9 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-base">
               🚚
             </div>
           </div>
 
           <!-- Card 2: Confirmed -->
-          <div class="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-xs flex items-center justify-between">
+          <div 
+            @click="activeJobTab = 'upcoming'; currentPage = 1"
+            :class="[
+              'bg-white p-3.5 rounded-2xl border shadow-xs flex items-center justify-between cursor-pointer transition-all hover:shadow-md',
+              activeJobTab === 'upcoming' ? 'border-emerald-400 ring-1 ring-emerald-200' : 'border-slate-200/80'
+            ]"
+          >
             <div class="space-y-1">
-              <p class="text-xs font-medium text-slate-500">Confirmed</p>
-              <p class="text-2xl font-black text-slate-900 font-sans">{{ kpiMetrics.confirmed }}</p>
+              <p class="text-xs font-semibold text-slate-500">Confirmed</p>
+              <p class="text-2xl sm:text-[26px] font-extrabold text-slate-900 font-sans leading-none">{{ kpiMetrics.confirmed }}</p>
               <p class="text-[11px] font-bold text-emerald-600 font-sans">{{ kpiMetrics.confirmedPct }}%</p>
             </div>
-            <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-base font-bold">
+            <div class="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-sm font-bold">
               ✓
             </div>
           </div>
 
           <!-- Card 3: In Progress -->
-          <div class="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-xs flex items-center justify-between">
+          <div 
+            @click="activeJobTab = 'inprogress'; currentPage = 1"
+            :class="[
+              'bg-white p-3.5 rounded-2xl border shadow-xs flex items-center justify-between cursor-pointer transition-all hover:shadow-md',
+              activeJobTab === 'inprogress' ? 'border-sky-400 ring-1 ring-sky-200' : 'border-slate-200/80'
+            ]"
+          >
             <div class="space-y-1">
-              <p class="text-xs font-medium text-slate-500">In Progress</p>
-              <p class="text-2xl font-black text-slate-900 font-sans">{{ kpiMetrics.inProgress }}</p>
+              <p class="text-xs font-semibold text-slate-500">In Progress</p>
+              <p class="text-2xl sm:text-[26px] font-extrabold text-slate-900 font-sans leading-none">{{ kpiMetrics.inProgress }}</p>
               <p class="text-[11px] font-bold text-blue-600 font-sans">{{ kpiMetrics.inProgressPct }}%</p>
             </div>
-            <div class="w-10 h-10 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center text-sm font-bold">
+            <div class="w-9 h-9 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center text-xs font-bold">
               ▶
             </div>
           </div>
 
           <!-- Card 4: Completed -->
-          <div class="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-xs flex items-center justify-between">
+          <div 
+            @click="activeJobTab = 'completed'; currentPage = 1"
+            :class="[
+              'bg-white p-3.5 rounded-2xl border shadow-xs flex items-center justify-between cursor-pointer transition-all hover:shadow-md',
+              activeJobTab === 'completed' ? 'border-purple-400 ring-1 ring-purple-200' : 'border-slate-200/80'
+            ]"
+          >
             <div class="space-y-1">
-              <p class="text-xs font-medium text-slate-500">Completed</p>
-              <p class="text-2xl font-black text-slate-900 font-sans">{{ kpiMetrics.completed }}</p>
+              <p class="text-xs font-semibold text-slate-500">Completed</p>
+              <p class="text-2xl sm:text-[26px] font-extrabold text-slate-900 font-sans leading-none">{{ kpiMetrics.completed }}</p>
               <p class="text-[11px] font-bold text-purple-600 font-sans">{{ kpiMetrics.completedPct }}%</p>
             </div>
-            <div class="w-10 h-10 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center text-base font-bold">
+            <div class="w-9 h-9 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center text-sm font-bold">
               ✓
             </div>
           </div>
 
           <!-- Card 5: Cancelled -->
-          <div class="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-xs flex items-center justify-between">
+          <div 
+            @click="activeJobTab = 'cancelled'; currentPage = 1"
+            :class="[
+              'bg-white p-3.5 rounded-2xl border shadow-xs flex items-center justify-between cursor-pointer transition-all hover:shadow-md',
+              activeJobTab === 'cancelled' ? 'border-rose-400 ring-1 ring-rose-200' : 'border-slate-200/80'
+            ]"
+          >
             <div class="space-y-1">
-              <p class="text-xs font-medium text-slate-500">Cancelled</p>
-              <p class="text-2xl font-black text-slate-900 font-sans">{{ kpiMetrics.cancelled }}</p>
+              <p class="text-xs font-semibold text-slate-500">Cancelled</p>
+              <p class="text-2xl sm:text-[26px] font-extrabold text-slate-900 font-sans leading-none">{{ kpiMetrics.cancelled }}</p>
               <p class="text-[11px] font-bold text-rose-600 font-sans">{{ kpiMetrics.cancelledPct }}%</p>
             </div>
-            <div class="w-10 h-10 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center text-sm font-bold">
+            <div class="w-9 h-9 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center text-xs font-bold">
               ✕
             </div>
           </div>
@@ -218,15 +248,15 @@
                         title="Select All"
                       />
                     </th>
-                    <th class="py-3 px-2">REF ⇅</th>
-                    <th class="py-3 px-2">DATE ▾</th>
+                    <th @click="toggleSort('ref')" class="py-3 px-2 cursor-pointer hover:text-slate-900 select-none whitespace-nowrap">REF {{ sortIcon('ref') }}</th>
+                    <th @click="toggleSort('date')" class="py-3 px-2 cursor-pointer hover:text-slate-900 select-none whitespace-nowrap">DATE {{ sortIcon('date') }}</th>
                     <th class="py-3 px-2">TIME</th>
-                    <th class="py-3 px-2">CUSTOMER</th>
-                    <th class="py-3 px-2">ROUTE</th>
-                    <th class="py-3 px-2">PACKAGE</th>
-                    <th class="py-3 px-1.5 text-center">TEAM</th>
-                    <th class="py-3 px-2">EST. VALUE</th>
-                    <th class="py-3 px-2">STATUS ▾</th>
+                    <th @click="toggleSort('customer')" class="py-3 px-2 cursor-pointer hover:text-slate-900 select-none whitespace-nowrap">CUSTOMER {{ sortIcon('customer') }}</th>
+                    <th @click="toggleSort('route')" class="py-3 px-2 cursor-pointer hover:text-slate-900 select-none whitespace-nowrap">ROUTE {{ sortIcon('route') }}</th>
+                    <th @click="toggleSort('package')" class="py-3 px-2 cursor-pointer hover:text-slate-900 select-none whitespace-nowrap">PACKAGE {{ sortIcon('package') }}</th>
+                    <th @click="toggleSort('team')" class="py-3 px-1.5 text-center cursor-pointer hover:text-slate-900 select-none whitespace-nowrap">TEAM {{ sortIcon('team') }}</th>
+                    <th @click="toggleSort('estValue')" class="py-3 px-2 cursor-pointer hover:text-slate-900 select-none whitespace-nowrap">EST. VALUE {{ sortIcon('estValue') }}</th>
+                    <th @click="toggleSort('status')" class="py-3 px-2 cursor-pointer hover:text-slate-900 select-none whitespace-nowrap">STATUS {{ sortIcon('status') }}</th>
                     <th class="py-3 px-1.5 text-center">ACTIONS</th>
                   </tr>
                 </thead>
@@ -234,7 +264,6 @@
                   <tr 
                     v-for="job in paginatedJobs" 
                     :key="job.ref || job.id"
-                    @mouseenter="hoverSelectJob(job)"
                     @click="selectJob(job)"
                     :class="[
                       'transition-colors cursor-pointer group',
@@ -649,12 +678,21 @@
             <div v-else-if="activeDrawerTab === 'Team & Vehicle'" class="space-y-3 text-xs">
               <div class="p-3 bg-slate-50 rounded-xl">
                 <span class="text-slate-400">Allocated Vehicle:</span>
-                <p class="font-bold text-slate-900">Ford Transit 20m³ (SMEK 25)</p>
+                <p class="font-bold text-slate-900">{{ activeSelectedJob.vehicle || 'Ford Transit (SMEK 25)' }}</p>
               </div>
               <div class="p-3 bg-slate-50 rounded-xl">
                 <span class="text-slate-400">Assigned Movers:</span>
-                <p class="font-bold text-slate-900">Ahmed (Lead Driver), Tomas (Mover)</p>
+                <p v-if="activeSelectedJob.assignedTeam && activeSelectedJob.assignedTeam.length > 0" class="font-bold text-slate-900">
+                  {{ activeSelectedJob.assignedTeam.map(m => typeof m === 'string' ? m : `${m.name} (${m.role || 'Mover'})`).join(', ') }}
+                </p>
+                <p v-else class="font-semibold text-amber-700">No crew assigned yet</p>
               </div>
+              <button
+                @click="currentSubView = 'detail'"
+                class="w-full py-2 bg-white hover:bg-slate-50 border border-slate-200 rounded-xl font-bold text-slate-800 cursor-pointer transition-colors"
+              >
+                Assign / Change Crew & Vehicle →
+              </button>
             </div>
 
             <!-- TAB 4: NOTES -->
@@ -865,9 +903,28 @@ const clearFilters = () => {
   currentPage.value = 1
 }
 
-// Filtered Jobs
+// Column Sorting
+const sortKey = ref('date')
+const sortDir = ref('desc')
+const toggleSort = (key) => {
+  if (sortKey.value === key) {
+    sortDir.value = sortDir.value === 'asc' ? 'desc' : 'asc'
+  } else {
+    sortKey.value = key
+    sortDir.value = (key === 'estValue' || key === 'date' || key === 'team') ? 'desc' : 'asc'
+  }
+  currentPage.value = 1
+}
+const sortIcon = (key) => (sortKey.value !== key ? '↕' : (sortDir.value === 'asc' ? '↑' : '↓'))
+const getJobDateTs = (job) => {
+  const raw = job.movingDate && job.movingDate !== 'TBD' ? job.movingDate : (job.raw?.created_at || '')
+  const ts = new Date(raw).getTime()
+  return isNaN(ts) ? 0 : ts
+}
+
+// Filtered & Sorted Jobs
 const filteredJobs = computed(() => {
-  return allJobsList.value.filter(job => {
+  const list = allJobsList.value.filter(job => {
     // 1. Tab filter
     if (activeJobTab.value === 'active' && job.status !== 'Confirmed' && job.status !== 'In Progress' && job.status !== 'Team Assigned' && job.status !== 'In Transit') return false
     if (activeJobTab.value === 'upcoming' && job.status !== 'Confirmed') return false
@@ -897,6 +954,15 @@ const filteredJobs = computed(() => {
     }
 
     return true
+  })
+
+  const key = sortKey.value
+  const dir = sortDir.value === 'asc' ? 1 : -1
+  return [...list].sort((a, b) => {
+    if (key === 'date') return (getJobDateTs(a) - getJobDateTs(b)) * dir
+    if (key === 'estValue') return (Number(a.estValue || 0) - Number(b.estValue || 0)) * dir
+    if (key === 'team') return (Number(a.team || 0) - Number(b.team || 0)) * dir
+    return String(a[key] || '').toLowerCase().localeCompare(String(b[key] || '').toLowerCase()) * dir
   })
 })
 

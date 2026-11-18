@@ -46,116 +46,198 @@
         </div>
       </div>
 
-      <!-- 4 KPI Cards Row -->
+      <!-- 4 KPI Cards Row (Compact & Interactive) -->
       <div class="grid grid-cols-2 lg:grid-cols-4 gap-3.5">
-        <div class="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-xs flex items-center justify-between">
+        <div 
+          @click="activeTxTab = 'Invoices'"
+          class="bg-white p-3.5 sm:p-4 rounded-2xl border border-slate-200/80 shadow-xs flex items-center justify-between hover:shadow-md hover:border-emerald-300 transition-all cursor-pointer group"
+          title="Click to filter Invoices"
+        >
           <div class="space-y-1">
-            <p class="text-xs font-medium text-slate-500">Total Revenue</p>
-            <p class="text-xl sm:text-2xl font-black text-slate-900 font-sans">€{{ computedKpis.revenue }}</p>
+            <p class="text-xs font-semibold text-slate-500 group-hover:text-slate-800">Total Revenue</p>
+            <p class="text-2xl sm:text-[26px] font-extrabold text-slate-900 font-sans leading-none tracking-tight">€{{ computedKpis.revenue }}</p>
             <p class="text-[11px] font-bold text-emerald-600">↗ +18% <span class="text-slate-400 font-normal">vs. last month</span></p>
           </div>
-          <span class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-sm font-bold">📈</span>
+          <span class="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-sm font-bold group-hover:scale-105 transition-transform">📈</span>
         </div>
 
-        <div class="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-xs flex items-center justify-between">
+        <div 
+          @click="activeTxTab = 'Expenses'"
+          class="bg-white p-3.5 sm:p-4 rounded-2xl border border-slate-200/80 shadow-xs flex items-center justify-between hover:shadow-md hover:border-rose-300 transition-all cursor-pointer group"
+          title="Click to filter Expenses"
+        >
           <div class="space-y-1">
-            <p class="text-xs font-medium text-slate-500">Total Expenses</p>
-            <p class="text-xl sm:text-2xl font-black text-slate-900 font-sans">€{{ computedKpis.expenses }}</p>
+            <p class="text-xs font-semibold text-slate-500 group-hover:text-slate-800">Total Expenses</p>
+            <p class="text-2xl sm:text-[26px] font-extrabold text-slate-900 font-sans leading-none tracking-tight">€{{ computedKpis.expenses }}</p>
             <p class="text-[11px] font-bold text-rose-600">↗ +12% <span class="text-slate-400 font-normal">vs. last month</span></p>
           </div>
-          <span class="w-10 h-10 rounded-xl bg-rose-50 text-rose-500 flex items-center justify-center text-sm font-bold">🪙</span>
+          <span class="w-9 h-9 rounded-xl bg-rose-50 text-rose-500 flex items-center justify-center text-sm font-bold group-hover:scale-105 transition-transform">🪙</span>
         </div>
 
-        <div class="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-xs flex items-center justify-between">
+        <div 
+          @click="activeTxTab = 'All Transactions'"
+          class="bg-white p-3.5 sm:p-4 rounded-2xl border border-slate-200/80 shadow-xs flex items-center justify-between hover:shadow-md hover:border-emerald-300 transition-all cursor-pointer group"
+          title="Click to view all transactions"
+        >
           <div class="space-y-1">
-            <p class="text-xs font-medium text-slate-500">Net Profit</p>
-            <p class="text-xl sm:text-2xl font-black text-slate-900 font-sans">€{{ computedKpis.profit }}</p>
+            <p class="text-xs font-semibold text-slate-500 group-hover:text-slate-800">Net Profit</p>
+            <p class="text-2xl sm:text-[26px] font-extrabold text-slate-900 font-sans leading-none tracking-tight">€{{ computedKpis.profit }}</p>
             <p class="text-[11px] font-bold text-emerald-600">↗ +24% <span class="text-slate-400 font-normal">vs. last month</span></p>
           </div>
-          <span class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-sm font-bold">📊</span>
+          <span class="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-sm font-bold group-hover:scale-105 transition-transform">📊</span>
         </div>
 
-        <div class="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-xs flex items-center justify-between">
+        <div 
+          @click="activeTxTab = 'Payments'"
+          class="bg-white p-3.5 sm:p-4 rounded-2xl border border-slate-200/80 shadow-xs flex items-center justify-between hover:shadow-md hover:border-emerald-300 transition-all cursor-pointer group"
+          title="Click to filter Paid entries"
+        >
           <div class="space-y-1">
-            <p class="text-xs font-medium text-slate-500">Profit Margin</p>
-            <p class="text-xl sm:text-2xl font-black text-slate-900 font-sans">{{ computedKpis.margin }}%</p>
+            <p class="text-xs font-semibold text-slate-500 group-hover:text-slate-800">Profit Margin</p>
+            <p class="text-2xl sm:text-[26px] font-extrabold text-slate-900 font-sans leading-none tracking-tight">{{ computedKpis.margin }}%</p>
             <p class="text-[11px] font-bold text-emerald-600">↗ +5% <span class="text-slate-400 font-normal">vs. last month</span></p>
           </div>
-          <span class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-sm font-black">%</span>
+          <span class="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-sm font-black group-hover:scale-105 transition-transform">%</span>
         </div>
       </div>
 
-      <!-- 3 Charts Row -->
-      <div class="grid grid-cols-1 md:grid-cols-12 gap-4">
-        <!-- Chart 1: Income vs Expenses (5 cols) -->
+      <!-- 3 Interactive Charts Row -->
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-3.5">
+        <!-- Chart 1: Income vs Expenses (5 cols - Thicker Bars + Instant Tooltip) -->
         <div class="md:col-span-5 bg-white p-4 rounded-2xl border border-slate-200/80 shadow-xs flex flex-col justify-between">
-          <div class="flex items-center justify-between mb-3">
+          <div class="flex items-center justify-between mb-2">
             <h3 class="text-xs font-black text-slate-900">Income vs Expenses</h3>
             <div class="flex items-center gap-3 text-[10px] font-semibold">
-              <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-xs bg-emerald-500"></span>Income</span>
-              <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-xs bg-rose-500"></span>Expenses</span>
+              <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-xs bg-emerald-500"></span>Income</span>
+              <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-xs bg-rose-500"></span>Expenses</span>
             </div>
           </div>
-          <div class="h-36 flex items-end justify-between gap-1.5 pt-4 border-b border-slate-100 px-1">
-            <div v-for="m in monthlyFlow" :key="m.month" class="flex-1 flex flex-col items-center h-full justify-end">
-              <div class="w-full flex items-end justify-center gap-0.5 h-full">
-                <div class="w-1.5 bg-emerald-500 rounded-t-xs" :style="{ height: m.income + '%' }"></div>
-                <div class="w-1.5 bg-rose-500 rounded-t-xs" :style="{ height: m.expense + '%' }"></div>
+          <div class="h-36 flex items-end justify-between gap-1 pt-6 border-b border-slate-100 px-1">
+            <div 
+              v-for="(m, idx) in monthlyFlow" 
+              :key="m.month" 
+              @mouseenter="hoveredFlowIdx = idx"
+              @mouseleave="hoveredFlowIdx = null"
+              class="flex-1 flex flex-col items-center h-full justify-end relative cursor-pointer"
+            >
+              <!-- Instant Tooltip -->
+              <div 
+                v-if="hoveredFlowIdx === idx"
+                class="absolute -top-11 left-1/2 -translate-x-1/2 z-30 bg-slate-900 text-white px-2.5 py-1 rounded-lg shadow-lg pointer-events-none whitespace-nowrap text-center"
+              >
+                <div class="text-[10px] font-black">{{ m.month }}: +€{{ Math.round(m.incomeEur).toLocaleString() }}</div>
+                <div class="text-[9px] text-rose-300 font-semibold">Exp: €{{ Math.round(m.expenseEur).toLocaleString() }}</div>
+                <div class="w-2 h-2 bg-slate-900 rotate-45 absolute -bottom-1 left-1/2 -translate-x-1/2"></div>
               </div>
-              <span class="text-[8px] text-slate-400 mt-1">{{ m.month }}</span>
+              <div class="w-full flex items-end justify-center gap-0.5 h-full rounded-t transition-colors" :class="hoveredFlowIdx === idx ? 'bg-slate-50' : ''">
+                <div class="w-2 bg-emerald-500 rounded-t transition-all duration-150" :class="hoveredFlowIdx === idx ? 'bg-emerald-600' : ''" :style="{ height: m.income + '%' }"></div>
+                <div class="w-2 bg-rose-500 rounded-t transition-all duration-150" :class="hoveredFlowIdx === idx ? 'bg-rose-600' : ''" :style="{ height: m.expense + '%' }"></div>
+              </div>
+              <span class="text-[9px] font-semibold mt-1" :class="hoveredFlowIdx === idx ? 'text-slate-900 font-bold' : 'text-slate-400'">{{ m.month }}</span>
             </div>
           </div>
         </div>
 
-        <!-- Chart 2: Revenue by Service Type Donut (4 cols) -->
+        <!-- Chart 2: Revenue by Service Type Donut (4 cols - Real Interactive Power BI Style) -->
         <div class="md:col-span-4 bg-white p-4 rounded-2xl border border-slate-200/80 shadow-xs flex flex-col justify-between">
-          <h3 class="text-xs font-black text-slate-900 mb-2">Revenue by Service Type</h3>
-          <div class="flex items-center justify-between gap-2 my-auto">
-            <div class="relative w-24 h-24 flex items-center justify-center flex-shrink-0">
-              <svg class="w-full h-full -rotate-90" viewBox="0 0 100 100">
+          <div class="flex items-center justify-between mb-1">
+            <h3 class="text-xs font-black text-slate-900">Revenue by Service Type</h3>
+            <span class="text-[10px] text-slate-400 font-medium">Hover slice</span>
+          </div>
+          <div class="flex items-center justify-between gap-3 my-auto">
+            <div class="relative w-28 h-28 flex items-center justify-center flex-shrink-0">
+              <svg class="w-full h-full -rotate-90 overflow-visible" viewBox="0 0 100 100">
                 <circle cx="50" cy="50" r="38" fill="none" stroke="#F1F5F9" stroke-width="14"/>
-                <circle cx="50" cy="50" r="38" fill="none" stroke="#EF4444" stroke-width="14" stroke-dasharray="100 238" stroke-dashoffset="0"/>
-                <circle cx="50" cy="50" r="38" fill="none" stroke="#3B82F6" stroke-width="14" stroke-dasharray="66 238" stroke-dashoffset="-100"/>
-                <circle cx="50" cy="50" r="38" fill="none" stroke="#10B981" stroke-width="14" stroke-dasharray="30 238" stroke-dashoffset="-166"/>
-                <circle cx="50" cy="50" r="38" fill="none" stroke="#F59E0B" stroke-width="14" stroke-dasharray="22 238" stroke-dashoffset="-196"/>
-                <circle cx="50" cy="50" r="38" fill="none" stroke="#8B5CF6" stroke-width="14" stroke-dasharray="20 238" stroke-dashoffset="-218"/>
+                <circle 
+                  v-for="cat in financeCategoryStats.items"
+                  :key="cat.key"
+                  cx="50" cy="50" r="38" fill="none" 
+                  :stroke="cat.color" 
+                  :stroke-width="hoveredFinCatKey === cat.key ? 18 : 14" 
+                  :stroke-dasharray="`${cat.strokeDash} 239`" 
+                  :stroke-dashoffset="`-${cat.offset}`"
+                  :opacity="hoveredFinCatKey && hoveredFinCatKey !== cat.key ? 0.3 : 1"
+                  @mouseenter="hoveredFinCatKey = cat.key"
+                  @mouseleave="hoveredFinCatKey = null"
+                  class="transition-all duration-150 cursor-pointer"
+                />
               </svg>
-              <div class="absolute inset-0 flex flex-col items-center justify-center">
-                <span class="text-xs font-black text-slate-900">€28.9K</span>
-                <span class="text-[8px] text-slate-400">Total</span>
+              <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none text-center px-2">
+                <template v-if="activeHoveredFinCat">
+                  <span class="text-xs font-black text-slate-900 leading-tight">€{{ Math.round(activeHoveredFinCat.revenue).toLocaleString() }}</span>
+                  <span class="text-[8px] font-bold leading-tight truncate max-w-[68px]" :style="{ color: activeHoveredFinCat.color }">{{ activeHoveredFinCat.label }}</span>
+                  <span class="text-[8px] font-bold text-slate-500">{{ activeHoveredFinCat.pct }}%</span>
+                </template>
+                <template v-else>
+                  <span class="text-xs font-black text-slate-900">€{{ financeCategoryStats.totalFormatted }}</span>
+                  <span class="text-[8px] text-slate-400 font-bold uppercase">Total</span>
+                </template>
               </div>
             </div>
-            <div class="space-y-1 text-[10px] flex-1">
-              <div class="flex items-center justify-between"><span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-red-500"></span>Local Move</span><span class="font-bold">42%</span></div>
-              <div class="flex items-center justify-between"><span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-blue-500"></span>National Move</span><span class="font-bold">28%</span></div>
-              <div class="flex items-center justify-between"><span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-emerald-500"></span>International</span><span class="font-bold">12%</span></div>
-              <div class="flex items-center justify-between"><span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-amber-500"></span>Packing Service</span><span class="font-bold">8%</span></div>
-              <div class="flex items-center justify-between"><span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-purple-500"></span>Storage</span><span class="font-bold">6%</span></div>
+            <div class="space-y-0.5 text-[10px] flex-1">
+              <div 
+                v-for="cat in financeCategoryStats.items" 
+                :key="cat.key"
+                @mouseenter="hoveredFinCatKey = cat.key"
+                @mouseleave="hoveredFinCatKey = null"
+                class="flex items-center justify-between px-1.5 py-0.5 rounded cursor-pointer transition-colors"
+                :class="hoveredFinCatKey === cat.key ? 'bg-slate-100' : 'hover:bg-slate-50'"
+              >
+                <span class="flex items-center gap-1.5 font-semibold text-slate-700 truncate">
+                  <span class="w-2 h-2 rounded-full flex-shrink-0" :style="{ backgroundColor: cat.color }"></span>
+                  <span class="truncate">{{ cat.label }}</span>
+                </span>
+                <span class="font-bold text-slate-900 ml-1 whitespace-nowrap">€{{ Math.round(cat.revenue).toLocaleString() }} ({{ cat.pct }}%)</span>
+              </div>
             </div>
           </div>
         </div>
 
-        <!-- Chart 3: Monthly Profit Line Chart (3 cols) -->
+        <!-- Chart 3: Monthly Profit Line Chart (3 cols - Interactive Real Data) -->
         <div class="md:col-span-3 bg-white p-4 rounded-2xl border border-slate-200/80 shadow-xs flex flex-col justify-between">
-          <h3 class="text-xs font-black text-slate-900">Monthly Profit</h3>
-          <div class="h-32 flex items-end pt-4">
-            <svg class="w-full h-full overflow-visible" viewBox="0 0 200 100" preserveAspectRatio="none">
+          <div class="flex items-center justify-between">
+            <h3 class="text-xs font-black text-slate-900">Monthly Profit</h3>
+            <span v-if="hoveredProfitIdx !== null" class="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded">
+              {{ profitMonthlyPoints[hoveredProfitIdx]?.month }}: €{{ Math.round(profitMonthlyPoints[hoveredProfitIdx]?.profitEur || 0).toLocaleString() }}
+            </span>
+          </div>
+          <div class="h-28 relative flex items-end pt-6">
+            <svg class="w-full h-full overflow-visible" viewBox="0 0 220 100" preserveAspectRatio="none">
               <defs>
                 <linearGradient id="profitGrad" x1="0" y1="0" x2="0" y2="1">
                   <stop offset="0%" stop-color="#10B981" stop-opacity="0.28"/>
                   <stop offset="100%" stop-color="#10B981" stop-opacity="0.02"/>
                 </linearGradient>
               </defs>
-              <path d="M0,75 L35,62 L70,65 L105,48 L140,35 L175,42 L200,25 L200,100 L0,100 Z" fill="url(#profitGrad)"/>
-              <polyline fill="none" stroke="#10B981" stroke-width="2.5" points="0,75 35,62 70,65 105,48 140,35 175,42 200,25"/>
-              <circle cx="0" cy="75" r="3" fill="#10B981"/>
-              <circle cx="35" cy="62" r="3" fill="#10B981"/>
-              <circle cx="70" cy="65" r="3" fill="#10B981"/>
-              <circle cx="105" cy="48" r="3" fill="#10B981"/>
-              <circle cx="140" cy="35" r="3" fill="#10B981"/>
-              <circle cx="175" cy="42" r="3" fill="#10B981"/>
-              <circle cx="200" cy="25" r="3" fill="#10B981"/>
+              <path :d="profitPathData.area" fill="url(#profitGrad)"/>
+              <path :d="profitPathData.line" fill="none" stroke="#10B981" stroke-width="2.5" stroke-linecap="round"/>
+              <circle 
+                v-for="(pt, idx) in profitMonthlyPoints" 
+                :key="pt.month" 
+                :cx="pt.x" :cy="pt.y" 
+                :r="hoveredProfitIdx === idx ? 5 : 3" 
+                :fill="hoveredProfitIdx === idx ? '#10B981' : '#fff'"
+                stroke="#10B981"
+                stroke-width="2"
+              />
             </svg>
+            <!-- Hover Columns -->
+            <div class="absolute inset-0 flex">
+              <div 
+                v-for="(pt, idx) in profitMonthlyPoints" 
+                :key="pt.month"
+                @mouseenter="hoveredProfitIdx = idx"
+                @mouseleave="hoveredProfitIdx = null"
+                class="flex-1 h-full relative cursor-pointer"
+              >
+                <div 
+                  v-if="hoveredProfitIdx === idx"
+                  class="absolute -top-9 left-1/2 -translate-x-1/2 z-30 bg-slate-900 text-white px-2 py-1 rounded-lg shadow-lg pointer-events-none whitespace-nowrap text-[10px] font-bold"
+                >
+                  {{ pt.month }}: €{{ Math.round(pt.profitEur).toLocaleString() }}
+                </div>
+              </div>
+            </div>
           </div>
           <div class="flex justify-between text-[8px] text-slate-400 pt-1">
             <span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>May</span><span>Jun</span>
@@ -179,13 +261,21 @@
           </button>
         </div>
 
-        <button
-          @click="exportTransactionsCsv"
-          class="flex items-center gap-1.5 px-3.5 py-2 bg-white hover:bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-700 shadow-2xs cursor-pointer"
-        >
-          <span>📥</span>
-          <span>Export CSV</span>
-        </button>
+        <div class="flex items-center gap-2">
+          <button
+            @click="newTx = { type: 'Expense', category: 'Fuel', customer: '', desc: '', amount: '', method: 'Bank Transfer' }; showAddTxModal = true"
+            class="flex items-center gap-1.5 px-3.5 py-2 bg-[#DC2626] hover:bg-red-700 text-white rounded-xl text-xs font-bold shadow-2xs cursor-pointer"
+          >
+            <span>+ Add Expense</span>
+          </button>
+          <button
+            @click="exportTransactionsCsv"
+            class="flex items-center gap-1.5 px-3.5 py-2 bg-white hover:bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-700 shadow-2xs cursor-pointer"
+          >
+            <span>📥</span>
+            <span>Export CSV</span>
+          </button>
+        </div>
       </div>
 
       <!-- Filter Bar -->
@@ -223,14 +313,14 @@
           <table class="w-full text-left text-xs border-collapse">
             <thead>
               <tr class="bg-slate-50/80 text-[10px] font-bold text-slate-400 uppercase tracking-wider border-b border-slate-200/80">
-                <th class="py-3 px-3 font-bold">DATE</th>
-                <th class="py-3 px-2.5 font-bold">TYPE</th>
-                <th class="py-3 px-2.5 font-bold">REF</th>
+                <th @click="toggleSort('date')" class="py-3 px-3 font-bold cursor-pointer hover:text-slate-900 select-none whitespace-nowrap">DATE {{ sortIcon('date') }}</th>
+                <th @click="toggleSort('type')" class="py-3 px-2.5 font-bold cursor-pointer hover:text-slate-900 select-none whitespace-nowrap">TYPE {{ sortIcon('type') }}</th>
+                <th @click="toggleSort('ref')" class="py-3 px-2.5 font-bold cursor-pointer hover:text-slate-900 select-none whitespace-nowrap">REF {{ sortIcon('ref') }}</th>
                 <th class="py-3 px-2.5 font-bold">DESCRIPTION</th>
-                <th class="py-3 px-2.5 font-bold">CUSTOMER / JOB</th>
-                <th class="py-3 px-2.5 font-bold">CATEGORY</th>
-                <th class="py-3 px-2.5 font-bold">AMOUNT</th>
-                <th class="py-3 px-2.5 font-bold">STATUS</th>
+                <th @click="toggleSort('customer')" class="py-3 px-2.5 font-bold cursor-pointer hover:text-slate-900 select-none whitespace-nowrap">CUSTOMER / JOB {{ sortIcon('customer') }}</th>
+                <th @click="toggleSort('category')" class="py-3 px-2.5 font-bold cursor-pointer hover:text-slate-900 select-none whitespace-nowrap">CATEGORY {{ sortIcon('category') }}</th>
+                <th @click="toggleSort('amount')" class="py-3 px-2.5 font-bold cursor-pointer hover:text-slate-900 select-none whitespace-nowrap">AMOUNT {{ sortIcon('amount') }}</th>
+                <th @click="toggleSort('status')" class="py-3 px-2.5 font-bold cursor-pointer hover:text-slate-900 select-none whitespace-nowrap">STATUS {{ sortIcon('status') }}</th>
                 <th class="py-3 px-2.5 font-bold">PAYMENT METHOD</th>
                 <th class="py-3 px-2 text-center font-bold">ACTIONS</th>
               </tr>
@@ -551,10 +641,15 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, watch, onMounted } from 'vue'
 import { jsPDF } from 'jspdf'
 import autoTable from 'jspdf-autotable'
 import { MOVEIT_LOGO_BASE64 } from '~/utils/pdfBranding'
+
+const { companySettings, fetchCompanySettings } = useAdminData()
+onMounted(() => {
+  fetchCompanySettings()
+})
 
 const props = defineProps({
   orders: { type: Array, default: () => [] },
@@ -630,30 +725,112 @@ const realTopProfitableJobs = computed(() => {
     })
 })
 
+const hoveredFlowIdx = ref(null)
+const hoveredFinCatKey = ref(null)
+const hoveredProfitIdx = ref(null)
+
 const monthlyFlow = computed(() => {
   const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
   const mapInc = Array(12).fill(0)
+  const mapExp = Array(12).fill(0)
   ;(props.orders || []).forEach(o => {
     const rev = Number(o.estValue || 450)
+    const exp = Number(o.jobCosts?.total || Math.round(rev * 0.35))
     const dStr = o.movingDate || o.raw?.form_data?.date || o.raw?.created_at
     if (dStr) {
       const d = new Date(dStr)
       if (!isNaN(d.getTime())) {
         mapInc[d.getMonth()] += rev
+        mapExp[d.getMonth()] += exp
       }
     }
   })
   const maxInc = Math.max(...mapInc, 5000)
   return months.map((m, idx) => {
     const inc = mapInc[idx]
+    const exp = mapExp[idx]
     const incPct = inc > 0 ? Math.min(95, Math.max(15, Math.round((inc / maxInc) * 85))) : 8
-    const expPct = Math.round(incPct * 0.45)
+    const expPct = exp > 0 ? Math.min(85, Math.max(10, Math.round((exp / maxInc) * 85))) : 4
     return {
       month: m,
       income: incPct,
-      expense: expPct
+      expense: expPct,
+      incomeEur: inc,
+      expenseEur: exp,
+      profitEur: Math.max(0, inc - exp)
     }
   })
+})
+
+const financeCategoryStats = computed(() => {
+  const cats = {
+    local: { label: 'Local Move', count: 0, revenue: 0, color: '#EF4444', pct: 0 },
+    national: { label: 'National Move', count: 0, revenue: 0, color: '#3B82F6', pct: 0 },
+    international: { label: 'International', count: 0, revenue: 0, color: '#10B981', pct: 0 },
+    business: { label: 'Business Move', count: 0, revenue: 0, color: '#F59E0B', pct: 0 },
+    student: { label: 'Student Move', count: 0, revenue: 0, color: '#8B5CF6', pct: 0 }
+  }
+  let totalRev = 0
+  ;(props.orders || []).forEach(o => {
+    const rev = Number(o.estValue || 0)
+    totalRev += rev
+    const from = String(o.fromFull || o.raw?.form_data?.from || '').toLowerCase()
+    const to = String(o.toFull || o.raw?.form_data?.to || '').toLowerCase()
+    const pkg = String(o.package || o.raw?.form_data?.package || '').toLowerCase()
+    const name = String(o.customer || '').toLowerCase()
+    if (pkg.includes('business') || pkg.includes('office') || name.includes('bv')) {
+      cats.business.count++; cats.business.revenue += rev
+    } else if (pkg.includes('student') || name.includes('student') || rev < 350) {
+      cats.student.count++; cats.student.revenue += rev
+    } else if (from.includes('belgi') || to.includes('belgi') || from.includes('germany') || to.includes('germany')) {
+      cats.international.count++; cats.international.revenue += rev
+    } else if ((from.includes('maastricht') && to.includes('maastricht')) || (from && from === to)) {
+      cats.local.count++; cats.local.revenue += rev
+    } else {
+      cats.national.count++; cats.national.revenue += rev
+    }
+  })
+  const safeTotal = totalRev > 0 ? totalRev : 1
+  const circ = 238.76
+  let cum = 0
+  const items = ['local', 'national', 'international', 'business', 'student'].map(key => {
+    const item = cats[key]
+    const pct = Math.round((item.revenue / safeTotal) * 100)
+    const strokeDash = Math.round((pct / 100) * circ)
+    const offset = cum
+    cum += strokeDash
+    return { key, ...item, pct, strokeDash, offset }
+  })
+  return { items, totalFormatted: (safeTotal / 1000).toFixed(1) + 'K' }
+})
+
+const activeHoveredFinCat = computed(() => {
+  if (!hoveredFinCatKey.value) return null
+  return financeCategoryStats.value.items.find(c => c.key === hoveredFinCatKey.value) || null
+})
+
+const profitMonthlyPoints = computed(() => {
+  const slice = monthlyFlow.value.slice(0, 7)
+  const maxProf = Math.max(...slice.map(m => m.profitEur), 1000)
+  return slice.map((m, idx) => {
+    const x = 10 + idx * 33
+    const y = Math.max(12, Math.min(88, 90 - Math.round((m.profitEur / maxProf) * 74)))
+    return { month: m.month, x, y, profitEur: m.profitEur }
+  })
+})
+
+const profitPathData = computed(() => {
+  const pts = profitMonthlyPoints.value
+  if (!pts.length) return { line: '', area: '' }
+  let line = `M ${pts[0].x},${pts[0].y}`
+  for (let i = 1; i < pts.length; i++) {
+    const prev = pts[i - 1]
+    const curr = pts[i]
+    const cx = (prev.x + curr.x) / 2
+    line += ` C ${cx},${prev.y} ${cx},${curr.y} ${curr.x},${curr.y}`
+  }
+  const area = `${line} L ${pts[pts.length - 1].x},100 L ${pts[0].x},100 Z`
+  return { line, area }
 })
 
 const outstandingInvoices = computed(() => {
@@ -687,8 +864,21 @@ const transactions = computed(() => {
   return [...manualTransactions.value, ...fromOrders]
 })
 
+const sortKey = ref('date')
+const sortDir = ref('desc')
+const toggleSort = (key) => {
+  if (sortKey.value === key) {
+    sortDir.value = sortDir.value === 'asc' ? 'desc' : 'asc'
+  } else {
+    sortKey.value = key
+    sortDir.value = (key === 'amount' || key === 'date') ? 'desc' : 'asc'
+  }
+}
+const sortIcon = (key) => (sortKey.value !== key ? '↕' : (sortDir.value === 'asc' ? '↑' : '↓'))
+const parseTxAmount = (amt) => Number(String(amt || '0').replace(/[^0-9.-]/g, '')) || 0
+
 const filteredTransactions = computed(() => {
-  return transactions.value.filter(t => {
+  const list = transactions.value.filter(t => {
     if (activeTxTab.value === 'Invoices' && t.type !== 'Income') return false
     if (activeTxTab.value === 'Expenses' && t.type !== 'Expense') return false
     if (activeTxTab.value === 'Payroll' && t.category !== 'Salaries') return false
@@ -703,13 +893,25 @@ const filteredTransactions = computed(() => {
     }
     return true
   })
+
+  const key = sortKey.value
+  const dir = sortDir.value === 'asc' ? 1 : -1
+  return [...list].sort((a, b) => {
+    if (key === 'amount') return (parseTxAmount(a.amount) - parseTxAmount(b.amount)) * dir
+    if (key === 'date') {
+      const tsA = new Date(a.date || 0).getTime() || 0
+      const tsB = new Date(b.date || 0).getTime() || 0
+      return (tsA - tsB) * dir
+    }
+    return String(a[key] || '').toLowerCase().localeCompare(String(b[key] || '').toLowerCase()) * dir
+  })
 })
 
 const toggleTxPaymentStatus = (tx) => {
   tx.status = tx.status === 'Paid' ? 'Pending' : 'Paid'
 }
 
-const saveNewTransaction = () => {
+const saveNewTransaction = async () => {
   if (!newTx.value.customer || !newTx.value.amount) return
   const prefix = newTx.value.type === 'Income' ? 'INV-2026-' : 'EXP-2026-'
   const num = Math.floor(1000 + Math.random() * 9000)
@@ -724,9 +926,28 @@ const saveNewTransaction = () => {
     status: 'Paid',
     method: newTx.value.method
   })
+  try {
+    const updatedSettings = {
+      ...(companySettings.value || {}),
+      manualTransactions: manualTransactions.value
+    }
+    await $fetch('/api/admin/settings', {
+      method: 'POST',
+      body: updatedSettings
+    })
+    companySettings.value = updatedSettings
+  } catch (err) {
+    console.warn('Could not persist transaction to settings:', err)
+  }
   showAddTxModal.value = false
   newTx.value = { type: 'Income', category: 'Moving Service', customer: '', desc: '', amount: '', method: 'Bank Transfer' }
 }
+
+watch(() => companySettings.value?.manualTransactions, (saved) => {
+  if (Array.isArray(saved) && saved.length > 0 && manualTransactions.value.length === 0) {
+    manualTransactions.value = [...saved]
+  }
+}, { immediate: true })
 
 const loadSampleHistoricalBatch = () => {
   backfillRawText.value = [

@@ -35,29 +35,47 @@
         </div>
       </div>
 
-      <!-- 5 KPI Cards Row -->
+      <!-- 5 KPI Cards Row (Compact & Clickable Filters) -->
       <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
-        <div class="bg-white p-3.5 rounded-2xl border border-slate-200/80 shadow-xs flex items-center justify-between">
+        <div 
+          @click="statusFilter = 'all'"
+          :class="[
+            'bg-white p-3.5 rounded-2xl border shadow-xs flex items-center justify-between cursor-pointer transition-all hover:shadow-md',
+            statusFilter === 'all' ? 'border-blue-300 ring-1 ring-blue-200' : 'border-slate-200/80'
+          ]"
+        >
           <div class="space-y-1">
-            <p class="text-[11px] font-medium text-slate-500">Total Vehicles</p>
-            <p class="text-2xl font-black text-slate-900 font-sans">5</p>
+            <p class="text-[11px] font-semibold text-slate-500">Total Vehicles</p>
+            <p class="text-2xl font-extrabold text-slate-900 font-sans leading-none">5</p>
           </div>
           <span class="w-9 h-9 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-sm">🚚</span>
         </div>
 
-        <div class="bg-white p-3.5 rounded-2xl border border-slate-200/80 shadow-xs flex items-center justify-between">
+        <div 
+          @click="statusFilter = 'Available'"
+          :class="[
+            'bg-white p-3.5 rounded-2xl border shadow-xs flex items-center justify-between cursor-pointer transition-all hover:shadow-md',
+            statusFilter === 'Available' ? 'border-emerald-400 ring-1 ring-emerald-200' : 'border-slate-200/80'
+          ]"
+        >
           <div class="space-y-1">
-            <p class="text-[11px] font-medium text-slate-500">Available Now</p>
-            <p class="text-2xl font-black text-slate-900 font-sans">3</p>
+            <p class="text-[11px] font-semibold text-slate-500">Available Now</p>
+            <p class="text-2xl font-extrabold text-slate-900 font-sans leading-none">3</p>
             <p class="text-[10px] font-bold text-emerald-600">● 60%</p>
           </div>
           <span class="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-sm">✓</span>
         </div>
 
-        <div class="bg-white p-3.5 rounded-2xl border border-slate-200/80 shadow-xs flex items-center justify-between">
+        <div 
+          @click="statusFilter = 'In Use'"
+          :class="[
+            'bg-white p-3.5 rounded-2xl border shadow-xs flex items-center justify-between cursor-pointer transition-all hover:shadow-md',
+            statusFilter === 'In Use' ? 'border-blue-400 ring-1 ring-blue-200' : 'border-slate-200/80'
+          ]"
+        >
           <div class="space-y-1">
-            <p class="text-[11px] font-medium text-slate-500">In Use</p>
-            <p class="text-2xl font-black text-slate-900 font-sans">2</p>
+            <p class="text-[11px] font-semibold text-slate-500">In Use</p>
+            <p class="text-2xl font-extrabold text-slate-900 font-sans leading-none">2</p>
             <p class="text-[10px] font-bold text-blue-600">● 40%</p>
           </div>
           <span class="w-9 h-9 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-sm">🚐</span>
@@ -65,8 +83,8 @@
 
         <div class="bg-white p-3.5 rounded-2xl border border-slate-200/80 shadow-xs flex items-center justify-between">
           <div class="space-y-1">
-            <p class="text-[11px] font-medium text-slate-500">In Maintenance</p>
-            <p class="text-2xl font-black text-slate-900 font-sans">0</p>
+            <p class="text-[11px] font-semibold text-slate-500">In Maintenance</p>
+            <p class="text-2xl font-extrabold text-slate-900 font-sans leading-none">0</p>
             <p class="text-[10px] font-bold text-rose-600">● 0%</p>
           </div>
           <span class="w-9 h-9 rounded-xl bg-rose-50 text-rose-500 flex items-center justify-center text-sm">🔧</span>
@@ -74,8 +92,8 @@
 
         <div class="bg-white p-3.5 rounded-2xl border border-slate-200/80 shadow-xs flex items-center justify-between">
           <div class="space-y-1">
-            <p class="text-[11px] font-medium text-slate-500">Total Monthly Cost</p>
-            <p class="text-2xl font-black text-slate-900 font-sans">€2,450</p>
+            <p class="text-[11px] font-semibold text-slate-500">Total Monthly Cost</p>
+            <p class="text-2xl font-extrabold text-slate-900 font-sans leading-none">€2,450</p>
             <p class="text-[10px] font-bold text-emerald-600">↗ -8% <span class="text-slate-400 font-normal">vs. last month</span></p>
           </div>
           <span class="w-9 h-9 rounded-xl bg-amber-50 text-amber-500 flex items-center justify-center text-sm">🪙</span>
@@ -154,7 +172,6 @@
               <tr 
                 v-for="v in filteredVehicles" 
                 :key="v.plate"
-                @mouseenter="selectedVehicle = v"
                 @click="selectedVehicle = v; isDrawerOpen = true"
                 :class="[
                   'transition-colors cursor-pointer group',

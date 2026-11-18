@@ -40,13 +40,18 @@
             Today
           </button>
           <div class="flex items-center bg-white border border-slate-200 rounded-xl shadow-2xs">
-            <button @click="prevPeriod" class="px-2.5 py-2 text-slate-500 hover:text-slate-900 cursor-pointer">‹</button>
-            <button @click="nextPeriod" class="px-2.5 py-2 text-slate-500 hover:text-slate-900 border-l border-slate-200 cursor-pointer">›</button>
+            <button @click="prevPeriod" class="px-2.5 py-2 text-slate-500 hover:text-slate-900 cursor-pointer" title="Previous">‹</button>
+            <button @click="nextPeriod" class="px-2.5 py-2 text-slate-500 hover:text-slate-900 border-l border-slate-200 cursor-pointer" title="Next">›</button>
           </div>
-          <div class="px-3.5 py-2 bg-white border border-slate-200 rounded-xl text-xs font-black text-slate-900 flex items-center gap-2 shadow-2xs">
+          <label class="px-3.5 py-1.5 bg-white border border-slate-200 rounded-xl text-xs font-black text-slate-900 flex items-center gap-2 shadow-2xs cursor-pointer hover:border-slate-300">
             <span>{{ currentMonthLabel }}</span>
-            <span class="text-slate-400 text-[10px]">▼</span>
-          </div>
+            <input
+              v-model="currentMonthInput"
+              type="month"
+              class="w-5 h-5 opacity-70 cursor-pointer bg-transparent text-xs focus:outline-none"
+              title="Jump to Month & Year"
+            />
+          </label>
         </div>
 
         <div class="flex flex-wrap items-center gap-2">
@@ -318,13 +323,18 @@
         </div>
         <div class="grid grid-cols-7 gap-2 pt-3">
           <div
-            v-for="n in 30"
+            v-for="blank in leadingEmptyDays"
+            :key="'blank-' + blank"
+            class="min-h-[92px] p-2 rounded-xl bg-slate-50/50 border border-slate-100/60"
+          ></div>
+          <div
+            v-for="n in daysInCurrentMonth"
             :key="n"
             @click="selectMonthDay(n)"
             class="min-h-[92px] p-2 rounded-xl border border-slate-100 hover:border-blue-300 hover:bg-slate-50/70 text-xs transition-all cursor-pointer"
           >
             <div class="flex items-center justify-between">
-              <span class="font-bold text-slate-700">{{ n }} Nov</span>
+              <span class="font-bold text-slate-700">{{ n }} {{ currentMonthShort }}</span>
               <span v-if="getJobsForMonthDay(n).length" class="text-[9px] font-black px-1.5 py-0.2 rounded bg-slate-100 text-slate-600">
                 {{ getJobsForMonthDay(n).length }}
               </span>
@@ -350,10 +360,10 @@
       <!-- 1. Mini Month Calendar Card -->
       <div class="bg-white rounded-2xl border border-slate-200/80 shadow-xs p-4 space-y-3">
         <div class="flex items-center justify-between">
-          <span class="text-xs font-black text-slate-900">‹ {{ currentMonthLabel }}</span>
+          <span class="text-xs font-black text-slate-900">{{ currentMonthLabel }}</span>
           <div class="flex items-center gap-1">
-            <button @click="prevPeriod" class="w-6 h-6 rounded-lg border border-slate-200 text-xs text-slate-500 hover:bg-slate-50 cursor-pointer">‹</button>
-            <button @click="nextPeriod" class="w-6 h-6 rounded-lg border border-slate-200 text-xs text-slate-500 hover:bg-slate-50 cursor-pointer">›</button>
+            <button @click="prevMonth" class="w-6 h-6 rounded-lg border border-slate-200 text-xs text-slate-500 hover:bg-slate-50 cursor-pointer" title="Previous Month">‹</button>
+            <button @click="nextMonth" class="w-6 h-6 rounded-lg border border-slate-200 text-xs text-slate-500 hover:bg-slate-50 cursor-pointer" title="Next Month">›</button>
             <button 
               @click="isDrawerOpen = false" 
               class="w-6 h-6 rounded-lg border border-slate-200 text-xs text-slate-400 hover:text-slate-700 hover:bg-slate-50 cursor-pointer flex items-center justify-center ml-1"
@@ -367,9 +377,9 @@
           <div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div><div>Sun</div>
         </div>
         <div class="grid grid-cols-7 gap-1 text-center text-xs font-semibold">
-          <span v-for="d in [27,28,29,30,31]" :key="'p'+d" class="py-1 text-slate-300">{{ d }}</span>
+          <span v-for="d in prevMonthTrailingDays" :key="'p'+d" class="py-1 text-slate-300">{{ d }}</span>
           <span
-            v-for="d in 30"
+            v-for="d in daysInCurrentMonth"
             :key="d"
             @click="selectMiniCalendarDay(d)"
             :class="[
@@ -676,9 +686,48 @@ const teamFilter = ref('all')
 const vanFilter = ref('all')
 const isDrawerOpen = ref(true)
 const activeResourceTab = ref('teams')
-const currentMonthLabel = ref('November 2025')
-const activeMiniDay = ref(3)
-const selectedDayDate = ref('3 Nov')
+const currentMonthDate = ref(new Date())
+const currentMonthLabel = computed(() => currentMonthDate.value.toLocaleString('en-US', { month: 'long', year: 'numeric' }))
+const currentMonthShort = computed(() => currentMonthDate.value.toLocaleString('en-US', { month: 'short' }))
+const currentMonthInput = computed({
+  get: () => {
+    const y = currentMonthDate.value.getFullYear()
+    const m = String(currentMonthDate.value.getMonth() + 1).padStart(2, '0')
+    return `${y}-${m}`
+  },
+  set: (val) => {
+    if (!val) return
+    const [y, m] = val.split('-').map(Number)
+    if (y && m) {
+      currentMonthDate.value = new Date(y, m - 1, 1)
+    }
+  }
+})
+const daysInCurrentMonth = computed(() => {
+  const y = currentMonthDate.value.getFullYear()
+  const m = currentMonthDate.value.getMonth()
+  return new Date(y, m + 1, 0).getDate()
+})
+const leadingEmptyDays = computed(() => {
+  const y = currentMonthDate.value.getFullYear()
+  const m = currentMonthDate.value.getMonth()
+  const firstDay = new Date(y, m, 1).getDay()
+  return (firstDay + 6) % 7 // Monday = 0
+})
+const prevMonthTrailingDays = computed(() => {
+  const count = leadingEmptyDays.value
+  if (count === 0) return []
+  const y = currentMonthDate.value.getFullYear()
+  const m = currentMonthDate.value.getMonth()
+  const prevLastDay = new Date(y, m, 0).getDate()
+  const arr = []
+  for (let i = count - 1; i >= 0; i--) {
+    arr.push(prevLastDay - i)
+  }
+  return arr
+})
+const activeMiniDay = ref(new Date().getDate())
+const selectedDayDate = ref(`${new Date().getDate()} ${new Date().toLocaleString('en-US', { month: 'short' })}`)
 
 const showScheduleModal = ref(false)
 const showConflictModal = ref(false)
@@ -895,8 +944,44 @@ const allScheduledFlat = computed(() => {
 })
 
 const getJobsForMonthDay = (dayNum) => {
-  const found = weekDays.value.find(d => d.dayNum === dayNum)
-  return found ? found.jobs.filter(j => j.ref !== 'Unavailable') : []
+  const y = currentMonthDate.value.getFullYear()
+  const m = currentMonthDate.value.getMonth() + 1
+  const isoTarget = `${y}-${String(m).padStart(2, '0')}-${String(dayNum).padStart(2, '0')}`
+  const monthShortLower = currentMonthShort.value.toLowerCase()
+
+  const realMatches = (props.orders || [])
+    .filter(o => {
+      if (o.operationalStatus === 'Cancelled') return false
+      const oDate = String(o.movingDate || o.raw?.form_data?.date || '')
+      if (!oDate) return false
+      if (oDate.includes(isoTarget)) return true
+      // Also match short date format like "14 Nov" if year matches or unspecified
+      const shortMatch = String(o.shortDate || '').toLowerCase()
+      return shortMatch === `${dayNum} ${monthShortLower}`
+    })
+    .map((o, idx) => ({
+      id: o.id,
+      ref: o.ref,
+      customer: o.customer,
+      route: o.route,
+      time: o.time || (idx === 0 ? '08:30 – 12:00' : '13:00 – 16:30'),
+      van: o.vehicle || 'Van 1',
+      team: o.team ? `Team ${o.team}` : 'Team 1',
+      status: o.operationalStatus || 'Confirmed',
+      cardClass: o.operationalStatus === 'In Progress'
+        ? 'bg-blue-50/90 border-l-blue-600'
+        : (o.operationalStatus === 'Completed' ? 'bg-emerald-50/90 border-l-emerald-500' : 'bg-amber-50/90 border-l-amber-500'),
+      raw: o
+    }))
+
+  if (realMatches.length > 0) return realMatches
+
+  const now = new Date()
+  if (y === now.getFullYear() && m === now.getMonth() + 1) {
+    const found = weekDays.value.find(d => d.dayNum === dayNum)
+    return found ? found.jobs.filter(j => j.ref !== 'Unavailable') : []
+  }
+  return []
 }
 
 const selectDayView = (day) => {
@@ -906,35 +991,54 @@ const selectDayView = (day) => {
 
 const selectMonthDay = (dayNum) => {
   activeMiniDay.value = dayNum
-  const found = weekDays.value.find(d => d.dayNum === dayNum)
-  if (found) {
-    selectedDayDate.value = found.date
-    viewMode.value = 'Day'
-  }
+  selectedDayDate.value = `${dayNum} ${currentMonthShort.value}`
+  viewMode.value = 'Day'
 }
 
 const selectMiniCalendarDay = (dayNum) => {
   activeMiniDay.value = dayNum
-  const found = weekDays.value.find(d => d.dayNum === dayNum)
-  if (found) {
-    selectedDayDate.value = found.date
-  }
+  selectedDayDate.value = `${dayNum} ${currentMonthShort.value}`
 }
 
 const resetToToday = () => {
-  activeMiniDay.value = 3
-  selectedDayDate.value = '3 Nov'
-  currentMonthLabel.value = 'November 2025'
+  const now = new Date()
+  currentMonthDate.value = now
+  activeMiniDay.value = now.getDate()
+  selectedDayDate.value = `${now.getDate()} ${now.toLocaleString('en-US', { month: 'short' })}`
+}
+
+const prevMonth = () => {
+  const d = new Date(currentMonthDate.value)
+  d.setMonth(d.getMonth() - 1)
+  currentMonthDate.value = d
+}
+
+const nextMonth = () => {
+  const d = new Date(currentMonthDate.value)
+  d.setMonth(d.getMonth() + 1)
+  currentMonthDate.value = d
 }
 
 const prevPeriod = () => {
-  const idx = weekDays.value.findIndex(d => d.date === selectedDayDate.value)
-  if (idx > 0) selectedDayDate.value = weekDays.value[idx - 1].date
+  if (viewMode.value === 'Day') {
+    const idx = weekDays.value.findIndex(d => d.date === selectedDayDate.value)
+    if (idx > 0) {
+      selectedDayDate.value = weekDays.value[idx - 1].date
+      return
+    }
+  }
+  prevMonth()
 }
 
 const nextPeriod = () => {
-  const idx = weekDays.value.findIndex(d => d.date === selectedDayDate.value)
-  if (idx < weekDays.value.length - 1) selectedDayDate.value = weekDays.value[idx + 1].date
+  if (viewMode.value === 'Day') {
+    const idx = weekDays.value.findIndex(d => d.date === selectedDayDate.value)
+    if (idx >= 0 && idx < weekDays.value.length - 1) {
+      selectedDayDate.value = weekDays.value[idx + 1].date
+      return
+    }
+  }
+  nextMonth()
 }
 
 // Click on a Calendar Job Card -> Open MoveDetailView

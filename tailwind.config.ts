@@ -7,6 +7,7 @@ export default <Partial<Config>>{
       fontFamily: {
         sans: ['Montserrat Alternates', 'sans-serif'],
         display: ['Montserrat Alternates', 'sans-serif'],
+        inter: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
       },
       colors: {
         brand: {

@@ -150,7 +150,16 @@
                 <span class="w-5 h-5 rounded-full bg-orange-50 text-orange-600 flex items-center justify-center text-[10px]">🛡️</span>
                 <span class="font-medium">Estimated Value</span>
               </div>
-              <span class="font-black text-slate-900 font-sans">€{{ revenueExVat.toLocaleString() }} excl. VAT</span>
+              <div class="flex items-center gap-2">
+                <span class="font-black text-slate-900 font-sans">€{{ revenueExVat.toLocaleString() }} excl. VAT</span>
+                <button
+                  @click="openEditFinancials"
+                  class="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-red-50 text-slate-600 hover:text-red-600 text-[10px] font-bold transition-colors cursor-pointer"
+                  title="Edit Revenue & Job Costs"
+                >
+                  ✎ Edit
+                </button>
+              </div>
             </div>
 
             <!-- Coordinator -->
@@ -163,54 +172,85 @@
             </div>
           </div>
 
-          <!-- Middle Column: Photo Gallery Grid (Real Customer Photos & Upload) -->
+          <!-- Middle Column: Photo Gallery Grid (100% Real Customer Photos & Manual Upload) -->
           <div class="lg:col-span-3 space-y-2">
-            <!-- Large Top Photo -->
-            <div class="w-full h-28 rounded-2xl overflow-hidden bg-slate-100 shadow-xs border border-slate-200/60 relative group">
-              <img 
-                :src="customerRealImages[0]" 
-                :alt="activeJob.customer" 
-                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 cursor-pointer"
-                @click="openLightbox(customerRealImages[0])"
-              />
-              <span v-if="hasRealUploads" class="absolute top-2 left-2 bg-emerald-600 text-white text-[9px] font-bold px-2 py-0.5 rounded shadow-xs">
-                Real Client Photos ({{ customerRealImages.length }})
-              </span>
-              <span v-else class="absolute top-2 left-2 bg-slate-900/80 backdrop-blur-xs text-white text-[9px] font-bold px-2 py-0.5 rounded shadow-xs">
-                Verified Move Photos
-              </span>
-            </div>
+            <input 
+              ref="photoUploadInput" 
+              type="file" 
+              accept="image/*" 
+              multiple 
+              class="hidden" 
+              @change="handleManualPhotoUpload" 
+            />
 
-            <!-- Bottom Row: 3 Thumbnails & Lightbox trigger -->
-            <div class="grid grid-cols-3 gap-2">
-              <div 
-                class="aspect-square rounded-xl overflow-hidden bg-slate-100 shadow-xs border border-slate-200/60 cursor-pointer hover:border-red-400 transition-colors" 
-                @click="openLightbox(customerRealImages[1] || customerRealImages[0])"
-              >
+            <template v-if="customerRealImages.length > 0">
+              <!-- Large Top Photo -->
+              <div class="w-full h-28 rounded-2xl overflow-hidden bg-slate-100 shadow-xs border border-slate-200/60 relative group">
                 <img 
-                  :src="customerRealImages[1] || customerRealImages[0]" 
-                  alt="Photo 2" 
-                  class="w-full h-full object-cover hover:scale-105 transition-transform duration-300" 
+                  :src="customerRealImages[0]" 
+                  :alt="activeJob.customer" 
+                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 cursor-pointer"
+                  @click="openLightbox(customerRealImages[0])"
                 />
+                <span class="absolute top-2 left-2 bg-emerald-600 text-white text-[9px] font-bold px-2 py-0.5 rounded shadow-xs">
+                  Client Photos ({{ customerRealImages.length }})
+                </span>
+                <button 
+                  @click.stop="triggerPhotoUpload"
+                  class="absolute top-2 right-2 bg-slate-900/80 hover:bg-slate-900 text-white text-[9px] font-bold px-2 py-0.5 rounded shadow-xs cursor-pointer"
+                  title="Upload additional move photos"
+                >
+                  + Upload
+                </button>
               </div>
-              <div 
-                class="aspect-square rounded-xl overflow-hidden bg-slate-100 shadow-xs border border-slate-200/60 cursor-pointer hover:border-red-400 transition-colors" 
-                @click="openLightbox(customerRealImages[2] || customerRealImages[0])"
+
+              <!-- Bottom Row: Real Thumbnails Only (No Fake Duplicates) -->
+              <div class="grid grid-cols-3 gap-2">
+                <div 
+                  v-for="(imgUrl, idx) in customerRealImages.slice(1, 3)"
+                  :key="idx"
+                  class="aspect-square rounded-xl overflow-hidden bg-slate-100 shadow-xs border border-slate-200/60 cursor-pointer hover:border-red-400 transition-colors" 
+                  @click="openLightbox(imgUrl)"
+                >
+                  <img :src="imgUrl" :alt="`Photo ${idx + 2}`" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300" />
+                </div>
+                <div 
+                  v-if="customerRealImages.length > 3"
+                  @click="openLightbox(customerRealImages[3])" 
+                  class="aspect-square rounded-xl bg-[#334155] hover:bg-slate-700 text-white flex flex-col items-center justify-center font-black text-sm shadow-xs cursor-pointer transition-colors" 
+                  title="View all photos in gallery"
+                >
+                  <span>+{{ customerRealImages.length - 3 }}</span>
+                  <span class="text-[9px] font-normal opacity-75">more</span>
+                </div>
+                <button 
+                  v-else
+                  @click="triggerPhotoUpload"
+                  class="aspect-square rounded-xl border border-dashed border-slate-300 hover:border-red-400 bg-slate-50 hover:bg-red-50/40 text-slate-500 hover:text-red-600 flex flex-col items-center justify-center text-[10px] font-bold cursor-pointer transition-colors"
+                  title="Upload another photo"
+                >
+                  <span class="text-base leading-none">+</span>
+                  <span>Add</span>
+                </button>
+              </div>
+            </template>
+
+            <!-- Empty State when order has 0 photos -->
+            <div 
+              v-else
+              class="h-[190px] rounded-2xl border-2 border-dashed border-slate-200 bg-slate-50/70 flex flex-col items-center justify-center p-4 text-center space-y-2"
+            >
+              <div class="w-10 h-10 rounded-full bg-slate-100 text-slate-400 flex items-center justify-center text-lg">📷</div>
+              <div>
+                <p class="text-xs font-bold text-slate-700">No Customer Photos Yet</p>
+                <p class="text-[10px] text-slate-400 mt-0.5">WhatsApp & form photos for this move appear here</p>
+              </div>
+              <button 
+                @click="triggerPhotoUpload"
+                class="px-3.5 py-1.5 bg-[#DC2626] hover:bg-red-700 text-white text-[11px] font-bold rounded-xl shadow-xs cursor-pointer transition-colors"
               >
-                <img 
-                  :src="customerRealImages[2] || customerRealImages[0]" 
-                  alt="Photo 3" 
-                  class="w-full h-full object-cover hover:scale-105 transition-transform duration-300" 
-                />
-              </div>
-              <div 
-                @click="openLightbox(customerRealImages[3] || customerRealImages[0])" 
-                class="aspect-square rounded-xl bg-[#334155] hover:bg-slate-700 text-white flex flex-col items-center justify-center font-black text-sm shadow-xs cursor-pointer transition-colors" 
-                title="View all photos in gallery"
-              >
-                <span>+{{ Math.max(1, customerRealImages.length - 2) }}</span>
-                <span class="text-[9px] font-normal opacity-75">photos</span>
-              </div>
+                + Upload Photos Manually
+              </button>
             </div>
           </div>
 
@@ -218,34 +258,46 @@
           <div class="lg:col-span-4 relative rounded-2xl overflow-hidden border border-slate-200 shadow-xs bg-slate-900 h-[190px] flex flex-col justify-between group">
             <!-- Dynamic Interactive Map Iframe -->
             <iframe 
-              :key="activeJob.id + activeJob.fromFull + activeJob.toFull"
-              :src="`https://maps.google.com/maps?q=${encodeURIComponent((activeJob.fromFull || 'Maastricht') + ' to ' + (activeJob.toFull || 'Paris'))}&t=&z=7&ie=UTF8&iwloc=&output=embed`" 
-              class="absolute inset-0 w-full h-full border-0 opacity-80 group-hover:opacity-100 transition-opacity pointer-events-auto"
+              :key="activeJob.id + activeJob.fromFull + activeJob.toFull + includeGarageRoundTrip"
+              :src="routeMetrics.embedMapUrl" 
+              class="absolute inset-0 w-full h-full border-0 opacity-85 group-hover:opacity-100 transition-opacity pointer-events-auto"
               loading="lazy"
             ></iframe>
 
             <!-- Route Floating Header Badge -->
-            <div class="relative z-10 m-2 flex items-center justify-between pointer-events-none">
-              <span class="px-2.5 py-1 bg-white/95 backdrop-blur-md text-slate-900 text-[10px] font-bold rounded-lg shadow-sm border border-slate-200/80 truncate max-w-[210px] flex items-center gap-1.5">
-                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
-                <span>{{ activeJob.route || 'Maastricht ➔ Paris' }}</span>
+            <div class="relative z-10 m-2 flex items-center justify-between gap-1.5 pointer-events-none">
+              <span class="px-2 py-1 bg-white/95 backdrop-blur-md text-slate-900 text-[10px] font-bold rounded-lg shadow-sm border border-slate-200/80 truncate max-w-[180px] flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping flex-shrink-0"></span>
+                <span class="truncate">{{ activeJob.route || 'Pickup → Delivery' }}</span>
               </span>
-              <span class="px-2 py-0.5 bg-slate-900/90 text-white text-[10px] font-bold rounded-md shadow-xs">
-                ~{{ routeMetrics.distanceKm }} km • {{ routeMetrics.driveText }}
+              <span class="px-2 py-1 bg-slate-900/90 text-white text-[10px] font-bold rounded-lg shadow-xs whitespace-nowrap">
+                {{ routeMetrics.isCalculating ? 'Calculating...' : `${routeMetrics.distanceKm} km • ${routeMetrics.driveText}` }}
               </span>
             </div>
 
-            <!-- Open Real Google Maps Route Button -->
-            <div class="relative z-10 p-2 bg-gradient-to-t from-slate-950/80 via-slate-900/40 to-transparent">
+            <!-- Bottom Bar: Garage Round-Trip Toggle + Google Maps Link -->
+            <div class="relative z-10 p-2 bg-gradient-to-t from-slate-950/90 via-slate-900/60 to-transparent flex items-center gap-1.5">
+              <button 
+                @click="includeGarageRoundTrip = !includeGarageRoundTrip"
+                :class="[
+                  'px-2.5 py-2 rounded-xl text-[10px] font-bold border transition-all cursor-pointer whitespace-nowrap',
+                  includeGarageRoundTrip 
+                    ? 'bg-[#DC2626] text-white border-red-500 shadow-sm' 
+                    : 'bg-white/90 text-slate-800 border-slate-200 hover:bg-white'
+                ]"
+                title="Include round-trip from Dokter van Kleefstraat 46C, Maastricht"
+              >
+                {{ includeGarageRoundTrip ? '✓ + Garage HQ' : '+ Garage HQ' }}
+              </button>
               <a 
                 :href="routeMetrics.googleMapsUrl" 
                 target="_blank"
-                class="w-full py-2 bg-[#1E293B] hover:bg-slate-900 text-white font-bold text-xs rounded-xl shadow-md border border-slate-700/60 transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-95"
+                class="flex-1 py-2 px-2.5 bg-[#1E293B] hover:bg-slate-900 text-white font-bold text-[11px] rounded-xl shadow-md border border-slate-700/60 transition-all flex items-center justify-center gap-1.5 cursor-pointer active:scale-95 truncate"
               >
-                <svg class="w-3.5 h-3.5 text-red-500" fill="currentColor" viewBox="0 0 24 24">
+                <svg class="w-3.5 h-3.5 text-red-500 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
                 </svg>
-                <span>Open Live Route on Google Maps ({{ routeMetrics.distanceKm }} km)</span>
+                <span class="truncate">Google Maps ({{ routeMetrics.distanceKm }} km)</span>
               </a>
             </div>
           </div>
@@ -365,18 +417,37 @@
         <!-- Team & Vehicle -->
         <div class="bg-white p-6 rounded-3xl border border-slate-200/80 shadow-xs flex flex-col justify-between">
           <div>
-            <h2 class="text-base font-black text-slate-900 tracking-tight font-sans mb-3">Team & Vehicle</h2>
-            <p class="text-xs font-semibold text-slate-500 mb-2.5">Movers ({{ activeJob.team || 2 }})</p>
+            <div class="flex items-center justify-between mb-3">
+              <h2 class="text-base font-black text-slate-900 tracking-tight font-sans">Team & Vehicle</h2>
+              <button
+                @click="openAssignCrew"
+                class="text-[11px] font-bold text-red-600 hover:text-red-700 cursor-pointer"
+              >
+                Assign / Edit
+              </button>
+            </div>
+            <p class="text-xs font-semibold text-slate-500 mb-2.5">
+              Movers ({{ assignedCrewList.length || activeJob.team || 0 }})
+            </p>
 
-            <div class="flex items-center gap-4 mb-5">
-              <div class="flex items-center gap-2">
-                <img src="/images/team/m.jpg" alt="Ahmed" class="w-8 h-8 rounded-full object-cover ring-2 ring-slate-100 shadow-xs" />
-                <span class="text-xs font-bold text-slate-900">Ahmed</span>
+            <div v-if="assignedCrewList.length > 0" class="flex flex-wrap items-center gap-3 mb-5">
+              <div
+                v-for="member in assignedCrewList"
+                :key="member.name"
+                class="flex items-center gap-2 bg-slate-50 border border-slate-200/80 rounded-full pl-1 pr-3 py-1"
+              >
+                <div class="w-7 h-7 rounded-full bg-slate-900 text-white flex items-center justify-center text-[10px] font-black shrink-0">
+                  {{ getInitials(member.name) }}
+                </div>
+                <div class="leading-tight">
+                  <span class="text-xs font-bold text-slate-900 block">{{ member.name }}</span>
+                  <span v-if="member.role" class="text-[9px] text-slate-400 font-semibold block">{{ member.role }}</span>
+                </div>
               </div>
-              <div class="flex items-center gap-2">
-                <img src="/images/team/se.jpg" alt="Tomas" class="w-8 h-8 rounded-full object-cover ring-2 ring-slate-100 shadow-xs" />
-                <span class="text-xs font-bold text-slate-900">Tomas</span>
-              </div>
+            </div>
+            <div v-else class="mb-5 p-3 rounded-xl bg-amber-50/70 border border-amber-200/70 flex items-center justify-between">
+              <span class="text-xs font-semibold text-amber-800">No crew assigned yet</span>
+              <button @click="openAssignCrew" class="text-[11px] font-bold text-red-600 hover:underline cursor-pointer">+ Assign Crew</button>
             </div>
           </div>
 
@@ -384,11 +455,11 @@
             <p class="text-xs font-semibold text-slate-500 mb-1">Vehicle</p>
             <div class="flex items-center justify-between">
               <div>
-                <p class="text-sm font-black text-slate-900">Ford Transit</p>
-                <p class="text-xs text-slate-400 font-mono font-medium">SMEK 25</p>
+                <p class="text-sm font-black text-slate-900">{{ displayVehicleName }}</p>
+                <p class="text-xs text-slate-400 font-mono font-medium">{{ displayVehiclePlate }}</p>
               </div>
               <div class="w-32 h-16 flex items-center justify-center">
-                <img src="/images/ford_transit_van.jpg" alt="Ford Transit" class="w-full h-full object-contain filter drop-shadow-sm" />
+                <img src="/images/ford_transit_van.jpg" :alt="displayVehicleName" class="w-full h-full object-contain filter drop-shadow-sm" />
               </div>
             </div>
           </div>
@@ -398,8 +469,8 @@
         <div class="bg-white p-6 rounded-3xl border border-slate-200/80 shadow-xs space-y-3">
           <div class="flex items-center justify-between mb-1">
             <h2 class="text-base font-black text-slate-900 tracking-tight font-sans">Financials</h2>
-            <button @click="activeMoveTab = 'Expenses'" class="text-[11px] font-bold text-red-600 hover:text-red-700 cursor-pointer">
-              Edit Costs
+            <button @click="openEditFinancials" class="text-[11px] font-bold text-red-600 hover:text-red-700 cursor-pointer">
+              Edit Price & Costs
             </button>
           </div>
 
@@ -454,21 +525,21 @@
               <div>
                 <div class="flex items-center justify-between mb-1">
                   <span class="text-slate-500 font-medium">1. Sales Pipeline</span>
-                  <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-50 text-blue-700">المبيعات</span>
+                  <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-50 text-blue-700">Sales</span>
                 </div>
                 <select 
                   v-model="salesStatus" 
                   @change="handleFieldChange"
                   class="w-full px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-800 focus:outline-none focus:border-red-500 cursor-pointer"
                 >
-                  <option value="New Lead">New Lead (فرصة جديدة)</option>
-                  <option value="Under Review">Under Review (قيد المراجعة)</option>
-                  <option value="Info Requested">Info Requested (طلب معلومات)</option>
-                  <option value="Quote Prepared">Quote Prepared (تجهيز العرض)</option>
-                  <option value="Quote Sent">Quote Sent (إرسال العرض)</option>
-                  <option value="Modification Requested">Modification Requested (طلب تعديل)</option>
-                  <option value="Won / Accepted">Won / Accepted (قبول العرض)</option>
-                  <option value="Lost / Rejected">Lost / Rejected (فرصة ضائعة أو مرفوضة)</option>
+                  <option value="New Lead">New Lead</option>
+                  <option value="Under Review">Under Review</option>
+                  <option value="Info Requested">Info Requested</option>
+                  <option value="Quote Prepared">Quote Prepared</option>
+                  <option value="Quote Sent">Quote Sent</option>
+                  <option value="Modification Requested">Modification Requested</option>
+                  <option value="Won / Accepted">Won / Accepted</option>
+                  <option value="Lost / Rejected">Lost / Rejected</option>
                 </select>
                 
                 <!-- Mandatory Rejection Reason when Lost/Rejected -->
@@ -483,44 +554,44 @@
                 </div>
               </div>
 
-              <!-- 2. Operational Pipeline (التشغيل) -->
+              <!-- 2. Operational Pipeline -->
               <div>
                 <div class="flex items-center justify-between mb-1">
                   <span class="text-slate-500 font-medium">2. Operations Pipeline</span>
-                  <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-orange-50 text-orange-700">التشغيل</span>
+                  <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-orange-50 text-orange-700">Operations</span>
                 </div>
                 <select 
                   v-model="currentStatus" 
                   @change="handleFieldChange"
                   class="w-full px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-800 focus:outline-none focus:border-red-500 cursor-pointer"
                 >
-                  <option value="Booking Pending">Booking Pending (انتظار الحجز)</option>
-                  <option value="Confirmed">Confirmed & Scheduled (مؤكد ومجدول)</option>
-                  <option value="Team Assigned">Team Assigned (تعيين الفريق)</option>
-                  <option value="In Progress">In Progress (قيد التنفيذ)</option>
-                  <option value="Completed">Completed (مكتمل)</option>
-                  <option value="Closed">Closed (مغلق)</option>
-                  <option value="Cancelled">Cancelled (ملغى)</option>
+                  <option value="Booking Pending">Booking Pending</option>
+                  <option value="Confirmed">Confirmed & Scheduled</option>
+                  <option value="Team Assigned">Team Assigned</option>
+                  <option value="In Progress">In Progress</option>
+                  <option value="Completed">Completed</option>
+                  <option value="Closed">Closed</option>
+                  <option value="Cancelled">Cancelled</option>
                 </select>
               </div>
 
-              <!-- 3. Invoicing Pipeline (الفواتير) -->
+              <!-- 3. Invoicing Pipeline -->
               <div>
                 <div class="flex items-center justify-between mb-1">
                   <span class="text-slate-500 font-medium">3. Invoicing Pipeline</span>
-                  <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700">الفواتير</span>
+                  <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700">Billing</span>
                 </div>
                 <select 
                   v-model="paymentStatus" 
                   @change="handleFieldChange"
                   class="w-full px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-800 focus:outline-none focus:border-red-500 cursor-pointer"
                 >
-                  <option value="Not Invoiced">Not Invoiced (لم تصدر فاتورة)</option>
-                  <option value="Invoiced">Invoice Sent (تم إرسال الفاتورة)</option>
-                  <option value="Partially Paid">Partially Paid (مدفوع جزئياً)</option>
-                  <option value="Paid">Paid in Full (مدفوع بالكامل)</option>
-                  <option value="Overdue">Overdue (متأخر)</option>
-                  <option value="Refunded">Refunded (مسترجع)</option>
+                  <option value="Not Invoiced">Not Invoiced</option>
+                  <option value="Invoiced">Invoice Sent</option>
+                  <option value="Partially Paid">Partially Paid</option>
+                  <option value="Paid">Paid in Full</option>
+                  <option value="Overdue">Overdue</option>
+                  <option value="Refunded">Refunded</option>
                 </select>
               </div>
 
@@ -588,18 +659,26 @@
           </div>
 
           <!-- Create & Download Invoice Action Buttons -->
-          <div class="pt-4 grid grid-cols-2 gap-2">
+          <div class="pt-4 space-y-2">
+            <div class="grid grid-cols-2 gap-2">
+              <button 
+                @click="downloadQuotePDF"
+                class="w-full py-2.5 bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs rounded-xl shadow-xs transition-all active:scale-95 cursor-pointer text-center"
+              >
+                📄 Quote PDF
+              </button>
+              <button 
+                @click="downloadInvoicePDF"
+                class="w-full py-2.5 bg-[#DC2626] hover:bg-red-700 text-white font-bold text-xs rounded-xl shadow-md shadow-red-600/30 transition-all active:scale-95 cursor-pointer text-center"
+              >
+                🧾 Invoice PDF
+              </button>
+            </div>
             <button 
-              @click="downloadQuotePDF"
-              class="w-full py-2.5 bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs rounded-xl shadow-xs transition-all active:scale-95 cursor-pointer text-center"
+              @click="openEditInvoiceModal"
+              class="w-full py-2 bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-xs rounded-xl border border-slate-200 transition-colors cursor-pointer text-center"
             >
-              📄 Quote PDF
-            </button>
-            <button 
-              @click="downloadInvoicePDF"
-              class="w-full py-2.5 bg-[#DC2626] hover:bg-red-700 text-white font-bold text-xs rounded-xl shadow-md shadow-red-600/30 transition-all active:scale-95 cursor-pointer text-center"
-            >
-              🧾 Invoice PDF
+              ✎ Edit Invoice Details & Line Items
             </button>
           </div>
         </div>
@@ -1326,14 +1405,255 @@
         <p>MoveIt Maastricht B.V. • Oranjeplein 35D, 6224 KV Maastricht • Tel: +31 6 21713503 • info@moveitmaastricht.nl • www.moveitmaastricht.nl • Page 1 of 1</p>
       </div>
     </div>
+
+    <!-- EDIT & CUSTOMIZE INVOICE MODAL -->
+    <div 
+      v-if="showEditInvoiceModal" 
+      class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4"
+      @click.self="showEditInvoiceModal = false"
+    >
+      <div class="bg-white rounded-3xl max-w-2xl w-full max-h-[88vh] flex flex-col shadow-2xl border border-slate-200 overflow-hidden">
+        <div class="flex items-center justify-between px-6 py-4 border-b border-slate-100 bg-slate-50/70">
+          <div>
+            <h3 class="text-base font-black text-slate-900">Edit & Customize Official Invoice</h3>
+            <p class="text-xs text-slate-500">Modify customer info, line items, amounts, or VAT before downloading PDF</p>
+          </div>
+          <button @click="showEditInvoiceModal = false" class="text-slate-400 hover:text-slate-600 text-lg cursor-pointer">✕</button>
+        </div>
+
+        <div class="p-6 overflow-y-auto space-y-4 text-xs flex-1">
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div>
+              <label class="block font-bold text-slate-700 mb-1">Invoice Number</label>
+              <input v-model="invoiceDraft.invNumber" type="text" class="w-full p-2 border border-slate-300 rounded-xl font-bold" />
+            </div>
+            <div>
+              <label class="block font-bold text-slate-700 mb-1">Invoice Date</label>
+              <input v-model="invoiceDraft.date" type="text" class="w-full p-2 border border-slate-300 rounded-xl font-semibold" />
+            </div>
+            <div>
+              <label class="block font-bold text-slate-700 mb-1">VAT Rate (%)</label>
+              <input v-model.number="invoiceDraft.vatRate" type="number" class="w-full p-2 border border-slate-300 rounded-xl font-bold" />
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block font-bold text-slate-700 mb-1">Client Name</label>
+              <input v-model="invoiceDraft.customer" type="text" class="w-full p-2 border border-slate-300 rounded-xl font-bold" />
+            </div>
+            <div>
+              <label class="block font-bold text-slate-700 mb-1">Client Email</label>
+              <input v-model="invoiceDraft.email" type="text" class="w-full p-2 border border-slate-300 rounded-xl" />
+            </div>
+          </div>
+
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Billing / Pickup Address</label>
+            <input v-model="invoiceDraft.address" type="text" class="w-full p-2 border border-slate-300 rounded-xl" />
+          </div>
+
+          <!-- Line Items -->
+          <div class="space-y-2 pt-2">
+            <div class="flex items-center justify-between">
+              <label class="font-black text-slate-900 uppercase tracking-wider text-[11px]">Invoice Line Items</label>
+              <button @click="addInvoiceLineItem" class="px-2.5 py-1 bg-slate-900 text-white rounded-lg text-[11px] font-bold cursor-pointer">+ Add Item</button>
+            </div>
+            <div v-for="(item, idx) in invoiceDraft.items" :key="idx" class="grid grid-cols-12 gap-2 items-center bg-slate-50 p-2 rounded-xl border border-slate-200">
+              <input v-model="item.description" type="text" placeholder="Service description" class="col-span-6 p-1.5 bg-white border border-slate-200 rounded-lg font-semibold" />
+              <input v-model="item.category" type="text" placeholder="Category" class="col-span-3 p-1.5 bg-white border border-slate-200 rounded-lg" />
+              <input v-model.number="item.netAmount" type="number" step="0.01" placeholder="€" class="col-span-2 p-1.5 bg-white border border-slate-200 rounded-lg font-bold text-right" />
+              <button @click="invoiceDraft.items.splice(idx, 1)" class="col-span-1 text-rose-500 hover:text-rose-700 font-bold text-center cursor-pointer" title="Remove item">🗑</button>
+            </div>
+          </div>
+
+          <!-- Totals Summary -->
+          <div class="bg-slate-900 text-white p-4 rounded-2xl flex items-center justify-between">
+            <div class="space-y-0.5">
+              <div class="text-[11px] text-slate-400">Subtotal (Excl. VAT): €{{ invoiceDraftSubtotal.toFixed(2) }}</div>
+              <div class="text-[11px] text-slate-400">VAT ({{ invoiceDraft.vatRate }}%): €{{ invoiceDraftVat.toFixed(2) }}</div>
+            </div>
+            <div class="text-right">
+              <div class="text-[10px] text-slate-400 uppercase font-bold">Total (Incl. VAT)</div>
+              <div class="text-xl font-black text-emerald-400">€{{ invoiceDraftTotal.toFixed(2) }}</div>
+            </div>
+          </div>
+
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Invoice Notes / Payment Instructions</label>
+            <textarea v-model="invoiceDraft.notes" rows="2" class="w-full p-2 border border-slate-300 rounded-xl"></textarea>
+          </div>
+        </div>
+
+        <div class="px-6 py-4 border-t border-slate-100 bg-slate-50/70 flex items-center justify-between">
+          <button @click="showEditInvoiceModal = false" class="px-4 py-2 text-xs font-bold text-slate-500 hover:text-slate-800 cursor-pointer">Cancel</button>
+          <button @click="generateEditedInvoicePDF" class="px-5 py-2.5 bg-[#DC2626] hover:bg-red-700 text-white text-xs font-bold rounded-xl shadow-xs cursor-pointer flex items-center gap-1.5">
+            <span>🧾</span> Download Customized Invoice PDF
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Edit Revenue & Job Costs Modal -->
+    <div
+      v-if="showEditFinancialsModal"
+      class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4"
+      @click.self="showEditFinancialsModal = false"
+    >
+      <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-200 space-y-4">
+        <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+          <div>
+            <h3 class="text-base font-black text-slate-900">Edit Revenue & Job Costs</h3>
+            <p class="text-[11px] text-slate-500">Updates order price, direct costs, and margin in Supabase</p>
+          </div>
+          <button @click="showEditFinancialsModal = false" class="text-slate-400 hover:text-slate-600 text-lg cursor-pointer">✕</button>
+        </div>
+
+        <div class="space-y-3 text-xs">
+          <div class="p-3 bg-slate-50 rounded-2xl border border-slate-200/80">
+            <label class="block font-bold text-slate-700 mb-1">Revenue (excl. VAT) (€)</label>
+            <input
+              v-model.number="financialsDraft.revenue"
+              type="number"
+              min="0"
+              step="10"
+              class="w-full p-2.5 bg-white border border-slate-300 rounded-xl font-black text-slate-900 text-sm focus:border-red-500 focus:outline-none"
+            />
+            <p class="text-[10px] text-slate-400 mt-1">
+              VAT (21%): €{{ Math.round(Number(financialsDraft.revenue || 0) * 0.21 * 100) / 100 }} · Total incl. VAT: €{{ Math.round(Number(financialsDraft.revenue || 0) * 1.21 * 100) / 100 }}
+            </p>
+          </div>
+
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <div class="flex items-center justify-between mb-1">
+                <label class="font-bold text-slate-700">Labor Cost (€)</label>
+                <button
+                  type="button"
+                  @click="autoCalculateLaborFromCrew"
+                  class="text-[10px] font-bold text-blue-600 hover:underline cursor-pointer"
+                  title="Calculate labor from assigned crew hourly rates and logged hours"
+                >
+                  ∑ From Crew Rates
+                </button>
+              </div>
+              <input v-model.number="financialsDraft.labor" type="number" min="0" class="w-full p-2.5 border border-slate-300 rounded-xl font-bold focus:border-red-500 focus:outline-none" />
+            </div>
+            <div>
+              <label class="block font-bold text-slate-700 mb-1">Fuel Cost (€)</label>
+              <input v-model.number="financialsDraft.fuel" type="number" min="0" class="w-full p-2.5 border border-slate-300 rounded-xl font-bold focus:border-red-500 focus:outline-none" />
+            </div>
+            <div>
+              <label class="block font-bold text-slate-700 mb-1">Tolls (€)</label>
+              <input v-model.number="financialsDraft.tolls" type="number" min="0" class="w-full p-2.5 border border-slate-300 rounded-xl font-bold focus:border-red-500 focus:outline-none" />
+            </div>
+            <div>
+              <label class="block font-bold text-slate-700 mb-1">Other Costs (€)</label>
+              <input v-model.number="financialsDraft.other" type="number" min="0" class="w-full p-2.5 border border-slate-300 rounded-xl font-bold focus:border-red-500 focus:outline-none" />
+            </div>
+          </div>
+
+          <div class="p-3 bg-emerald-50/70 border border-emerald-200 rounded-xl flex items-center justify-between">
+            <span class="font-bold text-emerald-900">Net Job Contribution</span>
+            <span class="font-black text-emerald-700 text-sm">
+              €{{ Math.max(0, Number(financialsDraft.revenue || 0) - (Number(financialsDraft.labor || 0) + Number(financialsDraft.fuel || 0) + Number(financialsDraft.tolls || 0) + Number(financialsDraft.other || 0))).toLocaleString() }}
+            </span>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-end gap-2 pt-2 border-t border-slate-100">
+          <button @click="showEditFinancialsModal = false" class="px-4 py-2 text-xs font-bold text-slate-500 hover:text-slate-800 cursor-pointer">Cancel</button>
+          <button @click="saveFinancials" class="px-5 py-2.5 bg-[#DC2626] hover:bg-red-700 text-white text-xs font-bold rounded-xl shadow-xs cursor-pointer">
+            Save Price & Costs
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Assign Crew, Coordinator & Vehicle Modal (Synced from Settings) -->
+    <div
+      v-if="showAssignCrewModal"
+      class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4"
+      @click.self="showAssignCrewModal = false"
+    >
+      <div class="bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 space-y-4">
+        <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+          <div>
+            <h3 class="text-base font-black text-slate-900">Assign Crew, Coordinator & Vehicle</h3>
+            <p class="text-[11px] text-slate-500">Live list synced from Settings → Team & Access</p>
+          </div>
+          <button @click="showAssignCrewModal = false" class="text-slate-400 hover:text-slate-600 text-lg cursor-pointer">✕</button>
+        </div>
+
+        <div class="space-y-4 text-xs">
+          <div>
+            <label class="block font-bold text-slate-700 mb-2">
+              Select Movers & Drivers ({{ crewDraft.selectedNames.length }} selected)
+            </label>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-48 overflow-y-auto pr-1">
+              <button
+                v-for="member in availableTeamMembers"
+                :key="member.name"
+                type="button"
+                @click="toggleCrewMember(member.name)"
+                :class="[
+                  'flex items-center justify-between p-2.5 rounded-xl border text-left transition-all cursor-pointer',
+                  crewDraft.selectedNames.includes(member.name)
+                    ? 'bg-red-50 border-red-400 ring-1 ring-red-200'
+                    : 'bg-slate-50 border-slate-200 hover:border-slate-300'
+                ]"
+              >
+                <div class="flex items-center gap-2 min-w-0">
+                  <div class="w-7 h-7 rounded-full bg-slate-900 text-white flex items-center justify-center text-[10px] font-black shrink-0">
+                    {{ getInitials(member.name) }}
+                  </div>
+                  <div class="min-w-0">
+                    <p class="font-bold text-slate-900 truncate">{{ member.name }}</p>
+                    <p class="text-[10px] text-slate-500 truncate">{{ member.role || 'Mover' }}</p>
+                  </div>
+                </div>
+                <span v-if="crewDraft.selectedNames.includes(member.name)" class="text-red-600 font-black text-sm">✓</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block font-bold text-slate-700 mb-1">Assigned Vehicle</label>
+              <select v-model="crewDraft.vehicle" class="w-full p-2.5 border border-slate-300 rounded-xl font-bold focus:border-red-500 focus:outline-none">
+                <option v-for="v in availableVehicles" :key="v" :value="v">{{ v }}</option>
+              </select>
+            </div>
+            <div>
+              <label class="block font-bold text-slate-700 mb-1">Move Coordinator</label>
+              <select v-model="crewDraft.coordinator" class="w-full p-2.5 border border-slate-300 rounded-xl font-bold focus:border-red-500 focus:outline-none">
+                <option v-for="c in availableCoordinators" :key="c" :value="c">{{ c }}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-end gap-2 pt-2 border-t border-slate-100">
+          <button @click="showAssignCrewModal = false" class="px-4 py-2 text-xs font-bold text-slate-500 hover:text-slate-800 cursor-pointer">Cancel</button>
+          <button @click="saveCrewAssignment" class="px-5 py-2.5 bg-[#DC2626] hover:bg-red-700 text-white text-xs font-bold rounded-xl shadow-xs cursor-pointer">
+            Save Assignment
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script setup>
-import { ref, computed, watch, onUnmounted } from 'vue'
+import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
 import { jsPDF } from 'jspdf'
 import autoTable from 'jspdf-autotable'
 import { MOVEIT_LOGO_BASE64 } from '~/utils/pdfBranding'
+
+const { companySettings, fetchCompanySettings } = useAdminData()
+onMounted(() => {
+  fetchCompanySettings()
+})
 
 const props = defineProps({
   job: {
@@ -1436,9 +1756,166 @@ const activeJob = computed(() => props.job || fallbackJob)
 
 // --- Dynamic Real Calculations based on Active Job's Real Value ---
 const revenueExVat = computed(() => {
-  const val = Number(activeJob.value.estValue || activeJob.value.raw?.est_revenue || activeJob.value.raw?.actual_revenue || 450)
+  const val = Number(
+    activeJob.value.estValue ||
+    activeJob.value.raw?.actual_revenue ||
+    activeJob.value.raw?.est_revenue ||
+    activeJob.value.raw?.form_data?.actual_revenue ||
+    activeJob.value.raw?.form_data?.est_revenue ||
+    450
+  )
   return val > 0 ? val : 450
 })
+
+// --- Dynamic Crew, Coordinator & Vehicle Assignment (Synced with Settings) ---
+const getInitials = (name) => {
+  if (!name) return 'M'
+  return String(name).split(' ').map(w => w[0]).slice(0, 2).join('').toUpperCase()
+}
+
+const availableTeamMembers = computed(() => {
+  const list = companySettings.value?.teamMembers
+  if (Array.isArray(list) && list.length > 0) {
+    return list.filter(m => m.active !== false)
+  }
+  return [
+    { name: 'Sherif Eliwa', role: 'Admin & Operations' },
+    { name: 'Ahmed', role: 'Lead Mover' },
+    { name: 'Tomas', role: 'Driver & Mover' },
+    { name: 'Bram', role: 'Mover' }
+  ]
+})
+
+const availableCoordinators = computed(() => {
+  const names = availableTeamMembers.value.map(m => m.name).filter(Boolean)
+  if (!names.includes('Sherif Eliwa')) names.unshift('Sherif Eliwa')
+  return Array.from(new Set(names))
+})
+
+const availableVehicles = [
+  'Ford Transit (SMEK 25)',
+  'Mercedes Sprinter (MV-02-NL)',
+  'Box Truck 35m³ (MV-03-NL)',
+  'Moving Lift 27m (LIFT-01)'
+]
+
+const assignedCrewList = computed(() => {
+  const saved = activeJob.value.assignedTeam || activeJob.value.raw?.form_data?.assigned_team || activeJob.value.raw?.assigned_team
+  if (Array.isArray(saved) && saved.length > 0) {
+    return saved.map(item => {
+      if (typeof item === 'string') {
+        const match = availableTeamMembers.value.find(m => m.name === item)
+        return { name: item, role: match?.role || 'Mover' }
+      }
+      return { name: item.name || 'Mover', role: item.role || 'Mover' }
+    })
+  }
+  return []
+})
+
+const displayVehicleName = computed(() => {
+  const raw = activeJob.value.vehicle || activeJob.value.raw?.assigned_vehicle || 'Ford Transit (SMEK 25)'
+  return String(raw).split('(')[0].trim() || 'Ford Transit'
+})
+
+const displayVehiclePlate = computed(() => {
+  const raw = activeJob.value.vehicle || activeJob.value.raw?.assigned_vehicle || 'Ford Transit (SMEK 25)'
+  const match = String(raw).match(/\(([^)]+)\)/)
+  return match ? match[1] : 'SMEK 25'
+})
+
+// Edit Revenue & Costs Modal
+const showEditFinancialsModal = ref(false)
+const financialsDraft = ref({
+  revenue: 450,
+  labor: 68,
+  fuel: 36,
+  tolls: 32,
+  other: 0
+})
+
+const openEditFinancials = () => {
+  financialsDraft.value = {
+    revenue: revenueExVat.value,
+    labor: laborCost.value,
+    fuel: fuelCost.value,
+    tolls: tollsCost.value,
+    other: otherCost.value
+  }
+  showEditFinancialsModal.value = true
+}
+
+const saveFinancials = () => {
+  if (activeJob.value?.id) {
+    emit('update-status', {
+      id: activeJob.value.id,
+      estValue: Number(financialsDraft.value.revenue || 0),
+      costs: {
+        labor: Number(financialsDraft.value.labor || 0),
+        fuel: Number(financialsDraft.value.fuel || 0),
+        tolls: Number(financialsDraft.value.tolls || 0),
+        other: Number(financialsDraft.value.other || 0)
+      }
+    })
+  }
+  showEditFinancialsModal.value = false
+}
+
+const autoCalculateLaborFromCrew = () => {
+  const crew = assignedCrewList.value
+  const totalRatePerHour = crew.length > 0
+    ? crew.reduce((sum, member) => {
+        const match = availableTeamMembers.value.find(m => m.name === member.name)
+        return sum + Number(match?.hourlyRate || 25)
+      }, 0)
+    : 50
+  const workStages = fieldStageTimers.value.filter(s => s.id !== 'break')
+  const totalHours = Math.max(1, Math.round((workStages.reduce((acc, s) => acc + s.seconds, 0) / 3600) * 10) / 10)
+  financialsDraft.value.labor = Math.round(totalRatePerHour * totalHours)
+}
+
+// Assign Crew & Vehicle Modal
+const showAssignCrewModal = ref(false)
+const crewDraft = ref({
+  selectedNames: [],
+  vehicle: 'Ford Transit (SMEK 25)',
+  coordinator: 'Sherif Eliwa'
+})
+
+const openAssignCrew = () => {
+  fetchCompanySettings(true)
+  crewDraft.value = {
+    selectedNames: assignedCrewList.value.map(m => m.name),
+    vehicle: activeJob.value.vehicle || 'Ford Transit (SMEK 25)',
+    coordinator: activeJob.value.coordinator || 'Sherif Eliwa'
+  }
+  showAssignCrewModal.value = true
+}
+
+const toggleCrewMember = (name) => {
+  const idx = crewDraft.value.selectedNames.indexOf(name)
+  if (idx === -1) {
+    crewDraft.value.selectedNames.push(name)
+  } else {
+    crewDraft.value.selectedNames.splice(idx, 1)
+  }
+}
+
+const saveCrewAssignment = () => {
+  const teamObjects = crewDraft.value.selectedNames.map(name => {
+    const found = availableTeamMembers.value.find(m => m.name === name)
+    return { name, role: found?.role || 'Mover' }
+  })
+  if (activeJob.value?.id) {
+    emit('update-status', {
+      id: activeJob.value.id,
+      team: teamObjects,
+      vehicle: crewDraft.value.vehicle,
+      coordinator: crewDraft.value.coordinator
+    })
+  }
+  showAssignCrewModal.value = false
+}
 
 const vatAmount = computed(() => Math.round(revenueExVat.value * 0.21 * 100) / 100)
 const totalIncVat = computed(() => Math.round((revenueExVat.value + vatAmount.value) * 100) / 100)
@@ -1498,26 +1975,45 @@ const statusBadgeColor = computed(() => {
   return 'bg-amber-500'
 })
 
-// --- 1. Real Customer Photos Logic ---
-const defaultRealMovePhotos = [
-  'https://res.cloudinary.com/dgqyvw6wf/image/upload/v1792952081/fac43dtxpahfpasupqvw.jpg',
-  'https://res.cloudinary.com/dgqyvw6wf/image/upload/v1792573136/yec8vl3lwyrfykpbebve.png',
-  'https://res.cloudinary.com/dgqyvw6wf/image/upload/v1791979405/tc37gnpv3e8hv66htmke.jpg',
-  'https://res.cloudinary.com/dgqyvw6wf/image/upload/v1790751228/ddpcfaae1czqecaeodry.jpg'
-]
+// --- 1. Real Customer Photos Logic (Zero Fake Photos + Manual Upload) ---
+const photoUploadInput = ref(null)
+const localUploadedPhotos = ref([])
+
+const triggerPhotoUpload = () => {
+  photoUploadInput.value?.click()
+}
+
+const handleManualPhotoUpload = (e) => {
+  const files = Array.from(e.target.files || [])
+  if (!files.length) return
+
+  files.forEach(file => {
+    const reader = new FileReader()
+    reader.onload = (ev) => {
+      const dataUrl = String(ev.target?.result || '')
+      if (!dataUrl) return
+      localUploadedPhotos.value.push(dataUrl)
+      const existing = activeJob.value.raw?.form_data?.images || activeJob.value.raw?.images || activeJob.value.images || []
+      const merged = Array.from(new Set([...existing, ...localUploadedPhotos.value]))
+      if (activeJob.value?.id) {
+        emit('update-status', {
+          id: activeJob.value.id,
+          images: merged
+        })
+      }
+    }
+    reader.readAsDataURL(file)
+  })
+  e.target.value = ''
+}
 
 const customerRealImages = computed(() => {
-  const fromDb = activeJob.value.raw?.form_data?.images || activeJob.value.raw?.images || activeJob.value.images
-  if (Array.isArray(fromDb) && fromDb.length > 0) {
-    return fromDb
-  }
-  return defaultRealMovePhotos
+  const fromDb = activeJob.value.raw?.form_data?.images || activeJob.value.raw?.images || activeJob.value.images || []
+  const dbList = Array.isArray(fromDb) ? fromDb : []
+  return Array.from(new Set([...dbList, ...localUploadedPhotos.value]))
 })
 
-const hasRealUploads = computed(() => {
-  const fromDb = activeJob.value.raw?.form_data?.images || activeJob.value.raw?.images || activeJob.value.images
-  return Array.isArray(fromDb) && fromDb.length > 0
-})
+const hasRealUploads = computed(() => customerRealImages.value.length > 0)
 
 // Lightbox state
 const showLightbox = ref(false)
@@ -1529,46 +2025,142 @@ const openLightbox = (url) => {
   showLightbox.value = true
 }
 
-// --- 2. Live Route & Map Metrics ---
+// --- 2. Live Route & Map Metrics (Real Nominatim + OSRM Routing & Garage HQ Round-Trip) ---
+const GARAGE_HQ = 'Dokter van Kleefstraat 46C, Maastricht, Netherlands'
+const includeGarageRoundTrip = ref(false)
+const liveRouteResult = ref({
+  directKm: null,
+  directMins: null,
+  roundTripKm: null,
+  roundTripMins: null,
+  isCalculating: false
+})
+
+const formatDriveDuration = (mins) => {
+  if (!mins || mins <= 0) return '15m'
+  const h = Math.floor(mins / 60)
+  const m = Math.round(mins % 60)
+  if (h === 0) return `${m}m`
+  return m > 0 ? `${h}h ${m}m` : `${h}h`
+}
+
+const geocodeAddress = async (addr) => {
+  if (!addr) return null
+  try {
+    const url = `https://nominatim.openstreetmap.org/search?format=json&limit=1&q=${encodeURIComponent(addr)}`
+    const res = await fetch(url, { headers: { 'Accept-Language': 'en' } })
+    const data = await res.json()
+    if (Array.isArray(data) && data[0]) {
+      return { lat: parseFloat(data[0].lat), lon: parseFloat(data[0].lon) }
+    }
+  } catch (e) {}
+  return null
+}
+
+const fetchOsrmRoute = async (coords) => {
+  if (!coords || coords.length < 2) return null
+  try {
+    const coordStr = coords.map(c => `${c.lon},${c.lat}`).join(';')
+    const url = `https://router.project-osrm.org/route/v1/driving/${coordStr}?overview=false`
+    const res = await fetch(url)
+    const data = await res.json()
+    if (data?.routes?.[0]) {
+      return {
+        km: Math.max(1, Math.round(data.routes[0].distance / 100) / 10),
+        mins: Math.max(1, Math.round(data.routes[0].duration / 60))
+      }
+    }
+  } catch (e) {}
+  return null
+}
+
+const computeLiveRouteDistance = async () => {
+  const from = activeJob.value.fromFull
+  const to = activeJob.value.toFull
+  if (!from || !to) return
+
+  liveRouteResult.value.isCalculating = true
+  try {
+    const [pCoord, dCoord, hqCoord] = await Promise.all([
+      geocodeAddress(from),
+      geocodeAddress(to),
+      geocodeAddress(GARAGE_HQ)
+    ])
+
+    if (pCoord && dCoord) {
+      const direct = await fetchOsrmRoute([pCoord, dCoord])
+      if (direct) {
+        liveRouteResult.value.directKm = direct.km
+        liveRouteResult.value.directMins = direct.mins
+      }
+      if (hqCoord) {
+        const roundTrip = await fetchOsrmRoute([hqCoord, pCoord, dCoord, hqCoord])
+        if (roundTrip) {
+          liveRouteResult.value.roundTripKm = roundTrip.km
+          liveRouteResult.value.roundTripMins = roundTrip.mins
+        }
+      }
+    }
+  } finally {
+    liveRouteResult.value.isCalculating = false
+  }
+}
+
+watch(
+  () => [activeJob.value?.id, activeJob.value?.fromFull, activeJob.value?.toFull],
+  () => {
+    localUploadedPhotos.value = []
+    liveRouteResult.value = { directKm: null, directMins: null, roundTripKm: null, roundTripMins: null, isCalculating: false }
+    if (typeof window !== 'undefined') {
+      computeLiveRouteDistance()
+    }
+  },
+  { immediate: true }
+)
+
 const routeMetrics = computed(() => {
   const from = (activeJob.value.fromFull || '').toLowerCase()
   const to = (activeJob.value.toFull || '').toLowerCase()
 
-  let distanceKm = 405
-  let driveText = '4h 30m'
+  let fallbackKm = 25
+  let fallbackMins = 25
 
-  if (to.includes('paris') || from.includes('paris')) {
-    distanceKm = 405
-    driveText = '4h 30m'
-  } else if (to.includes('amsterdam') || from.includes('amsterdam')) {
-    distanceKm = 215
-    driveText = '2h 25m'
-  } else if (to.includes('utrecht') || from.includes('utrecht')) {
-    distanceKm = 180
-    driveText = '2h 00m'
-  } else if (to.includes('brussels') || to.includes('bruxelles')) {
-    distanceKm = 120
-    driveText = '1h 25m'
-  } else if (to.includes('antwerp') || to.includes('antwerpen')) {
-    distanceKm = 110
-    driveText = '1h 20m'
-  } else if (to.includes('eindhoven')) {
-    distanceKm = 90
-    driveText = '1h 00m'
-  } else if (to.includes('lanaken')) {
-    distanceKm = 12
-    driveText = '20m'
-  } else if (to.includes('maastricht') && from.includes('maastricht')) {
-    distanceKm = 8
-    driveText = '15m'
-  }
+  if (to.includes('paris') || from.includes('paris')) { fallbackKm = 405; fallbackMins = 270 }
+  else if (to.includes('amsterdam') || from.includes('amsterdam')) { fallbackKm = 215; fallbackMins = 145 }
+  else if (to.includes('utrecht') || from.includes('utrecht')) { fallbackKm = 180; fallbackMins = 120 }
+  else if (to.includes('brussels') || to.includes('bruxelles')) { fallbackKm = 120; fallbackMins = 85 }
+  else if (to.includes('eindhoven')) { fallbackKm = 90; fallbackMins = 60 }
+  else if (to.includes('heerlen') || from.includes('heerlen') || to.includes('hulsberg') || from.includes('hulsberg')) { fallbackKm = 12; fallbackMins = 14 }
+  else if (to.includes('maastricht') && from.includes('maastricht')) { fallbackKm = 8; fallbackMins = 15 }
 
-  const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(activeJob.value.fromFull || 'Maastricht, NL')}&destination=${encodeURIComponent(activeJob.value.toFull || 'Paris, France')}`
+  const distanceKm = includeGarageRoundTrip.value
+    ? (liveRouteResult.value.roundTripKm ?? Math.round(fallbackKm + 38))
+    : (liveRouteResult.value.directKm ?? fallbackKm)
+
+  const mins = includeGarageRoundTrip.value
+    ? (liveRouteResult.value.roundTripMins ?? Math.round(fallbackMins + 36))
+    : (liveRouteResult.value.directMins ?? fallbackMins)
+
+  const driveText = formatDriveDuration(mins)
+
+  const originStr = encodeURIComponent(activeJob.value.fromFull || 'Maastricht, NL')
+  const destStr = encodeURIComponent(activeJob.value.toFull || 'Maastricht, NL')
+  const hqStr = encodeURIComponent(GARAGE_HQ)
+
+  const googleMapsUrl = includeGarageRoundTrip.value
+    ? `https://www.google.com/maps/dir/?api=1&origin=${hqStr}&waypoints=${originStr}|${destStr}&destination=${hqStr}`
+    : `https://www.google.com/maps/dir/?api=1&origin=${originStr}&destination=${destStr}`
+
+  const embedMapUrl = includeGarageRoundTrip.value
+    ? `https://maps.google.com/maps?q=${encodeURIComponent(GARAGE_HQ + ' to ' + (activeJob.value.fromFull || '') + ' to ' + (activeJob.value.toFull || ''))}&t=&z=9&ie=UTF8&iwloc=&output=embed`
+    : `https://maps.google.com/maps?q=${encodeURIComponent((activeJob.value.fromFull || 'Maastricht') + ' to ' + (activeJob.value.toFull || 'Maastricht'))}&t=&z=10&ie=UTF8&iwloc=&output=embed`
 
   return {
     distanceKm,
     driveText,
-    googleMapsUrl
+    googleMapsUrl,
+    embedMapUrl,
+    isCalculating: liveRouteResult.value.isCalculating
   }
 })
 
@@ -1779,8 +2371,175 @@ const timelineStatusBadge = computed(() => {
   return { text: 'Estimated Schedule', class: 'bg-amber-100 text-amber-800' }
 })
 
+watch(() => props.job, (newJob) => {
+  const saved = newJob?.raw?.form_data?.custom_schedule
+  if (saved) {
+    customSchedule.value = {
+      arrived: saved.arrived || '',
+      loading: saved.loading || '',
+      driving: saved.driving || '',
+      unloading: saved.unloading || '',
+      assembly: saved.assembly || '',
+      completed: saved.completed || ''
+    }
+  } else {
+    customSchedule.value = { arrived: '', loading: '', driving: '', unloading: '', assembly: '', completed: '' }
+  }
+}, { immediate: true })
+
 const saveTimelineSchedule = () => {
+  if (activeJob.value?.id) {
+    emit('update-status', {
+      id: activeJob.value.id,
+      customSchedule: { ...customSchedule.value }
+    })
+  }
   showEditTimesModal.value = false
+}
+
+// --- Edit & Customize Invoice Modal State ---
+const showEditInvoiceModal = ref(false)
+const invoiceDraft = ref({
+  invNumber: '',
+  date: '',
+  vatRate: 21,
+  customer: '',
+  email: '',
+  address: '',
+  items: [],
+  notes: ''
+})
+
+const invoiceDraftSubtotal = computed(() => {
+  return (invoiceDraft.value.items || []).reduce((sum, item) => sum + (Number(item.netAmount) || 0), 0)
+})
+
+const invoiceDraftVat = computed(() => {
+  return Math.round(invoiceDraftSubtotal.value * ((Number(invoiceDraft.value.vatRate) || 0) / 100) * 100) / 100
+})
+
+const invoiceDraftTotal = computed(() => {
+  return Math.round((invoiceDraftSubtotal.value + invoiceDraftVat.value) * 100) / 100
+})
+
+const openEditInvoiceModal = () => {
+  const job = activeJob.value
+  const exVat = revenueExVat.value
+  invoiceDraft.value = {
+    invNumber: `INV-2026-${job.ref || '1101'}`,
+    date: new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }),
+    vatRate: 21,
+    customer: job.customer || 'Valued Client',
+    email: job.raw?.form_data?.email || job.email || '',
+    address: job.fromFull || 'Maastricht, NL',
+    items: [
+      { description: `Moving Execution & Labor Crew (${job.package || 'Standard'})`, category: 'Relocation Service', netAmount: Math.round(exVat * 0.75 * 100) / 100 },
+      { description: `Route Transit & Fuel (${routeMetrics.value.distanceKm} km)`, category: 'Transport', netAmount: Math.round(exVat * 0.15 * 100) / 100 },
+      { description: 'Protective Equipment & Cargo Insurance', category: 'Materials & Cover', netAmount: Math.round(exVat * 0.10 * 100) / 100 }
+    ],
+    notes: 'Payment due within 14 days via IBAN NL44 RABO 0123 4567 89 (MoveIt Maastricht B.V.).'
+  }
+  showEditInvoiceModal.value = true
+}
+
+const addInvoiceLineItem = () => {
+  invoiceDraft.value.items.push({ description: 'Additional Service', category: 'Extra', netAmount: 50 })
+}
+
+const generateEditedInvoicePDF = () => {
+  try {
+    const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' })
+    const redColor = [220, 38, 38]
+    const darkColor = [15, 23, 42]
+    const grayColor = [100, 116, 139]
+    const lightBg = [248, 250, 252]
+
+    doc.setFillColor(...darkColor)
+    doc.rect(0, 0, 210, 6, 'F')
+
+    try {
+      doc.addImage(MOVEIT_LOGO_BASE64, 'PNG', 14, 11, 46, 10.24)
+    } catch (e) {
+      doc.setFont('helvetica', 'bold')
+      doc.setFontSize(16)
+      doc.setTextColor(...redColor)
+      doc.text('move-it', 14, 20)
+    }
+
+    doc.setFont('helvetica', 'normal')
+    doc.setFontSize(7.5)
+    doc.setTextColor(...grayColor)
+    doc.text('Premium Moving & Logistics Maastricht B.V.', 14, 26)
+
+    doc.setFontSize(8)
+    doc.text('MoveIt Maastricht B.V.', 196, 16, { align: 'right' })
+    doc.text('Oranjeplein 35D, 6224 KV Maastricht', 196, 20, { align: 'right' })
+    doc.text('Email: info@moveitmaastricht.nl | +31 6 21713503', 196, 24, { align: 'right' })
+    doc.text('KvK: 84920194 • BTW/VAT: NL863412345B01', 196, 28, { align: 'right' })
+
+    doc.setDrawColor(226, 232, 240)
+    doc.line(14, 32, 196, 32)
+
+    doc.setFont('helvetica', 'bold')
+    doc.setFontSize(16)
+    doc.setTextColor(...darkColor)
+    doc.text('OFFICIAL TAX INVOICE • FACTUUR', 14, 42)
+
+    doc.setFont('helvetica', 'normal')
+    doc.setFontSize(8.5)
+    doc.setTextColor(...grayColor)
+    doc.text(`Invoice Number: ${invoiceDraft.value.invNumber}`, 14, 48)
+    doc.text(`Invoice Date: ${invoiceDraft.value.date}`, 14, 53)
+    doc.text(`Client: ${invoiceDraft.value.customer}`, 14, 58)
+    if (invoiceDraft.value.address) doc.text(`Address: ${invoiceDraft.value.address}`, 14, 63)
+
+    const bodyRows = invoiceDraft.value.items.map((it, idx) => [
+      String(idx + 1),
+      it.description,
+      it.category,
+      `${invoiceDraft.value.vatRate}%`,
+      `€${Number(it.netAmount || 0).toFixed(2)}`
+    ])
+
+    const autoTableFn = autoTable.default || autoTable
+    autoTableFn(doc, {
+      startY: 70,
+      head: [['#', 'Service / Description', 'Category', 'VAT', 'Net Amount']],
+      body: bodyRows,
+      theme: 'grid',
+      headStyles: { fillColor: darkColor, textColor: [255, 255, 255], fontStyle: 'bold', fontSize: 8 },
+      bodyStyles: { fontSize: 8, textColor: darkColor },
+      columnStyles: { 0: { cellWidth: 10, halign: 'center' }, 4: { halign: 'right', fontStyle: 'bold' } },
+      margin: { left: 14, right: 14 }
+    })
+
+    const finalY = doc.lastAutoTable?.finalY || 140
+    doc.setFillColor(...lightBg)
+    doc.roundedRect(120, finalY + 8, 76, 28, 2, 2, 'FD')
+    doc.setFontSize(8.5)
+    doc.setTextColor(...darkColor)
+    doc.text('Subtotal (Excl. VAT):', 124, finalY + 15)
+    doc.text(`€${invoiceDraftSubtotal.value.toFixed(2)}`, 192, finalY + 15, { align: 'right' })
+    doc.text(`VAT (${invoiceDraft.value.vatRate}%):`, 124, finalY + 21)
+    doc.text(`€${invoiceDraftVat.value.toFixed(2)}`, 192, finalY + 21, { align: 'right' })
+    doc.setFont('helvetica', 'bold')
+    doc.setFontSize(10)
+    doc.setTextColor(...redColor)
+    doc.text('TOTAL (EUR):', 124, finalY + 30)
+    doc.text(`€${invoiceDraftTotal.value.toFixed(2)}`, 192, finalY + 30, { align: 'right' })
+
+    if (invoiceDraft.value.notes) {
+      doc.setFont('helvetica', 'normal')
+      doc.setFontSize(7.5)
+      doc.setTextColor(...grayColor)
+      doc.text(doc.splitTextToSize(invoiceDraft.value.notes, 100), 14, finalY + 14)
+    }
+
+    doc.save(`MoveIt_${invoiceDraft.value.invNumber}.pdf`)
+    showEditInvoiceModal.value = false
+  } catch (err) {
+    console.error('Error generating custom invoice:', err)
+  }
 }
 
 const applyPreset = (preset) => {

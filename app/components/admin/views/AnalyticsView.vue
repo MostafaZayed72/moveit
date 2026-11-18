@@ -147,52 +147,94 @@
     <!-- TAB 1: OVERVIEW CHARTS -->
     <div v-if="activeReportTab === 'Overview'" class="space-y-4">
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
-        <!-- Monthly Revenue & Profit -->
-        <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs flex flex-col justify-between">
-          <div class="flex items-center justify-between mb-4">
+        <!-- Monthly Revenue & Profit (Real Orders + Thicker Bars + Instant Tooltip) -->
+        <div class="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-xs flex flex-col justify-between">
+          <div class="flex items-center justify-between mb-2">
             <h3 class="text-sm font-black text-slate-900">Monthly Revenue & Profit</h3>
             <div class="flex items-center gap-3 text-[10px] font-semibold">
-              <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-xs bg-blue-500"></span>Revenue</span>
-              <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-xs bg-red-500"></span>Expenses</span>
-              <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-xs bg-emerald-500"></span>Profit</span>
+              <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-xs bg-blue-500"></span>Revenue</span>
+              <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-xs bg-red-500"></span>Expenses</span>
+              <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-xs bg-emerald-500"></span>Profit</span>
             </div>
           </div>
-          <div class="h-44 flex items-end justify-between gap-1.5 border-b border-slate-100 pt-4 px-1">
-            <div v-for="m in monthlyStats" :key="m.month" class="flex-1 flex flex-col items-center h-full justify-end">
-              <div class="w-full flex items-end justify-center gap-0.5 h-full">
-                <div class="w-1.5 bg-blue-500 rounded-t-xs" :style="{ height: m.rev + '%' }"></div>
-                <div class="w-1.5 bg-red-500 rounded-t-xs" :style="{ height: m.exp + '%' }"></div>
-                <div class="w-1 bg-emerald-500 rounded-t-xs" :style="{ height: m.prof + '%' }"></div>
+          <div class="h-40 flex items-end justify-between gap-1 border-b border-slate-100 pt-6 px-1">
+            <div 
+              v-for="(m, idx) in monthlyStats" 
+              :key="m.month" 
+              @mouseenter="hoveredAnalyticsMonthIdx = idx"
+              @mouseleave="hoveredAnalyticsMonthIdx = null"
+              class="flex-1 flex flex-col items-center h-full justify-end relative cursor-pointer"
+            >
+              <!-- Instant Floating Tooltip -->
+              <div 
+                v-if="hoveredAnalyticsMonthIdx === idx"
+                class="absolute -top-12 left-1/2 -translate-x-1/2 z-30 bg-slate-900 text-white px-2.5 py-1 rounded-lg shadow-lg pointer-events-none whitespace-nowrap text-center"
+              >
+                <div class="text-[10px] font-black">{{ m.month }}: €{{ Math.round(m.revEur).toLocaleString() }}</div>
+                <div class="text-[9px] text-emerald-300 font-semibold">Profit: €{{ Math.round(m.profEur).toLocaleString() }} • {{ m.count }} jobs</div>
+                <div class="w-2 h-2 bg-slate-900 rotate-45 absolute -bottom-1 left-1/2 -translate-x-1/2"></div>
               </div>
-              <span class="text-[9px] text-slate-400 mt-1.5">{{ m.month }}</span>
+              <div class="w-full flex items-end justify-center gap-0.5 h-full rounded-t transition-colors" :class="hoveredAnalyticsMonthIdx === idx ? 'bg-slate-50' : ''">
+                <div class="w-2 bg-blue-500 rounded-t transition-all duration-150" :style="{ height: m.rev + '%' }"></div>
+                <div class="w-2 bg-red-500 rounded-t transition-all duration-150" :style="{ height: m.exp + '%' }"></div>
+                <div class="w-1.5 bg-emerald-500 rounded-t transition-all duration-150" :style="{ height: m.prof + '%' }"></div>
+              </div>
+              <span class="text-[9px] font-semibold mt-1" :class="hoveredAnalyticsMonthIdx === idx ? 'text-slate-900 font-bold' : 'text-slate-400'">{{ m.month }}</span>
             </div>
           </div>
         </div>
 
-        <!-- Jobs by Service Type -->
-        <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs flex flex-col justify-between">
-          <h3 class="text-sm font-black text-slate-900 mb-3">Jobs by Service Type</h3>
-          <div class="flex items-center justify-around gap-4 my-auto">
-            <div class="relative w-32 h-32 flex items-center justify-center">
-              <svg class="w-full h-full -rotate-90" viewBox="0 0 100 100">
+        <!-- Jobs by Service Type (Real Interactive Power BI Donut) -->
+        <div class="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-xs flex flex-col justify-between">
+          <div class="flex items-center justify-between mb-2">
+            <h3 class="text-sm font-black text-slate-900">Jobs by Service Type</h3>
+            <span class="text-[10px] text-slate-400 font-medium">Hover slice</span>
+          </div>
+          <div class="flex items-center justify-around gap-3 my-auto">
+            <div class="relative w-32 h-32 flex items-center justify-center flex-shrink-0">
+              <svg class="w-full h-full -rotate-90 overflow-visible" viewBox="0 0 100 100">
                 <circle cx="50" cy="50" r="38" fill="none" stroke="#F1F5F9" stroke-width="14"/>
-                <circle cx="50" cy="50" r="38" fill="none" stroke="#EF4444" stroke-width="14" stroke-dasharray="100 238" stroke-dashoffset="0"/>
-                <circle cx="50" cy="50" r="38" fill="none" stroke="#3B82F6" stroke-width="14" stroke-dasharray="66 238" stroke-dashoffset="-100"/>
-                <circle cx="50" cy="50" r="38" fill="none" stroke="#10B981" stroke-width="14" stroke-dasharray="30 238" stroke-dashoffset="-166"/>
-                <circle cx="50" cy="50" r="38" fill="none" stroke="#F59E0B" stroke-width="14" stroke-dasharray="22 238" stroke-dashoffset="-196"/>
-                <circle cx="50" cy="50" r="38" fill="none" stroke="#8B5CF6" stroke-width="14" stroke-dasharray="20 238" stroke-dashoffset="-218"/>
+                <circle 
+                  v-for="cat in analyticsCategoryStats.items"
+                  :key="cat.key"
+                  cx="50" cy="50" r="38" fill="none" 
+                  :stroke="cat.color" 
+                  :stroke-width="hoveredAnalyticsCatKey === cat.key ? 18 : 14" 
+                  :stroke-dasharray="`${cat.strokeDash} 239`" 
+                  :stroke-dashoffset="`-${cat.offset}`"
+                  :opacity="hoveredAnalyticsCatKey && hoveredAnalyticsCatKey !== cat.key ? 0.3 : 1"
+                  @mouseenter="hoveredAnalyticsCatKey = cat.key"
+                  @mouseleave="hoveredAnalyticsCatKey = null"
+                  class="transition-all duration-150 cursor-pointer"
+                />
               </svg>
-              <div class="absolute inset-0 flex flex-col items-center justify-center">
-                <span class="text-lg font-black text-slate-900 leading-none">{{ periodMetrics.jobs }}</span>
-                <span class="text-[10px] text-slate-400">Jobs</span>
+              <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none text-center px-2">
+                <template v-if="activeHoveredAnalyticsCat">
+                  <span class="text-sm font-black text-slate-900 leading-tight">{{ activeHoveredAnalyticsCat.count }}</span>
+                  <span class="text-[9px] font-bold leading-tight truncate max-w-[75px]" :style="{ color: activeHoveredAnalyticsCat.color }">{{ activeHoveredAnalyticsCat.label }}</span>
+                  <span class="text-[9px] font-bold text-slate-500">€{{ Math.round(activeHoveredAnalyticsCat.revenue).toLocaleString() }}</span>
+                </template>
+                <template v-else>
+                  <span class="text-lg font-black text-slate-900 leading-none">{{ analyticsCategoryStats.totalJobs }}</span>
+                  <span class="text-[10px] text-slate-400">Jobs</span>
+                </template>
               </div>
             </div>
-            <div class="space-y-1.5 text-xs flex-1 max-w-[160px]">
-              <div class="flex items-center justify-between"><span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-red-500"></span>Local Move</span><span class="font-bold">42%</span></div>
-              <div class="flex items-center justify-between"><span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-blue-500"></span>National Move</span><span class="font-bold">28%</span></div>
-              <div class="flex items-center justify-between"><span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>International</span><span class="font-bold">12%</span></div>
-              <div class="flex items-center justify-between"><span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span>Packing Service</span><span class="font-bold">8%</span></div>
-              <div class="flex items-center justify-between"><span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-purple-500"></span>Storage</span><span class="font-bold">6%</span></div>
+            <div class="space-y-1 text-xs flex-1 max-w-[190px]">
+              <div 
+                v-for="cat in analyticsCategoryStats.items" 
+                :key="cat.key"
+                @mouseenter="hoveredAnalyticsCatKey = cat.key"
+                @mouseleave="hoveredAnalyticsCatKey = null"
+                class="flex items-center justify-between px-1.5 py-0.5 rounded cursor-pointer transition-colors"
+                :class="hoveredAnalyticsCatKey === cat.key ? 'bg-slate-100' : 'hover:bg-slate-50'"
+              >
+                <span class="flex items-center gap-1.5 font-semibold text-slate-700 truncate">
+                  <span class="w-2.5 h-2.5 rounded-full flex-shrink-0" :style="{ backgroundColor: cat.color }"></span>
+                  <span class="truncate">{{ cat.label }}</span>
+                </span>
+                <span class="font-bold text-slate-900 ml-1 whitespace-nowrap">{{ cat.count }} ({{ cat.pct }}%)</span>
+              </div>
             </div>
           </div>
         </div>
@@ -982,20 +1024,94 @@ const activeSubTabHighlightCards = computed(() => {
   }
 })
 
-const monthlyStats = [
-  { month: 'Jan', rev: 28, exp: 16, prof: 18 },
-  { month: 'Feb', rev: 34, exp: 20, prof: 22 },
-  { month: 'Mar', rev: 48, exp: 26, prof: 32 },
-  { month: 'Apr', rev: 44, exp: 24, prof: 28 },
-  { month: 'May', rev: 56, exp: 32, prof: 38 },
-  { month: 'Jun', rev: 62, exp: 34, prof: 44 },
-  { month: 'Jul', rev: 82, exp: 42, prof: 58 },
-  { month: 'Aug', rev: 92, exp: 46, prof: 64 },
-  { month: 'Sep', rev: 86, exp: 44, prof: 56 },
-  { month: 'Oct', rev: 58, exp: 32, prof: 38 },
-  { month: 'Nov', rev: 52, exp: 28, prof: 34 },
-  { month: 'Dec', rev: 46, exp: 24, prof: 30 }
-]
+const hoveredAnalyticsMonthIdx = ref(null)
+const hoveredAnalyticsCatKey = ref(null)
+
+const monthlyStats = computed(() => {
+  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+  const revArr = Array(12).fill(0)
+  const expArr = Array(12).fill(0)
+  const countArr = Array(12).fill(0)
+
+  ;(props.orders || []).forEach(o => {
+    const rev = Number(o.estValue || 450)
+    const exp = Number(o.jobCosts?.total || Math.round(rev * 0.35))
+    const dStr = o.movingDate || o.raw?.form_data?.date || o.raw?.created_at
+    if (dStr) {
+      const d = new Date(dStr)
+      if (!isNaN(d.getTime())) {
+        const m = d.getMonth()
+        revArr[m] += rev
+        expArr[m] += exp
+        countArr[m]++
+      }
+    }
+  })
+
+  const maxRev = Math.max(...revArr, 5000)
+  return months.map((m, idx) => {
+    const r = revArr[idx]
+    const e = expArr[idx]
+    const p = Math.max(0, r - e)
+    return {
+      month: m,
+      rev: r > 0 ? Math.min(95, Math.max(12, Math.round((r / maxRev) * 90))) : 8,
+      exp: e > 0 ? Math.min(85, Math.max(8, Math.round((e / maxRev) * 90))) : 4,
+      prof: p > 0 ? Math.min(85, Math.max(8, Math.round((p / maxRev) * 90))) : 4,
+      revEur: r,
+      expEur: e,
+      profEur: p,
+      count: countArr[idx]
+    }
+  })
+})
+
+const analyticsCategoryStats = computed(() => {
+  const cats = {
+    local: { label: 'Local Move', count: 0, revenue: 0, color: '#EF4444', pct: 0 },
+    national: { label: 'National Move', count: 0, revenue: 0, color: '#3B82F6', pct: 0 },
+    international: { label: 'International', count: 0, revenue: 0, color: '#10B981', pct: 0 },
+    business: { label: 'Business Move', count: 0, revenue: 0, color: '#F59E0B', pct: 0 },
+    student: { label: 'Student Move', count: 0, revenue: 0, color: '#8B5CF6', pct: 0 }
+  }
+  let totalJobs = 0
+  ;(props.orders || []).forEach(o => {
+    totalJobs++
+    const rev = Number(o.estValue || 0)
+    const from = String(o.fromFull || o.raw?.form_data?.from || '').toLowerCase()
+    const to = String(o.toFull || o.raw?.form_data?.to || '').toLowerCase()
+    const pkg = String(o.package || o.raw?.form_data?.package || '').toLowerCase()
+    const name = String(o.customer || '').toLowerCase()
+    if (pkg.includes('business') || pkg.includes('office') || name.includes('bv')) {
+      cats.business.count++; cats.business.revenue += rev
+    } else if (pkg.includes('student') || name.includes('student') || rev < 350) {
+      cats.student.count++; cats.student.revenue += rev
+    } else if (from.includes('belgi') || to.includes('belgi') || from.includes('germany') || to.includes('germany')) {
+      cats.international.count++; cats.international.revenue += rev
+    } else if ((from.includes('maastricht') && to.includes('maastricht')) || (from && from === to)) {
+      cats.local.count++; cats.local.revenue += rev
+    } else {
+      cats.national.count++; cats.national.revenue += rev
+    }
+  })
+  const safeJobs = totalJobs > 0 ? totalJobs : 1
+  const circ = 238.76
+  let cum = 0
+  const items = ['local', 'national', 'international', 'business', 'student'].map(key => {
+    const item = cats[key]
+    const pct = Math.round((item.count / safeJobs) * 100)
+    const strokeDash = Math.round((pct / 100) * circ)
+    const offset = cum
+    cum += strokeDash
+    return { key, ...item, pct, strokeDash, offset }
+  })
+  return { items, totalJobs }
+})
+
+const activeHoveredAnalyticsCat = computed(() => {
+  if (!hoveredAnalyticsCatKey.value) return null
+  return analyticsCategoryStats.value.items.find(c => c.key === hoveredAnalyticsCatKey.value) || null
+})
 
 const cityStats = [
   { city: 'Maastricht', jobs: 42, pct: 100, color: 'bg-red-500' },

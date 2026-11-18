@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-[#F8FAFC] text-slate-900 font-sans flex antialiased selection:bg-red-500 selection:text-white print:block print:bg-white print:min-h-0 print:h-auto print:overflow-visible">
+  <div class="admin-inter font-inter min-h-screen bg-[#F8FAFC] text-slate-900 flex antialiased selection:bg-red-500 selection:text-white print:block print:bg-white print:min-h-0 print:h-auto print:overflow-visible">
     <!-- 1. Left Sidebar Navigation (Dark Slate & Vibrant Red) -->
     <AdminSidebar 
       class="print:hidden"
@@ -24,7 +24,7 @@
       />
 
       <!-- Content Views Body -->
-      <main class="flex-1 p-3 sm:p-5 lg:p-6 max-w-[1750px] w-full mx-auto print:p-0 print:m-0 print:max-w-none">
+      <main class="flex-1 p-3 sm:p-4 max-w-[1750px] w-full mx-auto print:p-0 print:m-0 print:max-w-none">
         <Transition name="fade" mode="out-in">
           <!-- Screen 1: Overview Dashboard (1 Dashboard.png) -->
           <OverviewView 

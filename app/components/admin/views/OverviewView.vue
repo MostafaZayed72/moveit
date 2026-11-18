@@ -1,18 +1,18 @@
 <template>
-  <div class="space-y-6">
+  <div class="space-y-3.5">
     <!-- Greeting & Date Range -->
-    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
       <div>
-        <h1 class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight font-sans">
+        <h1 class="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight font-sans leading-tight">
           {{ greetingText }}, Admin!
         </h1>
-        <p class="text-xs text-slate-500 font-medium mt-1">
+        <p class="text-[11px] text-slate-500 font-medium mt-0.5">
           Here's what's happening with MoveIt Maastricht today.
         </p>
       </div>
 
       <!-- Date Range Selector Pill -->
-      <button class="flex items-center gap-2 px-3.5 py-2 bg-white hover:bg-slate-50 text-slate-700 text-xs font-semibold rounded-xl border border-slate-200/90 transition-colors shadow-xs cursor-pointer">
+      <button class="flex items-center gap-2 px-3 py-1.5 bg-white hover:bg-slate-50 text-slate-700 text-xs font-semibold rounded-xl border border-slate-200/90 transition-colors shadow-xs cursor-pointer">
         <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
         </svg>
@@ -23,26 +23,26 @@
       </button>
     </div>
 
-    <!-- 1. Top 6 KPI Cards Grid (Interactive Power BI-Style Drill-down) -->
-    <div class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-4 sm:gap-5">
+    <!-- 1. Top 6 KPI Cards Grid (Compact Proportions & Power BI-Style Drill-down) -->
+    <div class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-3.5">
       <!-- 1. Total Revenue -->
       <div 
         @click="openKpiBreakdown('revenue')"
-        class="bg-white p-5 sm:p-6 rounded-2xl border border-slate-200/80 shadow-xs flex flex-col justify-between hover:shadow-md hover:border-emerald-300 transition-all cursor-pointer group"
+        class="bg-white p-3.5 sm:p-4 rounded-2xl border border-slate-200/80 shadow-xs flex flex-col justify-between hover:shadow-md hover:border-emerald-300 transition-all cursor-pointer group"
         title="Click to inspect calculation & contributing orders"
       >
-        <div class="flex items-center justify-between">
-          <span class="text-xs font-bold text-slate-500 group-hover:text-slate-800">Total Revenue</span>
-          <span class="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center flex-shrink-0 shadow-xs group-hover:scale-105 transition-transform">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div class="flex items-center justify-between gap-2">
+          <span class="text-xs font-semibold text-slate-500 group-hover:text-slate-800 truncate">Total Revenue</span>
+          <span class="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
+            <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
             </svg>
           </span>
         </div>
-        <div class="mt-4">
-          <div class="text-2xl sm:text-3xl font-black text-slate-900 font-sans tracking-tight">€{{ Math.round(totalRevenue).toLocaleString() }}</div>
-          <div class="mt-1.5 flex items-center justify-between text-xs">
-            <div class="flex items-center gap-1.5">
+        <div class="mt-2.5">
+          <div class="text-2xl sm:text-[26px] font-extrabold text-slate-900 font-sans tracking-tight leading-none">€{{ Math.round(totalRevenue).toLocaleString() }}</div>
+          <div class="mt-1.5 flex items-center justify-between text-[11px]">
+            <div class="flex items-center gap-1">
               <span class="font-bold text-emerald-600">↗ +18%</span>
               <span class="text-slate-400">vs. last mo</span>
             </div>
@@ -54,21 +54,21 @@
       <!-- 2. Job Contribution -->
       <div 
         @click="openKpiBreakdown('contribution')"
-        class="bg-white p-5 sm:p-6 rounded-2xl border border-slate-200/80 shadow-xs flex flex-col justify-between hover:shadow-md hover:border-emerald-300 transition-all cursor-pointer group"
+        class="bg-white p-3.5 sm:p-4 rounded-2xl border border-slate-200/80 shadow-xs flex flex-col justify-between hover:shadow-md hover:border-emerald-300 transition-all cursor-pointer group"
         title="Click to inspect net contribution logic & direct costs"
       >
-        <div class="flex items-center justify-between">
-          <span class="text-xs font-bold text-slate-500 group-hover:text-slate-800">Job Contribution</span>
-          <span class="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center flex-shrink-0 shadow-xs group-hover:scale-105 transition-transform">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div class="flex items-center justify-between gap-2">
+          <span class="text-xs font-semibold text-slate-500 group-hover:text-slate-800 truncate">Job Contribution</span>
+          <span class="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
+            <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"/>
             </svg>
           </span>
         </div>
-        <div class="mt-4">
-          <div class="text-2xl sm:text-3xl font-black text-slate-900 font-sans tracking-tight">€{{ Math.round(jobContribution).toLocaleString() }}</div>
-          <div class="mt-1.5 flex items-center justify-between text-xs">
-            <div class="flex items-center gap-1.5">
+        <div class="mt-2.5">
+          <div class="text-2xl sm:text-[26px] font-extrabold text-slate-900 font-sans tracking-tight leading-none">€{{ Math.round(jobContribution).toLocaleString() }}</div>
+          <div class="mt-1.5 flex items-center justify-between text-[11px]">
+            <div class="flex items-center gap-1">
               <span class="font-bold text-emerald-600">↗ +22%</span>
               <span class="text-slate-400">vs. last mo</span>
             </div>
@@ -80,21 +80,21 @@
       <!-- 3. Active Leads -->
       <div 
         @click="openKpiBreakdown('leads')"
-        class="bg-white p-5 sm:p-6 rounded-2xl border border-slate-200/80 shadow-xs flex flex-col justify-between hover:shadow-md hover:border-rose-300 transition-all cursor-pointer group"
+        class="bg-white p-3.5 sm:p-4 rounded-2xl border border-slate-200/80 shadow-xs flex flex-col justify-between hover:shadow-md hover:border-rose-300 transition-all cursor-pointer group"
         title="Click to view active pipeline leads"
       >
-        <div class="flex items-center justify-between">
-          <span class="text-xs font-bold text-slate-500 group-hover:text-slate-800">Active Leads</span>
-          <span class="w-12 h-12 rounded-2xl bg-rose-50 text-rose-500 flex items-center justify-center flex-shrink-0 shadow-xs group-hover:scale-105 transition-transform">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div class="flex items-center justify-between gap-2">
+          <span class="text-xs font-semibold text-slate-500 group-hover:text-slate-800 truncate">Active Leads</span>
+          <span class="w-9 h-9 rounded-xl bg-rose-50 text-rose-500 flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
+            <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
             </svg>
           </span>
         </div>
-        <div class="mt-4">
-          <div class="text-2xl sm:text-3xl font-black text-slate-900 font-sans tracking-tight">{{ activeLeadsCount }}</div>
-          <div class="mt-1.5 flex items-center justify-between text-xs">
-            <span class="font-bold text-slate-700">{{ activeLeadsCount }} in pipeline</span>
+        <div class="mt-2.5">
+          <div class="text-2xl sm:text-[26px] font-extrabold text-slate-900 font-sans tracking-tight leading-none">{{ activeLeadsCount }}</div>
+          <div class="mt-1.5 flex items-center justify-between text-[11px]">
+            <span class="font-semibold text-slate-600">{{ activeLeadsCount }} in pipeline</span>
             <span class="text-[10px] font-bold text-rose-600 opacity-0 group-hover:opacity-100 transition-opacity">View →</span>
           </div>
         </div>
@@ -103,20 +103,20 @@
       <!-- 4. Pending Quotations -->
       <div 
         @click="openKpiBreakdown('quotes')"
-        class="bg-white p-5 sm:p-6 rounded-2xl border border-slate-200/80 shadow-xs flex flex-col justify-between hover:shadow-md hover:border-amber-300 transition-all cursor-pointer group"
+        class="bg-white p-3.5 sm:p-4 rounded-2xl border border-slate-200/80 shadow-xs flex flex-col justify-between hover:shadow-md hover:border-amber-300 transition-all cursor-pointer group"
         title="Click to inspect pending quotations"
       >
-        <div class="flex items-center justify-between">
-          <span class="text-xs font-bold text-slate-500 group-hover:text-slate-800">Pending Quotations</span>
-          <span class="w-12 h-12 rounded-2xl bg-amber-50 text-amber-500 flex items-center justify-center flex-shrink-0 shadow-xs group-hover:scale-105 transition-transform">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div class="flex items-center justify-between gap-2">
+          <span class="text-xs font-semibold text-slate-500 group-hover:text-slate-800 truncate">Pending Quotations</span>
+          <span class="w-9 h-9 rounded-xl bg-amber-50 text-amber-500 flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
+            <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
             </svg>
           </span>
         </div>
-        <div class="mt-4">
-          <div class="text-2xl sm:text-3xl font-black text-slate-900 font-sans tracking-tight">{{ pendingQuotesCount }}</div>
-          <div class="mt-1.5 flex items-center justify-between text-xs">
+        <div class="mt-2.5">
+          <div class="text-2xl sm:text-[26px] font-extrabold text-slate-900 font-sans tracking-tight leading-none">{{ pendingQuotesCount }}</div>
+          <div class="mt-1.5 flex items-center justify-between text-[11px]">
             <span class="font-bold text-amber-600">▲ {{ pendingQuotesCount }} action req.</span>
             <span class="text-[10px] font-bold text-amber-600 opacity-0 group-hover:opacity-100 transition-opacity">View →</span>
           </div>
@@ -126,22 +126,22 @@
       <!-- 5. Confirmed Jobs -->
       <div 
         @click="openKpiBreakdown('confirmed')"
-        class="bg-white p-5 sm:p-6 rounded-2xl border border-slate-200/80 shadow-xs flex flex-col justify-between hover:shadow-md hover:border-sky-300 transition-all cursor-pointer group"
+        class="bg-white p-3.5 sm:p-4 rounded-2xl border border-slate-200/80 shadow-xs flex flex-col justify-between hover:shadow-md hover:border-sky-300 transition-all cursor-pointer group"
         title="Click to inspect confirmed & active moving jobs"
       >
-        <div class="flex items-center justify-between">
-          <span class="text-xs font-bold text-slate-500 group-hover:text-slate-800">Confirmed Jobs</span>
-          <span class="w-12 h-12 rounded-2xl bg-sky-50 text-sky-600 flex items-center justify-center flex-shrink-0 shadow-xs group-hover:scale-105 transition-transform">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div class="flex items-center justify-between gap-2">
+          <span class="text-xs font-semibold text-slate-500 group-hover:text-slate-800 truncate">Confirmed Jobs</span>
+          <span class="w-9 h-9 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
+            <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z"/>
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0"/>
             </svg>
           </span>
         </div>
-        <div class="mt-4">
-          <div class="text-2xl sm:text-3xl font-black text-slate-900 font-sans tracking-tight">{{ confirmedJobsCount }}</div>
-          <div class="mt-1.5 flex items-center justify-between text-xs">
-            <span class="font-bold text-slate-600">▲ {{ confirmedJobsCount }} active moves</span>
+        <div class="mt-2.5">
+          <div class="text-2xl sm:text-[26px] font-extrabold text-slate-900 font-sans tracking-tight leading-none">{{ confirmedJobsCount }}</div>
+          <div class="mt-1.5 flex items-center justify-between text-[11px]">
+            <span class="font-semibold text-slate-600">▲ {{ confirmedJobsCount }} active moves</span>
             <span class="text-[10px] font-bold text-sky-600 opacity-0 group-hover:opacity-100 transition-opacity">View →</span>
           </div>
         </div>
@@ -150,23 +150,22 @@
       <!-- 6. Reviews (This Month) -->
       <div 
         @click="openKpiBreakdown('completed')"
-        class="bg-white p-5 sm:p-6 rounded-2xl border border-slate-200/80 shadow-xs flex flex-col justify-between hover:shadow-md hover:border-amber-300 transition-all cursor-pointer group"
+        class="bg-white p-3.5 sm:p-4 rounded-2xl border border-slate-200/80 shadow-xs flex flex-col justify-between hover:shadow-md hover:border-amber-300 transition-all cursor-pointer group"
         title="Click to view completed jobs & reviews"
       >
-        <div class="flex items-center justify-between">
-          <span class="text-xs font-bold text-slate-500 group-hover:text-slate-800">Reviews & Rating</span>
-          <span class="w-12 h-12 rounded-2xl bg-amber-50 text-amber-500 flex items-center justify-center flex-shrink-0 shadow-xs group-hover:scale-105 transition-transform">
-            <svg class="w-6.5 h-6.5 fill-amber-400 text-amber-400 filter drop-shadow-xs" viewBox="0 0 20 20">
+        <div class="flex items-center justify-between gap-2">
+          <span class="text-xs font-semibold text-slate-500 group-hover:text-slate-800 truncate">Reviews & Rating</span>
+          <span class="w-9 h-9 rounded-xl bg-amber-50 text-amber-500 flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
+            <svg class="w-5 h-5 fill-amber-400 text-amber-400" viewBox="0 0 20 20">
               <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
             </svg>
           </span>
         </div>
-        <div class="mt-4">
-          <div class="text-2xl sm:text-3xl font-black text-slate-900 font-sans tracking-tight">4.9</div>
-          <!-- Big, Prominent Golden Rating Stars Row -->
-          <div class="mt-2 flex items-center justify-between gap-1">
+        <div class="mt-2.5">
+          <div class="text-2xl sm:text-[26px] font-extrabold text-slate-900 font-sans tracking-tight leading-none">4.9</div>
+          <div class="mt-1.5 flex items-center justify-between gap-1">
             <div class="flex items-center gap-0.5 text-amber-400">
-              <svg v-for="i in 5" :key="i" class="w-4 h-4 fill-amber-400 text-amber-400 filter drop-shadow-xs" viewBox="0 0 20 20">
+              <svg v-for="i in 5" :key="i" class="w-3.5 h-3.5 fill-amber-400 text-amber-400" viewBox="0 0 20 20">
                 <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
               </svg>
             </div>
@@ -176,15 +175,15 @@
       </div>
     </div>
 
-    <!-- 2. Middle 3 Charts Row (Calculated from Real Database Data) -->
-    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-12 gap-5">
+    <!-- 2. Middle 3 Charts Row (Compact Height & Thicker Bars) -->
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-12 gap-3.5">
       <!-- Chart 1: Monthly Revenue (4 Cols) -->
-      <div class="xl:col-span-4 bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs flex flex-col justify-between">
+      <div class="xl:col-span-4 bg-white p-4 rounded-2xl border border-slate-200/80 shadow-xs flex flex-col justify-between">
         <div class="flex items-start justify-between">
           <div>
             <h2 class="text-xs font-bold text-slate-800">Monthly Revenue</h2>
-            <div class="mt-1 flex items-center gap-2">
-              <span class="text-xl font-black text-slate-900 font-sans tracking-tight">€{{ Math.round(totalRevenue).toLocaleString() }}</span>
+            <div class="mt-0.5 flex items-center gap-2">
+              <span class="text-lg font-extrabold text-slate-900 font-sans tracking-tight">€{{ Math.round(totalRevenue).toLocaleString() }}</span>
               <span class="text-[11px] font-bold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded">↗ +18%</span>
             </div>
           </div>
@@ -201,9 +200,9 @@
           </div>
         </div>
 
-        <!-- Bar Chart Visual (Dynamic Real Months + Instant Top Tooltip) -->
-        <div class="h-44 flex flex-col justify-between pt-8">
-          <div class="relative flex-1 flex items-end justify-between gap-1.5 px-2 border-b border-slate-100">
+        <!-- Bar Chart Visual (Dynamic Real Months + Thicker Bars + Instant Top Tooltip) -->
+        <div class="h-36 flex flex-col justify-between pt-6">
+          <div class="relative flex-1 flex items-end justify-between gap-1 px-2 border-b border-slate-100">
             <!-- Y-Axis Gridlines & Labels -->
             <div class="absolute inset-x-0 top-0 border-b border-slate-100/70 flex justify-start text-[9px] text-slate-400 -mt-2 pointer-events-none"><span>€20K</span></div>
             <div class="absolute inset-x-0 top-1/3 border-b border-slate-100/70 flex justify-start text-[9px] text-slate-400 -mt-2 pointer-events-none"><span>€15K</span></div>
@@ -231,29 +230,29 @@
 
               <div class="w-full flex items-end justify-center gap-0.5 h-full pb-0.5 rounded-t transition-colors" :class="hoveredRevenueIdx === idx ? 'bg-slate-50/90' : ''">
                 <div 
-                  class="w-1.5 bg-rose-100 rounded-t-xs transition-all duration-150"
+                  class="w-1.5 sm:w-2 bg-rose-100 rounded-t transition-all duration-150"
                   :class="hoveredRevenueIdx === idx ? 'bg-rose-300' : ''"
                   :style="{ height: bar.lastYear + '%' }"
                 ></div>
                 <div 
-                  class="w-1.5 bg-[#DC2626] rounded-t-xs transition-all duration-150"
-                  :class="hoveredRevenueIdx === idx ? 'bg-red-700 scale-x-125' : ''"
+                  class="w-2 sm:w-2.5 bg-[#DC2626] rounded-t transition-all duration-150"
+                  :class="hoveredRevenueIdx === idx ? 'bg-red-700 scale-x-110' : ''"
                   :style="{ height: bar.thisYear + '%' }"
                 ></div>
               </div>
-              <span class="text-[9px] font-semibold mt-2 transition-colors" :class="hoveredRevenueIdx === idx ? 'text-[#DC2626] font-bold' : 'text-slate-400'">{{ bar.month }}</span>
+              <span class="text-[9px] font-semibold mt-1.5 transition-colors" :class="hoveredRevenueIdx === idx ? 'text-[#DC2626] font-bold' : 'text-slate-400'">{{ bar.month }}</span>
             </div>
           </div>
         </div>
       </div>
 
       <!-- Chart 2: Lead Conversion Rate (4 Cols - Interactive 12-Month Hover) -->
-      <div class="xl:col-span-4 bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs flex flex-col justify-between">
+      <div class="xl:col-span-4 bg-white p-4 rounded-2xl border border-slate-200/80 shadow-xs flex flex-col justify-between">
         <div class="flex items-start justify-between">
           <div>
             <h2 class="text-xs font-bold text-slate-800">Lead Conversion Rate</h2>
-            <div class="mt-1 flex items-center gap-2">
-              <span class="text-xl font-black text-slate-900 font-sans tracking-tight">{{ realConversionRate }}%</span>
+            <div class="mt-0.5 flex items-center gap-2">
+              <span class="text-lg font-extrabold text-slate-900 font-sans tracking-tight">{{ realConversionRate }}%</span>
               <span class="text-[11px] font-bold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded">↗ +12%</span>
             </div>
           </div>
@@ -263,14 +262,14 @@
         </div>
 
         <!-- Line Chart Visual (Dynamic SVG with Interactive Monthly Hover Columns) -->
-        <div class="h-44 relative flex flex-col justify-between pt-8">
-          <div class="absolute inset-x-0 top-6 border-b border-slate-100/70 flex justify-start text-[9px] text-slate-400 -mt-2 pointer-events-none"><span>100%</span></div>
-          <div class="absolute inset-x-0 top-[42%] border-b border-slate-100/70 flex justify-start text-[9px] text-slate-400 -mt-2 pointer-events-none"><span>75%</span></div>
+        <div class="h-36 relative flex flex-col justify-between pt-6">
+          <div class="absolute inset-x-0 top-5 border-b border-slate-100/70 flex justify-start text-[9px] text-slate-400 -mt-2 pointer-events-none"><span>100%</span></div>
+          <div class="absolute inset-x-0 top-[40%] border-b border-slate-100/70 flex justify-start text-[9px] text-slate-400 -mt-2 pointer-events-none"><span>75%</span></div>
           <div class="absolute inset-x-0 top-[58%] border-b border-slate-100/70 flex justify-start text-[9px] text-slate-400 -mt-2 pointer-events-none"><span>50%</span></div>
-          <div class="absolute inset-x-0 top-[74%] border-b border-slate-100/70 flex justify-start text-[9px] text-slate-400 -mt-2 pointer-events-none"><span>25%</span></div>
-          <div class="absolute inset-x-0 bottom-6 border-b border-slate-200 flex justify-start text-[9px] text-slate-400 pointer-events-none"><span>0%</span></div>
+          <div class="absolute inset-x-0 top-[75%] border-b border-slate-100/70 flex justify-start text-[9px] text-slate-400 -mt-2 pointer-events-none"><span>25%</span></div>
+          <div class="absolute inset-x-0 bottom-5 border-b border-slate-200 flex justify-start text-[9px] text-slate-400 pointer-events-none"><span>0%</span></div>
 
-          <div class="relative w-full h-28">
+          <div class="relative w-full h-24">
             <svg class="w-full h-full overflow-visible" viewBox="0 0 330 100" preserveAspectRatio="none">
               <defs>
                 <linearGradient id="conversionGrad" x1="0" y1="0" x2="0" y2="1">
@@ -342,15 +341,15 @@
       </div>
 
       <!-- Chart 3: Revenue by Move Category (4 Cols - Power BI Style Interactive Donut) -->
-      <div class="xl:col-span-4 bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs flex flex-col justify-between">
+      <div class="xl:col-span-4 bg-white p-4 rounded-2xl border border-slate-200/80 shadow-xs flex flex-col justify-between">
         <div class="flex items-center justify-between">
           <h2 class="text-xs font-bold text-slate-800">Revenue by Move Category</h2>
           <span class="text-[10px] font-semibold text-slate-400">Hover or click slice</span>
         </div>
 
-        <div class="py-2 flex items-center justify-between gap-4">
+        <div class="py-1 flex items-center justify-between gap-3">
           <!-- Donut Graphic with Dynamic Interactive Center -->
-          <div class="relative w-36 h-36 flex items-center justify-center flex-shrink-0">
+          <div class="relative w-32 h-32 flex items-center justify-center flex-shrink-0">
             <svg class="w-full h-full -rotate-90 overflow-visible" viewBox="0 0 100 100">
               <circle cx="50" cy="50" r="38" fill="none" stroke="#F1F5F9" stroke-width="14" />
               <!-- Segments dynamically calculated from real orders -->
@@ -386,18 +385,18 @@
           </div>
 
           <!-- Interactive Legend with Euro Amount + Percentage -->
-          <div class="space-y-1 flex-1 text-xs">
+          <div class="space-y-0.5 flex-1 text-xs">
             <div 
               v-for="cat in categoryStats.items" 
               :key="cat.key" 
               @mouseenter="hoveredCategoryKey = cat.key"
               @mouseleave="hoveredCategoryKey = null"
               @click="openCategoryBreakdown(cat)"
-              class="flex items-center justify-between px-2 py-1 rounded-lg cursor-pointer transition-colors"
+              class="flex items-center justify-between px-1.5 py-0.5 rounded-lg cursor-pointer transition-colors"
               :class="hoveredCategoryKey === cat.key ? 'bg-slate-100' : 'hover:bg-slate-50'"
             >
               <span class="flex items-center gap-1.5 text-slate-700 font-semibold text-[11px] truncate">
-                <span class="w-2.5 h-2.5 rounded-full flex-shrink-0" :style="{ backgroundColor: cat.color }"></span>
+                <span class="w-2 h-2 rounded-full flex-shrink-0" :style="{ backgroundColor: cat.color }"></span>
                 <span class="truncate">{{ cat.label }}</span>
               </span>
               <div class="flex items-center gap-1.5 ml-2 flex-shrink-0">
@@ -411,10 +410,10 @@
     </div>
 
     <!-- 3. Middle-Bottom Row (Recent Leads & Quotations + Upcoming Jobs) -->
-    <div class="grid grid-cols-1 xl:grid-cols-12 gap-5">
+    <div class="grid grid-cols-1 xl:grid-cols-12 gap-3.5">
       <!-- Card 1 (8 Cols): Recent Leads & Quotations from Supabase -->
-      <div class="xl:col-span-8 bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs">
-        <div class="flex items-center justify-between mb-3">
+      <div class="xl:col-span-8 bg-white p-4 rounded-2xl border border-slate-200/80 shadow-xs">
+        <div class="flex items-center justify-between mb-2">
           <div class="flex items-center gap-2">
             <h2 class="text-sm font-bold text-slate-900">Recent Leads & Quotations</h2>
             <span class="px-2 py-0.5 bg-rose-50 text-rose-600 text-[10px] font-bold rounded-full">
@@ -430,15 +429,15 @@
         <div class="overflow-x-auto">
           <table class="w-full text-left text-xs">
             <thead>
-              <tr class="text-[10px] font-bold text-slate-400 uppercase tracking-wider border-b border-slate-100 pb-2">
-                <th class="py-2.5 font-bold">REF</th>
-                <th class="py-2.5 font-bold">CUSTOMER</th>
-                <th class="py-2.5 font-bold">MOVING DATE</th>
-                <th class="py-2.5 font-bold">ROUTE</th>
-                <th class="py-2.5 font-bold">EST. REVENUE</th>
-                <th class="py-2.5 font-bold">STATUS</th>
-                <th class="py-2.5 font-bold">NEXT ACTION</th>
-                <th class="py-2.5 font-bold text-right"></th>
+              <tr class="text-[10px] font-bold text-slate-400 uppercase tracking-wider border-b border-slate-100">
+                <th class="py-1.5 font-bold">REF</th>
+                <th class="py-1.5 font-bold">CUSTOMER</th>
+                <th class="py-1.5 font-bold">MOVING DATE</th>
+                <th class="py-1.5 font-bold">ROUTE</th>
+                <th class="py-1.5 font-bold">EST. REVENUE</th>
+                <th class="py-1.5 font-bold">STATUS</th>
+                <th class="py-1.5 font-bold">NEXT ACTION</th>
+                <th class="py-1.5 font-bold text-right"></th>
               </tr>
             </thead>
             <tbody class="divide-y divide-slate-100 text-slate-700 font-medium">
@@ -448,12 +447,12 @@
                 @click="$emit('select-job', lead.raw || lead)"
                 class="hover:bg-slate-50/80 transition-colors cursor-pointer group"
               >
-                <td class="py-3 font-semibold text-slate-900 group-hover:text-red-600 whitespace-nowrap">{{ lead.ref }}</td>
-                <td class="py-3 font-bold text-slate-900 truncate max-w-[130px]" :title="lead.customer">{{ lead.customer }}</td>
-                <td class="py-3 text-slate-600 whitespace-nowrap">{{ lead.movingDate }}</td>
-                <td class="py-3 text-slate-600 truncate max-w-[150px]" :title="lead.route">{{ lead.route }}</td>
-                <td class="py-3 font-bold text-slate-900 whitespace-nowrap">€{{ lead.estRevenue.toLocaleString() }}</td>
-                <td class="py-3 whitespace-nowrap">
+                <td class="py-2 font-semibold text-slate-900 group-hover:text-red-600 whitespace-nowrap">{{ lead.ref }}</td>
+                <td class="py-2 font-bold text-slate-900 truncate max-w-[130px]" :title="lead.customer">{{ lead.customer }}</td>
+                <td class="py-2 text-slate-600 whitespace-nowrap">{{ lead.movingDate }}</td>
+                <td class="py-2 text-slate-600 truncate max-w-[150px]" :title="lead.route">{{ lead.route }}</td>
+                <td class="py-2 font-bold text-slate-900 whitespace-nowrap">€{{ lead.estRevenue.toLocaleString() }}</td>
+                <td class="py-2 whitespace-nowrap">
                   <span 
                     class="px-2.5 py-0.5 rounded-full text-[10px] font-bold inline-block"
                     :class="getLeadStatusClass(lead.status)"
@@ -461,11 +460,11 @@
                     {{ lead.status }}
                   </span>
                 </td>
-                <td class="py-3 whitespace-nowrap">
+                <td class="py-2 whitespace-nowrap">
                   <div class="text-[11px] font-semibold text-slate-800 leading-tight">{{ lead.nextAction }}</div>
                   <div class="text-[10px] font-bold" :class="lead.actionDue === 'Today' ? 'text-amber-600' : 'text-slate-400'">{{ lead.actionDue }}</div>
                 </td>
-                <td class="py-3 text-right text-slate-400 group-hover:text-slate-700">···</td>
+                <td class="py-2 text-right text-slate-400 group-hover:text-slate-700">···</td>
               </tr>
               <tr v-if="displayedRecentLeads.length === 0">
                 <td colspan="8" class="py-6 text-center text-slate-400 text-xs">No leads currently in the database.</td>
@@ -476,8 +475,8 @@
       </div>
 
       <!-- Card 2 (4 Cols): Upcoming Jobs from Supabase -->
-      <div class="xl:col-span-4 bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs">
-        <div class="flex items-center justify-between mb-3">
+      <div class="xl:col-span-4 bg-white p-4 rounded-2xl border border-slate-200/80 shadow-xs">
+        <div class="flex items-center justify-between mb-2">
           <div class="flex items-center gap-2">
             <h2 class="text-sm font-bold text-slate-900">Upcoming Jobs</h2>
             <span class="px-2 py-0.5 bg-sky-50 text-sky-600 text-[10px] font-bold rounded-full">
@@ -493,12 +492,12 @@
         <div class="overflow-x-auto">
           <table class="w-full text-left text-xs">
             <thead>
-              <tr class="text-[10px] font-bold text-slate-400 uppercase tracking-wider border-b border-slate-100 pb-2">
-                <th class="py-2.5 font-bold">DATE</th>
-                <th class="py-2.5 font-bold">TIME</th>
-                <th class="py-2.5 font-bold">CUSTOMER</th>
-                <th class="py-2.5 font-bold">ROUTE</th>
-                <th class="py-2.5 font-bold">STATUS</th>
+              <tr class="text-[10px] font-bold text-slate-400 uppercase tracking-wider border-b border-slate-100">
+                <th class="py-1.5 font-bold">DATE</th>
+                <th class="py-1.5 font-bold">TIME</th>
+                <th class="py-1.5 font-bold">CUSTOMER</th>
+                <th class="py-1.5 font-bold">ROUTE</th>
+                <th class="py-1.5 font-bold">STATUS</th>
               </tr>
             </thead>
             <tbody class="divide-y divide-slate-100 text-slate-700 font-medium">
@@ -508,16 +507,16 @@
                 @click="$emit('select-job', job.raw || job)"
                 class="hover:bg-slate-50/80 transition-colors cursor-pointer group"
               >
-                <td class="py-3 whitespace-nowrap">
+                <td class="py-2 whitespace-nowrap">
                   <div class="flex items-center gap-1.5 font-semibold text-slate-800">
                     <span class="w-1.5 h-1.5 rounded-full" :class="job.dotClass"></span>
                     {{ job.date }}
                   </div>
                 </td>
-                <td class="py-3 text-slate-500 whitespace-nowrap">{{ job.time }}</td>
-                <td class="py-3 font-bold text-slate-900 truncate max-w-[100px]" :title="job.customer">{{ job.customer }}</td>
-                <td class="py-3 text-slate-600 truncate max-w-[120px]" :title="job.route">{{ job.route }}</td>
-                <td class="py-3 whitespace-nowrap">
+                <td class="py-2 text-slate-500 whitespace-nowrap">{{ job.time }}</td>
+                <td class="py-2 font-bold text-slate-900 truncate max-w-[100px]" :title="job.customer">{{ job.customer }}</td>
+                <td class="py-2 text-slate-600 truncate max-w-[120px]" :title="job.route">{{ job.route }}</td>
+                <td class="py-2 whitespace-nowrap">
                   <span 
                     class="px-2 py-0.5 rounded-full text-[10px] font-bold inline-block"
                     :class="getJobStatusBadge(job.status)"
@@ -536,9 +535,9 @@
     </div>
 
     <!-- 4. Bottom Row (Jobs in Progress Today + Follow-up Required + Recent Activity) -->
-    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-12 gap-5">
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-12 gap-3.5">
       <!-- Card 1 (4 Cols): Jobs in Progress Today -->
-      <div class="xl:col-span-4 bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs">
+      <div class="xl:col-span-4 bg-white p-4 rounded-2xl border border-slate-200/80 shadow-xs">
         <div class="flex items-center justify-between mb-3">
           <div class="flex items-center gap-2">
             <h2 class="text-sm font-bold text-slate-900">Active Moves</h2>
@@ -694,13 +693,13 @@
       class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4"
       @click.self="drilldownModal = null"
     >
-      <div class="bg-white rounded-3xl max-w-3xl w-full max-h-[85vh] flex flex-col shadow-2xl border border-slate-200 overflow-hidden">
+      <div class="bg-white rounded-3xl max-w-5xl w-full max-h-[88vh] flex flex-col shadow-2xl border border-slate-200 overflow-hidden">
         <!-- Modal Header -->
         <div class="flex items-center justify-between px-6 py-4 border-b border-slate-100 bg-slate-50/70">
           <div>
             <div class="flex items-center gap-2">
-              <h3 class="text-base font-black text-slate-900">{{ drilldownModal.title }}</h3>
-              <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold" :class="drilldownModal.badgeClass">
+              <h3 class="text-lg font-black text-slate-900">{{ drilldownModal.title }}</h3>
+              <span class="px-2.5 py-0.5 rounded-full text-xs font-bold" :class="drilldownModal.badgeClass">
                 {{ drilldownModal.badgeText }}
               </span>
             </div>
@@ -713,68 +712,87 @@
 
         <!-- Modal Body -->
         <div class="p-6 overflow-y-auto space-y-5 flex-1">
-          <!-- Formula / Calculation Logic Box -->
-          <div class="p-4 rounded-2xl bg-slate-900 text-white space-y-2">
-            <div class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Calculation Logic & Live Formula</div>
-            <div class="text-xs font-mono text-emerald-300 leading-relaxed">{{ drilldownModal.formula }}</div>
-            <div v-if="drilldownModal.stats && drilldownModal.stats.length" class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2 border-t border-slate-800">
-              <div v-for="st in drilldownModal.stats" :key="st.label">
-                <div class="text-[10px] text-slate-400">{{ st.label }}</div>
-                <div class="text-sm font-black text-white">{{ st.value }}</div>
+          <!-- Formula / Calculation Logic Box (High-Contrast Light Card, Clear Larger Typography) -->
+          <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200/90 space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-extrabold uppercase tracking-wider text-slate-500">Calculation Logic & Live Formula</span>
+              <span class="px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[11px] font-bold">Live Formula</span>
+            </div>
+            <div class="text-sm font-mono font-bold text-slate-900 bg-white px-3.5 py-2.5 rounded-xl border border-slate-200 leading-relaxed">
+              {{ drilldownModal.formula }}
+            </div>
+            <div v-if="drilldownModal.stats && drilldownModal.stats.length" class="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-2 border-t border-slate-200/80">
+              <div v-for="st in drilldownModal.stats" :key="st.label" class="bg-white p-3 rounded-xl border border-slate-200/70">
+                <div class="text-xs font-semibold text-slate-500">{{ st.label }}</div>
+                <div class="text-lg font-black text-slate-900 mt-0.5">{{ st.value }}</div>
               </div>
             </div>
           </div>
 
           <!-- Contributing Records Table -->
           <div>
-            <div class="flex items-center justify-between mb-2">
+            <div class="flex items-center justify-between mb-2.5">
               <h4 class="text-xs font-black text-slate-800 uppercase tracking-wider">
                 Contributing Records ({{ drilldownModal.records.length }})
               </h4>
-              <span class="text-[11px] text-slate-400">Click any row to open full details</span>
+              <span class="text-xs text-slate-500">Click any column header to sort · Click any row to open details</span>
             </div>
-            <div class="border border-slate-200/80 rounded-2xl overflow-hidden">
-              <table class="w-full text-left text-xs">
-                <thead class="bg-slate-50 text-[10px] font-bold text-slate-400 uppercase border-b border-slate-200/80">
+            <div class="border border-slate-200/80 rounded-2xl overflow-x-auto">
+              <table class="w-full text-left text-xs min-w-[760px]">
+                <thead class="bg-slate-50 text-[11px] font-bold text-slate-500 uppercase border-b border-slate-200/80 select-none">
                   <tr>
-                    <th class="py-2.5 px-3">REF</th>
-                    <th class="py-2.5 px-3">CUSTOMER</th>
-                    <th class="py-2.5 px-3">DATE</th>
-                    <th class="py-2.5 px-3">ROUTE</th>
-                    <th class="py-2.5 px-3">STATUS</th>
-                    <th class="py-2.5 px-3 text-right">REVENUE</th>
-                    <th v-if="drilldownModal.showContribution" class="py-2.5 px-3 text-right">CONTRIBUTION</th>
+                    <th @click="toggleDrilldownSort('ref')" class="py-3 px-3 cursor-pointer hover:text-slate-900 whitespace-nowrap">
+                      REF <span class="text-[10px]">{{ drilldownSortIndicator('ref') }}</span>
+                    </th>
+                    <th @click="toggleDrilldownSort('customer')" class="py-3 px-3 cursor-pointer hover:text-slate-900 whitespace-nowrap">
+                      CUSTOMER <span class="text-[10px]">{{ drilldownSortIndicator('customer') }}</span>
+                    </th>
+                    <th @click="toggleDrilldownSort('date')" class="py-3 px-3 cursor-pointer hover:text-slate-900 whitespace-nowrap">
+                      DATE <span class="text-[10px]">{{ drilldownSortIndicator('date') }}</span>
+                    </th>
+                    <th @click="toggleDrilldownSort('route')" class="py-3 px-3 cursor-pointer hover:text-slate-900 whitespace-nowrap">
+                      ROUTE <span class="text-[10px]">{{ drilldownSortIndicator('route') }}</span>
+                    </th>
+                    <th @click="toggleDrilldownSort('status')" class="py-3 px-3 cursor-pointer hover:text-slate-900 whitespace-nowrap">
+                      STATUS <span class="text-[10px]">{{ drilldownSortIndicator('status') }}</span>
+                    </th>
+                    <th @click="toggleDrilldownSort('revenue')" class="py-3 px-3 text-right cursor-pointer hover:text-slate-900 whitespace-nowrap">
+                      REVENUE <span class="text-[10px]">{{ drilldownSortIndicator('revenue') }}</span>
+                    </th>
+                    <th v-if="drilldownModal.showContribution" @click="toggleDrilldownSort('contribution')" class="py-3 px-4 text-right cursor-pointer hover:text-slate-900 whitespace-nowrap">
+                      CONTRIBUTION <span class="text-[10px]">{{ drilldownSortIndicator('contribution') }}</span>
+                    </th>
                   </tr>
                 </thead>
                 <tbody class="divide-y divide-slate-100">
                   <tr 
-                    v-for="rec in drilldownModal.records.slice(0, 25)" 
+                    v-for="rec in sortedDrilldownRecords.slice(0, 30)" 
                     :key="rec.id || rec.ref"
                     @click="$emit('select-job', rec.raw || rec); drilldownModal = null"
                     class="hover:bg-red-50/50 cursor-pointer transition-colors"
                   >
                     <td class="py-2.5 px-3 font-bold text-slate-900 whitespace-nowrap">{{ rec.ref }}</td>
-                    <td class="py-2.5 px-3 font-semibold text-slate-800 truncate max-w-[140px]">{{ rec.customer }}</td>
-                    <td class="py-2.5 px-3 text-slate-500 whitespace-nowrap">{{ rec.shortDate || rec.movingDate }}</td>
-                    <td class="py-2.5 px-3 text-slate-500 truncate max-w-[160px]">{{ rec.route }}</td>
+                    <td class="py-2.5 px-3 font-semibold text-slate-800 truncate max-w-[150px]">{{ rec.customer }}</td>
+                    <td class="py-2.5 px-3 text-slate-600 font-medium whitespace-nowrap">{{ rec.shortDate || rec.movingDate }}</td>
+                    <td class="py-2.5 px-3 text-slate-500 truncate max-w-[180px]">{{ rec.route }}</td>
                     <td class="py-2.5 px-3 whitespace-nowrap">
-                      <span class="px-2 py-0.5 rounded-full text-[10px] font-bold" :class="getJobStatusBadge(rec.operationalStatus || rec.status)">
+                      <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold" :class="getJobStatusBadge(rec.operationalStatus || rec.status)">
                         {{ rec.operationalStatus || rec.status }}
                       </span>
                     </td>
                     <td class="py-2.5 px-3 text-right font-bold text-slate-900 whitespace-nowrap">€{{ Math.round(rec.estValue || 0).toLocaleString() }}</td>
-                    <td v-if="drilldownModal.showContribution" class="py-2.5 px-3 text-right font-bold text-emerald-700 whitespace-nowrap">
+                    <td v-if="drilldownModal.showContribution" class="py-2.5 px-4 text-right font-bold text-emerald-700 whitespace-nowrap">
                       €{{ Math.round(rec.contribution || 0).toLocaleString() }} <span class="text-[10px] text-slate-400">({{ rec.contributionPercent }}%)</span>
                     </td>
                   </tr>
-                  <tr v-if="drilldownModal.records.length === 0">
+                  <tr v-if="sortedDrilldownRecords.length === 0">
                     <td colspan="7" class="py-6 text-center text-slate-400">No matching records found.</td>
                   </tr>
                 </tbody>
               </table>
             </div>
-            <p v-if="drilldownModal.records.length > 25" class="text-[11px] text-slate-400 mt-2 text-center">
-              Showing top 25 of {{ drilldownModal.records.length }} records. Open the full section to view all.
+            <p v-if="sortedDrilldownRecords.length > 30" class="text-[11px] text-slate-400 mt-2 text-center">
+              Showing top 30 of {{ sortedDrilldownRecords.length }} records. Open the full section to view all.
             </p>
           </div>
         </div>
@@ -1363,11 +1381,56 @@ const getLeadStatusClass = (status) => {
 }
 
 const getJobStatusBadge = (status) => {
-  if (status === 'Confirmed') return 'bg-emerald-50 text-emerald-700 border border-emerald-200/60'
-  if (status === 'Team Assigned') return 'bg-amber-50 text-amber-700 border border-amber-200/60'
-  if (status === 'In Progress') return 'bg-sky-50 text-sky-700 border border-sky-200/60'
-  if (status === 'Quote Sent') return 'bg-purple-50 text-purple-700 border border-purple-200/60'
-  if (status === 'Completed') return 'bg-slate-100 text-slate-700 border border-slate-200/60'
-  return 'bg-slate-100 text-slate-700'
+  if (status === 'Cancelled' || status === 'Lost' || status === 'Lost / Cancelled') return 'bg-rose-50 text-rose-700 border border-rose-200'
+  if (status === 'Confirmed' || status === 'Completed') return 'bg-emerald-50 text-emerald-700 border border-emerald-200'
+  if (status === 'Team Assigned' || status === 'Pending' || status === 'Pending Review') return 'bg-amber-50 text-amber-700 border border-amber-200'
+  if (status === 'In Progress' || status === 'In Transit') return 'bg-sky-50 text-sky-700 border border-sky-200'
+  if (status === 'Quote Sent') return 'bg-purple-50 text-purple-700 border border-purple-200'
+  return 'bg-slate-100 text-slate-700 border border-slate-200'
 }
+
+// --- Drilldown Table Sorting (Chronological Date, Revenue, Contribution, etc.) ---
+const drilldownSortKey = ref('date')
+const drilldownSortDir = ref('desc')
+
+const toggleDrilldownSort = (key) => {
+  if (drilldownSortKey.value === key) {
+    drilldownSortDir.value = drilldownSortDir.value === 'asc' ? 'desc' : 'asc'
+  } else {
+    drilldownSortKey.value = key
+    drilldownSortDir.value = (key === 'revenue' || key === 'contribution' || key === 'date') ? 'desc' : 'asc'
+  }
+}
+
+const drilldownSortIndicator = (key) => {
+  if (drilldownSortKey.value !== key) return '↕'
+  return drilldownSortDir.value === 'asc' ? '↑' : '↓'
+}
+
+const parseRecordTimestamp = (rec) => {
+  const rawDate = rec.movingDate && rec.movingDate !== 'TBD' ? rec.movingDate : (rec.raw?.created_at || '')
+  const ts = new Date(rawDate).getTime()
+  return isNaN(ts) ? 0 : ts
+}
+
+const sortedDrilldownRecords = computed(() => {
+  const list = [...(drilldownModal.value?.records || [])]
+  const key = drilldownSortKey.value
+  const dir = drilldownSortDir.value === 'asc' ? 1 : -1
+
+  return list.sort((a, b) => {
+    if (key === 'date') {
+      return (parseRecordTimestamp(a) - parseRecordTimestamp(b)) * dir
+    }
+    if (key === 'revenue') {
+      return (Number(a.estValue || 0) - Number(b.estValue || 0)) * dir
+    }
+    if (key === 'contribution') {
+      return (Number(a.contribution || 0) - Number(b.contribution || 0)) * dir
+    }
+    const valA = String(key === 'status' ? (a.operationalStatus || a.status || '') : (a[key] || '')).toLowerCase()
+    const valB = String(key === 'status' ? (b.operationalStatus || b.status || '') : (b[key] || '')).toLowerCase()
+    return valA.localeCompare(valB) * dir
+  })
+})
 </script>

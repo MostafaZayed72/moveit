@@ -57,52 +57,70 @@
     <div class="grid grid-cols-1 xl:grid-cols-12 gap-5 items-start">
       <!-- LEFT COLUMN (8 or 12 Cols depending on drawer) -->
       <div :class="[isDrawerOpen && activeSelectedLead ? 'xl:col-span-8' : 'xl:col-span-12', 'space-y-4 min-w-0 transition-all duration-300']">
-        <!-- Top 4 KPI Cards (Live Database Metrics) -->
+        <!-- Top 4 KPI Cards (Compact & Clickable Filters) -->
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-3.5">
           <!-- Total Leads -->
-          <div class="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-xs flex items-center justify-between">
+          <div 
+            @click="activeLeadTab = 'all'; currentPage = 1"
+            :class="[
+              'bg-white p-3.5 rounded-2xl border shadow-xs flex items-center justify-between cursor-pointer transition-all hover:shadow-md',
+              activeLeadTab === 'all' ? 'border-rose-300 ring-1 ring-rose-200' : 'border-slate-200/80'
+            ]"
+          >
             <div class="space-y-1">
-              <p class="text-xs font-medium text-slate-500">Total Leads</p>
-              <p class="text-2xl font-black text-slate-900 font-sans">{{ kpiStats.total }}</p>
+              <p class="text-xs font-semibold text-slate-500">Total Leads</p>
+              <p class="text-2xl sm:text-[26px] font-extrabold text-slate-900 font-sans leading-none">{{ kpiStats.total }}</p>
               <p class="text-[11px] font-bold text-emerald-600 flex items-center gap-1">
                 <span>↗ Live</span>
                 <span class="text-slate-400 font-normal">from Supabase</span>
               </p>
             </div>
-            <div class="w-10 h-10 rounded-2xl bg-rose-50 text-rose-500 flex items-center justify-center flex-shrink-0">
-              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+            <div class="w-9 h-9 rounded-xl bg-rose-50 text-rose-500 flex items-center justify-center flex-shrink-0">
+              <svg class="w-4.5 h-4.5" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6zM16 7a1 1 0 10-2 0v1h-1a1 1 0 100 2h1v1a1 1 0 102 0v-1h1a1 1 0 100-2h-1V7z"/>
               </svg>
             </div>
           </div>
 
           <!-- Pending Review -->
-          <div class="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-xs flex items-center justify-between">
+          <div 
+            @click="activeLeadTab = 'Pending Review'; currentPage = 1"
+            :class="[
+              'bg-white p-3.5 rounded-2xl border shadow-xs flex items-center justify-between cursor-pointer transition-all hover:shadow-md',
+              activeLeadTab === 'Pending Review' ? 'border-amber-400 ring-1 ring-amber-200' : 'border-slate-200/80'
+            ]"
+          >
             <div class="space-y-1">
-              <p class="text-xs font-medium text-slate-500">Pending Review</p>
-              <p class="text-2xl font-black text-slate-900 font-sans">{{ kpiStats.pendingReview }}</p>
+              <p class="text-xs font-semibold text-slate-500">Pending Review</p>
+              <p class="text-2xl sm:text-[26px] font-extrabold text-slate-900 font-sans leading-none">{{ kpiStats.pendingReview }}</p>
               <p class="text-[11px] font-bold text-amber-600 flex items-center gap-1">
                 <span>▲ {{ kpiStats.pendingReview }} require action</span>
               </p>
             </div>
-            <div class="w-10 h-10 rounded-2xl bg-amber-50 text-amber-500 flex items-center justify-center flex-shrink-0">
-              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+            <div class="w-9 h-9 rounded-xl bg-amber-50 text-amber-500 flex items-center justify-center flex-shrink-0">
+              <svg class="w-4.5 h-4.5" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
               </svg>
             </div>
           </div>
 
           <!-- Quotes Sent -->
-          <div class="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-xs flex items-center justify-between">
+          <div 
+            @click="activeLeadTab = 'Quote Sent'; currentPage = 1"
+            :class="[
+              'bg-white p-3.5 rounded-2xl border shadow-xs flex items-center justify-between cursor-pointer transition-all hover:shadow-md',
+              activeLeadTab === 'Quote Sent' ? 'border-blue-400 ring-1 ring-blue-200' : 'border-slate-200/80'
+            ]"
+          >
             <div class="space-y-1">
-              <p class="text-xs font-medium text-slate-500">Quotes Sent</p>
-              <p class="text-2xl font-black text-slate-900 font-sans">{{ kpiStats.quotesSent }}</p>
+              <p class="text-xs font-semibold text-slate-500">Quotes Sent</p>
+              <p class="text-2xl sm:text-[26px] font-extrabold text-slate-900 font-sans leading-none">{{ kpiStats.quotesSent }}</p>
               <p class="text-[11px] font-bold text-emerald-600 flex items-center gap-1">
                 <span>↗ {{ kpiStats.quotesSent }} active</span>
               </p>
             </div>
-            <div class="w-10 h-10 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center flex-shrink-0">
-              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+            <div class="w-9 h-9 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center flex-shrink-0">
+              <svg class="w-4.5 h-4.5" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
                 <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
               </svg>
@@ -110,10 +128,16 @@
           </div>
 
           <!-- Converted to Job -->
-          <div class="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-xs flex items-center justify-between">
+          <div 
+            @click="activeLeadTab = 'Converted'; currentPage = 1"
+            :class="[
+              'bg-white p-3.5 rounded-2xl border shadow-xs flex items-center justify-between cursor-pointer transition-all hover:shadow-md',
+              activeLeadTab === 'Converted' ? 'border-emerald-400 ring-1 ring-emerald-200' : 'border-slate-200/80'
+            ]"
+          >
             <div class="space-y-1">
-              <p class="text-xs font-medium text-slate-500">Converted to Job</p>
-              <p class="text-2xl font-black text-slate-900 font-sans">{{ kpiStats.converted }}</p>
+              <p class="text-xs font-semibold text-slate-500">Converted to Job</p>
+              <p class="text-2xl sm:text-[26px] font-extrabold text-slate-900 font-sans leading-none">{{ kpiStats.converted }}</p>
               <p class="text-[11px] font-bold text-emerald-600 flex items-center gap-1">
                 <span>{{ kpiStats.conversionRate }}% conversion rate</span>
               </p>
@@ -210,14 +234,14 @@
                       title="Select All"
                     />
                   </th>
-                  <th class="py-3 px-2.5 font-bold">REF</th>
-                  <th class="py-3 px-2.5 font-bold">CUSTOMER</th>
-                  <th class="py-3 px-2.5 font-bold">MOVING DATE</th>
-                  <th class="py-3 px-2.5 font-bold">ROUTE</th>
-                  <th class="py-3 px-2.5 font-bold">EST. VALUE</th>
-                  <th class="py-3 px-2.5 font-bold">STATUS</th>
-                  <th class="py-3 px-2.5 font-bold">PRIORITY</th>
-                  <th class="py-3 px-2.5 font-bold">SOURCE</th>
+                  <th @click="toggleSort('ref')" class="py-3 px-2.5 font-bold cursor-pointer hover:text-slate-900 select-none whitespace-nowrap">REF {{ sortIcon('ref') }}</th>
+                  <th @click="toggleSort('customer')" class="py-3 px-2.5 font-bold cursor-pointer hover:text-slate-900 select-none whitespace-nowrap">CUSTOMER {{ sortIcon('customer') }}</th>
+                  <th @click="toggleSort('date')" class="py-3 px-2.5 font-bold cursor-pointer hover:text-slate-900 select-none whitespace-nowrap">MOVING DATE {{ sortIcon('date') }}</th>
+                  <th @click="toggleSort('route')" class="py-3 px-2.5 font-bold cursor-pointer hover:text-slate-900 select-none whitespace-nowrap">ROUTE {{ sortIcon('route') }}</th>
+                  <th @click="toggleSort('estValue')" class="py-3 px-2.5 font-bold cursor-pointer hover:text-slate-900 select-none whitespace-nowrap">EST. VALUE {{ sortIcon('estValue') }}</th>
+                  <th @click="toggleSort('status')" class="py-3 px-2.5 font-bold cursor-pointer hover:text-slate-900 select-none whitespace-nowrap">STATUS {{ sortIcon('status') }}</th>
+                  <th @click="toggleSort('priority')" class="py-3 px-2.5 font-bold cursor-pointer hover:text-slate-900 select-none whitespace-nowrap">PRIORITY {{ sortIcon('priority') }}</th>
+                  <th @click="toggleSort('source')" class="py-3 px-2.5 font-bold cursor-pointer hover:text-slate-900 select-none whitespace-nowrap">SOURCE {{ sortIcon('source') }}</th>
                   <th class="py-3 px-2.5 font-bold">NEXT ACTION</th>
                   <th class="py-3 px-2 text-center">•••</th>
                 </tr>
@@ -226,7 +250,6 @@
                 <tr 
                   v-for="lead in paginatedLeads" 
                   :key="lead.id || lead.ref"
-                  @mouseenter="activeSelectedLead = lead"
                   @click="activeSelectedLead = lead; isDrawerOpen = true"
                   :class="[
                     'transition-colors cursor-pointer group',
@@ -645,9 +668,28 @@ const dynamicLeadTabs = computed(() => {
   ]
 })
 
-// Filtered Leads
+// Column Sorting
+const sortKey = ref('date')
+const sortDir = ref('desc')
+const toggleSort = (key) => {
+  if (sortKey.value === key) {
+    sortDir.value = sortDir.value === 'asc' ? 'desc' : 'asc'
+  } else {
+    sortKey.value = key
+    sortDir.value = (key === 'estValue' || key === 'date') ? 'desc' : 'asc'
+  }
+  currentPage.value = 1
+}
+const sortIcon = (key) => (sortKey.value !== key ? '↕' : (sortDir.value === 'asc' ? '↑' : '↓'))
+const getLeadDateTs = (lead) => {
+  const raw = lead.movingDate && lead.movingDate !== 'TBD' ? lead.movingDate : (lead.raw?.created_at || '')
+  const ts = new Date(raw).getTime()
+  return isNaN(ts) ? 0 : ts
+}
+
+// Filtered & Sorted Leads
 const filteredLeads = computed(() => {
-  return activeLeadsSource.value.filter(lead => {
+  const list = activeLeadsSource.value.filter(lead => {
     if (activeLeadTab.value !== 'all' && lead.status !== activeLeadTab.value) return false
     if (statusFilter.value !== 'all' && lead.status !== statusFilter.value) return false
     if (sourceFilter.value !== 'all' && lead.source.toLowerCase() !== sourceFilter.value.toLowerCase()) return false
@@ -661,6 +703,14 @@ const filteredLeads = computed(() => {
       if (!match) return false
     }
     return true
+  })
+
+  const key = sortKey.value
+  const dir = sortDir.value === 'asc' ? 1 : -1
+  return [...list].sort((a, b) => {
+    if (key === 'date') return (getLeadDateTs(a) - getLeadDateTs(b)) * dir
+    if (key === 'estValue') return (Number(a.estValue || 0) - Number(b.estValue || 0)) * dir
+    return String(a[key] || '').toLowerCase().localeCompare(String(b[key] || '').toLowerCase()) * dir
   })
 })
 

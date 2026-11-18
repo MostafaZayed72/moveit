@@ -25,56 +25,74 @@
         </button>
       </div>
 
-      <!-- 4 KPI Cards Row (Real Database Aggregations) -->
+      <!-- 4 KPI Cards Row (Compact & Clickable Filters) -->
       <div class="grid grid-cols-2 lg:grid-cols-4 gap-3.5">
         <!-- Total Customers -->
-        <div class="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-xs flex items-center justify-between">
+        <div 
+          @click="segmentFilter = 'all'; currentPage = 1"
+          :class="[
+            'bg-white p-3.5 rounded-2xl border shadow-xs flex items-center justify-between cursor-pointer transition-all hover:shadow-md',
+            segmentFilter === 'all' ? 'border-blue-300 ring-1 ring-blue-200' : 'border-slate-200/80'
+          ]"
+        >
           <div class="space-y-1">
-            <p class="text-xs font-medium text-slate-500">Total Customers</p>
-            <p class="text-2xl font-black text-slate-900 font-sans">{{ totalCustomersCount }}</p>
+            <p class="text-xs font-semibold text-slate-500">Total Customers</p>
+            <p class="text-2xl sm:text-[26px] font-extrabold text-slate-900 font-sans leading-none">{{ totalCustomersCount }}</p>
             <p class="text-[11px] font-bold text-emerald-600">
               <span>↗ Live</span>
               <span class="text-slate-400 font-normal ml-1">from Supabase</span>
             </p>
           </div>
-          <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-base">👥</div>
+          <div class="w-9 h-9 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-sm">👥</div>
         </div>
 
         <!-- New Customers -->
-        <div class="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-xs flex items-center justify-between">
+        <div 
+          @click="segmentFilter = 'new'; currentPage = 1"
+          :class="[
+            'bg-white p-3.5 rounded-2xl border shadow-xs flex items-center justify-between cursor-pointer transition-all hover:shadow-md',
+            segmentFilter === 'new' ? 'border-emerald-400 ring-1 ring-emerald-200' : 'border-slate-200/80'
+          ]"
+        >
           <div class="space-y-1">
-            <p class="text-xs font-medium text-slate-500">New Customers</p>
-            <p class="text-2xl font-black text-slate-900 font-sans">{{ newCustomersCount }}</p>
+            <p class="text-xs font-semibold text-slate-500">New Customers</p>
+            <p class="text-2xl sm:text-[26px] font-extrabold text-slate-900 font-sans leading-none">{{ newCustomersCount }}</p>
             <p class="text-[11px] font-bold text-emerald-600">
               <span>Single moves</span>
             </p>
           </div>
-          <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-base">👤</div>
+          <div class="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-sm">👤</div>
         </div>
 
         <!-- Returning Customers -->
-        <div class="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-xs flex items-center justify-between">
+        <div 
+          @click="segmentFilter = 'returning'; currentPage = 1"
+          :class="[
+            'bg-white p-3.5 rounded-2xl border shadow-xs flex items-center justify-between cursor-pointer transition-all hover:shadow-md',
+            segmentFilter === 'returning' ? 'border-sky-400 ring-1 ring-sky-200' : 'border-slate-200/80'
+          ]"
+        >
           <div class="space-y-1">
-            <p class="text-xs font-medium text-slate-500">Returning Customers</p>
-            <p class="text-2xl font-black text-slate-900 font-sans">{{ returningCustomersCount }}</p>
+            <p class="text-xs font-semibold text-slate-500">Returning Customers</p>
+            <p class="text-2xl sm:text-[26px] font-extrabold text-slate-900 font-sans leading-none">{{ returningCustomersCount }}</p>
             <p class="text-[11px] font-bold text-sky-600">
               <span>Multiple bookings</span>
             </p>
           </div>
-          <div class="w-10 h-10 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center text-base">🔄</div>
+          <div class="w-9 h-9 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center text-sm">🔄</div>
         </div>
 
         <!-- Customer Satisfaction -->
-        <div class="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-xs flex items-center justify-between">
+        <div class="bg-white p-3.5 rounded-2xl border border-slate-200/80 shadow-xs flex items-center justify-between">
           <div class="space-y-1">
-            <p class="text-xs font-medium text-slate-500">Customer Satisfaction</p>
-            <p class="text-2xl font-black text-slate-900 font-sans">4.9</p>
+            <p class="text-xs font-semibold text-slate-500">Customer Satisfaction</p>
+            <p class="text-2xl sm:text-[26px] font-extrabold text-slate-900 font-sans leading-none">4.9</p>
             <p class="text-[11px] font-bold text-amber-400 flex items-center gap-1">
               <span>★★★★★</span>
               <span class="text-slate-400 font-normal text-[10px]">(Verified)</span>
             </p>
           </div>
-          <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-500 flex items-center justify-center text-base">⭐</div>
+          <div class="w-9 h-9 rounded-xl bg-amber-50 text-amber-500 flex items-center justify-center text-sm">⭐</div>
         </div>
       </div>
 
@@ -135,14 +153,14 @@
                     title="Select All"
                   />
                 </th>
-                <th class="py-3 px-3 font-bold">NAME</th>
+                <th @click="toggleSort('name')" class="py-3 px-3 font-bold cursor-pointer hover:text-slate-900 select-none whitespace-nowrap">NAME {{ sortIcon('name') }}</th>
                 <th class="py-3 px-3 font-bold">PHONE</th>
                 <th class="py-3 px-3 font-bold">EMAIL</th>
-                <th class="py-3 px-2.5 font-bold">TYPE</th>
-                <th class="py-3 px-2.5 font-bold text-center">TOTAL MOVES</th>
-                <th class="py-3 px-2.5 font-bold">TOTAL REVENUE</th>
-                <th class="py-3 px-2.5 font-bold">LAST MOVE</th>
-                <th class="py-3 px-2.5 font-bold">STATUS</th>
+                <th @click="toggleSort('type')" class="py-3 px-2.5 font-bold cursor-pointer hover:text-slate-900 select-none whitespace-nowrap">TYPE {{ sortIcon('type') }}</th>
+                <th @click="toggleSort('totalMoves')" class="py-3 px-2.5 font-bold text-center cursor-pointer hover:text-slate-900 select-none whitespace-nowrap">TOTAL MOVES {{ sortIcon('totalMoves') }}</th>
+                <th @click="toggleSort('totalRevenue')" class="py-3 px-2.5 font-bold cursor-pointer hover:text-slate-900 select-none whitespace-nowrap">TOTAL REVENUE {{ sortIcon('totalRevenue') }}</th>
+                <th @click="toggleSort('lastMove')" class="py-3 px-2.5 font-bold cursor-pointer hover:text-slate-900 select-none whitespace-nowrap">LAST MOVE {{ sortIcon('lastMove') }}</th>
+                <th @click="toggleSort('status')" class="py-3 px-2.5 font-bold cursor-pointer hover:text-slate-900 select-none whitespace-nowrap">STATUS {{ sortIcon('status') }}</th>
                 <th class="py-3 px-2 text-center font-bold">ACTIONS</th>
               </tr>
             </thead>
@@ -150,7 +168,6 @@
               <tr 
                 v-for="c in paginatedCustomers" 
                 :key="c.id || c.name"
-                @mouseenter="activeSelectedCustomer = c"
                 @click="activeSelectedCustomer = c; isDrawerOpen = true"
                 :class="[
                   'transition-colors cursor-pointer group',
@@ -339,6 +356,7 @@ const activeCustomersList = computed(() => {
 
 const activeSelectedCustomer = ref(null)
 const isDrawerOpen = ref(true)
+const segmentFilter = ref('all')
 
 watch(activeCustomersList, (newCusts) => {
   if (!activeSelectedCustomer.value && newCusts.length > 0) {
@@ -353,8 +371,21 @@ const totalCustomersCount = computed(() => activeCustomersList.value.length)
 const newCustomersCount = computed(() => activeCustomersList.value.filter(c => c.totalMoves === 1).length)
 const returningCustomersCount = computed(() => activeCustomersList.value.filter(c => c.totalMoves > 1).length)
 
+const sortKey = ref('totalRevenue')
+const sortDir = ref('desc')
+const toggleSort = (key) => {
+  if (sortKey.value === key) {
+    sortDir.value = sortDir.value === 'asc' ? 'desc' : 'asc'
+  } else {
+    sortKey.value = key
+    sortDir.value = (key === 'totalRevenue' || key === 'totalMoves' || key === 'lastMove') ? 'desc' : 'asc'
+  }
+  currentPage.value = 1
+}
+const sortIcon = (key) => (sortKey.value !== key ? '↕' : (sortDir.value === 'asc' ? '↑' : '↓'))
+
 const filteredCustomers = computed(() => {
-  return activeCustomersList.value.filter(c => {
+  const list = activeCustomersList.value.filter(c => {
     if (searchQuery.value) {
       const q = searchQuery.value.toLowerCase().trim()
       const matchName = (c.name || '').toLowerCase().includes(q)
@@ -364,7 +395,23 @@ const filteredCustomers = computed(() => {
     }
     if (typeFilter.value !== 'all' && c.type !== typeFilter.value) return false
     if (statusFilter.value !== 'all' && (c.status || 'Active') !== statusFilter.value) return false
+    if (segmentFilter.value === 'new' && c.totalMoves !== 1) return false
+    if (segmentFilter.value === 'returning' && c.totalMoves <= 1) return false
     return true
+  })
+
+  const key = sortKey.value
+  const dir = sortDir.value === 'asc' ? 1 : -1
+  return [...list].sort((a, b) => {
+    if (key === 'totalMoves' || key === 'totalRevenue') {
+      return (Number(a[key] || 0) - Number(b[key] || 0)) * dir
+    }
+    if (key === 'lastMove') {
+      const tsA = new Date(a.lastMove || 0).getTime() || 0
+      const tsB = new Date(b.lastMove || 0).getTime() || 0
+      return (tsA - tsB) * dir
+    }
+    return String(a[key] || '').toLowerCase().localeCompare(String(b[key] || '').toLowerCase()) * dir
   })
 })
 

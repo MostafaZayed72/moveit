@@ -33,37 +33,61 @@
 
       <!-- 5 KPI Cards Row -->
       <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
-        <div class="bg-white p-3.5 rounded-2xl border border-slate-200/80 shadow-xs flex items-center justify-between">
+        <div 
+          @click="stockStatusFilter = 'all'"
+          :class="[
+            'bg-white p-3.5 rounded-2xl border shadow-xs flex items-center justify-between cursor-pointer transition-all hover:shadow-md',
+            stockStatusFilter === 'all' ? 'border-emerald-300 ring-1 ring-emerald-200' : 'border-slate-200/80'
+          ]"
+        >
           <div class="space-y-1">
-            <p class="text-[11px] font-medium text-slate-500">Total Items</p>
-            <p class="text-2xl font-black text-slate-900 font-sans">68</p>
+            <p class="text-[11px] font-semibold text-slate-500">Total Items</p>
+            <p class="text-2xl font-extrabold text-slate-900 font-sans leading-none">68</p>
             <p class="text-[10px] font-bold text-emerald-600">↗ +12% <span class="text-slate-400 font-normal">vs. last month</span></p>
           </div>
           <span class="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-sm">📦</span>
         </div>
 
-        <div class="bg-white p-3.5 rounded-2xl border border-slate-200/80 shadow-xs flex items-center justify-between">
+        <div 
+          @click="stockStatusFilter = 'In Stock'"
+          :class="[
+            'bg-white p-3.5 rounded-2xl border shadow-xs flex items-center justify-between cursor-pointer transition-all hover:shadow-md',
+            stockStatusFilter === 'In Stock' ? 'border-blue-400 ring-1 ring-blue-200' : 'border-slate-200/80'
+          ]"
+        >
           <div class="space-y-1">
-            <p class="text-[11px] font-medium text-slate-500">Items in Stock</p>
-            <p class="text-2xl font-black text-slate-900 font-sans">512</p>
+            <p class="text-[11px] font-semibold text-slate-500">Items in Stock</p>
+            <p class="text-2xl font-extrabold text-slate-900 font-sans leading-none">512</p>
             <p class="text-[10px] font-bold text-emerald-600">↗ +8% <span class="text-slate-400 font-normal">vs. last month</span></p>
           </div>
           <span class="w-9 h-9 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-sm">🧊</span>
         </div>
 
-        <div class="bg-white p-3.5 rounded-2xl border border-slate-200/80 shadow-xs flex items-center justify-between">
+        <div 
+          @click="stockStatusFilter = 'Low Stock'"
+          :class="[
+            'bg-white p-3.5 rounded-2xl border shadow-xs flex items-center justify-between cursor-pointer transition-all hover:shadow-md',
+            stockStatusFilter === 'Low Stock' ? 'border-amber-400 ring-1 ring-amber-200' : 'border-slate-200/80'
+          ]"
+        >
           <div class="space-y-1">
-            <p class="text-[11px] font-medium text-slate-500">Low Stock Items</p>
-            <p class="text-2xl font-black text-slate-900 font-sans">6</p>
+            <p class="text-[11px] font-semibold text-slate-500">Low Stock Items</p>
+            <p class="text-2xl font-extrabold text-slate-900 font-sans leading-none">6</p>
             <p class="text-[10px] font-bold text-amber-600">⚠️ Below minimum</p>
           </div>
           <span class="w-9 h-9 rounded-xl bg-amber-50 text-amber-500 flex items-center justify-center text-sm">⚠️</span>
         </div>
 
-        <div class="bg-white p-3.5 rounded-2xl border border-slate-200/80 shadow-xs flex items-center justify-between">
+        <div 
+          @click="stockStatusFilter = 'Out of Stock'"
+          :class="[
+            'bg-white p-3.5 rounded-2xl border shadow-xs flex items-center justify-between cursor-pointer transition-all hover:shadow-md',
+            stockStatusFilter === 'Out of Stock' ? 'border-rose-400 ring-1 ring-rose-200' : 'border-slate-200/80'
+          ]"
+        >
           <div class="space-y-1">
-            <p class="text-[11px] font-medium text-slate-500">Out of Stock</p>
-            <p class="text-2xl font-black text-slate-900 font-sans">2</p>
+            <p class="text-[11px] font-semibold text-slate-500">Out of Stock</p>
+            <p class="text-2xl font-extrabold text-slate-900 font-sans leading-none">2</p>
             <p class="text-[10px] font-bold text-rose-600">⊗ Needs reorder</p>
           </div>
           <span class="w-9 h-9 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center text-sm font-bold">✕</span>
@@ -71,8 +95,8 @@
 
         <div class="bg-white p-3.5 rounded-2xl border border-slate-200/80 shadow-xs flex items-center justify-between">
           <div class="space-y-1">
-            <p class="text-[11px] font-medium text-slate-500">Total Value</p>
-            <p class="text-2xl font-black text-slate-900 font-sans">€4,850</p>
+            <p class="text-[11px] font-semibold text-slate-500">Total Value</p>
+            <p class="text-2xl font-extrabold text-slate-900 font-sans leading-none">€4,850</p>
             <p class="text-[10px] text-slate-400">Based on purchase cost</p>
           </div>
           <span class="w-9 h-9 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center text-sm">🪙</span>
@@ -148,7 +172,6 @@
               <tr 
                 v-for="item in filteredItems" 
                 :key="item.sku"
-                @mouseenter="selectedItem = item"
                 @click="selectedItem = item; isDrawerOpen = true"
                 :class="[
                   'transition-colors cursor-pointer group',
@@ -380,6 +403,7 @@ import { ref, computed } from 'vue'
 
 const searchQuery = ref('')
 const categoryFilter = ref('all')
+const stockStatusFilter = ref('all')
 const activeDrawerTab = ref('Overview')
 const isDrawerOpen = ref(true)
 
@@ -403,6 +427,7 @@ const selectedItem = ref(inventoryItems[0])
 const filteredItems = computed(() => {
   return inventoryItems.filter(item => {
     if (categoryFilter.value !== 'all' && item.category !== categoryFilter.value) return false
+    if (stockStatusFilter.value !== 'all' && item.status !== stockStatusFilter.value) return false
     if (searchQuery.value) {
       const q = searchQuery.value.toLowerCase()
       return item.name.toLowerCase().includes(q) || item.sku.toLowerCase().includes(q)

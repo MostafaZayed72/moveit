@@ -33,52 +33,88 @@
 
       <!-- 6 KPI Cards Row -->
       <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5">
-        <div class="bg-white p-3 rounded-2xl border border-slate-200/80 shadow-xs flex items-center justify-between">
+        <div 
+          @click="roleFilter = 'all'; statusFilter = 'all'"
+          :class="[
+            'bg-white p-3 rounded-2xl border shadow-xs flex items-center justify-between cursor-pointer transition-all hover:shadow-md',
+            roleFilter === 'all' && statusFilter === 'all' ? 'border-blue-300 ring-1 ring-blue-200' : 'border-slate-200/80'
+          ]"
+        >
           <div>
-            <p class="text-[10px] font-medium text-slate-500">Total Team Members</p>
-            <p class="text-xl font-black text-slate-900 font-sans mt-0.5">8</p>
-            <p class="text-[10px] font-bold text-emerald-600 mt-0.5">↗ +14% <span class="text-slate-400 font-normal">vs. last month</span></p>
+            <p class="text-[10px] font-semibold text-slate-500">Total Team Members</p>
+            <p class="text-xl font-extrabold text-slate-900 font-sans mt-0.5 leading-none">{{ teamList.length }}</p>
+            <p class="text-[10px] font-bold text-emerald-600 mt-1">↗ +14% <span class="text-slate-400 font-normal">vs. last mo</span></p>
           </div>
           <span class="w-8 h-8 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-xs">👥</span>
         </div>
 
-        <div class="bg-white p-3 rounded-2xl border border-slate-200/80 shadow-xs flex items-center justify-between">
+        <div 
+          @click="roleFilter = 'Mover'; statusFilter = 'all'"
+          :class="[
+            'bg-white p-3 rounded-2xl border shadow-xs flex items-center justify-between cursor-pointer transition-all hover:shadow-md',
+            roleFilter === 'Mover' ? 'border-emerald-400 ring-1 ring-emerald-200' : 'border-slate-200/80'
+          ]"
+        >
           <div>
-            <p class="text-[10px] font-medium text-slate-500">Movers</p>
-            <p class="text-xl font-black text-slate-900 font-sans mt-0.5">5</p>
+            <p class="text-[10px] font-semibold text-slate-500">Movers</p>
+            <p class="text-xl font-extrabold text-slate-900 font-sans mt-0.5 leading-none">5</p>
           </div>
           <span class="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-xs">👷</span>
         </div>
 
-        <div class="bg-white p-3 rounded-2xl border border-slate-200/80 shadow-xs flex items-center justify-between">
+        <div 
+          @click="roleFilter = 'Driver'; statusFilter = 'all'"
+          :class="[
+            'bg-white p-3 rounded-2xl border shadow-xs flex items-center justify-between cursor-pointer transition-all hover:shadow-md',
+            roleFilter === 'Driver' ? 'border-blue-400 ring-1 ring-blue-200' : 'border-slate-200/80'
+          ]"
+        >
           <div>
-            <p class="text-[10px] font-medium text-slate-500">Drivers</p>
-            <p class="text-xl font-black text-slate-900 font-sans mt-0.5">2</p>
+            <p class="text-[10px] font-semibold text-slate-500">Drivers</p>
+            <p class="text-xl font-extrabold text-slate-900 font-sans mt-0.5 leading-none">2</p>
           </div>
           <span class="w-8 h-8 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-xs">🛞</span>
         </div>
 
-        <div class="bg-white p-3 rounded-2xl border border-slate-200/80 shadow-xs flex items-center justify-between">
+        <div 
+          @click="roleFilter = 'Office'; statusFilter = 'all'"
+          :class="[
+            'bg-white p-3 rounded-2xl border shadow-xs flex items-center justify-between cursor-pointer transition-all hover:shadow-md',
+            roleFilter === 'Office' ? 'border-rose-400 ring-1 ring-rose-200' : 'border-slate-200/80'
+          ]"
+        >
           <div>
-            <p class="text-[10px] font-medium text-slate-500">Office / Support</p>
-            <p class="text-xl font-black text-slate-900 font-sans mt-0.5">1</p>
+            <p class="text-[10px] font-semibold text-slate-500">Office / Support</p>
+            <p class="text-xl font-extrabold text-slate-900 font-sans mt-0.5 leading-none">1</p>
           </div>
           <span class="w-8 h-8 rounded-xl bg-rose-50 text-rose-500 flex items-center justify-center text-xs">👤</span>
         </div>
 
-        <div class="bg-white p-3 rounded-2xl border border-slate-200/80 shadow-xs flex items-center justify-between">
+        <div 
+          @click="statusFilter = 'On Duty'; roleFilter = 'all'"
+          :class="[
+            'bg-white p-3 rounded-2xl border shadow-xs flex items-center justify-between cursor-pointer transition-all hover:shadow-md',
+            statusFilter === 'On Duty' ? 'border-emerald-400 ring-1 ring-emerald-200' : 'border-slate-200/80'
+          ]"
+        >
           <div>
-            <p class="text-[10px] font-medium text-slate-500">On Duty Today</p>
-            <p class="text-xl font-black text-slate-900 font-sans mt-0.5">4</p>
-            <p class="text-[10px] font-bold text-emerald-600 mt-0.5">● 50% of team</p>
+            <p class="text-[10px] font-semibold text-slate-500">On Duty Today</p>
+            <p class="text-xl font-extrabold text-slate-900 font-sans mt-0.5 leading-none">4</p>
+            <p class="text-[10px] font-bold text-emerald-600 mt-1">● 50% of team</p>
           </div>
           <span class="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-xs">🛡️</span>
         </div>
 
-        <div class="bg-white p-3 rounded-2xl border border-slate-200/80 shadow-xs flex items-center justify-between">
+        <div 
+          @click="statusFilter = 'On Leave'; roleFilter = 'all'"
+          :class="[
+            'bg-white p-3 rounded-2xl border shadow-xs flex items-center justify-between cursor-pointer transition-all hover:shadow-md',
+            statusFilter === 'On Leave' ? 'border-rose-400 ring-1 ring-rose-200' : 'border-slate-200/80'
+          ]"
+        >
           <div>
-            <p class="text-[10px] font-medium text-slate-500">On Leave</p>
-            <p class="text-xl font-black text-slate-900 font-sans mt-0.5">1</p>
+            <p class="text-[10px] font-semibold text-slate-500">On Leave</p>
+            <p class="text-xl font-extrabold text-slate-900 font-sans mt-0.5 leading-none">1</p>
           </div>
           <span class="w-8 h-8 rounded-xl bg-rose-50 text-rose-500 flex items-center justify-center text-xs">✈️</span>
         </div>
@@ -150,6 +186,7 @@
                 <th class="py-3 px-2.5 font-bold">PHONE</th>
                 <th class="py-3 px-2.5 font-bold">AVAILABILITY</th>
                 <th class="py-3 px-2.5 font-bold">STATUS</th>
+                <th class="py-3 px-2.5 font-bold">HOURLY RATE</th>
                 <th class="py-3 px-2.5 font-bold">CURRENT JOB</th>
                 <th class="py-3 px-2 text-center font-bold">ACTIONS</th>
               </tr>
@@ -158,7 +195,6 @@
               <tr 
                 v-for="m in filteredMembers" 
                 :key="m.name"
-                @mouseenter="selectedMember = m"
                 @click="selectedMember = m; isDrawerOpen = true"
                 :class="[
                   'transition-colors cursor-pointer group',
@@ -208,6 +244,9 @@
                   <span class="px-2.5 py-0.5 rounded-md text-[10px] font-bold" :class="m.statusClass">
                     {{ m.status }}
                   </span>
+                </td>
+                <td class="py-3 px-2.5 font-bold text-slate-900 whitespace-nowrap">
+                  €{{ Number(m.hourlyRate || 25).toFixed(2) }}/hr
                 </td>
                 <td class="py-3 px-2.5">
                   <div v-if="m.currentJob" class="font-bold text-slate-900 text-[11px]">{{ m.currentJob }}</div>
@@ -515,13 +554,19 @@
               </select>
             </div>
           </div>
-          <div>
-            <label class="block font-bold text-slate-700 mb-1">Availability</label>
-            <select v-model="editingMember.availability" class="w-full p-2.5 border border-slate-300 rounded-xl font-bold focus:border-red-500 focus:outline-none">
-              <option value="Available">Available</option>
-              <option value="Busy">Busy</option>
-              <option value="Unavailable">Unavailable</option>
-            </select>
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block font-bold text-slate-700 mb-1">Availability</label>
+              <select v-model="editingMember.availability" class="w-full p-2.5 border border-slate-300 rounded-xl font-bold focus:border-red-500 focus:outline-none">
+                <option value="Available">Available</option>
+                <option value="Busy">Busy</option>
+                <option value="Unavailable">Unavailable</option>
+              </select>
+            </div>
+            <div>
+              <label class="block font-bold text-slate-700 mb-1">Hourly Rate (€/hr)</label>
+              <input v-model.number="editingMember.hourlyRate" type="number" step="0.5" min="0" class="w-full p-2.5 border border-slate-300 rounded-xl font-bold focus:border-red-500 focus:outline-none" />
+            </div>
           </div>
         </div>
 
@@ -539,10 +584,16 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, watch, onMounted } from 'vue'
+
+const { companySettings, fetchCompanySettings } = useAdminData()
 
 const props = defineProps({
   orders: { type: Array, default: () => [] }
+})
+
+onMounted(() => {
+  fetchCompanySettings(true)
 })
 
 const latestActiveJob = computed(() => {
@@ -551,6 +602,7 @@ const latestActiveJob = computed(() => {
 
 const searchQuery = ref('')
 const roleFilter = ref('all')
+const statusFilter = ref('all')
 const activeDrawerTab = ref('Overview')
 const isDrawerOpen = ref(true)
 const selectedMembers = ref([])
@@ -570,17 +622,64 @@ const teamList = ref([
 
 const selectedMember = ref(teamList.value[0])
 
+const avatarPalette = ['bg-rose-600', 'bg-blue-600', 'bg-slate-800', 'bg-indigo-600', 'bg-emerald-600', 'bg-amber-600']
+
+const mapSettingsMemberToRow = (m, idx) => {
+  const name = m.name || 'Team Member'
+  const initials = String(name).split(' ').map(w => w[0]).slice(0, 2).join('').toUpperCase() || 'TM'
+  const isActive = m.active !== false
+  const status = m.status || (isActive ? 'On Duty' : 'Off Duty')
+  const availability = m.availability || (isActive ? 'Available' : 'Unavailable')
+  const assignedOrder = (props.orders || []).find(o =>
+    Array.isArray(o.assignedTeam) && o.assignedTeam.some(t => (typeof t === 'string' ? t : t.name) === name)
+  )
+  return {
+    id: m.id,
+    initials,
+    avatarBg: avatarPalette[idx % avatarPalette.length],
+    name,
+    role: m.role || 'Mover',
+    hourlyRate: Number(m.hourlyRate || 25),
+    email: m.email || `${name.toLowerCase().replace(/\s+/g, '.')}@move-it.nl`,
+    phone: m.phone || '+31 6 12 34 56 78',
+    availability,
+    availabilityClass: availability === 'Available' ? 'bg-emerald-50 text-emerald-700' : availability === 'Busy' ? 'bg-amber-50 text-amber-700' : 'bg-rose-50 text-rose-600',
+    status,
+    statusClass: status === 'On Duty' ? 'bg-emerald-50 text-emerald-700' : status === 'On Leave' ? 'bg-rose-50 text-rose-600' : 'bg-slate-100 text-slate-600',
+    currentJob: assignedOrder?.ref || m.currentJob || '',
+    currentJobTime: assignedOrder?.time || m.currentJobTime || '',
+    skills: Array.isArray(m.skills) && m.skills.length > 0
+      ? m.skills
+      : [{ label: m.role || 'Moving', badgeClass: 'bg-blue-50 text-blue-600' }]
+  }
+}
+
+watch(() => [companySettings.value?.teamMembers, props.orders], ([members]) => {
+  if (Array.isArray(members) && members.length > 0) {
+    teamList.value = members.map((m, idx) => mapSettingsMemberToRow(m, idx))
+    if (!selectedMember.value || !teamList.value.some(x => x.name === selectedMember.value.name)) {
+      selectedMember.value = teamList.value[0]
+    } else {
+      selectedMember.value = teamList.value.find(x => x.name === selectedMember.value.name) || teamList.value[0]
+    }
+  }
+}, { immediate: true, deep: true })
+
+const editingMemberIndex = ref(-1)
+
 const openEditMember = (member) => {
   if (!member) return
-  editingMember.value = { ...member }
+  editingMemberIndex.value = teamList.value.findIndex(m => m === member || (m.name === member.name && m.email === member.email))
+  editingMember.value = { ...member, hourlyRate: Number(member.hourlyRate || 25) }
   showEditModal.value = true
 }
 
-const saveEditMember = () => {
+const saveEditMember = async () => {
   if (!editingMember.value || !editingMember.value.name) return
-  const idx = teamList.value.findIndex(m => m.name === editingMember.value.name || m.email === editingMember.value.email)
+  const idx = editingMemberIndex.value !== -1
+    ? editingMemberIndex.value
+    : teamList.value.findIndex(m => m.name === editingMember.value.name || m.email === editingMember.value.email)
   if (idx !== -1) {
-    // update status class
     const st = editingMember.value.status
     let statusClass = 'bg-slate-100 text-slate-600'
     if (st === 'On Duty') statusClass = 'bg-emerald-50 text-emerald-700'
@@ -592,13 +691,43 @@ const saveEditMember = () => {
     else if (av === 'Busy') availabilityClass = 'bg-amber-50 text-amber-700'
     else if (av === 'Unavailable') availabilityClass = 'bg-rose-50 text-rose-600'
 
+    const initials = String(editingMember.value.name).split(' ').map(w => w[0]).slice(0, 2).join('').toUpperCase() || 'TM'
+
     teamList.value[idx] = {
       ...teamList.value[idx],
       ...editingMember.value,
+      initials,
+      hourlyRate: Number(editingMember.value.hourlyRate || 25),
       statusClass,
       availabilityClass
     }
     selectedMember.value = teamList.value[idx]
+
+    // Sync back to company_settings in Supabase
+    try {
+      const updatedSettingsMembers = teamList.value.map(m => ({
+        id: m.id,
+        name: m.name,
+        email: m.email,
+        phone: m.phone,
+        role: m.role,
+        hourlyRate: Number(m.hourlyRate || 25),
+        status: m.status,
+        availability: m.availability,
+        active: m.status !== 'Off Duty' && m.status !== 'On Leave'
+      }))
+      const updatedSettings = {
+        ...(companySettings.value || {}),
+        teamMembers: updatedSettingsMembers
+      }
+      await $fetch('/api/admin/settings', {
+        method: 'POST',
+        body: updatedSettings
+      })
+      companySettings.value = updatedSettings
+    } catch (err) {
+      console.warn('Could not sync team member edit to settings:', err)
+    }
   }
   showEditModal.value = false
   editingMember.value = null
@@ -607,6 +736,7 @@ const saveEditMember = () => {
 const filteredMembers = computed(() => {
   return teamList.value.filter(m => {
     if (roleFilter.value !== 'all' && !m.role.includes(roleFilter.value)) return false
+    if (statusFilter.value !== 'all' && m.status !== statusFilter.value) return false
     if (searchQuery.value) {
       const q = searchQuery.value.toLowerCase()
       return m.name.toLowerCase().includes(q) || m.role.toLowerCase().includes(q)

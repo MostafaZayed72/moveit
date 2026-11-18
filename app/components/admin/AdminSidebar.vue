@@ -17,16 +17,14 @@
     <!-- Top Brand & Navigation -->
     <div class="p-4 space-y-4">
       <!-- Logo & Mobile Close Button -->
-      <div class="flex items-center justify-between px-2 py-1">
-        <div class="flex items-center gap-3">
-          <div class="w-8 h-8 rounded-lg bg-[#DC2626] flex items-center justify-center text-white font-black text-lg shadow-md shadow-red-600/30">
-            m
-          </div>
-          <div class="flex items-baseline">
-            <span class="text-xl font-bold tracking-tight text-white font-sans">move</span>
-            <span class="text-xl font-bold tracking-tight text-[#DC2626]">-it</span>
-          </div>
-        </div>
+      <div class="flex items-center justify-between px-2 py-1.5">
+        <NuxtLink to="/admin" class="flex items-center group shrink-0">
+          <img 
+            src="/images/logo.svg" 
+            alt="MoveIt Logo" 
+            class="h-8 w-auto object-contain transition-transform duration-200 group-hover:scale-[1.03]"
+          />
+        </NuxtLink>
         <!-- Close button on mobile -->
         <button 
           @click="$emit('close')"

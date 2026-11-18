@@ -7,6 +7,26 @@ export const useAdminData = () => {
   const isLoading = ref(false)
   const error = ref<any>(null)
 
+  const companySettings = useState<any>('adminCompanySettings', () => ({
+    general: { currency: 'EUR (€)', vatRate: 21, timezone: 'Europe/Amsterdam' },
+    company: { name: 'MoveIt Maastricht' },
+    teamMembers: [],
+    servicePackages: []
+  }))
+
+  const fetchCompanySettings = async (force = false) => {
+    if (!force && companySettings.value?.teamMembers?.length > 0) return companySettings.value
+    try {
+      const res: any = await $fetch('/api/admin/settings')
+      if (res?.settings) {
+        companySettings.value = res.settings
+      }
+    } catch (err) {
+      console.warn('Could not load company settings:', err)
+    }
+    return companySettings.value
+  }
+
   // Fetch all orders from Supabase
   const fetchOrders = async () => {
     isLoading.value = true
@@ -20,6 +40,7 @@ export const useAdminData = () => {
 
       if (err) throw err
       allOrders.value = data || []
+      fetchCompanySettings()
     } catch (err: any) {
       console.error('Error fetching admin orders:', err)
       error.value = err
@@ -43,6 +64,9 @@ export const useAdminData = () => {
     team?: any[]
     vehicle?: string
     reason?: string
+    estValue?: number
+    customSchedule?: Record<string, string>
+    images?: string[]
     costs?: {
       labor?: number
       fuel?: number
@@ -54,6 +78,8 @@ export const useAdminData = () => {
       const existing = allOrders.value.find(o => o.id === orderId)
       const existingFormData = existing?.form_data || {}
 
+      const parsedRevenue = payload.estValue !== undefined ? Number(payload.estValue) : undefined
+
       // Update in-memory and prepare payload
       const updatedFormData = {
         ...existingFormData,
@@ -62,9 +88,13 @@ export const useAdminData = () => {
         payment_status: payload.paymentStatus || existing?.payment_status || existingFormData.payment_status,
         priority: payload.priority || existing?.priority || existingFormData.priority,
         coordinator: payload.coordinator || existing?.coordinator || existingFormData.coordinator,
-        assigned_team: payload.team || existing?.assigned_team || existingFormData.assigned_team,
-        assigned_vehicle: payload.vehicle || existing?.assigned_vehicle || existingFormData.assigned_vehicle,
-        job_costs: payload.costs || existingFormData.job_costs,
+        assigned_team: payload.team !== undefined ? payload.team : (existing?.assigned_team || existingFormData.assigned_team),
+        assigned_vehicle: payload.vehicle !== undefined ? payload.vehicle : (existing?.assigned_vehicle || existingFormData.assigned_vehicle),
+        custom_schedule: payload.customSchedule || existingFormData.custom_schedule,
+        images: payload.images !== undefined ? payload.images : existingFormData.images,
+        job_costs: payload.costs ? { ...(existingFormData.job_costs || {}), ...payload.costs } : existingFormData.job_costs,
+        est_revenue: parsedRevenue !== undefined ? parsedRevenue : (existingFormData.est_revenue ?? existing?.est_revenue),
+        actual_revenue: parsedRevenue !== undefined ? parsedRevenue : (existingFormData.actual_revenue ?? existing?.actual_revenue),
         time_logs: (payload as any).timeLogs || existingFormData.time_logs,
         actual_hours: (payload as any).actualHours ?? existing?.actual_hours ?? existingFormData.actual_hours,
         scheduled_time_slot: (payload as any).scheduledTimeSlot || existing?.scheduled_time_slot || existingFormData.scheduled_time_slot,
@@ -83,7 +113,11 @@ export const useAdminData = () => {
       if (payload.paymentStatus) updatePayload.payment_status = payload.paymentStatus
       if (payload.priority) updatePayload.priority = payload.priority
       if (payload.coordinator) updatePayload.coordinator = payload.coordinator
-      if (payload.vehicle) updatePayload.assigned_vehicle = payload.vehicle
+      if (payload.vehicle !== undefined) updatePayload.assigned_vehicle = payload.vehicle
+      if (parsedRevenue !== undefined) {
+        updatePayload.est_revenue = parsedRevenue
+        updatePayload.actual_revenue = parsedRevenue
+      }
 
       // Execute update in Supabase
       const { error: err } = await supabase
@@ -271,8 +305,23 @@ export const useAdminData = () => {
   }
 
   const getOrderRevenue = (o: any) => {
-    const rev = Number(o?.actual_revenue || o?.est_revenue || 0)
-    return rev > 0 ? rev : 450
+    const rev = Number(
+      o?.actual_revenue ||
+      o?.est_revenue ||
+      o?.form_data?.actual_revenue ||
+      o?.form_data?.est_revenue ||
+      0
+    )
+    if (rev > 0) return rev
+    // Smart fallback by package from companySettings if available, otherwise €450
+    const pkgLabel = getOrderPackage(o).toLowerCase()
+    const matchedPkg = (companySettings.value?.servicePackages || []).find((p: any) =>
+      String(p.name || '').toLowerCase() === pkgLabel
+    )
+    if (matchedPkg && Number(matchedPkg.basePrice) > 0) {
+      return Number(matchedPkg.basePrice)
+    }
+    return 450
   }
 
   const getOrderRef = (o: any) => {
@@ -354,7 +403,10 @@ export const useAdminData = () => {
         fromFull: from,
         toFull: to,
         package: getOrderPackage(o),
-        team: getOrderTeam(o),
+        assignedTeam: Array.isArray(o.form_data?.assigned_team) ? o.form_data.assigned_team : (Array.isArray(o.assigned_team) ? o.assigned_team : []),
+        team: (Array.isArray(o.form_data?.assigned_team) && o.form_data.assigned_team.length > 0)
+          ? o.form_data.assigned_team.length
+          : getOrderTeam(o),
         estValue: revenue,
         status: operationalStatus,
         operationalStatus,
@@ -642,6 +694,8 @@ export const useAdminData = () => {
     automationLogs,
     triggerAutomation,
     fetchAutomationLogs,
+    companySettings,
+    fetchCompanySettings,
     totalRevenue,
     jobContribution,
     activeLeadsCount,

@@ -459,13 +459,38 @@
           <!-- Logo Card -->
           <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 text-center space-y-2">
             <div class="text-slate-500 font-bold">Official Branding</div>
-            <div class="py-4 px-2 bg-white rounded-xl border border-slate-200 flex flex-col items-center justify-center">
-              <div class="text-3xl font-black text-[#DC2626] tracking-tight font-sans">move•it</div>
-              <div class="text-[9px] font-bold tracking-[0.25em] text-slate-500">MAASTRICHT</div>
+            <div class="py-4 px-2 bg-white rounded-xl border border-slate-200 flex flex-col items-center justify-center min-h-[84px]">
+              <img
+                v-if="company.logoUrl"
+                :src="company.logoUrl"
+                alt="Company Logo"
+                class="max-h-14 max-w-full object-contain"
+              />
+              <template v-else>
+                <div class="text-3xl font-black text-[#DC2626] tracking-tight font-sans">move•it</div>
+                <div class="text-[9px] font-bold tracking-[0.25em] text-slate-500">MAASTRICHT</div>
+              </template>
             </div>
-            <button @click="triggerToast('Branding updated!')" class="w-full py-1.5 bg-white border border-slate-300 hover:bg-slate-50 rounded-xl text-slate-700 font-bold cursor-pointer">
-              Upload New Logo
-            </button>
+            <input
+              ref="logoInputRef"
+              type="file"
+              accept="image/png,image/jpeg,image/svg+xml,image/webp"
+              class="hidden"
+              @change="handleLogoUpload"
+            />
+            <div class="flex items-center gap-2">
+              <button @click="triggerLogoUpload" class="flex-1 py-1.5 bg-white border border-slate-300 hover:bg-slate-50 rounded-xl text-slate-700 font-bold cursor-pointer">
+                Upload New Logo
+              </button>
+              <button
+                v-if="company.logoUrl"
+                @click="resetCompanyLogo"
+                class="px-2.5 py-1.5 bg-white border border-rose-200 hover:bg-rose-50 rounded-xl text-rose-600 font-bold cursor-pointer text-[11px]"
+                title="Reset to default logo"
+              >
+                Reset
+              </button>
+            </div>
           </div>
 
           <!-- Business Hours -->
@@ -778,8 +803,9 @@
             </div>
           </div>
           <div class="flex items-center gap-2">
-            <button @click="triggerToast(`Sample downloaded for ${doc.name}`)" class="px-3 py-1.5 bg-white border border-slate-300 hover:bg-slate-50 rounded-xl font-bold text-slate-700 cursor-pointer">
-              Download
+            <button @click="downloadDocTemplate(doc)" class="px-3 py-1.5 bg-white border border-slate-300 hover:bg-slate-50 rounded-xl font-bold text-slate-700 cursor-pointer flex items-center gap-1.5">
+              <span>📥</span>
+              <span>Download</span>
             </button>
           </div>
         </div>
@@ -1179,6 +1205,8 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
+import { jsPDF } from 'jspdf'
+import { MOVEIT_LOGO_BASE64 } from '~/utils/pdfBranding'
 
 const emit = defineEmits(['add-member', 'settings-saved'])
 
@@ -1421,6 +1449,73 @@ const docTemplates = [
   { name: 'Damage Report Form', file: 'Moveit_Damage_Report.pdf', tag: 'Operations', badgeClass: 'bg-slate-100 text-slate-600' }
 ]
 
+const logoInputRef = ref(null)
+const triggerLogoUpload = () => {
+  logoInputRef.value?.click()
+}
+const handleLogoUpload = (e) => {
+  const file = e.target.files?.[0]
+  if (!file) return
+  const reader = new FileReader()
+  reader.onload = async (ev) => {
+    company.value.logoUrl = String(ev.target?.result || '')
+    await saveAllSettings()
+    triggerToast('Company logo updated and saved!')
+  }
+  reader.readAsDataURL(file)
+  e.target.value = ''
+}
+const resetCompanyLogo = async () => {
+  company.value.logoUrl = ''
+  await saveAllSettings()
+  triggerToast('Logo reset to MoveIt default!')
+}
+
+const downloadDocTemplate = (docItem) => {
+  try {
+    const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' })
+    const logoSrc = company.value.logoUrl || MOVEIT_LOGO_BASE64
+    if (logoSrc) {
+      try { pdf.addImage(logoSrc, 'PNG', 14, 12, 38, 13) } catch {}
+    }
+    pdf.setFont('helvetica', 'bold')
+    pdf.setFontSize(18)
+    pdf.setTextColor(15, 23, 42)
+    pdf.text(docItem.name, 14, 38)
+
+    pdf.setFont('helvetica', 'normal')
+    pdf.setFontSize(10)
+    pdf.setTextColor(100, 116, 139)
+    pdf.text(`${company.value.name || 'MoveIt Maastricht'} · ${company.value.address || 'Maastricht, Netherlands'}`, 14, 45)
+    pdf.text(`KVK: ${company.value.kvk || '94563384'} · BTW/VAT: ${company.value.vat || 'NL005093291B10'} · ${company.value.email || 'info@moveitmaastricht.nl'}`, 14, 51)
+
+    pdf.setDrawColor(226, 232, 240)
+    pdf.line(14, 56, 196, 56)
+
+    pdf.setFont('helvetica', 'bold')
+    pdf.setFontSize(12)
+    pdf.setTextColor(15, 23, 42)
+    pdf.text(`Template Category: ${docItem.tag}`, 14, 66)
+
+    pdf.setFont('helvetica', 'normal')
+    pdf.setFontSize(10)
+    pdf.setTextColor(51, 65, 85)
+    const bodyLines = pdf.splitTextToSize(
+      `This is the official ${docItem.name} (${docItem.file}) for ${company.value.name || 'MoveIt Maastricht'}.\n\n` +
+      `All terms, VAT (21% BTW) calculations, and customer service conditions apply according to Dutch & EU transport regulations.\n\n` +
+      `Contact: ${company.value.phone || '+31 6 19 76 38 78'} | ${company.value.website || 'www.moveit-maastricht.nl'}`,
+      180
+    )
+    pdf.text(bodyLines, 14, 76)
+
+    pdf.save(docItem.file || `${docItem.name.replace(/\s+/g, '_')}.pdf`)
+    triggerToast(`Downloaded ${docItem.file}`)
+  } catch (err) {
+    console.error('PDF template download error:', err)
+    triggerToast('Could not generate template PDF')
+  }
+}
+
 // 7. Integrations List
 const integrationsList = ref([
   { name: 'Supabase Database', desc: 'Orders, movers, and automation logs', icon: '⚡', bg: 'bg-emerald-50 text-emerald-600', statusDetail: 'Latency 28ms • Connected' },
@@ -1536,6 +1631,9 @@ const saveAllSettings = async () => {
       method: 'POST',
       body: payload
     })
+
+    const { companySettings } = useAdminData()
+    companySettings.value = payload
 
     if (res && res.savedToDb) {
       dbStatus.value = 'connected'

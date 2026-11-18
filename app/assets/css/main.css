@@ -181,3 +181,32 @@
   }
 }
 
+/* Dashboard Global Inter Font */
+.admin-inter,
+.admin-inter h1,
+.admin-inter h2,
+.admin-inter h3,
+.admin-inter h4,
+.admin-inter h5,
+.admin-inter h6,
+.admin-inter p,
+.admin-inter span,
+.admin-inter a,
+.admin-inter button,
+.admin-inter input,
+.admin-inter select,
+.admin-inter textarea,
+.admin-inter th,
+.admin-inter td,
+.admin-inter div,
+.admin-inter label,
+.admin-inter .font-sans {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+}
+
+.admin-inter .font-mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace !important;
+}
+
+
