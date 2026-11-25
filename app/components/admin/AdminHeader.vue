@@ -1,6 +1,6 @@
 <template>
   <header class="bg-white border-b border-slate-200/80 px-3 sm:px-6 lg:px-7 py-3 flex items-center justify-between gap-2.5 sm:gap-4 sticky top-0 z-20 shadow-2xs print:hidden">
-    <!-- Left: Mobile Hamburger Button + Global Search Input -->
+    <!-- Left: Sidebar Toggle + Global Search Input -->
     <div class="flex items-center gap-2.5 flex-1 max-w-xl">
       <!-- Hamburger Menu Toggle (Visible on Mobile & Tablet < lg) -->
       <button 
@@ -13,16 +13,78 @@
         </svg>
       </button>
 
-      <!-- Search Input -->
+      <!-- Desktop Sidebar Collapse / Expand Toggle -->
+      <button 
+        @click="$emit('toggle-collapse')"
+        class="hidden lg:flex p-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 items-center justify-center flex-shrink-0 cursor-pointer transition-colors"
+        :title="isSidebarCollapsed ? 'Show Sidebar' : 'Hide Sidebar'"
+      >
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+      </button>
+
+      <!-- Global Live Search Input -->
       <div class="relative flex-1 min-w-0">
-        <svg class="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg class="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
         </svg>
         <input 
+          v-model="globalSearchQuery"
+          @focus="isSearchFocused = true"
+          @blur="handleSearchBlur"
+          @keydown.enter="selectTopSearchResult"
           type="text" 
           placeholder="Search jobs, customers, addresses, or reference numbers..." 
-          class="w-full pl-9 pr-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all text-slate-900 placeholder:text-slate-400 truncate"
+          class="w-full pl-9 pr-8 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all text-slate-900 placeholder:text-slate-400 truncate"
         />
+        <button
+          v-if="globalSearchQuery"
+          @mousedown.prevent="globalSearchQuery = ''"
+          class="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-700 text-xs font-bold cursor-pointer"
+          title="Clear search"
+        >
+          ✕
+        </button>
+
+        <!-- Global Search Results Dropdown -->
+        <div
+          v-if="isSearchFocused && globalSearchQuery.trim().length > 0"
+          class="absolute left-0 right-0 top-full mt-2 bg-white rounded-2xl border border-slate-200 shadow-2xl z-50 overflow-hidden max-h-[420px] overflow-y-auto"
+        >
+          <div class="px-3.5 py-2 bg-slate-50 border-b border-slate-100 flex items-center justify-between text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+            <span>Global Search Results ({{ globalSearchResults.length }})</span>
+            <span>Click to open</span>
+          </div>
+
+          <div v-if="globalSearchResults.length > 0" class="divide-y divide-slate-100">
+            <button
+              v-for="item in globalSearchResults"
+              :key="item.id || item.ref"
+              type="button"
+              @mousedown.prevent="selectSearchResult(item)"
+              class="w-full px-3.5 py-2.5 text-left hover:bg-red-50/50 transition-colors flex items-center justify-between gap-3 cursor-pointer"
+            >
+              <div class="min-w-0 flex-1">
+                <div class="flex items-center gap-2">
+                  <span class="text-xs font-black text-slate-900">{{ item.ref }}</span>
+                  <span class="text-xs font-bold text-slate-800 truncate">{{ item.customer }}</span>
+                  <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-slate-100 text-slate-700">{{ item.operationalStatus || item.status }}</span>
+                </div>
+                <p class="text-[11px] text-slate-500 truncate mt-0.5">
+                  {{ item.route }} · {{ item.shortDate || item.movingDate }}
+                </p>
+              </div>
+              <div class="text-right shrink-0">
+                <span class="text-xs font-black text-slate-900">€{{ Math.round(item.estValue || 0).toLocaleString() }}</span>
+              </div>
+            </button>
+          </div>
+
+          <div v-else class="px-4 py-6 text-center text-xs text-slate-400">
+            No orders or customers found matching "{{ globalSearchQuery }}"
+          </div>
+        </div>
       </div>
     </div>
 
@@ -192,9 +254,9 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 
-defineProps({
+const props = defineProps({
   title: {
     type: String,
     default: 'Dashboard'
@@ -206,10 +268,58 @@ defineProps({
   actionButtonText: {
     type: String,
     default: 'New'
+  },
+  orders: {
+    type: Array,
+    default: () => []
+  },
+  isSidebarCollapsed: {
+    type: Boolean,
+    default: false
   }
 })
 
-defineEmits(['primary-action', 'toggle-sidebar'])
+const emit = defineEmits(['primary-action', 'toggle-sidebar', 'toggle-collapse', 'select-result'])
+
+const globalSearchQuery = ref('')
+const isSearchFocused = ref(false)
+
+const globalSearchResults = computed(() => {
+  const q = globalSearchQuery.value.toLowerCase().trim()
+  if (!q) return []
+  return (props.orders || [])
+    .filter(o => {
+      return (
+        String(o.ref || '').toLowerCase().includes(q) ||
+        String(o.customer || '').toLowerCase().includes(q) ||
+        String(o.email || '').toLowerCase().includes(q) ||
+        String(o.phone || '').toLowerCase().includes(q) ||
+        String(o.fromFull || '').toLowerCase().includes(q) ||
+        String(o.toFull || '').toLowerCase().includes(q) ||
+        String(o.route || '').toLowerCase().includes(q) ||
+        String(o.package || '').toLowerCase().includes(q)
+      )
+    })
+    .slice(0, 8)
+})
+
+const selectSearchResult = (item) => {
+  emit('select-result', item.raw || item)
+  globalSearchQuery.value = ''
+  isSearchFocused.value = false
+}
+
+const selectTopSearchResult = () => {
+  if (globalSearchResults.value.length > 0) {
+    selectSearchResult(globalSearchResults.value[0])
+  }
+}
+
+const handleSearchBlur = () => {
+  setTimeout(() => {
+    isSearchFocused.value = false
+  }, 150)
+}
 
 const deferredPrompt = ref(null)
 const showInstallModal = ref(false)

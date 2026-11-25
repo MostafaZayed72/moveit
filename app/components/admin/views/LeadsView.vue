@@ -302,10 +302,15 @@
                       {{ lead.nextActionSub }}
                     </div>
                   </td>
-                  <td class="py-3.5 px-2 text-center" @click.stop="$emit('select-lead', lead.raw || lead)">
-                    <button class="p-1 text-slate-400 hover:text-slate-700 rounded-lg hover:bg-slate-100 cursor-pointer" title="Open Full Move Detail">
-                      •••
-                    </button>
+                  <td class="py-3.5 px-2 text-center" @click.stop>
+                    <div class="inline-flex items-center gap-1">
+                      <button @click="$emit('select-lead', lead.raw || lead)" class="p-1 text-slate-400 hover:text-slate-700 rounded-lg hover:bg-slate-100 cursor-pointer" title="Open Full Move Detail">
+                        •••
+                      </button>
+                      <button @click="$emit('delete-order', lead.id || lead.raw?.id)" class="p-1 text-slate-400 hover:text-rose-600 rounded-lg hover:bg-rose-50 cursor-pointer text-xs" title="Delete Lead">
+                        🗑️
+                      </button>
+                    </div>
                   </td>
                 </tr>
                 <tr v-if="filteredLeads.length === 0">
@@ -541,7 +546,7 @@ const props = defineProps({
   }
 })
 
-const emit = defineEmits(['select-lead', 'add-lead'])
+const emit = defineEmits(['select-lead', 'add-lead', 'delete-order'])
 const { exportToExcel } = useAdminData()
 
 const exportLeadPdf = (lead) => {

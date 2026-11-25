@@ -7,7 +7,9 @@
       :leads-count="leadsOrders.length"
       :jobs-count="movingJobsOrders.length"
       :is-open="isSidebarOpen"
+      :is-collapsed="isSidebarCollapsed"
       @close="isSidebarOpen = false"
+      @toggle-collapse="isSidebarCollapsed = !isSidebarCollapsed"
       @select-view="handleViewSelect"
     />
 
@@ -19,8 +21,12 @@
         :title="viewMeta.title"
         :subtitle="viewMeta.subtitle"
         :action-button-text="viewMeta.actionText"
+        :orders="formattedOrders"
+        :is-sidebar-collapsed="isSidebarCollapsed"
         @primary-action="handlePrimaryAction"
         @toggle-sidebar="isSidebarOpen = !isSidebarOpen"
+        @toggle-collapse="isSidebarCollapsed = !isSidebarCollapsed"
+        @select-result="openMoveDetail"
       />
 
       <!-- Content Views Body -->
@@ -53,6 +59,7 @@
             :orders="formattedOrders"
             :initial-tab="leadsInitialTab"
             @select-lead="openMoveDetail"
+            @delete-order="handleDeleteOrder"
             @add-lead="showNewModal = true"
           />
 
@@ -63,6 +70,7 @@
             :initial-tab="jobsInitialTab"
             @select-job="openMoveDetail"
             @update-status="handleUpdateStatus"
+            @delete-order="handleDeleteOrder"
             @add-job="showNewModal = true"
           />
 
@@ -138,6 +146,7 @@
             :job="selectedJob || formattedOrders[0]"
             @back="currentView = previousView || 'jobs'"
             @update-status="handleUpdateStatus"
+            @delete-order="handleDeleteOrder"
             @trigger-automation="triggerAutomation"
           />
         </Transition>
@@ -236,6 +245,7 @@ const {
   movingJobsOrders,
   fetchOrders,
   updateThreeTrackStatus,
+  deleteOrder,
   createOrder,
   totalRevenue,
   jobContribution,
@@ -273,6 +283,7 @@ const selectedJob = ref(null)
 const showNewModal = ref(false)
 const isSubmitting = ref(false)
 const isSidebarOpen = ref(false)
+const isSidebarCollapsed = ref(false)
 
 const newForm = ref({
   customer: '',
@@ -317,6 +328,23 @@ const handleUpdateStatus = async (payload) => {
       if (payload.paymentStatus) selectedJob.value.paymentStatus = payload.paymentStatus
       if (payload.priority) selectedJob.value.priority = payload.priority
     }
+  }
+}
+
+const handleDeleteOrder = async (orderOrId) => {
+  const id = typeof orderOrId === 'string' ? orderOrId : (orderOrId?.id || orderOrId?.raw?.id)
+  if (!id) return
+  if (typeof window !== 'undefined' && !window.confirm('Are you sure you want to permanently delete this order/lead from the database? This cannot be undone.')) {
+    return
+  }
+  const res = await deleteOrder(id)
+  if (res.success) {
+    if (selectedJob.value && selectedJob.value.id === id) {
+      selectedJob.value = null
+      currentView.value = previousView.value || 'leads'
+    }
+  } else {
+    alert('Failed to delete order from database.')
   }
 }
 

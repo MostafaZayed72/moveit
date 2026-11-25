@@ -59,6 +59,16 @@
           </svg>
           <span>Download PDF</span>
         </button>
+
+        <!-- Delete Order Permanently -->
+        <button
+          @click="$emit('delete-order', activeJob.id || activeJob.raw?.id)"
+          class="flex items-center gap-1 px-3 py-1.5 bg-white hover:bg-rose-50 border border-rose-200 text-rose-600 text-xs font-bold rounded-xl shadow-xs transition-colors cursor-pointer"
+          title="Permanently delete this order/lead"
+        >
+          <span>🗑️</span>
+          <span class="hidden sm:inline">Delete</span>
+        </button>
       </div>
     </div>
 
@@ -1662,7 +1672,7 @@ const props = defineProps({
   }
 })
 
-const emit = defineEmits(['back', 'update-status', 'trigger-automation'])
+const emit = defineEmits(['back', 'update-status', 'delete-order', 'trigger-automation'])
 
 // --- Phase 3 Automated Communication State & Dispatch ---
 const showAutoDispatchModal = ref(false)

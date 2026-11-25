@@ -171,6 +171,29 @@ export const useAdminData = () => {
     }
   }
 
+  // Delete order / lead permanently from Supabase
+  const deleteOrder = async (orderId: string) => {
+    if (!orderId) return { success: false, error: 'Missing order ID' }
+    try {
+      try {
+        await supabase.from('order_status_logs').delete().eq('order_id', orderId)
+      } catch {
+        // Non-blocking if logs table does not exist or has no rows
+      }
+      const { error: err } = await supabase
+        .from('orders')
+        .delete()
+        .eq('id', orderId)
+
+      if (err) throw err
+      allOrders.value = allOrders.value.filter(o => o.id !== orderId)
+      return { success: true }
+    } catch (err: any) {
+      console.error('Error deleting order:', err)
+      return { success: false, error: err }
+    }
+  }
+
   // Create new order / lead in Supabase
   const createOrder = async (orderPayload: any) => {
     try {
@@ -403,6 +426,7 @@ export const useAdminData = () => {
         fromFull: from,
         toFull: to,
         package: getOrderPackage(o),
+        moveType: o.form_data?.move_type || '',
         assignedTeam: Array.isArray(o.form_data?.assigned_team) ? o.form_data.assigned_team : (Array.isArray(o.assigned_team) ? o.assigned_team : []),
         team: (Array.isArray(o.form_data?.assigned_team) && o.form_data.assigned_team.length > 0)
           ? o.form_data.assigned_team.length
@@ -689,6 +713,7 @@ export const useAdminData = () => {
     fetchOrders,
     updateOrderStatus,
     updateThreeTrackStatus,
+    deleteOrder,
     createOrder,
     exportToExcel,
     automationLogs,

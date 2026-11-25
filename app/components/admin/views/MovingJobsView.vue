@@ -333,8 +333,15 @@
                     </td>
 
                     <!-- ACTIONS MENU -->
-                    <td class="py-3.5 px-1.5 text-center text-slate-400 hover:text-slate-700 cursor-pointer font-black text-sm" @click.stop="openJobDetail(job)">
-                      •••
+                    <td class="py-3.5 px-1.5 text-center" @click.stop>
+                      <div class="inline-flex items-center gap-1">
+                        <button @click="openJobDetail(job)" class="p-1 text-slate-400 hover:text-slate-700 rounded-lg hover:bg-slate-100 cursor-pointer font-black text-sm" title="Open Job Detail">
+                          •••
+                        </button>
+                        <button @click="$emit('delete-order', job.id || job.raw?.id)" class="p-1 text-slate-400 hover:text-rose-600 rounded-lg hover:bg-rose-50 cursor-pointer text-xs" title="Delete Job">
+                          🗑️
+                        </button>
+                      </div>
                     </td>
                   </tr>
 
@@ -772,7 +779,7 @@ const props = defineProps({
   }
 })
 
-const emit = defineEmits(['add-job', 'select-job', 'update-status'])
+const emit = defineEmits(['add-job', 'select-job', 'update-status', 'delete-order'])
 const { exportToExcel } = useAdminData()
 
 const handleExportExcel = () => {

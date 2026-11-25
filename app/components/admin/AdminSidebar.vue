@@ -9,14 +9,15 @@
   <!-- Sidebar (Off-canvas drawer on Mobile/Tablet, Sticky Left on Desktop lg+) -->
   <aside 
     :class="[
-      'w-60 xl:w-64 bg-[#0F141F] text-slate-300 flex flex-col justify-between h-screen border-r border-slate-800/80 select-none flex-shrink-0 overflow-y-auto print:hidden transition-transform duration-300 ease-in-out',
-      'fixed inset-y-0 left-0 z-50 lg:static lg:z-30 lg:translate-x-0',
+      'w-60 xl:w-64 bg-[#0F141F] text-slate-300 flex flex-col justify-between h-screen border-r border-slate-800/80 select-none flex-shrink-0 overflow-y-auto print:hidden transition-all duration-300 ease-in-out',
+      'fixed inset-y-0 left-0 z-50 lg:static lg:z-30',
+      isCollapsed ? 'lg:hidden' : 'lg:translate-x-0',
       isOpen ? 'translate-x-0 shadow-2xl' : '-translate-x-full'
     ]"
   >
     <!-- Top Brand & Navigation -->
     <div class="p-4 space-y-4">
-      <!-- Logo & Mobile Close Button -->
+      <!-- Logo & Close / Collapse Buttons -->
       <div class="flex items-center justify-between px-2 py-1.5">
         <NuxtLink to="/admin" class="flex items-center group shrink-0">
           <img 
@@ -25,6 +26,14 @@
             class="h-8 w-auto object-contain transition-transform duration-200 group-hover:scale-[1.03]"
           />
         </NuxtLink>
+        <!-- Collapse button on desktop -->
+        <button 
+          @click="$emit('toggle-collapse')"
+          class="hidden lg:flex w-8 h-8 rounded-lg bg-slate-800/80 text-slate-400 hover:text-white hover:bg-slate-700 items-center justify-center text-xs font-bold cursor-pointer transition-colors"
+          title="Collapse Sidebar"
+        >
+          «
+        </button>
         <!-- Close button on mobile -->
         <button 
           @click="$emit('close')"
@@ -311,10 +320,14 @@ defineProps({
   isOpen: {
     type: Boolean,
     default: false
+  },
+  isCollapsed: {
+    type: Boolean,
+    default: false
   }
 })
 
-const emit = defineEmits(['select-view', 'close'])
+const emit = defineEmits(['select-view', 'close', 'toggle-collapse'])
 
 const selectAndClose = (view) => {
   emit('select-view', view)

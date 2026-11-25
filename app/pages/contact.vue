@@ -6,17 +6,28 @@
         <div class="glass-panel p-10 rounded-3xl" data-aos="fade-right">
 
           <!-- Success Message -->
-          <div v-if="submitted" class="text-center py-16">
-            <div class="w-20 h-20 bg-emerald-500 rounded-full flex items-center justify-center mx-auto mb-6">
+          <div v-if="submitted" class="text-center py-12 space-y-4">
+            <div class="w-20 h-20 bg-emerald-500 rounded-full flex items-center justify-center mx-auto mb-4">
               <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
               </svg>
             </div>
-            <h3 class="text-2xl font-bold text-slate-900 dark:text-white mb-3">{{ $t('contact.success_title') }}</h3>
-            <p class="text-slate-600 dark:text-slate-400">{{ $t('contact.success_desc') }}</p>
-            <button @click="submitted = false" class="mt-8 btn-primary px-8 py-3">
-              {{ $t('contact.send_another') }}
-            </button>
+            <h3 class="text-2xl font-bold text-slate-900 dark:text-white">{{ $t('contact.success_title') }}</h3>
+            <p class="text-slate-600 dark:text-slate-400 max-w-md mx-auto">
+              We've received your moving request! Our team will review your details and get in touch shortly.
+            </p>
+            <div v-if="estimatedInstantPrice > 0" class="inline-block px-6 py-4 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800">
+              <div class="text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400">Estimated Instant Quote</div>
+              <div class="text-3xl font-black text-emerald-700 dark:text-emerald-300 mt-1">€{{ estimatedInstantPrice.toLocaleString() }} <span class="text-xs font-semibold">excl. VAT</span></div>
+              <div v-if="totalInventoryItems > 0" class="text-xs text-emerald-600 dark:text-emerald-400 mt-1">
+                Based on {{ totalInventoryItems }} items ({{ totalInventoryVolume.toFixed(1) }} m³)
+              </div>
+            </div>
+            <div>
+              <button @click="submitted = false" class="mt-4 btn-primary px-8 py-3">
+                {{ $t('contact.send_another') }}
+              </button>
+            </div>
           </div>
 
           <form v-else @submit.prevent="nextStep" class="space-y-6">
@@ -75,6 +86,36 @@
                 </div>
               </div>
 
+              <!-- Type of Move & Storage / In-Person Quote -->
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full min-w-0">
+                <div class="space-y-2 min-w-0">
+                  <label class="form-label" for="move_type">Type of Move</label>
+                  <select id="move_type" v-model="moveType" class="form-input cursor-pointer" required>
+                    <option value="" disabled>Choose an option</option>
+                    <option value="Residential">Residential</option>
+                    <option value="Office / Commercial">Office / Commercial</option>
+                    <option value="Special Event">Special Event</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
+
+                <div class="space-y-2 min-w-0">
+                  <label class="form-label">Do you require MoveIt storage services?</label>
+                  <div class="grid grid-cols-2 gap-3 h-[58px]">
+                    <label class="flex items-center justify-center gap-2 rounded-xl border-2 transition-all cursor-pointer bg-slate-50/50 dark:bg-slate-900/30"
+                           :class="storageRequired === 'yes' ? 'border-red-500 bg-red-500/5 text-red-600 font-bold' : 'border-slate-100 dark:border-slate-800 hover:border-slate-300 text-slate-700 dark:text-slate-300'">
+                      <input type="radio" v-model="storageRequired" value="yes" class="sr-only" />
+                      <span class="text-sm">Yes</span>
+                    </label>
+                    <label class="flex items-center justify-center gap-2 rounded-xl border-2 transition-all cursor-pointer bg-slate-50/50 dark:bg-slate-900/30"
+                           :class="storageRequired === 'no' ? 'border-red-500 bg-red-500/5 text-red-600 font-bold' : 'border-slate-100 dark:border-slate-800 hover:border-slate-300 text-slate-700 dark:text-slate-300'">
+                      <input type="radio" v-model="storageRequired" value="no" class="sr-only" />
+                      <span class="text-sm">No</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+
               <div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full min-w-0">
                 <div class="space-y-2 min-w-0 relative">
                   <label class="form-label" for="moving_size">{{ $t('contact.what_are_you_moving') }}</label>
@@ -86,7 +127,7 @@
                       class="form-input text-left flex justify-between items-center cursor-pointer w-full text-sm h-[58px]"
                     >
                       <span :class="{'text-slate-400 dark:text-slate-500': !moveSize, 'text-slate-900 dark:text-white': moveSize}" class="truncate block">
-                        {{ moveSize ? $t(sizeOptions.find(o => o.value === moveSize).key) : $t('contact.select_size') }}
+                        {{ moveSize ? (sizeOptions.find(o => o.value === moveSize)?.fallback || $t(sizeOptions.find(o => o.value === moveSize).key)) : $t('contact.select_size') }}
                       </span>
                       <svg class="h-4 w-4 transition-transform duration-200 shrink-0 text-slate-400" :class="{'rotate-180': isSizeDropdownOpen}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
                     </button>
@@ -110,11 +151,18 @@
                           class="px-5 py-3 hover:bg-blue-600 hover:text-white dark:hover:bg-blue-600 dark:hover:text-white cursor-pointer transition-colors flex items-center justify-between group text-sm"
                           :class="{'bg-blue-500/10 text-blue-600 dark:bg-blue-500/20 dark:text-blue-400 font-bold': moveSize === option.value, 'text-slate-700 dark:text-slate-300': moveSize !== option.value}"
                         >
-                          <span class="flex-1">{{ $t(option.key) }}</span>
+                          <span class="flex-1">{{ option.fallback || $t(option.key) }}</span>
                         </div>
                       </div>
                     </transition>
                   </div>
+                  <input
+                    v-if="moveSize === 'other'"
+                    v-model="customMoveSize"
+                    type="text"
+                    placeholder="Please specify size (e.g. 4-Bedroom Villa, 120m² Office)..."
+                    class="form-input mt-2 text-sm"
+                  />
                 </div>
                 <div class="space-y-2 min-w-0 relative">
                   <label class="form-label">{{ $t('contact.preferred_time') }}</label>
@@ -187,6 +235,58 @@
               <div class="space-y-2">
                 <label class="form-label">{{ $t('contact.form_moving_to') }}</label>
                 <AddressAutocomplete v-model="movingTo" input-class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl py-4 text-slate-900 dark:text-white focus:border-red-500 outline-none transition-all shadow-sm dark:shadow-none" required />
+              </div>
+
+              <!-- Transitional Stops -->
+              <div class="space-y-3">
+                <div v-for="(stop, sIdx) in transitionalStops" :key="sIdx" class="flex items-center gap-2">
+                  <div class="flex-1">
+                    <label class="form-label text-[11px]">Transitional Stop #{{ sIdx + 1 }}</label>
+                    <input
+                      v-model="transitionalStops[sIdx]"
+                      type="text"
+                      placeholder="Enter intermediate pickup or drop-off address..."
+                      class="form-input text-sm"
+                    />
+                  </div>
+                  <button
+                    type="button"
+                    @click="removeTransitionalStop(sIdx)"
+                    class="mt-6 px-3 py-3 rounded-xl border border-slate-200 dark:border-slate-800 text-slate-400 hover:text-red-600 hover:border-red-300 text-xs font-bold cursor-pointer"
+                    title="Remove stop"
+                  >
+                    ✕
+                  </button>
+                </div>
+
+                <button
+                  type="button"
+                  @click="addTransitionalStop"
+                  class="inline-flex items-center gap-2 text-xs font-bold text-red-600 hover:text-red-700 cursor-pointer py-1"
+                >
+                  <span class="w-5 h-5 rounded-full bg-red-600 text-white flex items-center justify-center text-sm leading-none">+</span>
+                  <span>Add transitional stops if it's necessary</span>
+                </button>
+              </div>
+
+              <!-- Free In-Person / Video Survey Quote -->
+              <div class="p-4 rounded-2xl bg-slate-50/70 dark:bg-slate-900/40 border border-slate-200/80 dark:border-slate-800 space-y-2.5">
+                <div>
+                  <label class="form-label mb-0">Are you interested in a free in-person quote?</label>
+                  <p class="text-[11px] text-slate-500 dark:text-slate-400">We will come to your home/office or review a video and price your quote in person.</p>
+                </div>
+                <div class="grid grid-cols-2 gap-3 max-w-xs">
+                  <label class="flex items-center justify-center gap-2 p-2.5 rounded-xl border-2 transition-all cursor-pointer bg-white dark:bg-slate-900"
+                         :class="inPersonQuote === 'yes' ? 'border-red-500 bg-red-500/5 text-red-600 font-bold' : 'border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300'">
+                    <input type="radio" v-model="inPersonQuote" value="yes" class="sr-only" />
+                    <span class="text-xs">Yes</span>
+                  </label>
+                  <label class="flex items-center justify-center gap-2 p-2.5 rounded-xl border-2 transition-all cursor-pointer bg-white dark:bg-slate-900"
+                         :class="inPersonQuote === 'no' ? 'border-red-500 bg-red-500/5 text-red-600 font-bold' : 'border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300'">
+                    <input type="radio" v-model="inPersonQuote" value="no" class="sr-only" />
+                    <span class="text-xs">No</span>
+                  </label>
+                </div>
               </div>
             </div>
 
@@ -461,6 +561,29 @@
                   </div>
                 </div>
               </div>
+              <!-- Instant Pricing vs Direct Callback Choice -->
+              <div v-if="currentStep === 4" class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 space-y-3">
+                <p class="text-xs text-slate-600 dark:text-slate-300 text-center leading-relaxed">
+                  You have the option to provide us with the list of your items &amp; rooms for an instant estimated price, or submit now and we will get in touch.
+                </p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <button
+                    type="button"
+                    @click="openInventoryBuilder"
+                    class="w-full py-3.5 px-4 bg-[#DC2626] hover:bg-red-700 text-white text-xs font-bold rounded-xl shadow-md shadow-red-600/25 transition-all cursor-pointer flex items-center justify-center gap-2"
+                  >
+                    <span>📦</span>
+                    <span>Add items for instant pricing</span>
+                  </button>
+                  <button
+                    type="submit"
+                    :disabled="loading"
+                    class="w-full py-3.5 px-4 bg-white dark:bg-slate-900 hover:bg-slate-50 border-2 border-red-600 text-red-600 text-xs font-bold rounded-xl transition-all cursor-pointer flex items-center justify-center gap-2"
+                  >
+                    <span>{{ loading ? 'Sending...' : 'Submit now & we will get in touch' }}</span>
+                  </button>
+                </div>
+              </div>
             </div>
 
             <!-- STEP 5: OTP Verification -->
@@ -559,6 +682,198 @@
         </div>
       </div>
     </BaseSection>
+
+    <!-- INTERACTIVE ROOM & ITEM INVENTORY BUILDER MODAL -->
+    <div
+      v-if="showInventoryBuilder"
+      class="fixed inset-0 z-50 bg-slate-900/75 backdrop-blur-sm flex items-center justify-center p-2 sm:p-5 overflow-y-auto"
+    >
+      <div class="bg-white dark:bg-slate-950 rounded-3xl max-w-6xl w-full max-h-[92vh] flex flex-col shadow-2xl border border-slate-200 dark:border-slate-800 overflow-hidden">
+        <!-- Top Header -->
+        <div class="px-6 py-4 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between bg-slate-50/80 dark:bg-slate-900/60">
+          <div>
+            <h3 class="text-lg font-black text-slate-900 dark:text-white">Your Rooms &amp; Inventory for Instant Pricing</h3>
+            <p class="text-xs text-slate-500">Select rooms, add your furniture &amp; boxes, and get a live volume &amp; price estimate.</p>
+          </div>
+          <button @click="showInventoryBuilder = false" class="w-9 h-9 rounded-full hover:bg-slate-200/70 flex items-center justify-center text-slate-500 font-bold cursor-pointer">
+            ✕
+          </button>
+        </div>
+
+        <!-- 3-Column Builder Body -->
+        <div class="flex-1 overflow-y-auto grid grid-cols-1 lg:grid-cols-12 divide-y lg:divide-y-0 lg:divide-x divide-slate-100 dark:divide-slate-800">
+          <!-- Left: Rooms Sidebar (3 Cols) -->
+          <div class="lg:col-span-3 p-4 space-y-2 bg-slate-50/50 dark:bg-slate-900/30">
+            <div class="text-[11px] font-extrabold uppercase tracking-wider text-slate-400 px-2 mb-2">Your Rooms</div>
+            <button
+              v-for="room in inventoryRooms"
+              :key="room.id"
+              type="button"
+              @click="activeInventoryRoom = room.id"
+              class="w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer"
+              :class="activeInventoryRoom === room.id ? 'bg-[#DC2626] text-white shadow-sm' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800'"
+            >
+              <span class="flex items-center gap-2">
+                <span>{{ room.icon }}</span>
+                <span>{{ room.label }}</span>
+              </span>
+              <span
+                class="px-2 py-0.5 rounded-full text-[10px] font-black"
+                :class="activeInventoryRoom === room.id ? 'bg-white/20 text-white' : 'bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400'"
+              >
+                {{ getRoomItemCount(room.id) }}
+              </span>
+            </button>
+          </div>
+
+          <!-- Center: Searchable Items Grid (6 Cols) -->
+          <div class="lg:col-span-6 p-5 space-y-4 overflow-y-auto max-h-[65vh]">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <div class="relative flex-1 min-w-[200px]">
+                <input
+                  v-model="inventorySearch"
+                  type="text"
+                  placeholder="Search for furniture or boxes (e.g. bed, sofa, box)..."
+                  class="w-full pl-3.5 pr-8 py-2 text-xs bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl focus:border-red-500 focus:outline-none text-slate-900 dark:text-white"
+                />
+                <button v-if="inventorySearch" @click="inventorySearch = ''" class="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs">✕</button>
+              </div>
+              <div class="flex items-center bg-slate-100 dark:bg-slate-800 p-1 rounded-xl text-[11px] font-bold">
+                <button
+                  type="button"
+                  @click="inventoryFilterTab = 'all'"
+                  class="px-3 py-1 rounded-lg cursor-pointer"
+                  :class="inventoryFilterTab === 'all' ? 'bg-white dark:bg-slate-950 text-slate-900 dark:text-white shadow-xs' : 'text-slate-500'"
+                >
+                  All Items
+                </button>
+                <button
+                  type="button"
+                  @click="inventoryFilterTab = 'added'"
+                  class="px-3 py-1 rounded-lg cursor-pointer"
+                  :class="inventoryFilterTab === 'added' ? 'bg-white dark:bg-slate-950 text-red-600 shadow-xs' : 'text-slate-500'"
+                >
+                  Your Added Items ({{ totalInventoryItems }})
+                </button>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div
+                v-for="item in filteredInventoryCatalog"
+                :key="item.id"
+                class="p-3.5 rounded-2xl border transition-all flex flex-col justify-between gap-3"
+                :class="(inventoryQuantities[item.id] || 0) > 0 ? 'border-red-400 bg-red-50/40 dark:bg-red-950/20' : 'border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900'"
+              >
+                <div class="flex items-start justify-between gap-2">
+                  <div>
+                    <div class="text-lg mb-0.5">{{ item.icon }}</div>
+                    <p class="text-xs font-bold text-slate-900 dark:text-white leading-snug">{{ item.name }}</p>
+                    <p class="text-[10px] text-slate-400 mt-0.5">Est. {{ item.volume }} m³</p>
+                  </div>
+                </div>
+                <div class="flex items-center justify-between pt-2 border-t border-slate-100 dark:border-slate-800">
+                  <button
+                    type="button"
+                    @click="decrementItem(item.id)"
+                    class="w-7 h-7 rounded-lg border border-slate-200 dark:border-slate-700 font-black text-slate-600 hover:bg-slate-100 cursor-pointer"
+                  >
+                    -
+                  </button>
+                  <span class="text-xs font-black text-slate-900 dark:text-white">{{ inventoryQuantities[item.id] || 0 }}</span>
+                  <button
+                    type="button"
+                    @click="incrementItem(item.id)"
+                    class="w-7 h-7 rounded-lg bg-slate-900 text-white font-black hover:bg-[#DC2626] transition-colors cursor-pointer"
+                  >
+                    +
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: Live Move & Inventory Summary (3 Cols) -->
+          <div class="lg:col-span-3 p-5 space-y-4 bg-slate-50/50 dark:bg-slate-900/30 flex flex-col justify-between">
+            <div class="space-y-4">
+              <div>
+                <div class="text-[11px] font-extrabold uppercase tracking-wider text-slate-400">Your Move</div>
+                <p class="text-xs font-bold text-slate-900 dark:text-white mt-1">{{ moveDate || 'Date TBD' }} · {{ moveType || 'Residential' }}</p>
+                <p class="text-[11px] text-slate-500 mt-1 truncate">From: {{ movingFrom || 'Pickup TBD' }}</p>
+                <p class="text-[11px] text-slate-500 truncate">To: {{ movingTo || 'Drop-off TBD' }}</p>
+              </div>
+
+              <div class="p-3.5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-3">
+                <div class="text-[11px] font-extrabold uppercase tracking-wider text-slate-400">Inventory Summary</div>
+                <div class="grid grid-cols-3 gap-2 text-center">
+                  <div class="p-2 rounded-xl bg-slate-50 dark:bg-slate-800">
+                    <div class="text-base font-black text-slate-900 dark:text-white">{{ totalInventoryItems }}</div>
+                    <div class="text-[10px] text-slate-500">Items</div>
+                  </div>
+                  <div class="p-2 rounded-xl bg-slate-50 dark:bg-slate-800">
+                    <div class="text-base font-black text-slate-900 dark:text-white">{{ activeRoomsCount }}</div>
+                    <div class="text-[10px] text-slate-500">Rooms</div>
+                  </div>
+                  <div class="p-2 rounded-xl bg-slate-50 dark:bg-slate-800">
+                    <div class="text-base font-black text-slate-900 dark:text-white">{{ totalInventoryVolume.toFixed(1) }}</div>
+                    <div class="text-[10px] text-slate-500">m³</div>
+                  </div>
+                </div>
+                <div class="pt-2 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                  <span class="text-xs font-bold text-slate-600 dark:text-slate-400">Instant Estimate</span>
+                  <span class="text-lg font-black text-[#DC2626]">€{{ estimatedInstantPrice.toLocaleString() }}</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="space-y-2 pt-3">
+              <button
+                type="button"
+                @click="handleSeeQuoteClick"
+                class="w-full py-3.5 bg-[#DC2626] hover:bg-red-700 text-white text-xs font-black rounded-xl shadow-md shadow-red-600/25 cursor-pointer"
+              >
+                See Quote &amp; Submit →
+              </button>
+              <button
+                type="button"
+                @click="showInventoryBuilder = false"
+                class="w-full py-2 text-xs font-bold text-slate-500 hover:text-slate-800 cursor-pointer"
+              >
+                Back to Form
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BOXES REMINDER MODAL -->
+    <div
+      v-if="showBoxesReminderModal"
+      class="fixed inset-0 z-[60] bg-slate-900/70 backdrop-blur-xs flex items-center justify-center p-4"
+    >
+      <div class="bg-white dark:bg-slate-950 rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-200 dark:border-slate-800 text-center space-y-4">
+        <div class="w-12 h-12 rounded-2xl bg-amber-100 text-amber-600 flex items-center justify-center text-2xl mx-auto">📦</div>
+        <h4 class="text-base font-black text-slate-900 dark:text-white">Did you choose the right number of boxes you'll have for us to move?</h4>
+        <p class="text-xs text-slate-500">A helpful rule of thumb is 15–25 moving boxes per person.</p>
+        <div class="flex items-center justify-center gap-3 pt-2">
+          <button
+            type="button"
+            @click="jumpToBoxes"
+            class="px-4 py-2.5 rounded-xl border border-slate-300 text-xs font-bold text-slate-700 hover:bg-slate-50 cursor-pointer"
+          >
+            Add Moving Boxes
+          </button>
+          <button
+            type="button"
+            @click="proceedToQuoteSubmit"
+            class="px-5 py-2.5 rounded-xl bg-[#DC2626] hover:bg-red-700 text-white text-xs font-bold cursor-pointer"
+          >
+            Proceed to Quote
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -576,6 +891,14 @@ const movingPackages = [
 
 // Form state
 const movingPackage = ref('')
+const moveType     = ref('Residential')
+const storageRequired = ref('no')
+const inPersonQuote = ref('no')
+const customMoveSize = ref('')
+const transitionalStops = ref([])
+const addTransitionalStop = () => transitionalStops.value.push('')
+const removeTransitionalStop = (idx) => transitionalStops.value.splice(idx, 1)
+
 const fullName     = ref('')
 const email        = ref('')
 const phone        = ref('')
@@ -592,7 +915,9 @@ const sizeOptions = [
   { value: '1bed', key: 'contact.1bed_apt' },
   { value: '2bed', key: 'contact.2bed_apt' },
   { value: '3bed', key: 'contact.3bed_house' },
-  { value: 'items', key: 'contact.few_items' }
+  { value: 'office', key: 'contact.office_space', fallback: 'Office / Commercial Space' },
+  { value: 'items', key: 'contact.few_items' },
+  { value: 'other', key: 'contact.other_size', fallback: 'Other (Specify)' }
 ]
 
 const selectSizeOption = (val) => {
@@ -679,7 +1004,173 @@ const hearAbout = ref('')
 // UI state
 const currentStep  = ref(1)
 const submitted    = ref(false)
-const loading      = ref(false)
+const showInventoryBuilder = ref(false)
+const showBoxesReminderModal = ref(false)
+const activeInventoryRoom = ref('bedroom')
+const inventorySearch = ref('')
+const inventoryFilterTab = ref('all')
+const inventoryQuantities = ref({})
+
+const inventoryRooms = [
+  { id: 'bedroom', label: 'Bedroom', icon: '🛏️' },
+  { id: 'living', label: 'Living Room', icon: '🛋️' },
+  { id: 'dining', label: 'Dining Room', icon: '🍽️' },
+  { id: 'kitchen', label: 'Kitchen', icon: '🍳' },
+  { id: 'office', label: 'Home Office', icon: '💻' },
+  { id: 'boxes', label: 'Boxes & Packing', icon: '📦' }
+]
+
+const inventoryCatalog = [
+  // Bedroom
+  { id: 'bed_king', room: 'bedroom', name: 'King / Queen Bed Frame + Mattress', volume: 2.0, icon: '🛏️' },
+  { id: 'bed_single', room: 'bedroom', name: 'Single Bed + Mattress', volume: 1.2, icon: '🛏️' },
+  { id: 'wardrobe_2', room: 'bedroom', name: 'Wardrobe (2-Door)', volume: 1.5, icon: '🚪' },
+  { id: 'wardrobe_3', room: 'bedroom', name: 'Wardrobe (3-Door / PAX)', volume: 2.4, icon: '🚪' },
+  { id: 'dresser', room: 'bedroom', name: 'Chest of Drawers / Dresser', volume: 0.8, icon: '🗄️' },
+  { id: 'nightstand', room: 'bedroom', name: 'Nightstand / Bedside Table', volume: 0.25, icon: '🪑' },
+  // Living Room
+  { id: 'sofa_3', room: 'living', name: '3-Seater Sofa / Couch', volume: 1.8, icon: '🛋️' },
+  { id: 'sofa_2', room: 'living', name: '2-Seater Loveseat / Sofa', volume: 1.3, icon: '🛋️' },
+  { id: 'armchair', room: 'living', name: 'Armchair / Lounge Chair', volume: 0.7, icon: '💺' },
+  { id: 'coffee_table', room: 'living', name: 'Coffee Table', volume: 0.4, icon: '🪵' },
+  { id: 'tv_stand', room: 'living', name: 'TV Stand / Media Console', volume: 0.7, icon: '📺' },
+  { id: 'tv_large', room: 'living', name: 'Large TV (50"+)', volume: 0.3, icon: '📺' },
+  { id: 'bookcase', room: 'living', name: 'Bookshelf / Bookcase', volume: 0.9, icon: '📚' },
+  // Dining Room
+  { id: 'dining_table', room: 'dining', name: 'Dining Table (4–6 Person)', volume: 1.4, icon: '🍽️' },
+  { id: 'dining_chair', room: 'dining', name: 'Dining Chair', volume: 0.2, icon: '🪑' },
+  { id: 'sideboard', room: 'dining', name: 'Buffet / Sideboard Cabinet', volume: 1.1, icon: '🗄️' },
+  // Kitchen
+  { id: 'fridge', room: 'kitchen', name: 'Refrigerator / Freezer', volume: 1.2, icon: '🧊' },
+  { id: 'washer', room: 'kitchen', name: 'Washing Machine / Dryer', volume: 0.7, icon: '🧺' },
+  { id: 'dishwasher', room: 'kitchen', name: 'Dishwasher / Oven', volume: 0.6, icon: '🍽️' },
+  // Home Office
+  { id: 'desk', room: 'office', name: 'Office Desk', volume: 0.9, icon: '🖥️' },
+  { id: 'office_chair', room: 'office', name: 'Ergonomic Office Chair', volume: 0.3, icon: '🪑' },
+  { id: 'file_cabinet', room: 'office', name: 'Filing Cabinet', volume: 0.5, icon: '🗄️' },
+  // Boxes & Packing
+  { id: 'box_small', room: 'boxes', name: 'Small Moving Box (Books/Heavy)', volume: 0.05, icon: '📦' },
+  { id: 'box_medium', room: 'boxes', name: 'Medium Moving Box (Standard)', volume: 0.08, icon: '📦' },
+  { id: 'box_large', room: 'boxes', name: 'Large Moving Box (Bedding/Clothes)', volume: 0.12, icon: '📦' },
+  { id: 'wardrobe_box', room: 'boxes', name: 'Wardrobe Hanging Box', volume: 0.25, icon: '🧥' }
+]
+
+const filteredInventoryCatalog = computed(() => {
+  const q = inventorySearch.value.toLowerCase().trim()
+  return inventoryCatalog.filter(item => {
+    if (inventoryFilterTab.value === 'added') {
+      if ((inventoryQuantities.value[item.id] || 0) <= 0) return false
+    } else if (!q && item.room !== activeInventoryRoom.value) {
+      return false
+    }
+    if (q) {
+      return item.name.toLowerCase().includes(q)
+    }
+    return true
+  })
+})
+
+const getRoomItemCount = (roomId) => {
+  return inventoryCatalog
+    .filter(i => i.room === roomId)
+    .reduce((sum, i) => sum + (inventoryQuantities.value[i.id] || 0), 0)
+}
+
+const incrementItem = (id) => {
+  inventoryQuantities.value = {
+    ...inventoryQuantities.value,
+    [id]: (inventoryQuantities.value[id] || 0) + 1
+  }
+}
+
+const decrementItem = (id) => {
+  const cur = inventoryQuantities.value[id] || 0
+  if (cur <= 0) return
+  inventoryQuantities.value = {
+    ...inventoryQuantities.value,
+    [id]: cur - 1
+  }
+}
+
+const selectedInventoryList = computed(() => {
+  return inventoryCatalog
+    .filter(i => (inventoryQuantities.value[i.id] || 0) > 0)
+    .map(i => ({
+      id: i.id,
+      name: i.name,
+      room: i.room,
+      qty: inventoryQuantities.value[i.id],
+      volume: i.volume
+    }))
+})
+
+const totalInventoryItems = computed(() => selectedInventoryList.value.reduce((s, i) => s + i.qty, 0))
+const activeRoomsCount = computed(() => new Set(selectedInventoryList.value.map(i => i.room)).size)
+const totalInventoryVolume = computed(() => selectedInventoryList.value.reduce((s, i) => s + i.qty * i.volume, 0))
+
+const estimatedInstantPrice = computed(() => {
+  const pkgBase = {
+    van_only: 220,
+    van_1_mover: 320,
+    van_2_movers: 450,
+    full_service: 750
+  }[movingPackage.value] || 350
+
+  const vol = totalInventoryVolume.value
+  const volumeCharge = vol > 0 ? Math.round(vol * 24) : ({
+    studio: 90,
+    '1bed': 160,
+    '2bed': 260,
+    '3bed': 420,
+    office: 380,
+    items: 70,
+    other: 200
+  }[moveSize.value] || 150)
+
+  const storageAdd = storageRequired.value === 'yes' ? 95 : 0
+  const packingAdd = packingService.value === 'yes' ? 120 : 0
+  const assemblyAdd = furnitureAssembly.value === 'yes' ? 85 : 0
+  const stopsAdd = transitionalStops.value.filter(s => String(s || '').trim()).length * 55
+
+  return Math.round(pkgBase + volumeCharge + storageAdd + packingAdd + assemblyAdd + stopsAdd)
+})
+
+const openInventoryBuilder = () => {
+  validationError.value = ''
+  if (!fullName.value.trim() || !email.value.trim() || !phone.value.trim() || !contactPreference.value || !hearAbout.value) {
+    validationError.value = 'Please fill in all contact details and select how you heard about us before adding items.'
+    return
+  }
+  showInventoryBuilder.value = true
+}
+
+const handleSeeQuoteClick = () => {
+  const hasBoxes = getRoomItemCount('boxes') > 0
+  if (!hasBoxes) {
+    showBoxesReminderModal.value = true
+    return
+  }
+  proceedToQuoteSubmit()
+}
+
+const jumpToBoxes = () => {
+  showBoxesReminderModal.value = false
+  inventoryFilterTab.value = 'all'
+  inventorySearch.value = ''
+  activeInventoryRoom.value = 'boxes'
+}
+
+const proceedToQuoteSubmit = () => {
+  showBoxesReminderModal.value = false
+  showInventoryBuilder.value = false
+  if (user.value) {
+    verifyOtpAndSubmit()
+  } else {
+    handleSendOtp()
+  }
+}
+
+const loading = ref(false)
 const validationError = ref('')
 const otpCode      = ref('')
 
@@ -875,12 +1366,16 @@ const submitToDatabase = async () => {
     email: email.value,
     phone: phone.value,
     package: movingPackage.value,
+    move_type: moveType.value,
+    storage_required: storageRequired.value,
+    in_person_quote: inPersonQuote.value,
+    transitional_stops: transitionalStops.value.filter(s => String(s || '').trim().length > 0),
     from: movingFrom.value,
     to: movingTo.value,
     date: moveDate.value,
     time: preferredTime.value,
     altDate: alternativeDate.value,
-    size: moveSize.value,
+    size: moveSize.value === 'other' && customMoveSize.value ? customMoveSize.value : moveSize.value,
     pickupFloor: pickupFloor.value,
     deliveryFloor: deliveryFloor.value,
     elevator: elevatorAvailable.value,
@@ -891,6 +1386,9 @@ const submitToDatabase = async () => {
     preference: contactPreference.value,
     hear: hearAbout.value,
     notes: notes.value,
+    inventory_items: selectedInventoryList.value,
+    estimated_volume_m3: Number(totalInventoryVolume.value.toFixed(1)),
+    est_revenue: estimatedInstantPrice.value,
     images: [],
     quote_code: quoteCode,
     invoice_number: invoiceNumber
@@ -937,6 +1435,7 @@ const submitToDatabase = async () => {
   const { data: createdOrder, error } = await supabase.from('orders').insert({
     customer_id: authUser.id,
     status: 'Pending',
+    est_revenue: estimatedInstantPrice.value > 0 ? estimatedInstantPrice.value : null,
     form_data: formDataObj
   }).select('id').single()
   if (error) throw error
