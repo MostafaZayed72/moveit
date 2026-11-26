@@ -683,66 +683,71 @@
       </div>
     </BaseSection>
 
-    <!-- INTERACTIVE ROOM & ITEM INVENTORY BUILDER MODAL -->
+    <!-- INTERACTIVE ROOM & ITEM INVENTORY BUILDER MODAL (Mobile-First Responsive Flow) -->
     <div
       v-if="showInventoryBuilder"
-      class="fixed inset-0 z-50 bg-slate-900/75 backdrop-blur-sm flex items-center justify-center p-2 sm:p-5 overflow-y-auto"
+      class="fixed inset-0 z-50 bg-slate-900/75 backdrop-blur-sm flex items-end sm:items-center justify-center sm:p-4"
     >
-      <div class="bg-white dark:bg-slate-950 rounded-3xl max-w-6xl w-full max-h-[92vh] flex flex-col shadow-2xl border border-slate-200 dark:border-slate-800 overflow-hidden">
+      <div class="bg-white dark:bg-slate-950 rounded-t-3xl sm:rounded-3xl max-w-6xl w-full h-[94vh] sm:h-auto sm:max-h-[92vh] flex flex-col shadow-2xl border border-slate-200 dark:border-slate-800 overflow-hidden">
         <!-- Top Header -->
-        <div class="px-6 py-4 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between bg-slate-50/80 dark:bg-slate-900/60">
+        <div class="px-4 sm:px-6 py-3.5 sm:py-4 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between bg-slate-50/90 dark:bg-slate-900/80 shrink-0">
           <div>
-            <h3 class="text-lg font-black text-slate-900 dark:text-white">Your Rooms &amp; Inventory for Instant Pricing</h3>
-            <p class="text-xs text-slate-500">Select rooms, add your furniture &amp; boxes, and get a live volume &amp; price estimate.</p>
+            <h3 class="text-base sm:text-lg font-black text-slate-900 dark:text-white">Your Rooms &amp; Items</h3>
+            <p class="text-[11px] sm:text-xs text-slate-500">Select a room, add your furniture &amp; boxes, and see live volume &amp; pricing.</p>
           </div>
-          <button @click="showInventoryBuilder = false" class="w-9 h-9 rounded-full hover:bg-slate-200/70 flex items-center justify-center text-slate-500 font-bold cursor-pointer">
+          <button @click="showInventoryBuilder = false" class="w-9 h-9 rounded-full hover:bg-slate-200/70 dark:hover:bg-slate-800 flex items-center justify-center text-slate-500 font-bold cursor-pointer shrink-0">
             ✕
           </button>
         </div>
 
-        <!-- 3-Column Builder Body -->
-        <div class="flex-1 overflow-y-auto grid grid-cols-1 lg:grid-cols-12 divide-y lg:divide-y-0 lg:divide-x divide-slate-100 dark:divide-slate-800">
-          <!-- Left: Rooms Sidebar (3 Cols) -->
-          <div class="lg:col-span-3 p-4 space-y-2 bg-slate-50/50 dark:bg-slate-900/30">
-            <div class="text-[11px] font-extrabold uppercase tracking-wider text-slate-400 px-2 mb-2">Your Rooms</div>
-            <button
-              v-for="room in inventoryRooms"
-              :key="room.id"
-              type="button"
-              @click="activeInventoryRoom = room.id"
-              class="w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer"
-              :class="activeInventoryRoom === room.id ? 'bg-[#DC2626] text-white shadow-sm' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800'"
-            >
-              <span class="flex items-center gap-2">
-                <span>{{ room.icon }}</span>
-                <span>{{ room.label }}</span>
-              </span>
-              <span
-                class="px-2 py-0.5 rounded-full text-[10px] font-black"
-                :class="activeInventoryRoom === room.id ? 'bg-white/20 text-white' : 'bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400'"
+        <!-- Scrollable Body: Single Vertical Flow on Mobile, 3-Column Grid on Desktop (lg+) -->
+        <div class="flex-1 overflow-y-auto lg:overflow-hidden lg:grid lg:grid-cols-12 divide-y lg:divide-y-0 lg:divide-x divide-slate-100 dark:divide-slate-800">
+          <!-- Left: Rooms Selector (Vertical List on Desktop, Clean Horizontal/Grid Pills on Mobile) -->
+          <div class="lg:col-span-3 p-3.5 sm:p-4 bg-slate-50/50 dark:bg-slate-900/30 lg:overflow-y-auto lg:max-h-[75vh]">
+            <div class="flex items-center justify-between px-1 mb-2.5">
+              <span class="text-[11px] font-extrabold uppercase tracking-wider text-slate-400">Your Rooms ({{ inventoryRooms.length }})</span>
+              <span class="text-[11px] font-bold text-[#DC2626] lg:hidden">Items added: {{ totalInventoryItems }}</span>
+            </div>
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-1 gap-1.5 sm:gap-2">
+              <button
+                v-for="room in inventoryRooms"
+                :key="room.id"
+                type="button"
+                @click="activeInventoryRoom = room.id; inventoryFilterTab = 'all'"
+                class="w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer"
+                :class="activeInventoryRoom === room.id ? 'bg-[#DC2626] text-white shadow-sm' : 'bg-white dark:bg-slate-900 lg:bg-transparent border border-slate-200/80 dark:border-slate-800 lg:border-0 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800'"
               >
-                {{ getRoomItemCount(room.id) }}
-              </span>
-            </button>
+                <span class="flex items-center gap-2 truncate">
+                  <span>{{ room.icon }}</span>
+                  <span class="truncate">{{ room.label }}</span>
+                </span>
+                <span
+                  class="px-2 py-0.5 rounded-full text-[10px] font-black shrink-0"
+                  :class="activeInventoryRoom === room.id ? 'bg-white/20 text-white' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400'"
+                >
+                  {{ getRoomItemCount(room.id) }}
+                </span>
+              </button>
+            </div>
           </div>
 
-          <!-- Center: Searchable Items Grid (6 Cols) -->
-          <div class="lg:col-span-6 p-5 space-y-4 overflow-y-auto max-h-[65vh]">
-            <div class="flex flex-wrap items-center justify-between gap-2">
-              <div class="relative flex-1 min-w-[200px]">
+          <!-- Center: Searchable Items Grid with Technical SVG Drawings -->
+          <div class="lg:col-span-6 p-4 sm:p-5 space-y-4 lg:overflow-y-auto lg:max-h-[75vh]">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
+              <div class="relative flex-1 min-w-0">
                 <input
                   v-model="inventorySearch"
                   type="text"
                   placeholder="Search for furniture or boxes (e.g. bed, sofa, box)..."
-                  class="w-full pl-3.5 pr-8 py-2 text-xs bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl focus:border-red-500 focus:outline-none text-slate-900 dark:text-white"
+                  class="w-full pl-3.5 pr-8 py-2.5 text-xs bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl focus:border-red-500 focus:outline-none text-slate-900 dark:text-white"
                 />
                 <button v-if="inventorySearch" @click="inventorySearch = ''" class="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs">✕</button>
               </div>
-              <div class="flex items-center bg-slate-100 dark:bg-slate-800 p-1 rounded-xl text-[11px] font-bold">
+              <div class="flex items-center bg-slate-100 dark:bg-slate-800 p-1 rounded-xl text-[11px] font-bold self-start sm:self-auto">
                 <button
                   type="button"
                   @click="inventoryFilterTab = 'all'"
-                  class="px-3 py-1 rounded-lg cursor-pointer"
+                  class="px-3 py-1.5 rounded-lg cursor-pointer"
                   :class="inventoryFilterTab === 'all' ? 'bg-white dark:bg-slate-950 text-slate-900 dark:text-white shadow-xs' : 'text-slate-500'"
                 >
                   All Items
@@ -750,7 +755,7 @@
                 <button
                   type="button"
                   @click="inventoryFilterTab = 'added'"
-                  class="px-3 py-1 rounded-lg cursor-pointer"
+                  class="px-3 py-1.5 rounded-lg cursor-pointer"
                   :class="inventoryFilterTab === 'added' ? 'bg-white dark:bg-slate-950 text-red-600 shadow-xs' : 'text-slate-500'"
                 >
                   Your Added Items ({{ totalInventoryItems }})
@@ -758,43 +763,60 @@
               </div>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div class="grid grid-cols-2 sm:grid-cols-2 xl:grid-cols-3 gap-3">
               <div
                 v-for="item in filteredInventoryCatalog"
                 :key="item.id"
-                class="p-3.5 rounded-2xl border transition-all flex flex-col justify-between gap-3"
-                :class="(inventoryQuantities[item.id] || 0) > 0 ? 'border-red-400 bg-red-50/40 dark:bg-red-950/20' : 'border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900'"
+                class="p-3 sm:p-3.5 rounded-2xl border transition-all flex flex-col justify-between gap-2.5"
+                :class="(inventoryQuantities[item.id] || 0) > 0 ? 'border-red-500 bg-red-50/40 dark:bg-red-950/20 shadow-xs' : 'border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900'"
               >
-                <div class="flex items-start justify-between gap-2">
-                  <div>
-                    <div class="text-lg mb-0.5">{{ item.icon }}</div>
-                    <p class="text-xs font-bold text-slate-900 dark:text-white leading-snug">{{ item.name }}</p>
-                    <p class="text-[10px] text-slate-400 mt-0.5">Est. {{ item.volume }} m³</p>
+                <div class="flex flex-col items-center text-center gap-1.5">
+                  <div class="w-full py-2 rounded-xl bg-slate-50 dark:bg-slate-800/60 flex items-center justify-center">
+                    <FurnitureSvgIcon :type="item.svgType" />
                   </div>
+                  <p class="text-[11px] sm:text-xs font-bold text-slate-900 dark:text-white leading-snug line-clamp-2">{{ item.name }}</p>
+                  <p class="text-[10px] text-slate-400">
+                    {{ getEffectiveItemVolume(item).toFixed(2) }} m³
+                    <span v-if="item.disassemblable && disassembledItems[item.id]" class="text-emerald-600 font-bold">(Disassembled)</span>
+                  </p>
                 </div>
-                <div class="flex items-center justify-between pt-2 border-t border-slate-100 dark:border-slate-800">
+
+                <div class="space-y-2">
+                  <!-- Disassembly option for bulky beds, wardrobes, tables, desks -->
                   <button
+                    v-if="item.disassemblable && (inventoryQuantities[item.id] || 0) > 0"
                     type="button"
-                    @click="decrementItem(item.id)"
-                    class="w-7 h-7 rounded-lg border border-slate-200 dark:border-slate-700 font-black text-slate-600 hover:bg-slate-100 cursor-pointer"
+                    @click="toggleDisassembled(item.id)"
+                    class="w-full py-1 px-2 rounded-lg text-[10px] font-bold border transition-colors cursor-pointer"
+                    :class="disassembledItems[item.id] ? 'bg-emerald-50 border-emerald-300 text-emerald-700' : 'bg-slate-50 border-slate-200 text-slate-600 hover:bg-slate-100'"
                   >
-                    -
+                    {{ disassembledItems[item.id] ? '✓ Disassembled (-30% space)' : 'Assembled (Tap to disassemble)' }}
                   </button>
-                  <span class="text-xs font-black text-slate-900 dark:text-white">{{ inventoryQuantities[item.id] || 0 }}</span>
-                  <button
-                    type="button"
-                    @click="incrementItem(item.id)"
-                    class="w-7 h-7 rounded-lg bg-slate-900 text-white font-black hover:bg-[#DC2626] transition-colors cursor-pointer"
-                  >
-                    +
-                  </button>
+
+                  <div class="flex items-center justify-between pt-2 border-t border-slate-100 dark:border-slate-800">
+                    <button
+                      type="button"
+                      @click="decrementItem(item.id)"
+                      class="w-7 h-7 rounded-lg border border-slate-200 dark:border-slate-700 font-black text-slate-600 hover:bg-slate-100 cursor-pointer"
+                    >
+                      -
+                    </button>
+                    <span class="text-xs font-black text-slate-900 dark:text-white">{{ inventoryQuantities[item.id] || 0 }}</span>
+                    <button
+                      type="button"
+                      @click="incrementItem(item.id)"
+                      class="w-7 h-7 rounded-lg bg-slate-900 text-white font-black hover:bg-[#DC2626] transition-colors cursor-pointer"
+                    >
+                      +
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
 
-          <!-- Right: Live Move & Inventory Summary (3 Cols) -->
-          <div class="lg:col-span-3 p-5 space-y-4 bg-slate-50/50 dark:bg-slate-900/30 flex flex-col justify-between">
+          <!-- Right: Live Move & Inventory Summary -->
+          <div class="lg:col-span-3 p-4 sm:p-5 space-y-4 bg-slate-50/50 dark:bg-slate-900/30 flex flex-col justify-between">
             <div class="space-y-4">
               <div>
                 <div class="text-[11px] font-extrabold uppercase tracking-wider text-slate-400">Your Move</div>
@@ -819,6 +841,16 @@
                     <div class="text-[10px] text-slate-500">m³</div>
                   </div>
                 </div>
+                <div class="space-y-1 text-[11px] text-slate-500 pt-2 border-t border-slate-100 dark:border-slate-800">
+                  <div class="flex justify-between">
+                    <span>Package &amp; Services</span>
+                    <span class="font-bold text-slate-800 dark:text-slate-200">€{{ baseMoveCharge.toLocaleString() }}</span>
+                  </div>
+                  <div class="flex justify-between">
+                    <span>Volume ({{ totalInventoryVolume.toFixed(1) }} m³ × €38)</span>
+                    <span class="font-bold text-slate-800 dark:text-slate-200">+ €{{ volumeMoveCharge.toLocaleString() }}</span>
+                  </div>
+                </div>
                 <div class="pt-2 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
                   <span class="text-xs font-bold text-slate-600 dark:text-slate-400">Instant Estimate</span>
                   <span class="text-lg font-black text-[#DC2626]">€{{ estimatedInstantPrice.toLocaleString() }}</span>
@@ -826,7 +858,7 @@
               </div>
             </div>
 
-            <div class="space-y-2 pt-3">
+            <div class="hidden lg:block space-y-2 pt-3">
               <button
                 type="button"
                 @click="handleSeeQuoteClick"
@@ -843,6 +875,21 @@
               </button>
             </div>
           </div>
+        </div>
+
+        <!-- Sticky Mobile Bottom Action Bar -->
+        <div class="lg:hidden px-4 py-3 border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 flex items-center justify-between gap-3 shrink-0">
+          <div>
+            <div class="text-[10px] text-slate-500 font-semibold">{{ totalInventoryItems }} items · {{ totalInventoryVolume.toFixed(1) }} m³</div>
+            <div class="text-base font-black text-[#DC2626]">€{{ estimatedInstantPrice.toLocaleString() }}</div>
+          </div>
+          <button
+            type="button"
+            @click="handleSeeQuoteClick"
+            class="px-5 py-3 bg-[#DC2626] hover:bg-red-700 text-white text-xs font-black rounded-xl shadow-md shadow-red-600/25 cursor-pointer"
+          >
+            See Quote &amp; Submit →
+          </button>
         </div>
       </div>
     </div>
@@ -1006,54 +1053,82 @@ const currentStep  = ref(1)
 const submitted    = ref(false)
 const showInventoryBuilder = ref(false)
 const showBoxesReminderModal = ref(false)
-const activeInventoryRoom = ref('bedroom')
+const activeInventoryRoom = ref('primary_bedroom')
 const inventorySearch = ref('')
 const inventoryFilterTab = ref('all')
 const inventoryQuantities = ref({})
+const disassembledItems = ref({})
 
 const inventoryRooms = [
+  { id: 'primary_bedroom', label: 'Primary Bedroom', icon: '🛏️' },
   { id: 'bedroom', label: 'Bedroom', icon: '🛏️' },
   { id: 'living', label: 'Living Room', icon: '🛋️' },
   { id: 'dining', label: 'Dining Room', icon: '🍽️' },
   { id: 'kitchen', label: 'Kitchen', icon: '🍳' },
   { id: 'office', label: 'Home Office', icon: '💻' },
+  { id: 'studio', label: 'Studio / Hallway', icon: '🏠' },
   { id: 'boxes', label: 'Boxes & Packing', icon: '📦' }
 ]
 
 const inventoryCatalog = [
+  // Primary Bedroom
+  { id: 'p_bed_king', room: 'primary_bedroom', name: 'King Bed Frame + Mattress (Disassembly/Reassembly)', volume: 2.2, svgType: 'bed', disassemblable: true },
+  { id: 'p_bed_storage', room: 'primary_bedroom', name: 'King Storage Bed + Mattress (Drawers)', volume: 2.5, svgType: 'bed', disassemblable: true },
+  { id: 'p_wardrobe_3', room: 'primary_bedroom', name: 'Wardrobe (3-Door / PAX)', volume: 2.4, svgType: 'wardrobe', disassemblable: true },
+  { id: 'p_dresser_double', room: 'primary_bedroom', name: 'Dresser Double / Triple', volume: 1.1, svgType: 'dresser', disassemblable: false },
+  { id: 'p_nightstand', room: 'primary_bedroom', name: 'Nightstand / Bedside Table', volume: 0.25, svgType: 'nightstand', disassemblable: false },
+  { id: 'p_tv', room: 'primary_bedroom', name: 'TV Flat 42"-65"', volume: 0.3, svgType: 'tv', disassemblable: false },
   // Bedroom
-  { id: 'bed_king', room: 'bedroom', name: 'King / Queen Bed Frame + Mattress', volume: 2.0, icon: '🛏️' },
-  { id: 'bed_single', room: 'bedroom', name: 'Single Bed + Mattress', volume: 1.2, icon: '🛏️' },
-  { id: 'wardrobe_2', room: 'bedroom', name: 'Wardrobe (2-Door)', volume: 1.5, icon: '🚪' },
-  { id: 'wardrobe_3', room: 'bedroom', name: 'Wardrobe (3-Door / PAX)', volume: 2.4, icon: '🚪' },
-  { id: 'dresser', room: 'bedroom', name: 'Chest of Drawers / Dresser', volume: 0.8, icon: '🗄️' },
-  { id: 'nightstand', room: 'bedroom', name: 'Nightstand / Bedside Table', volume: 0.25, icon: '🪑' },
+  { id: 'bed_queen', room: 'bedroom', name: 'Queen / Full Bed Frame + Mattress', volume: 1.8, svgType: 'bed', disassemblable: true },
+  { id: 'bed_single', room: 'bedroom', name: 'Single Bed + Mattress', volume: 1.2, svgType: 'bed', disassemblable: true },
+  { id: 'wardrobe_2', room: 'bedroom', name: 'Wardrobe (2-Door)', volume: 1.5, svgType: 'wardrobe', disassemblable: true },
+  { id: 'dresser', room: 'bedroom', name: 'Chest of Drawers / Dresser', volume: 0.8, svgType: 'dresser', disassemblable: false },
+  { id: 'nightstand', room: 'bedroom', name: 'Nightstand / Bedside Table', volume: 0.25, svgType: 'nightstand', disassemblable: false },
   // Living Room
-  { id: 'sofa_3', room: 'living', name: '3-Seater Sofa / Couch', volume: 1.8, icon: '🛋️' },
-  { id: 'sofa_2', room: 'living', name: '2-Seater Loveseat / Sofa', volume: 1.3, icon: '🛋️' },
-  { id: 'armchair', room: 'living', name: 'Armchair / Lounge Chair', volume: 0.7, icon: '💺' },
-  { id: 'coffee_table', room: 'living', name: 'Coffee Table', volume: 0.4, icon: '🪵' },
-  { id: 'tv_stand', room: 'living', name: 'TV Stand / Media Console', volume: 0.7, icon: '📺' },
-  { id: 'tv_large', room: 'living', name: 'Large TV (50"+)', volume: 0.3, icon: '📺' },
-  { id: 'bookcase', room: 'living', name: 'Bookshelf / Bookcase', volume: 0.9, icon: '📚' },
+  { id: 'sofa_3', room: 'living', name: '3-Seater Sofa / Couch', volume: 1.8, svgType: 'sofa', disassemblable: true },
+  { id: 'sofa_l', room: 'living', name: 'L-Shape Sectional Sofa (4–5 Seat)', volume: 2.8, svgType: 'sofa', disassemblable: true },
+  { id: 'sofa_2', room: 'living', name: '2-Seater Loveseat / Sofa', volume: 1.3, svgType: 'sofa', disassemblable: false },
+  { id: 'armchair', room: 'living', name: 'Armchair / Lounge Chair', volume: 0.7, svgType: 'chair', disassemblable: false },
+  { id: 'coffee_table', room: 'living', name: 'Coffee Table', volume: 0.4, svgType: 'table', disassemblable: false },
+  { id: 'tv_stand', room: 'living', name: 'TV Stand / Media Console', volume: 0.7, svgType: 'dresser', disassemblable: false },
+  { id: 'tv_large', room: 'living', name: 'Large TV (50"+)', volume: 0.3, svgType: 'tv', disassemblable: false },
+  { id: 'bookcase', room: 'living', name: 'Bookshelf / Bookcase', volume: 0.9, svgType: 'shelf', disassemblable: true },
   // Dining Room
-  { id: 'dining_table', room: 'dining', name: 'Dining Table (4–6 Person)', volume: 1.4, icon: '🍽️' },
-  { id: 'dining_chair', room: 'dining', name: 'Dining Chair', volume: 0.2, icon: '🪑' },
-  { id: 'sideboard', room: 'dining', name: 'Buffet / Sideboard Cabinet', volume: 1.1, icon: '🗄️' },
+  { id: 'dining_table', room: 'dining', name: 'Dining Table (4–6 Person)', volume: 1.4, svgType: 'table', disassemblable: true },
+  { id: 'dining_chair', room: 'dining', name: 'Dining Chair', volume: 0.2, svgType: 'chair', disassemblable: false },
+  { id: 'sideboard', room: 'dining', name: 'Buffet / Sideboard Cabinet', volume: 1.1, svgType: 'dresser', disassemblable: false },
   // Kitchen
-  { id: 'fridge', room: 'kitchen', name: 'Refrigerator / Freezer', volume: 1.2, icon: '🧊' },
-  { id: 'washer', room: 'kitchen', name: 'Washing Machine / Dryer', volume: 0.7, icon: '🧺' },
-  { id: 'dishwasher', room: 'kitchen', name: 'Dishwasher / Oven', volume: 0.6, icon: '🍽️' },
+  { id: 'fridge', room: 'kitchen', name: 'Refrigerator / Freezer', volume: 1.2, svgType: 'appliance', disassemblable: false },
+  { id: 'washer', room: 'kitchen', name: 'Washing Machine / Dryer', volume: 0.7, svgType: 'appliance', disassemblable: false },
+  { id: 'dishwasher', room: 'kitchen', name: 'Dishwasher / Oven', volume: 0.6, svgType: 'appliance', disassemblable: false },
   // Home Office
-  { id: 'desk', room: 'office', name: 'Office Desk', volume: 0.9, icon: '🖥️' },
-  { id: 'office_chair', room: 'office', name: 'Ergonomic Office Chair', volume: 0.3, icon: '🪑' },
-  { id: 'file_cabinet', room: 'office', name: 'Filing Cabinet', volume: 0.5, icon: '🗄️' },
+  { id: 'desk', room: 'office', name: 'Office Desk', volume: 0.9, svgType: 'table', disassemblable: true },
+  { id: 'office_chair', room: 'office', name: 'Ergonomic Office Chair', volume: 0.3, svgType: 'chair', disassemblable: false },
+  { id: 'file_cabinet', room: 'office', name: 'Filing Cabinet', volume: 0.5, svgType: 'dresser', disassemblable: false },
+  { id: 'monitor', room: 'office', name: 'Computer Monitor / iMac', volume: 0.2, svgType: 'tv', disassemblable: false },
+  // Studio / Hallway
+  { id: 'entry_table', room: 'studio', name: 'Entryway Console Table', volume: 0.5, svgType: 'table', disassemblable: false },
+  { id: 'shoe_shelf', room: 'studio', name: 'Shoe Rack / Storage Shelf', volume: 0.4, svgType: 'shelf', disassemblable: false },
   // Boxes & Packing
-  { id: 'box_small', room: 'boxes', name: 'Small Moving Box (Books/Heavy)', volume: 0.05, icon: '📦' },
-  { id: 'box_medium', room: 'boxes', name: 'Medium Moving Box (Standard)', volume: 0.08, icon: '📦' },
-  { id: 'box_large', room: 'boxes', name: 'Large Moving Box (Bedding/Clothes)', volume: 0.12, icon: '📦' },
-  { id: 'wardrobe_box', room: 'boxes', name: 'Wardrobe Hanging Box', volume: 0.25, icon: '🧥' }
+  { id: 'box_small', room: 'boxes', name: 'Small Moving Box (Books/Heavy)', volume: 0.05, svgType: 'box', disassemblable: false },
+  { id: 'box_medium', room: 'boxes', name: 'Medium Moving Box (Standard)', volume: 0.08, svgType: 'box', disassemblable: false },
+  { id: 'box_large', room: 'boxes', name: 'Large Moving Box (Bedding/Clothes)', volume: 0.12, svgType: 'box', disassemblable: false },
+  { id: 'wardrobe_box', room: 'boxes', name: 'Wardrobe Hanging Box', volume: 0.25, svgType: 'box', disassemblable: false }
 ]
+
+const toggleDisassembled = (id) => {
+  disassembledItems.value = {
+    ...disassembledItems.value,
+    [id]: !disassembledItems.value[id]
+  }
+}
+
+const getEffectiveItemVolume = (item) => {
+  if (item.disassemblable && disassembledItems.value[item.id]) {
+    return Math.round(item.volume * 0.7 * 100) / 100
+  }
+  return item.volume
+}
 
 const filteredInventoryCatalog = computed(() => {
   const q = inventorySearch.value.toLowerCase().trim()
@@ -1100,7 +1175,8 @@ const selectedInventoryList = computed(() => {
       name: i.name,
       room: i.room,
       qty: inventoryQuantities.value[i.id],
-      volume: i.volume
+      disassembled: Boolean(i.disassemblable && disassembledItems.value[i.id]),
+      volume: getEffectiveItemVolume(i)
     }))
 })
 
@@ -1108,31 +1184,42 @@ const totalInventoryItems = computed(() => selectedInventoryList.value.reduce((s
 const activeRoomsCount = computed(() => new Set(selectedInventoryList.value.map(i => i.room)).size)
 const totalInventoryVolume = computed(() => selectedInventoryList.value.reduce((s, i) => s + i.qty * i.volume, 0))
 
-const estimatedInstantPrice = computed(() => {
+const baseMoveCharge = computed(() => {
   const pkgBase = {
-    van_only: 220,
-    van_1_mover: 320,
-    van_2_movers: 450,
-    full_service: 750
-  }[movingPackage.value] || 350
-
-  const vol = totalInventoryVolume.value
-  const volumeCharge = vol > 0 ? Math.round(vol * 24) : ({
-    studio: 90,
-    '1bed': 160,
-    '2bed': 260,
-    '3bed': 420,
-    office: 380,
-    items: 70,
-    other: 200
-  }[moveSize.value] || 150)
+    van_only: 199,
+    van_1_mover: 279,
+    van_2_movers: 389,
+    full_service: 649
+  }[movingPackage.value] || 320
 
   const storageAdd = storageRequired.value === 'yes' ? 95 : 0
   const packingAdd = packingService.value === 'yes' ? 120 : 0
   const assemblyAdd = furnitureAssembly.value === 'yes' ? 85 : 0
   const stopsAdd = transitionalStops.value.filter(s => String(s || '').trim()).length * 55
 
-  return Math.round(pkgBase + volumeCharge + storageAdd + packingAdd + assemblyAdd + stopsAdd)
+  return Math.round(pkgBase + storageAdd + packingAdd + assemblyAdd + stopsAdd)
+})
+
+const volumeMoveCharge = computed(() => {
+  if (totalInventoryItems.value > 0) {
+    return Math.round(totalInventoryVolume.value * 38)
+  }
+  if (showInventoryBuilder.value) {
+    return 0
+  }
+  return {
+    studio: 90,
+    '1bed': 150,
+    '2bed': 240,
+    '3bed': 360,
+    office: 320,
+    items: 60,
+    other: 180
+  }[moveSize.value] || 140
+})
+
+const estimatedInstantPrice = computed(() => {
+  return Math.round(baseMoveCharge.value + volumeMoveCharge.value)
 })
 
 const openInventoryBuilder = () => {
