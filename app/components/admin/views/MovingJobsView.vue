@@ -872,8 +872,14 @@ const kpiMetrics = computed(() => {
   }
 })
 
-// Tab navigation for filtering with real live counts
+// Tab navigation & Search/Filter state
 const activeJobTab = ref(props.initialTab || 'all')
+const searchQuery = ref('')
+const statusFilter = ref('all')
+const teamFilter = ref('all')
+const dateFilter = ref('')
+const currentPage = ref(1)
+const pageSize = ref(10)
 
 watch(() => props.initialTab, (val) => {
   if (val) {
@@ -892,14 +898,6 @@ const dynamicJobTabs = computed(() => {
     { id: 'cancelled', label: 'Cancelled', count: kpiMetrics.value.cancelled }
   ]
 })
-
-// Search & Filter state
-const searchQuery = ref('')
-const statusFilter = ref('all')
-const teamFilter = ref('all')
-const dateFilter = ref('')
-const currentPage = ref(1)
-const pageSize = ref(10)
 
 const clearFilters = () => {
   searchQuery.value = ''

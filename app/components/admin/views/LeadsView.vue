@@ -557,13 +557,6 @@ const exportLeadPdf = (lead) => {
 
 const searchQuery = ref('')
 const activeLeadTab = ref(props.initialTab || 'all')
-
-watch(() => props.initialTab, (val) => {
-  if (val) {
-    activeLeadTab.value = val
-    currentPage.value = 1
-  }
-}, { immediate: true })
 const statusFilter = ref('all')
 const sourceFilter = ref('all')
 const priorityFilter = ref('all')
@@ -571,6 +564,13 @@ const currentPage = ref(1)
 const pageSize = 10
 const activeDrawerTab = ref('Overview')
 const isDrawerOpen = ref(false)
+
+watch(() => props.initialTab, (val) => {
+  if (val) {
+    activeLeadTab.value = val
+    currentPage.value = 1
+  }
+}, { immediate: true })
 
 // Map 100% real Supabase orders into rich lead objects
 const activeLeadsSource = computed(() => {
