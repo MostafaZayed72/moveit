@@ -115,25 +115,53 @@
         </svg>
       </button>
 
-      <!-- Notification Bell with Badge '3' -->
-      <button class="relative p-1.5 sm:p-2 text-slate-500 hover:text-slate-800 hover:bg-slate-100 rounded-xl transition-colors cursor-pointer">
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
-        </svg>
-        <span class="absolute top-0.5 right-0.5 w-4 h-4 bg-[#DC2626] text-white text-[9px] font-bold rounded-full flex items-center justify-center ring-2 ring-white">
-          3
-        </span>
-      </button>
+      <!-- Live Notification Bell (Real Pending Orders Count) -->
+      <div class="relative">
+        <button
+          @click="showNotifications = !showNotifications"
+          class="relative p-1.5 sm:p-2 text-slate-500 hover:text-slate-800 hover:bg-slate-100 rounded-xl transition-colors cursor-pointer"
+          title="Pending Leads & Notifications"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+          </svg>
+          <span
+            v-if="pendingNotifications.length > 0"
+            class="absolute top-0.5 right-0.5 min-w-[16px] h-4 px-1 bg-[#DC2626] text-white text-[9px] font-bold rounded-full flex items-center justify-center ring-2 ring-white"
+          >
+            {{ pendingNotifications.length }}
+          </span>
+        </button>
 
-      <!-- Message Bubble Icon with Badge '5' -->
-      <button class="relative p-1.5 sm:p-2 text-slate-500 hover:text-slate-800 hover:bg-slate-100 rounded-xl transition-colors cursor-pointer hidden sm:inline-flex">
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/>
-        </svg>
-        <span class="absolute top-0.5 right-0.5 w-4 h-4 bg-[#DC2626] text-white text-[9px] font-bold rounded-full flex items-center justify-center ring-2 ring-white">
-          5
-        </span>
-      </button>
+        <!-- Live Notifications Popover -->
+        <div
+          v-if="showNotifications"
+          class="absolute right-0 top-full mt-2 w-80 bg-white rounded-2xl border border-slate-200 shadow-2xl z-50 overflow-hidden"
+        >
+          <div class="px-4 py-2.5 bg-slate-50 border-b border-slate-100 flex items-center justify-between">
+            <span class="text-xs font-black text-slate-900">Pending Leads ({{ pendingNotifications.length }})</span>
+            <button @click="showNotifications = false" class="text-xs text-slate-400 hover:text-slate-700 cursor-pointer">✕</button>
+          </div>
+          <div class="max-h-72 overflow-y-auto divide-y divide-slate-100">
+            <button
+              v-for="n in pendingNotifications.slice(0, 8)"
+              :key="n.id || n.ref"
+              type="button"
+              @click="selectSearchResult(n); showNotifications = false"
+              class="w-full px-4 py-2.5 text-left hover:bg-red-50/50 transition-colors cursor-pointer"
+            >
+              <div class="flex items-center justify-between gap-2">
+                <span class="text-xs font-bold text-slate-900 truncate">{{ n.customer }}</span>
+                <span class="text-[10px] font-mono text-slate-400">{{ n.ref }}</span>
+              </div>
+              <p class="text-[11px] text-slate-500 truncate mt-0.5">{{ n.route }} · {{ n.shortDate || n.movingDate }}</p>
+            </button>
+            <div v-if="pendingNotifications.length === 0" class="px-4 py-6 text-center text-xs text-slate-400">
+              All caught up! No pending leads.
+            </div>
+          </div>
+        </div>
+      </div>
 
       <!-- User Profile Avatar & Dropdown -->
       <div class="flex items-center gap-2 pl-2 border-l border-slate-200">
@@ -283,6 +311,13 @@ const emit = defineEmits(['primary-action', 'toggle-sidebar', 'toggle-collapse',
 
 const globalSearchQuery = ref('')
 const isSearchFocused = ref(false)
+const showNotifications = ref(false)
+
+const pendingNotifications = computed(() => {
+  return (props.orders || []).filter(o =>
+    o.operationalStatus === 'Pending' || o.salesStatus === 'New Lead'
+  )
+})
 
 const globalSearchResults = computed(() => {
   const q = globalSearchQuery.value.toLowerCase().trim()
@@ -304,7 +339,7 @@ const globalSearchResults = computed(() => {
 })
 
 const selectSearchResult = (item) => {
-  emit('select-result', item.raw || item)
+  emit('select-result', item)
   globalSearchQuery.value = ''
   isSearchFocused.value = false
 }

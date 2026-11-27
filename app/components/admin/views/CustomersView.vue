@@ -355,7 +355,7 @@ const activeCustomersList = computed(() => {
 })
 
 const activeSelectedCustomer = ref(null)
-const isDrawerOpen = ref(true)
+const isDrawerOpen = ref(false)
 const segmentFilter = ref('all')
 
 watch(activeCustomersList, (newCusts) => {

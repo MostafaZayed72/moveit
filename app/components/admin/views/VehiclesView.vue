@@ -446,7 +446,7 @@ import { ref, computed } from 'vue'
 const searchQuery = ref('')
 const statusFilter = ref('all')
 const activeDrawerTab = ref('Overview')
-const isDrawerOpen = ref(true)
+const isDrawerOpen = ref(false)
 const selectedPlates = ref([])
 
 const vehiclesList = [

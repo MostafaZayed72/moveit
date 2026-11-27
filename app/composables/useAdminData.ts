@@ -335,16 +335,7 @@ export const useAdminData = () => {
       o?.form_data?.est_revenue ||
       0
     )
-    if (rev > 0) return rev
-    // Smart fallback by package from companySettings if available, otherwise €450
-    const pkgLabel = getOrderPackage(o).toLowerCase()
-    const matchedPkg = (companySettings.value?.servicePackages || []).find((p: any) =>
-      String(p.name || '').toLowerCase() === pkgLabel
-    )
-    if (matchedPkg && Number(matchedPkg.basePrice) > 0) {
-      return Number(matchedPkg.basePrice)
-    }
-    return 450
+    return rev > 0 ? rev : 0
   }
 
   const getOrderRef = (o: any) => {

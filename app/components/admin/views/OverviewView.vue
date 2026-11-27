@@ -768,7 +768,7 @@
                   <tr 
                     v-for="rec in sortedDrilldownRecords.slice(0, 30)" 
                     :key="rec.id || rec.ref"
-                    @click="$emit('select-job', rec.raw || rec); drilldownModal = null"
+                    @click="$emit('select-job', rec); drilldownModal = null"
                     class="hover:bg-red-50/50 cursor-pointer transition-colors"
                   >
                     <td class="py-2.5 px-3 font-bold text-slate-900 whitespace-nowrap">{{ rec.ref }}</td>

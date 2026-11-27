@@ -154,8 +154,8 @@
               <span class="font-bold text-slate-900">{{ activeJob.moveType || (revenueExVat > 1500 ? 'Business • Long Distance' : 'Private • National • 2-Bedroom') }}</span>
             </div>
 
-            <!-- Estimated Value -->
-            <div class="flex items-center justify-between py-0.5">
+            <!-- Estimated Value (temporarily hidden) -->
+            <div v-if="false" class="flex items-center justify-between py-0.5">
               <div class="flex items-center gap-2.5 text-slate-500">
                 <span class="w-5 h-5 rounded-full bg-orange-50 text-orange-600 flex items-center justify-center text-[10px]">🛡️</span>
                 <span class="font-medium">Estimated Value</span>
@@ -816,12 +816,36 @@
     <div v-else-if="activeMoveTab === 'Inventory'" class="bg-white p-6 rounded-3xl border border-slate-200/80 shadow-xs space-y-4">
       <div class="flex items-center justify-between">
         <h2 class="text-base font-black text-slate-900 tracking-tight font-sans">Inventory & Cargo Volume</h2>
-        <span class="px-3 py-1 rounded-full bg-red-50 text-red-600 font-bold text-xs">Volume: ~18 m³</span>
+        <span class="px-3 py-1 rounded-full bg-red-50 text-red-600 font-bold text-xs">
+          Volume: {{ activeJob.raw?.form_data?.estimated_volume_m3 ? `${activeJob.raw.form_data.estimated_volume_m3} m³` : 'Not specified' }}
+        </span>
       </div>
       <div class="p-4 bg-slate-50 rounded-2xl border border-slate-100 space-y-2 text-xs">
         <p class="font-bold text-slate-800">Cargo Description & Scope:</p>
-        <p class="text-slate-600">{{ activeJob.raw?.form_data?.notes || activeJob.package || 'Full household items, furniture and moving boxes.' }}</p>
+        <p class="text-slate-600">{{ activeJob.raw?.form_data?.notes || activeJob.package || 'No additional notes provided.' }}</p>
       </div>
+
+      <!-- Real Itemized Inventory submitted by customer -->
+      <div v-if="Array.isArray(activeJob.raw?.form_data?.inventory_items) && activeJob.raw.form_data.inventory_items.length > 0" class="space-y-2">
+        <p class="text-xs font-black text-slate-800 uppercase tracking-wider">Customer Itemized Inventory ({{ activeJob.raw.form_data.inventory_items.length }} types)</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2.5 text-xs">
+          <div
+            v-for="item in activeJob.raw.form_data.inventory_items"
+            :key="item.id || item.name"
+            class="p-3 rounded-xl bg-slate-50 border border-slate-200/80 flex items-center justify-between gap-2"
+          >
+            <div class="min-w-0">
+              <p class="font-bold text-slate-900 truncate">{{ item.name }}</p>
+              <p class="text-[10px] text-slate-500">
+                {{ item.room }} · {{ item.volume }} m³
+                <span v-if="item.disassembled" class="text-emerald-600 font-bold">· Disassembled</span>
+              </p>
+            </div>
+            <span class="px-2 py-0.5 rounded-lg bg-slate-900 text-white font-black text-[11px] shrink-0">×{{ item.qty }}</span>
+          </div>
+        </div>
+      </div>
+
       <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
         <div class="p-3 bg-white rounded-xl border border-slate-200 text-center">
           <p class="text-[11px] text-slate-400">Package Type</p>
@@ -829,15 +853,17 @@
         </div>
         <div class="p-3 bg-white rounded-xl border border-slate-200 text-center">
           <p class="text-[11px] text-slate-400">Vehicle Allocated</p>
-          <p class="font-bold text-slate-900 mt-1">Ford Transit 20m³</p>
+          <p class="font-bold text-slate-900 mt-1">{{ displayVehicleName }}</p>
         </div>
         <div class="p-3 bg-white rounded-xl border border-slate-200 text-center">
           <p class="text-[11px] text-slate-400">Movers Needed</p>
-          <p class="font-bold text-slate-900 mt-1">{{ activeJob.team || 2 }} Movers</p>
+          <p class="font-bold text-slate-900 mt-1">{{ assignedCrewList.length || activeJob.team || 2 }} Movers</p>
         </div>
         <div class="p-3 bg-white rounded-xl border border-slate-200 text-center">
-          <p class="text-[11px] text-slate-400">Fragile Goods</p>
-          <p class="font-bold text-slate-900 mt-1">{{ activeJob.raw?.form_data?.fragile === 'yes' ? 'Yes (Special Care)' : 'Standard' }}</p>
+          <p class="text-[11px] text-slate-400">Storage / In-Person</p>
+          <p class="font-bold text-slate-900 mt-1">
+            {{ activeJob.raw?.form_data?.storage_required === 'yes' ? 'Storage Needed' : (activeJob.raw?.form_data?.in_person_quote === 'yes' ? 'In-Person Survey' : 'Standard') }}
+          </p>
         </div>
       </div>
     </div>
@@ -1772,9 +1798,9 @@ const revenueExVat = computed(() => {
     activeJob.value.raw?.est_revenue ||
     activeJob.value.raw?.form_data?.actual_revenue ||
     activeJob.value.raw?.form_data?.est_revenue ||
-    450
+    0
   )
-  return val > 0 ? val : 450
+  return val > 0 ? val : 0
 })
 
 // --- Dynamic Crew, Coordinator & Vehicle Assignment (Synced with Settings) ---

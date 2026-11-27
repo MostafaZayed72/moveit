@@ -405,7 +405,7 @@ const searchQuery = ref('')
 const categoryFilter = ref('all')
 const stockStatusFilter = ref('all')
 const activeDrawerTab = ref('Overview')
-const isDrawerOpen = ref(true)
+const isDrawerOpen = ref(false)
 
 const inventoryItems = [
   { icon: '📦', name: 'Moving Box 60L', subtitle: 'Standard strong box', sku: 'BOX-60L', category: 'Moving Boxes', categoryClass: 'bg-blue-50 text-blue-600', stock: 250, minStock: 50, unit: 'pcs', status: 'In Stock', location: 'Warehouse' },

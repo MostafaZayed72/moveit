@@ -255,7 +255,7 @@
                     <th @click="toggleSort('route')" class="py-3 px-2 cursor-pointer hover:text-slate-900 select-none whitespace-nowrap">ROUTE {{ sortIcon('route') }}</th>
                     <th @click="toggleSort('package')" class="py-3 px-2 cursor-pointer hover:text-slate-900 select-none whitespace-nowrap">PACKAGE {{ sortIcon('package') }}</th>
                     <th @click="toggleSort('team')" class="py-3 px-1.5 text-center cursor-pointer hover:text-slate-900 select-none whitespace-nowrap">TEAM {{ sortIcon('team') }}</th>
-                    <th @click="toggleSort('estValue')" class="py-3 px-2 cursor-pointer hover:text-slate-900 select-none whitespace-nowrap">EST. VALUE {{ sortIcon('estValue') }}</th>
+                    <th v-if="false" @click="toggleSort('estValue')" class="py-3 px-2 cursor-pointer hover:text-slate-900 select-none whitespace-nowrap">EST. VALUE {{ sortIcon('estValue') }}</th>
                     <th @click="toggleSort('status')" class="py-3 px-2 cursor-pointer hover:text-slate-900 select-none whitespace-nowrap">STATUS {{ sortIcon('status') }}</th>
                     <th class="py-3 px-1.5 text-center">ACTIONS</th>
                   </tr>
@@ -317,8 +317,8 @@
                       {{ job.team || 2 }}
                     </td>
 
-                    <!-- EST. VALUE -->
-                    <td class="py-3.5 px-2 font-bold text-slate-900 font-sans whitespace-nowrap">
+                    <!-- EST. VALUE (temporarily hidden) -->
+                    <td v-if="false" class="py-3.5 px-2 font-bold text-slate-900 font-sans whitespace-nowrap">
                       €{{ (job.estValue || 0).toLocaleString() }}
                     </td>
 
@@ -526,11 +526,11 @@
                     </div>
                   </div>
 
-                  <div class="flex items-start gap-1.5">
+                  <div v-if="false" class="flex items-start gap-1.5">
                     <span class="text-slate-400">💰</span>
                     <div>
                       <span class="text-[10px] text-slate-400 block font-medium">Est. Value</span>
-                      <strong class="text-slate-900 font-sans">€{{ (activeSelectedJob.estValue || 1350).toLocaleString() }} (excl. VAT)</strong>
+                      <strong class="text-slate-900 font-sans">€{{ (activeSelectedJob.estValue || 0).toLocaleString() }} (excl. VAT)</strong>
                     </div>
                   </div>
 
@@ -799,7 +799,7 @@ const downloadJobInvoicePDF = (job) => {
 // Split view is the DEFAULT mode, matching "3 Moving Jobs.png"!
 const currentSubView = ref('split')
 const activeDrawerTab = ref('Overview')
-const isDrawerOpen = ref(true)
+const isDrawerOpen = ref(false)
 const drawerTabs = ['Overview', 'Inventory', 'Team & Vehicle', 'Notes', 'Files']
 const lightboxImage = ref(null)
 const showMoreActions = ref(false)

@@ -279,7 +279,15 @@ const navigateWithFilter = (view, tab = 'all') => {
   if (view === 'leads') leadsInitialTab.value = tab || 'all'
   currentView.value = view
 }
-const selectedJob = ref(null)
+const selectedJobId = ref(null)
+const selectedJobFallback = ref(null)
+const selectedJob = computed(() => {
+  if (selectedJobId.value) {
+    const live = formattedOrders.value.find(o => o.id === selectedJobId.value)
+    if (live) return live
+  }
+  return selectedJobFallback.value
+})
 const showNewModal = ref(false)
 const isSubmitting = ref(false)
 const isSidebarOpen = ref(false)
@@ -301,7 +309,9 @@ const handleViewSelect = (viewId) => {
 }
 
 const openMoveDetail = (job) => {
-  selectedJob.value = job
+  const targetId = job?.id || job?.raw?.id || null
+  selectedJobId.value = targetId
+  selectedJobFallback.value = (targetId && formattedOrders.value.find(o => o.id === targetId)) || job
   previousView.value = currentView.value
   currentView.value = 'move_detail'
 }
@@ -320,15 +330,7 @@ const handlePrimaryAction = () => {
 
 const handleUpdateStatus = async (payload) => {
   if (!payload || !payload.id) return
-  const res = await updateThreeTrackStatus(payload.id, payload)
-  if (res.success) {
-    if (selectedJob.value && selectedJob.value.id === payload.id) {
-      if (payload.operationalStatus) selectedJob.value.operationalStatus = payload.operationalStatus
-      if (payload.operationalStatus) selectedJob.value.status = payload.operationalStatus
-      if (payload.paymentStatus) selectedJob.value.paymentStatus = payload.paymentStatus
-      if (payload.priority) selectedJob.value.priority = payload.priority
-    }
-  }
+  await updateThreeTrackStatus(payload.id, payload)
 }
 
 const handleDeleteOrder = async (orderOrId) => {
@@ -339,8 +341,9 @@ const handleDeleteOrder = async (orderOrId) => {
   }
   const res = await deleteOrder(id)
   if (res.success) {
-    if (selectedJob.value && selectedJob.value.id === id) {
-      selectedJob.value = null
+    if (selectedJobId.value === id) {
+      selectedJobId.value = null
+      selectedJobFallback.value = null
       currentView.value = previousView.value || 'leads'
     }
   } else {

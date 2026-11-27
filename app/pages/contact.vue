@@ -16,12 +16,15 @@
             <p class="text-slate-600 dark:text-slate-400 max-w-md mx-auto">
               We've received your moving request! Our team will review your details and get in touch shortly.
             </p>
-            <div v-if="estimatedInstantPrice > 0" class="inline-block px-6 py-4 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800">
+            <div v-if="false && estimatedInstantPrice > 0" class="inline-block px-6 py-4 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800">
               <div class="text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400">Estimated Instant Quote</div>
               <div class="text-3xl font-black text-emerald-700 dark:text-emerald-300 mt-1">€{{ estimatedInstantPrice.toLocaleString() }} <span class="text-xs font-semibold">excl. VAT</span></div>
               <div v-if="totalInventoryItems > 0" class="text-xs text-emerald-600 dark:text-emerald-400 mt-1">
                 Based on {{ totalInventoryItems }} items ({{ totalInventoryVolume.toFixed(1) }} m³)
               </div>
+            </div>
+            <div v-else-if="totalInventoryItems > 0" class="inline-block px-5 py-3 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 text-xs font-bold text-emerald-700 dark:text-emerald-300">
+              Inventory Submitted: {{ totalInventoryItems }} items ({{ totalInventoryVolume.toFixed(1) }} m³)
             </div>
             <div>
               <button @click="submitted = false" class="mt-4 btn-primary px-8 py-3">
@@ -841,7 +844,7 @@
                     <div class="text-[10px] text-slate-500">m³</div>
                   </div>
                 </div>
-                <div class="space-y-1 text-[11px] text-slate-500 pt-2 border-t border-slate-100 dark:border-slate-800">
+                <div v-if="false" class="space-y-1 text-[11px] text-slate-500 pt-2 border-t border-slate-100 dark:border-slate-800">
                   <div class="flex justify-between">
                     <span>Package &amp; Services</span>
                     <span class="font-bold text-slate-800 dark:text-slate-200">€{{ baseMoveCharge.toLocaleString() }}</span>
@@ -851,7 +854,7 @@
                     <span class="font-bold text-slate-800 dark:text-slate-200">+ €{{ volumeMoveCharge.toLocaleString() }}</span>
                   </div>
                 </div>
-                <div class="pt-2 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                <div v-if="false" class="pt-2 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
                   <span class="text-xs font-bold text-slate-600 dark:text-slate-400">Instant Estimate</span>
                   <span class="text-lg font-black text-[#DC2626]">€{{ estimatedInstantPrice.toLocaleString() }}</span>
                 </div>
@@ -864,7 +867,7 @@
                 @click="handleSeeQuoteClick"
                 class="w-full py-3.5 bg-[#DC2626] hover:bg-red-700 text-white text-xs font-black rounded-xl shadow-md shadow-red-600/25 cursor-pointer"
               >
-                See Quote &amp; Submit →
+                Submit Inventory &amp; Request Quote →
               </button>
               <button
                 type="button"
@@ -880,15 +883,15 @@
         <!-- Sticky Mobile Bottom Action Bar -->
         <div class="lg:hidden px-4 py-3 border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 flex items-center justify-between gap-3 shrink-0">
           <div>
-            <div class="text-[10px] text-slate-500 font-semibold">{{ totalInventoryItems }} items · {{ totalInventoryVolume.toFixed(1) }} m³</div>
-            <div class="text-base font-black text-[#DC2626]">€{{ estimatedInstantPrice.toLocaleString() }}</div>
+            <div class="text-xs text-slate-700 dark:text-slate-200 font-bold">{{ totalInventoryItems }} items · {{ totalInventoryVolume.toFixed(1) }} m³</div>
+            <div class="text-[10px] text-slate-400">Custom quote sent after review</div>
           </div>
           <button
             type="button"
             @click="handleSeeQuoteClick"
             class="px-5 py-3 bg-[#DC2626] hover:bg-red-700 text-white text-xs font-black rounded-xl shadow-md shadow-red-600/25 cursor-pointer"
           >
-            See Quote &amp; Submit →
+            Submit &amp; Request Quote →
           </button>
         </div>
       </div>
@@ -1475,7 +1478,7 @@ const submitToDatabase = async () => {
     notes: notes.value,
     inventory_items: selectedInventoryList.value,
     estimated_volume_m3: Number(totalInventoryVolume.value.toFixed(1)),
-    est_revenue: estimatedInstantPrice.value,
+    est_revenue: null,
     images: [],
     quote_code: quoteCode,
     invoice_number: invoiceNumber
@@ -1522,7 +1525,7 @@ const submitToDatabase = async () => {
   const { data: createdOrder, error } = await supabase.from('orders').insert({
     customer_id: authUser.id,
     status: 'Pending',
-    est_revenue: estimatedInstantPrice.value > 0 ? estimatedInstantPrice.value : null,
+    est_revenue: null,
     form_data: formDataObj
   }).select('id').single()
   if (error) throw error

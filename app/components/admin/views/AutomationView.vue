@@ -425,7 +425,7 @@ const emit = defineEmits(['trigger-automation', 'select-job'])
 const activeTabId = ref('all')
 const searchQuery = ref('')
 const categoryFilter = ref('all')
-const isDrawerOpen = ref(true)
+const isDrawerOpen = ref(false)
 
 const showRunModal = ref(false)
 const showNewWorkflowModal = ref(false)

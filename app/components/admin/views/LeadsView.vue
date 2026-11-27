@@ -238,7 +238,8 @@
                   <th @click="toggleSort('customer')" class="py-3 px-2.5 font-bold cursor-pointer hover:text-slate-900 select-none whitespace-nowrap">CUSTOMER {{ sortIcon('customer') }}</th>
                   <th @click="toggleSort('date')" class="py-3 px-2.5 font-bold cursor-pointer hover:text-slate-900 select-none whitespace-nowrap">MOVING DATE {{ sortIcon('date') }}</th>
                   <th @click="toggleSort('route')" class="py-3 px-2.5 font-bold cursor-pointer hover:text-slate-900 select-none whitespace-nowrap">ROUTE {{ sortIcon('route') }}</th>
-                  <th @click="toggleSort('estValue')" class="py-3 px-2.5 font-bold cursor-pointer hover:text-slate-900 select-none whitespace-nowrap">EST. VALUE {{ sortIcon('estValue') }}</th>
+                  <!-- EST. VALUE temporarily hidden per user request -->
+                  <th v-if="false" @click="toggleSort('estValue')" class="py-3 px-2.5 font-bold cursor-pointer hover:text-slate-900 select-none whitespace-nowrap">EST. VALUE {{ sortIcon('estValue') }}</th>
                   <th @click="toggleSort('status')" class="py-3 px-2.5 font-bold cursor-pointer hover:text-slate-900 select-none whitespace-nowrap">STATUS {{ sortIcon('status') }}</th>
                   <th @click="toggleSort('priority')" class="py-3 px-2.5 font-bold cursor-pointer hover:text-slate-900 select-none whitespace-nowrap">PRIORITY {{ sortIcon('priority') }}</th>
                   <th @click="toggleSort('source')" class="py-3 px-2.5 font-bold cursor-pointer hover:text-slate-900 select-none whitespace-nowrap">SOURCE {{ sortIcon('source') }}</th>
@@ -270,7 +271,7 @@
                   <td class="py-3.5 px-2.5 font-bold text-slate-900 whitespace-nowrap max-w-[150px] truncate" :title="lead.customer">{{ lead.customer }}</td>
                   <td class="py-3.5 px-2.5 text-slate-600 whitespace-nowrap">{{ lead.movingDate }}</td>
                   <td class="py-3.5 px-2.5 text-slate-600 whitespace-nowrap max-w-[160px] truncate" :title="lead.route">{{ lead.route }}</td>
-                  <td class="py-3.5 px-2.5 font-bold text-slate-900 font-sans whitespace-nowrap">€{{ (lead.estValue || 0).toLocaleString() }}</td>
+                  <td v-if="false" class="py-3.5 px-2.5 font-bold text-slate-900 font-sans whitespace-nowrap">€{{ (lead.estValue || 0).toLocaleString() }}</td>
                   <td class="py-3.5 px-2.5 whitespace-nowrap">
                     <span 
                       class="px-2.5 py-1 rounded-lg text-[10px] font-bold inline-block"
@@ -462,7 +463,7 @@
               <span class="col-span-5 text-slate-400 flex items-center gap-2"><span>💬</span> Source</span>
               <span class="col-span-7 font-semibold text-slate-800">{{ activeSelectedLead.source }}</span>
             </div>
-            <div class="grid grid-cols-12 items-center">
+            <div v-if="false" class="grid grid-cols-12 items-center">
               <span class="col-span-5 text-slate-400 flex items-center gap-2"><span>🏷️</span> Estimated Value</span>
               <span class="col-span-7 font-black text-slate-900 font-sans">€{{ (activeSelectedLead.estValue || 0).toLocaleString() }}</span>
             </div>
@@ -569,7 +570,7 @@ const priorityFilter = ref('all')
 const currentPage = ref(1)
 const pageSize = 10
 const activeDrawerTab = ref('Overview')
-const isDrawerOpen = ref(true)
+const isDrawerOpen = ref(false)
 
 // Map 100% real Supabase orders into rich lead objects
 const activeLeadsSource = computed(() => {
