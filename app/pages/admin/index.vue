@@ -152,6 +152,26 @@
       </main>
     </div>
 
+    <!-- Centered Circular Logo Loading Indicator -->
+    <div
+      v-if="isLoading"
+      class="fixed inset-0 z-[70] flex flex-col items-center justify-center bg-slate-900/40 backdrop-blur-xs print:hidden"
+    >
+      <div class="relative w-28 h-28 flex items-center justify-center">
+        <!-- Outer Static Track -->
+        <div class="absolute inset-0 rounded-full border-4 border-white/20"></div>
+        <!-- Spinning Red Ring -->
+        <div class="absolute inset-0 rounded-full border-4 border-transparent border-t-[#DC2626] border-r-[#DC2626] animate-spin"></div>
+        <!-- Inner Dark Circle with MoveIt Logo -->
+        <div class="w-22 h-22 rounded-full bg-[#0F141F] shadow-2xl border border-slate-800 flex items-center justify-center p-3">
+          <img src="/images/logo.svg" alt="MoveIt Loading" class="w-16 h-auto object-contain animate-pulse" />
+        </div>
+      </div>
+      <span class="mt-3 px-3.5 py-1 rounded-full bg-[#0F141F]/90 text-white text-[11px] font-bold tracking-wider uppercase shadow-lg">
+        Syncing Live Data...
+      </span>
+    </div>
+
     <!-- Modal for + New Lead / Job (Connected to Supabase createOrder) -->
     <div v-if="showNewModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm">
       <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-lg w-full border border-slate-200 shadow-2xl space-y-6 animate-in fade-in zoom-in-95 duration-200">
@@ -242,6 +262,7 @@ const {
   formattedOrders,
   leadsOrders,
   movingJobsOrders,
+  isLoading,
   fetchOrders,
   updateThreeTrackStatus,
   deleteOrder,
