@@ -3,9 +3,42 @@ import { ref, computed } from 'vue'
 export const useAdminData = () => {
   const supabase = useSupabaseClient()
 
-  const allOrders = ref<any[]>([])
-  const isLoading = ref(false)
+  const ORDERS_CACHE_KEY = 'moveit_admin_orders_cache_v1'
+
+  const allOrders = useState<any[]>('adminAllOrders', () => {
+    if (import.meta.client) {
+      try {
+        const cached = localStorage.getItem(ORDERS_CACHE_KEY)
+        if (cached) {
+          const parsed = JSON.parse(cached)
+          if (Array.isArray(parsed) && parsed.length > 0) return parsed
+        }
+      } catch {}
+    }
+    return []
+  })
+  const isLoading = useState<boolean>('adminOrdersLoading', () => false)
   const error = ref<any>(null)
+
+  const saveOrdersCache = (list: any[]) => {
+    if (!import.meta.client) return
+    try {
+      localStorage.setItem(ORDERS_CACHE_KEY, JSON.stringify(list))
+    } catch {}
+  }
+
+  // Hydrate immediately on client if SSR state was empty
+  if (import.meta.client && allOrders.value.length === 0) {
+    try {
+      const cached = localStorage.getItem(ORDERS_CACHE_KEY)
+      if (cached) {
+        const parsed = JSON.parse(cached)
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          allOrders.value = parsed
+        }
+      }
+    } catch {}
+  }
 
   const companySettings = useState<any>('adminCompanySettings', () => ({
     general: { currency: 'EUR (€)', vatRate: 21, timezone: 'Europe/Amsterdam' },
@@ -40,6 +73,7 @@ export const useAdminData = () => {
 
       if (err) throw err
       allOrders.value = data || []
+      saveOrdersCache(allOrders.value)
       fetchCompanySettings()
     } catch (err: any) {
       console.error('Error fetching admin orders:', err)
@@ -146,6 +180,7 @@ export const useAdminData = () => {
           ...updatePayload,
           form_data: updatedFormData
         }
+        saveOrdersCache(allOrders.value)
       }
 
       // Log status change audit trail if order_status_logs exists
@@ -187,6 +222,7 @@ export const useAdminData = () => {
 
       if (err) throw err
       allOrders.value = allOrders.value.filter(o => o.id !== orderId)
+      saveOrdersCache(allOrders.value)
       return { success: true }
     } catch (err: any) {
       console.error('Error deleting order:', err)

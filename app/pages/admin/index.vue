@@ -219,7 +219,7 @@
 <script setup>
 definePageMeta({ layout: false })
 
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, onServerPrefetch } from 'vue'
 import { useAdminData } from '~/composables/useAdminData'
 
 import AdminSidebar from '~/components/admin/AdminSidebar.vue'
@@ -262,6 +262,15 @@ const {
   triggerAutomation,
   fetchAutomationLogs
 } = useAdminData()
+
+// Await orders on SSR so the initial HTML already has real numbers (zero flash of 0s)
+onServerPrefetch(async () => {
+  await fetchOrders()
+})
+
+if (import.meta.client && formattedOrders.value.length === 0) {
+  fetchOrders()
+}
 
 onMounted(() => {
   fetchOrders()
